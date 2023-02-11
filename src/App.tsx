@@ -5,7 +5,7 @@ function App() {
     <div className="App">
       <h1>Hello World</h1>
       <h1>!</h1>
-      <input type="button" value="" />
+      <input type="button" value="teste" />
     </div>
   )
 }
