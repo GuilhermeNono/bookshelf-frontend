@@ -1,6 +1,7 @@
 # 📚Bookshelf📚
 ## 📖 Description 
-<p>Repositório referente ao Front-end do projeto Bookshelf. O Bookshelf, será um sistema especializado no gerenciamento e consulta de dados relacionados à bibliotecas. Inicialmente o frontend será desenvolvido em React. O mesmo será utilizado como Trabalho de Conclusão de curso para a ETEC Comendador João Rays.</p>
+<p>Repositório referente ao Front-end do projeto Bookshelf. O Bookshelf, será um sistema especializado no gerenciamento e consulta de dados relacionados à bibliotecas. Inicialmente o frontend será desenvolvido em React.</p>
+<p><i>O mesmo será utilizado como Trabalho de Conclusão de curso para a ETEC Comendador João Rays.</i></p>
 
 ##
 
