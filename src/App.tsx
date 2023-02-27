@@ -1,14 +1,21 @@
-import './App.css'
+import "./App.css";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+
+// pages
+import Contact from "./pages/Contact/Contact";
 
 function App() {
   return (
     <div className="App">
-      <h1>Hello World</h1>
-      <h1>!</h1>
-      <input type="button" value="teste" />
-      <h3>Enviando uma Pull Request "teste"</h3>
+      <h1></h1>
+
+      <BrowserRouter>
+        <Routes>
+          <Route path="/Contact" element={<Contact />} />
+        </Routes>
+      </BrowserRouter>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
