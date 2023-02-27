@@ -7,6 +7,22 @@ function Card({title, imageUrl, body}) {
       <div className='image-container'>
           <img src={imageUrl} alt=''></img>
       </div>
+
+      <div className="card-content">
+          <div className='card-title'>
+            {title}
+          </div>
+          <div className="card-body">
+            <p>{body}</p>
+          </div>
+      </div>
+
+      <div className="btn">
+        <button>
+          <a>Saiba Mais</a>
+        </button>
+      </div>
+
     </div>
   );
 }
