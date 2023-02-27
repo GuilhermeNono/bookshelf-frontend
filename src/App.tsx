@@ -2,7 +2,7 @@ import "./App.css";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 // pages
-import Contact from "./pages/Contact/Contact";
+import Contact from "./pages/Contact/Index";
 
 function App() {
   return (
