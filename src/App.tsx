@@ -1,12 +1,16 @@
 import './App.css'
+import { GlobalStyle } from "./styles/global";
+import { Route, Routes, BrowserRouter } from "react-router-dom";
+import Login from './pages/Login/Login';
 
 function App() {
   return (
     <div className="App">
-      <h1>Hello World</h1>
-      <h1>!</h1>
-      <input type="button" value="teste" />
-      <h3>Enviando uma Pull Request "teste"</h3>
+      <BrowserRouter>
+        <Routes>
+          <Route path='/Login' element={<Login />} />
+        </Routes>
+      </BrowserRouter>
     </div>
   )
 }
