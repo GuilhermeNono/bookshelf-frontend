@@ -6,6 +6,11 @@ export const Container = styled.div`
   box-shadow: 0px 0px 15px -5px;
   transition: 0.5s;
   animation: ease-in;
+  background-color: #FFFF;
+  &:hover {
+    transform: scale(1.005);
+    box-shadow: 0px 0px 15px 0px;
+  }
 `;
 
 export const ImgContainer = styled.div`
@@ -20,10 +25,7 @@ export const CardContent = styled.div`
   margin-top: 0.3rem;
   color: #1a2e40;
   font-family: "Rubik", sans-serif;
-  &:hover {
-    transform: scale(1.1);
-    box-shadow: 0px 0px 15px 0px;
-  }
+  
 `;
 
 export const CardTitle = styled.div`
@@ -31,39 +33,39 @@ export const CardTitle = styled.div`
   text-align: center;
 `;
 
-// h3, p{
-//     margin: 0;
-//     padding: 0;
-// }
+
+export const P = styled.p`
+  margin: 0;
+  padding: 0;
+`;
+
+export const H3 = styled.p`
+  margin: 0;
+  padding: 0;
+`;
 
 export const Btn = styled.button`
   display: flex;
   justify-content: center;
 `;
 
-// .btn{
-//     display: flex;
-//     justify-content: center;
-// }
+export const Button = styled.button`
+  padding: 0.5rem;
+  background-color: #1b8ef2;
+  border: none;
+  transition: 0.2s;
 
-// .btn button{
-//     padding: 0.5rem;
-//     background-color: #1B8EF2;
-//     border:none;
-//     transition: 0.2s;
+  width: 100%;
+  position: relative;
+`;
 
-//     border-radius: 3px;
-//     width: 100%;
-//     position: relative;
-// }
+export const A = styled.a`
+  text-transform: uppercase;
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: bold;
+`;
 
-// .btn:hover{
-//     background: rgba(27, 156, 252, 0.1);
-// }
+export const CardBody = styled.div``;
 
-// a{
-//     text-transform: uppercase;
-//     color: #FFFFFF;
-//     text-decoration: none;
-//     font-weight: bold;
-// }
+export const Img = styled.img``;

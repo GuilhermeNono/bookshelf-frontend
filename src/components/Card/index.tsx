@@ -1,4 +1,4 @@
-import { Container, ImgContainer, CardContent, CardTitle, Btn } from "./styles";
+import { Container, ImgContainer, CardContent, CardTitle, Btn, Button, P, A, CardBody, Img } from "./styles";
 
 interface cardProps{
   title:string;
@@ -10,22 +10,22 @@ function Card({body, imageUrl, title}:cardProps) {
   return (
     <Container>
       <ImgContainer>
-          <img src={imageUrl} alt=''></img>
+          <Img src={imageUrl} alt=''></Img>
       </ImgContainer>
 
       <CardContent>
-          <CardTitle className='card-title'>
+          <CardTitle>
             {title}
           </CardTitle>
-          <div className="card-body">
-            <p>{body}</p>
-          </div>
+          <CardBody>
+            <P>{body}</P>
+          </CardBody>
       </CardContent>
 
       <>
-        <button>
-          <a>Saiba Mais</a>
-        </button>
+        <Button>
+          <A>Saiba Mais</A>
+        </Button>
       </>
 
     </Container>
