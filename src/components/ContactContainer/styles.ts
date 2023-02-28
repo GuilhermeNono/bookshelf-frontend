@@ -8,13 +8,13 @@ export const MainContainer = styled.div`
   overflow: hidden;
 
   display: flex;
+  flex-direction: row;
   justify-content: center;
-  
 `;
 
 export const TextContainer = styled.div`
-    color: #335675;
-    max-width: 60%;
+  color: #335675;
+  max-width: 60%;
 `;
 export const H2 = styled.h2`
   color: #ffff;
@@ -38,10 +38,11 @@ export const ContainerInfo = styled.div`
 `;
 
 export const InputContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    margin: 0.5rem;
-    padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+
+  margin: 0.5rem;
+  padding: 0.5rem;
 `;
 
 export const Input = styled.input`
@@ -49,13 +50,31 @@ export const Input = styled.input`
   padding: 0.5rem;
   width: 300px;
   color: #335675;
-  border-radius: 2px;
+  border-radius: 7px;
   border-style: none;
+`;
+
+export const TextBox = styled.textarea`
+  margin: 0.5rem;
+  padding: 0.5rem;
+  width: 300px;
+  color: #335675;
+  border-radius: 7px;
+  border-style: none;
+  resize: none;
+  height: 100px;
 `;
 
 export const Button = styled.button`
   padding: 0.5rem;
+  width: 100px;
   background-color: #1b8ef2;
   border: none;
   color: #ffff;
+  margin-top: 10px;
+  align-self: center;
+
+  &:hover {
+    transform: scale(1.1);
+  }
 `;

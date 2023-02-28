@@ -1,23 +1,25 @@
 import styled from "styled-components";
 
 export const Nav = styled.div`
- /* height: 50px;
+  /* height: 50px;
   margin-top: 0px;
   position: relative;
   background-color: #335675;
   display: block;
   justify-items: center;
   align-items: center;*/
-
+  background-color: #335675;
   height: 50px;
-  display: flex;
-  flex-direction: row;
+`;
 
+export const MainDiv = styled.div`
+  display: inline-block;
 `;
 
 export const NavContent = styled.div`
+  flex-direction: row-reverse;
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-start;
 `;
 
 export const A = styled.button`
@@ -33,13 +35,18 @@ export const A = styled.button`
   &.Active {
     color: #5cb9f2;
   }
+
+  &:hover {
+    transform: scale(1.1);
+  }
+  &:hover {
+    transform: scale(1.1);
+  }
 `;
 
-export const Logo = styled.svg`
-  float: left;
-  margin-left: 50px;
-  height: 40px;
-  order: -2;
+export const Logo = styled.a`
+  
+  
 `;
 
 export const GetStarted = styled.button`
@@ -52,10 +59,9 @@ export const GetStarted = styled.button`
   text-decoration: none;
   font-size: 17px;
   background: none;
-  //margin-top: 8px;
-
   border-radius: 10px;
   border-color: #5cb9f2;
-
-  order: 2;
+  &:hover {
+    transform: scale(1.1);
+  }
 `;

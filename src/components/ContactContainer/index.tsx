@@ -1,5 +1,5 @@
 import React from 'react'
-import { ContainerInfo, H2, H3, InputContainer, MainContainer, P, TextContainer, Input, Button, Desc } from './styles'
+import { ContainerInfo, H2, H3, InputContainer, MainContainer, P, TextContainer, Input, Button, Desc, TextBox } from './styles'
 
 function index() {
   return (
@@ -24,10 +24,10 @@ function index() {
         
         <ContainerInfo>
         <InputContainer>
-            <Input type="text" placeholder="Seu Nome" />
-            <Input type="email" placeholder="Endereço de e-mail" />
-            <Input type="text" placeholder="Titulo" />
-            <Input type="text" placeholder="Mensagem" /> 
+            <Input type="text" placeholder="Seu Nome" required/>
+            <Input type="email" placeholder="Endereço de e-mail" required />
+            <Input type="text" placeholder="Titulo" required />
+            <TextBox placeholder="Mensagem" required /> 
 
             <Button>Enviar</Button>
         </InputContainer>
