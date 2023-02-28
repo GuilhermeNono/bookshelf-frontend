@@ -1,18 +1,30 @@
-import { Container, OneRow, Box, Titulo, Botao, Col, Input, Link, TituloContainer, TitleBox, Spacing, H2, Info, LabelFloat } from "./Styles";
+import {
+  Container,
+  OneRow,
+  Box,
+  Titulo,
+  Botao,
+  Col,
+  Input,
+  Link,
+  TituloContainer,
+  TitleBox,
+  Spacing,
+  H2,
+  Info,
+  LabelFloat,
+  Body,
+} from "./Styles";
 import { GlobalStyle } from "../../styles/global";
 
 function Login() {
   return (
-    <div>
-      <GlobalStyle />
-        <Box>
-
+    <Body>
+      <Box>
         <TitleBox>
           <Titulo>Login</Titulo>
         </TitleBox>
-
         <Container>
-
           <OneRow>
             <svg
               width="40"
@@ -30,37 +42,40 @@ function Login() {
             </svg>
             <TituloContainer>BookShelf</TituloContainer>
           </OneRow>
-
           <Col>
             <H2>Entrar</H2>
-            <Info>Entre em sua conta para utilizar dos recursos do sistema.</Info>
+            <Info>
+              Entre em sua conta para utilizar dos recursos do sistema.
+            </Info>
           </Col>
-
           <form>
-
             <LabelFloat>
-                <Input type="email" name="nome" placeholder="Informe seu email" />
+              <Input type="email" name="nome" placeholder="Informe seu email" />
             </LabelFloat>
-
-              <LabelFloat>
-                <Input type="password" name="senha" placeholder="Informe sua senha" />
-              </LabelFloat>
-
+            <LabelFloat>
+              <Input
+                type="password"
+                name="senha"
+                placeholder="Informe sua senha"
+              />
+            </LabelFloat>
           </form>
-
-          <OneRow style={{paddingTop: 0}}>
-          <Info>Não tem uma conta? <Link href="#">Crie uma!</Link></Info>
+          <OneRow style={{ paddingTop: 0 }}>
+            <Info>
+              Não tem uma conta? <Link href="#">Crie uma!</Link>
+            </Info>
           </OneRow>
-          
           <Spacing>
-          <Info><Link href="#">Esqueci minha senha</Link></Info>
-          <p style={{paddingRight: 15}}><Botao type="submit" value="Entrar"/></p>
+            <Info>
+              <Link href="#">Esqueci minha senha</Link>
+            </Info>
+            <p style={{ paddingRight: 15 }}>
+              <Botao type="submit" value="Entrar" />
+            </p>
           </Spacing>
-
         </Container>
-
-        </Box>
-    </div>
+      </Box>
+    </Body>
   );
 }
 

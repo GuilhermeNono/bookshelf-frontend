@@ -7,7 +7,4 @@ export const GlobalStyle = createGlobalStyle`
     font-family: "poppins";
     }
 
-    body{
-        background-color: #335675;
-    }
 `;

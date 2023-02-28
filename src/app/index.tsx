@@ -10,20 +10,16 @@ import { AuthProvider } from "../context/authContext";
 import { GlobalStyle } from "../styles/global";
 
 function App() {
-  const [first, setfirst] = useState("second");
   return (
     <div className="App">
-      <AuthProvider value={{ first }}>
         <BrowserRouter>
-          <Header />
+          <GlobalStyle />
           <Routes>
             <Route element={<Home />} path={"/"} />
             <Route element={<About />} path={"/about"} />
             <Route element={<Login />} path={"/Login"} />
           </Routes>
-          <Footer />
         </BrowserRouter>
-      </AuthProvider>
     </div>
   );
 }

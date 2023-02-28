@@ -121,3 +121,13 @@ export const Link = styled.a`
         color: #61A9EB;
     }
 `
+
+export const Body = styled.div`
+    background-image: url("/assets/images/svg/Login.svg");
+    position: fixed;
+    height: 100vh;
+    width: 100vw;
+    left: 0;
+    bottom: 0;
+    z-index: -1;
+`
