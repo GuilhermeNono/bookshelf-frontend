@@ -2,19 +2,19 @@ import React from "react";
 import Card from "../../components/Card";
 import { GlobalStyle } from "../../styles/global";
 import ContactContainer from "../../components/ContactContainer/index";
-import { CardsDiv, MainDiv } from "./styles";
-import Footer from "../../components/Footer/Index";
-import Header from "../../components/Header/Index";
+import { CardsDiv, MainDiv, Space } from "./styles";
+import Footer from "../../components/Footer";
+import Header from "../../components/Header";
 import HeaderPolygon from "../../components/HeaderPolygon/Index";
 import Svg from "../../components/HeaderPolygon/Index";
 
 const Contact = () => {
   return (
     <MainDiv>
-       <Header/>
-      <HeaderPolygon />
-     
-      <GlobalStyle />
+      <Header />
+
+      <Space></Space>
+
       <CardsDiv>
         <Card
           title="E-Mail"
@@ -36,7 +36,6 @@ const Contact = () => {
       </CardsDiv>
 
       <ContactContainer />
-      <Footer />
     </MainDiv>
   );
 };

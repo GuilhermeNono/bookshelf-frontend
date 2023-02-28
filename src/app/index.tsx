@@ -7,21 +7,20 @@ import Home from "../pages/Home";
 import { getACep } from "../services/getACep";
 import { AuthProvider } from "../context/authContext";
 import { GlobalStyle } from "../styles/global";
+import Contact from "../pages/Contact/Index";
 
 function App() {
-  const [first, setfirst] = useState("second");
   return (
     <div className="App">
-      <AuthProvider value={{ first }}>
         <BrowserRouter>
-          <Header />
+        <GlobalStyle />
           <Routes>
+ 
             <Route element={<Home />} path={"/"} />
             <Route element={<About />} path={"/about"} />
+            <Route element={<Contact />} path={"/Contact"} />
           </Routes>
-          <Footer />
         </BrowserRouter>
-      </AuthProvider>
     </div>
   );
 }

@@ -6,7 +6,6 @@ export const MainContainer = styled.div`
   margin-top: 8rem;
   padding: 0.5rem;
   overflow: hidden;
-
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -40,7 +39,6 @@ export const ContainerInfo = styled.div`
 export const InputContainer = styled.div`
   display: flex;
   flex-direction: column;
-
   margin: 0.5rem;
   padding: 0.5rem;
 `;
@@ -76,7 +74,6 @@ export const Button = styled.button`
   align-self: center;
   transition: 0.5s;
   animation: ease-in;
-
   &:hover {
     transform: scale(1.1);
   }

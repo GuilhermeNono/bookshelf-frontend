@@ -6,30 +6,30 @@ export const Container = styled.div`
   box-shadow: 0px 0px 15px -5px;
   transition: 0.5s;
   animation: ease-in;
-  background-color: #FFFF;
-
+  background: #ffffff;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 5.42px;
 `;
 
 export const ImgContainer = styled.div`
-  overflow: hidden;
   height: 100px;
   display: flex;
   justify-content: center;
+  align-items: center;
+
+  z-index: 9999;
 `;
 
 export const CardContent = styled.div`
   margin: 1rem;
   margin-top: 0.3rem;
   color: #1a2e40;
-  font-family: "Rubik", sans-serif;
-  
 `;
 
 export const CardTitle = styled.div`
   margin-bottom: 0.5rem;
   text-align: center;
 `;
-
 
 export const P = styled.p`
   margin: 0;
@@ -59,7 +59,6 @@ export const Button = styled.button`
   &:hover {
     transform: scale(1.1);
   }
-
 `;
 
 export const A = styled.a`
@@ -71,4 +70,8 @@ export const A = styled.a`
 
 export const CardBody = styled.div``;
 
-export const Img = styled.img``;
+export const Img = styled.img`
+  position: absolute;
+  bottom: 300px;
+  z-index: 9999;
+`;

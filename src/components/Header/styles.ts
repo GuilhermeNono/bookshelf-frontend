@@ -8,7 +8,6 @@ export const Nav = styled.div`
   display: block;
   justify-items: center;
   align-items: center;*/
-  background-color: #335675;
   height: 50px;
 `;
 
@@ -17,9 +16,9 @@ export const MainDiv = styled.div`
 `;
 
 export const NavContent = styled.div`
-  flex-direction: row-reverse;
+  flex-direction: row;
+  justify-content: center;
   display: flex;
-  justify-content: flex-start;
 `;
 
 export const A = styled.button`
@@ -45,9 +44,21 @@ export const A = styled.button`
 `;
 
 export const Logo = styled.a`
+  margin-left: 60px;
+  margin-top: 15px;
   
   
 `;
+
+export const Space = styled.span`
+  flex-grow: 1;
+`
+
+export const ContainerLinks = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
 
 export const GetStarted = styled.button`
   float: right;

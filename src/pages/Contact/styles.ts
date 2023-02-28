@@ -13,3 +13,8 @@ export const CardsDiv = styled.div`
   flex-direction: row;
   justify-content: space-around;
 `;
+
+export const Space = styled.span`
+  width: 100%;
+  height: 30vh;
+`

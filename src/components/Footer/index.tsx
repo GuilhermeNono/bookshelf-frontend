@@ -1,10 +1,17 @@
-import React from 'react'
-import { Container } from './styles'
+import React from "react";
+import { FooterLeft, FooterRight, Text, Bar } from "./styles";
 
-const Footer = () => {
+function Footer() {
   return (
-    <Container>Footer</Container>
-  )
+    <Bar>
+      <FooterLeft>
+        
+      </FooterLeft>
+      <FooterRight>
+        <Text>Bookshelf © 2022  All Rights Reserved</Text>
+      </FooterRight>
+      </Bar>
+  );
 }
 
-export default Footer
+export default Footer;
