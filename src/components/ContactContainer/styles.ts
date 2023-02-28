@@ -3,6 +3,7 @@ import styled from "styled-components";
 export const MainContainer = styled.div`
   height: auto;
   margin: 0.5rem;
+  margin-top: 8rem;
   padding: 0.5rem;
   overflow: hidden;
 
@@ -17,19 +18,23 @@ export const TextContainer = styled.div`
 `;
 export const H2 = styled.h2`
   color: #ffff;
-  text-align: ce;
+  text-align: center;
+  margin: 1rem;
 `;
 
 export const H3 = styled.h3`
   color: #ffff;
+  margin: 0.5rem;
 `;
 
 export const P = styled.p``;
 
+export const Desc = styled.p`
+  margin-bottom: 3rem;
+`;
+
 export const ContainerInfo = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  height: 500px;
 `;
 
 export const InputContainer = styled.div`

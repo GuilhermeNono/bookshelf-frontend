@@ -1,16 +1,16 @@
 import React from 'react'
-import { ContainerInfo, H2, H3, InputContainer, MainContainer, P, TextContainer, Input, Button } from './styles'
+import { ContainerInfo, H2, H3, InputContainer, MainContainer, P, TextContainer, Input, Button, Desc } from './styles'
 
 function index() {
   return (
     <MainContainer>
       <TextContainer>
         <H2>Contato</H2>
-        <P>
+        <Desc>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vel sem
         non magna posuere accumsan in non felis. Nullam urna metus, aliquet
         fringilla aliquet luctus, imperdiet vitae dolor"
-        </P> 
+        </Desc> 
 
         <H3>Phone</H3>
         <P>+55 14 99999-9999</P>
