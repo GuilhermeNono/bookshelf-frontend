@@ -12,6 +12,7 @@ export const Container = styled.div`
     margin: 0 auto;
     width: 626px;
     height: 448px;
+    padding: 16px;
     background: #FFFFFF;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 `
@@ -43,26 +44,48 @@ export const Col = styled.div`
     flex-direction: column;
     padding: 15px;
 `
-export const info = styled.h2`
-
+export const H2 = styled.h2`
+    font-weight: 400;
+    font-size: 32px;
+    line-height: 48px;
+    color: #1A2E40;
 `
 
 export const Input = styled.input`
-    margin-top: 10px;
-    padding: 7px;
+    width: 100%;
+    padding-bottom: 7px;
+    padding-left: 10px;
+    display: inline-block;
+    border: 0;
+    border-bottom: 1px solid;
+    background-color: transparent;
+    outline: none;
 
     font-weight: 400;
     font-size: 20px;
     line-height: 30px;
-    `
+    color: #8796A3;
+`
+
+export const LabelFloat = styled.div`
+    padding: 12px;
+    box-sizing: border-box;
+`
+
+export const Info = styled.p`
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    color: #335675;
+`
 
 export const TituloContainer = styled.h2`
     display: grid;
     align-items: center;
     font-size: 33.98px;
-    line-height: 51px;
     line-height: 100%;
     opacity: 70%;
+    font-weight: 500;
     color: #1A2E40;
 `
 
@@ -92,4 +115,9 @@ export const Spacing = styled.div`
 
 export const Link = styled.a`
     color: #0075FF;
+
+    &:hover,
+    &:focus {
+        color: #61A9EB;
+    }
 `

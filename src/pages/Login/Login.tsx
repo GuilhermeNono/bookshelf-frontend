@@ -1,4 +1,4 @@
-import { Container, OneRow, Box, Titulo, Botao, Col, Input, Link, TituloContainer, TitleBox, Spacing } from "./Styles";
+import { Container, OneRow, Box, Titulo, Botao, Col, Input, Link, TituloContainer, TitleBox, Spacing, H2, Info, LabelFloat } from "./Styles";
 import { GlobalStyle } from "../../styles/global";
 
 function Login() {
@@ -32,24 +32,29 @@ function Login() {
           </OneRow>
 
           <Col>
-            <h2>Entrar</h2>
-            <p>Entre em sua conta para utilizar dos recursos do sistema</p>
+            <H2>Entrar</H2>
+            <Info>Entre em sua conta para utilizar dos recursos do sistema.</Info>
           </Col>
 
           <form>
-            <Col>
-              <Input type="email" name="nome" placeholder="Informe seu email" />
-              <Input type="password" name="senha" placeholder="Informe sua senha" />
-            </Col>
+
+            <LabelFloat>
+                <Input type="email" name="nome" placeholder="Informe seu email" />
+            </LabelFloat>
+
+              <LabelFloat>
+                <Input type="password" name="senha" placeholder="Informe sua senha" />
+              </LabelFloat>
+
           </form>
 
           <OneRow style={{paddingTop: 0}}>
-          <p>Não tem uma conta? <Link href="#">Crie uma!</Link></p>
+          <Info>Não tem uma conta? <Link href="#">Crie uma!</Link></Info>
           </OneRow>
           
           <Spacing>
-          <p><Link href="#">Esqueci minha senha</Link></p>
-          <p><Botao type="submit" value="Entrar"/></p>
+          <Info><Link href="#">Esqueci minha senha</Link></Info>
+          <p style={{paddingRight: 15}}><Botao type="submit" value="Entrar"/></p>
           </Spacing>
 
         </Container>
