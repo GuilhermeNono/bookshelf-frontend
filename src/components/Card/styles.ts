@@ -7,10 +7,7 @@ export const Container = styled.div`
   transition: 0.5s;
   animation: ease-in;
   background-color: #FFFF;
-  &:hover {
-    transform: scale(1.005);
-    box-shadow: 0px 0px 15px 0px;
-  }
+
 `;
 
 export const ImgContainer = styled.div`
@@ -57,6 +54,12 @@ export const Button = styled.button`
 
   width: 100%;
   position: relative;
+  transition: 0.5s;
+  animation: ease-in;
+  &:hover {
+    transform: scale(1.1);
+  }
+
 `;
 
 export const A = styled.a`

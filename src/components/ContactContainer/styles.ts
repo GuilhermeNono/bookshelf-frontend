@@ -70,9 +70,12 @@ export const Button = styled.button`
   width: 100px;
   background-color: #1b8ef2;
   border: none;
+  border-radius: 7px;
   color: #ffff;
   margin-top: 10px;
   align-self: center;
+  transition: 0.5s;
+  animation: ease-in;
 
   &:hover {
     transform: scale(1.1);
