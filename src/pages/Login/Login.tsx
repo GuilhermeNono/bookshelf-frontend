@@ -15,7 +15,6 @@ import {
   LabelFloat,
   Body,
 } from "./Styles";
-import { GlobalStyle } from "../../styles/global";
 
 function Login() {
   return (

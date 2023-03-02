@@ -3,6 +3,7 @@ import styled from "styled-components";
 export const Box = styled.section`
     display: grid;
     height: 100vh;
+    width: 100vw;
     justify-content: center;
     margin: 0;
 `
@@ -10,11 +11,14 @@ export const Box = styled.section`
 export const Container = styled.div`
     position: relative;
     margin: 0 auto;
-    width: 626px;
-    height: 448px;
+    max-width: 100%;
+    height: 28rem;
     padding: 16px;
     background: #FFFFFF;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    margin-left: 20px;
+    margin-right: 20px;
 `
 
 export const TitleBox = styled.div`
@@ -124,10 +128,7 @@ export const Link = styled.a`
 
 export const Body = styled.div`
     background-image: url("/assets/images/svg/Login.svg");
-    position: fixed;
-    height: 100vh;
-    width: 100vw;
-    left: 0;
-    bottom: 0;
-    z-index: -1;
+    background-attachment: fixed;
+    background-size: cover;
 `
+
