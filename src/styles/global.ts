@@ -4,7 +4,11 @@ export const GlobalStyle = createGlobalStyle`
     *{
     padding: 0;
     margin: 0;
-    font-family: "poppins";
+    font-family: 'poppins';
     }
-
+    
+    body{
+        width: 100%;
+        height: 100%;
+    }
 `;

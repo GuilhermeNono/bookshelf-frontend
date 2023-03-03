@@ -126,9 +126,21 @@ export const Link = styled.a`
     }
 `
 
+export const Logo = styled.svg`
+    background-image: url("/assets/images/svg/Logo.svg");
+    background-repeat: no-repeat;
+    width: 40px;
+    height: 43px;
+`
+
 export const Body = styled.div`
     background-image: url("/assets/images/svg/Login.svg");
     background-attachment: fixed;
     background-size: cover;
+    background-repeat: no-repeat;
+`
+
+export const PButton = styled.p`
+    padding-right: 15px;
 `
 
