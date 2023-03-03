@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Box = styled.section`
+export const Container = styled.section`
     display: grid;
     height: 100vh;
     width: 100vw;
@@ -8,7 +8,7 @@ export const Box = styled.section`
     margin: 0;
 `
 
-export const Container = styled.div`
+export const BoxForm = styled.div`
     position: relative;
     margin: 0 auto;
     max-width: 100%;
@@ -143,4 +143,3 @@ export const Body = styled.div`
 export const PButton = styled.p`
     padding-right: 15px;
 `
-

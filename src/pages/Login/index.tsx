@@ -1,7 +1,7 @@
 import {
   Container,
   OneRow,
-  Box,
+  BoxForm,
   Titulo,
   Botao,
   Col,
@@ -16,16 +16,16 @@ import {
   Body,
   Logo,
   PButton,
-} from "./Styles";
+} from "./styles";
 
 function Login() {
   return (
     <Body>
-      <Box>
+      <Container>
         <TitleBox>
           <Titulo>Login</Titulo>
         </TitleBox>
-        <Container> 
+        <BoxForm> 
           <OneRow>
             <Logo />
             <TituloContainer>BookShelf</TituloContainer>
@@ -61,8 +61,8 @@ function Login() {
               <Botao type="submit" value="Entrar" />
             </PButton>
           </Spacing>
-        </Container>
-      </Box>
+        </BoxForm>
+      </Container>
     </Body>
   );
 }
