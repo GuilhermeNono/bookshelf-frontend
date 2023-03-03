@@ -1,7 +1,6 @@
 import React from "react";
-import Card from "../../components/Card";
+import { Card } from "../../Components/Card";
 import { GlobalStyle } from "../../styles/global";
-import ContactContainer from "../../components/ContactContainer/index";
 import { CardsDiv, MainDiv, Space } from "./styles";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
@@ -35,7 +34,6 @@ const Contact = () => {
         />
       </CardsDiv>
 
-      <ContactContainer />
     </MainDiv>
   );
 };

@@ -1,77 +1,172 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  width: 300px;
-  overflow: hidden;
-  box-shadow: 0px 0px 15px -5px;
-  transition: 0.5s;
-  animation: ease-in;
-  background: #ffffff;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 5.42px;
-`;
-
-export const ImgContainer = styled.div`
-  height: 100px;
+  width: 100%;
+  height: 100vh;
   display: flex;
+
   justify-content: center;
   align-items: center;
-
-  z-index: 9999;
+  flex-direction: column;
 `;
-
-export const CardContent = styled.div`
-  margin: 1rem;
-  margin-top: 0.3rem;
-  color: #1a2e40;
-`;
-
-export const CardTitle = styled.div`
-  margin-bottom: 0.5rem;
-  text-align: center;
-`;
-
-export const P = styled.p`
-  margin: 0;
-  padding: 0;
-`;
-
-export const H3 = styled.p`
-  margin: 0;
-  padding: 0;
-`;
-
-export const Btn = styled.button`
-  display: flex;
-  justify-content: center;
-`;
-
-export const Button = styled.button`
-  padding: 0.5rem;
-  background-color: #1b8ef2;
-  border: none;
-  transition: 0.2s;
-
-  width: 100%;
+export const CardContainer = styled.div`
   position: relative;
+  width: 350px;
+  height: 150px;
+
+  height: 300px;
   transition: 0.5s;
-  animation: ease-in;
-  &:hover {
-    transform: scale(1.1);
+`;
+export const Lines = styled.div`
+  position: absolute;
+  border-radius: 10px;
+
+  inset: 0;
+
+  overflow: hidden;
+
+  &:before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    /* transform: translate(-50%, -50%); */
+    width: 600px;
+    height: 120px;
+
+  }
+
+  &:after {
+    content: "";
+    position: absolute;
+    background: #fff;
+
+    inset: 3px;
+  }
+`;
+export const ImgBox = styled.div`
+  position: absolute;
+  top: -25%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  background: transparent;
+  z-index: 10;
+
+  overflow: hidden;
+
+  img {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: calc(100% - 20px);
+    height: calc(100% - 20px);
+    z-index: 20;
+  }
+
+  &:before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 500px;
+    height: 150px;
+  }
+
+
+
+  @keyframes rotateImgBox {
+    0% {
+      transform: translate(-50%, -50%) rotate(0deg);
+    }
+    100% {
+      transform: translate(-50%, -50%) rotate(-360deg);
+    }
   }
 `;
 
-export const A = styled.a`
-  text-transform: uppercase;
-  color: #ffffff;
-  text-decoration: none;
-  font-weight: bold;
-`;
-
-export const CardBody = styled.div``;
-
-export const Img = styled.img`
+export const ContentInformation = styled.div`
   position: absolute;
-  bottom: 300px;
-  z-index: 9999;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-direction: column;
+  opacity: 1;
+  transition: 0.5s;
+  overflow: hidden;
+`;
+export const DetailsInformation = styled.div`
+  padding-top: 10px;
+  width: 100%;
+  transition: 0.5s;
+  transform: translateY(-10%);
+`;
+export const TextDetails = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  h2 {
+    color: black;
+    font-size: 32px;
+    font-weight: 600;
+  }
+
+  span {
+    font-weight: 300;
+    color: balck;
+  }
+`;
+export const DataDetails = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  padding: 10px;
+`;
+export const TextDataDetails = styled.div`
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100px;
+
+  h3 {
+    color: black;
+    font-size: 24px;
+    font-weight: 600;
+  }
+
+  span {
+    font-weight: 300;
+    color: #fff;
+  }
+`;
+export const ActionsButton = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  button {
+    width: 100%;
+    padding: 10px 30px;
+    margin-bottom: 0px;
+    cursor: pointer;
+    border: none;
+
+    border-radius: 5px;
+    font-size: 1em;
+    font-weight: 500;
+    background: #3498db;
+    color: #fff;
+    transition: 0.4s;
+
+    &:hover {
+      background: #2980b9;
+    }
+  }
 `;

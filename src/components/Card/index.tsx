@@ -1,14 +1,15 @@
+import ImgTest from "../../../public/assets/images/testeimg.png";
 import {
+  ActionsButton,
+  CardContainer,
   Container,
-  ImgContainer,
-  CardContent,
-  CardTitle,
-  Btn,
-  Button,
-  P,
-  A,
-  CardBody,
-  Img,
+  ContentInformation,
+  DataDetails,
+  DetailsInformation,
+  ImgBox,
+  Lines,
+  TextDataDetails,
+  TextDetails,
 } from "./styles";
 
 interface cardProps {
@@ -17,28 +18,33 @@ interface cardProps {
   body: string;
 }
 
-function Card({ body, imageUrl, title }: cardProps) {
+export function Card({ body, imageUrl, title }: cardProps) {
   return (
     <Container>
-      
+      <CardContainer>
+        <Lines></Lines>
+        <ImgBox>
+          <img src={imageUrl} alt="img" />
+        </ImgBox>
 
-      <CardContent>
-      <ImgContainer>
-        <Img src={imageUrl} alt=""></Img>
-      </ImgContainer>
-        <CardTitle>{title}</CardTitle>
-        <CardBody>
-          <P>{body}</P>
-        </CardBody>
-      </CardContent>
+        <ContentInformation>
+          <DetailsInformation>
 
-      <>
-        <Button>
-          <A>Saiba Mais</A>
-        </Button>
-      </>
+            <TextDetails>
+              <h2>{title}</h2>
+            </TextDetails>
+
+            <DataDetails>
+            {body}
+            </DataDetails>
+
+            {/*<ActionsButton>
+              <button>Saiba Mais</button>
+            </ActionsButton>*/}
+
+          </DetailsInformation>
+        </ContentInformation>
+      </CardContainer>
     </Container>
   );
 }
-
-export default Card;
