@@ -38,9 +38,9 @@ export function Card({ body, imageUrl, title }: cardProps) {
             {body}
             </DataDetails>
 
-            {/*<ActionsButton>
+            <ActionsButton>
               <button>Saiba Mais</button>
-            </ActionsButton>*/}
+            </ActionsButton>
 
           </DetailsInformation>
         </ContentInformation>

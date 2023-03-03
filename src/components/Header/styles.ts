@@ -8,6 +8,7 @@ export const Nav = styled.div`
   display: block;
   justify-items: center;
   align-items: center;*/
+  background-color: #335675;
   height: 50px;
 `;
 

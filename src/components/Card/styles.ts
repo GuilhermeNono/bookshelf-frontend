@@ -8,6 +8,7 @@ export const Container = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
+
 `;
 export const CardContainer = styled.div`
   position: relative;
@@ -19,7 +20,7 @@ export const CardContainer = styled.div`
 `;
 export const Lines = styled.div`
   position: absolute;
-  border-radius: 10px;
+  border-radius: 20px;
 
   inset: 0;
 
@@ -151,6 +152,7 @@ export const ActionsButton = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  border-radius: 20px;
   button {
     width: 100%;
     padding: 10px 30px;
