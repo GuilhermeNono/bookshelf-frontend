@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Container = styled.section`
+export const Body = styled.section`
     display: grid;
     height: 100vh;
     width: 100vw;
@@ -133,7 +133,7 @@ export const Logo = styled.svg`
     height: 43px;
 `
 
-export const Body = styled.div`
+export const Container = styled.div`
     background-image: url("/assets/images/svg/Login.svg");
     background-attachment: fixed;
     background-size: cover;

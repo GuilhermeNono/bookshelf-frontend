@@ -20,8 +20,8 @@ import {
 
 function Login() {
   return (
-    <Body>
-      <Container>
+    <Container>
+      <Body>
         <TitleBox>
           <Titulo>Login</Titulo>
         </TitleBox>
@@ -62,8 +62,8 @@ function Login() {
             </PButton>
           </Spacing>
         </BoxForm>
-      </Container>
-    </Body>
+      </Body>
+    </Container>
   );
 }
 
