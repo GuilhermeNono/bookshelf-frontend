@@ -8,7 +8,7 @@ export const Container = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-
+  overflow: hidden;
 `;
 export const CardContainer = styled.div`
   position: relative;
@@ -20,30 +20,16 @@ export const CardContainer = styled.div`
 `;
 export const Lines = styled.div`
   position: absolute;
-  border-radius: 20px;
+  border-radius: 10px;
 
   inset: 0;
 
   overflow: hidden;
+  content: "";
+  position: absolute;
+  background: #fff;
 
-  &:before {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    /* transform: translate(-50%, -50%); */
-    width: 600px;
-    height: 120px;
-
-  }
-
-  &:after {
-    content: "";
-    position: absolute;
-    background: #fff;
-
-    inset: 3px;
-  }
+  inset: 3px;
 `;
 export const ImgBox = styled.div`
   position: absolute;
@@ -65,26 +51,6 @@ export const ImgBox = styled.div`
     width: calc(100% - 20px);
     height: calc(100% - 20px);
     z-index: 20;
-  }
-
-  &:before {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 500px;
-    height: 150px;
-  }
-
-
-
-  @keyframes rotateImgBox {
-    0% {
-      transform: translate(-50%, -50%) rotate(0deg);
-    }
-    100% {
-      transform: translate(-50%, -50%) rotate(-360deg);
-    }
   }
 `;
 
@@ -138,7 +104,7 @@ export const TextDataDetails = styled.div`
   width: 100px;
 
   h3 {
-    color: black;
+    color: #335675;
     font-size: 24px;
     font-weight: 600;
   }
@@ -148,27 +114,18 @@ export const TextDataDetails = styled.div`
     color: #fff;
   }
 `;
-export const ActionsButton = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 20px;
-  button {
-    width: 100%;
-    padding: 10px 30px;
-    margin-bottom: 0px;
-    cursor: pointer;
-    border: none;
+export const Button = styled.button`
+  width: 99%;
+  height: 50px;
+  border-style: none;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  background-color:#1B8EF2;
+  color: #FFF;
+  transition: 200ms;
 
-    border-radius: 5px;
-    font-size: 1em;
-    font-weight: 500;
-    background: #3498db;
-    color: #fff;
-    transition: 0.4s;
-
-    &:hover {
-      background: #2980b9;
-    }
+  &:hover{
+    font-size: 20px;
+    background-color:#0a8afa ;
   }
 `;

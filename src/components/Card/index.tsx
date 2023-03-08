@@ -1,6 +1,6 @@
 import ImgTest from "../../../public/assets/images/testeimg.png";
 import {
-  ActionsButton,
+  Button,
   CardContainer,
   Container,
   ContentInformation,
@@ -29,21 +29,19 @@ export function Card({ body, imageUrl, title }: cardProps) {
 
         <ContentInformation>
           <DetailsInformation>
-
             <TextDetails>
               <h2>{title}</h2>
             </TextDetails>
 
-            <DataDetails>
-            {body}
-            </DataDetails>
-
-            <ActionsButton>
-              <button>Saiba Mais</button>
-            </ActionsButton>
-
+            <DataDetails>{body}</DataDetails>
           </DetailsInformation>
+          <Button>Saiba Mais</Button>
+
+ 
+
+
         </ContentInformation>
+        
       </CardContainer>
     </Container>
   );

@@ -2,8 +2,8 @@ import styled from "styled-components";
 import Svg from "../../components/HeaderPolygon/Index"
 
 
-export const MainDiv = styled.body`
-   
+export const MainDiv = styled.div`
+  background-image: url(public/assets/images/svg/Back.svg);
 `;
 
 export const CardsDiv = styled.div`
@@ -17,4 +17,12 @@ export const CardsDiv = styled.div`
 export const Space = styled.span`
   width: 100%;
   height: 30vh;
+`;
+
+export const Poly = styled.div`
+
+  background-image: url(public/assets/images/svg/Back.svg);
+  margin-top: 0;
+  margin-left: 0;
+  z-index: 9999;
 `

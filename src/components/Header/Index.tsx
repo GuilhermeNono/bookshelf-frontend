@@ -1,38 +1,34 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import HeaderPolygon from "../HeaderPolygon/Index";
 import {
   Nav,
-  A,
-  Logo,
-  GetStarted,
-  NavContent,
+  NavLink,
+  Bars,
+  NavMenu,
+  NavBtn,
+  NavBtnLink,
+  Svg,
+  GStart,
   Space,
-  ContainerLinks,
+  Logo,
+  LogoImg,
 } from "./styles";
 
-function Header() {
+const Header = () => {
   return (
     <Nav>
-      <NavContent>
-        <Logo href="/">
-          <img
-            src="/assets/images/svg/logo.svg"
-            width="200"
-            height="37"
-          />
-        </Logo>
-        <Space></Space>
+      <Bars />
+      <a href="/"><LogoImg src="public/assets/images/svg/logo.svg" alt="Bookshelf" /></a>
+      <NavMenu>
+      <Space></Space>
+        <NavLink to="/pricing">Pricing</NavLink>
+        <NavLink to="/contact">Contact</NavLink>
+        <GStart>Get Started</GStart>
 
-        <ContainerLinks>
-          <A>Pricing</A>
-          <A className="Active">Contact</A>
-
-          <GetStarted>Get Started</GetStarted>
-        </ContainerLinks>
-      </NavContent>
+        {/* Second Nav */}
+        {/* <NavBtnLink to='/sign-in'>Sign In</NavBtnLink> */}
+      </NavMenu>
     </Nav>
   );
-}
+};
 
 export default Header;
