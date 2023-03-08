@@ -17,7 +17,7 @@ const Header = () => {
   return (
     <Nav>
       
-      <a href="/"><LogoImg src="public/assets/images/svg/logo.svg" alt="Bookshelf" /></a>
+      <a href="/"><LogoImg src="public/assets/images/svg/ContactPage/Header/logoHeader.svg" alt="Bookshelf" /></a>
       <Space></Space>
         <NavLink to="/pricing">Pricing</NavLink>
         <NavLink to="/contact">Contact</NavLink>

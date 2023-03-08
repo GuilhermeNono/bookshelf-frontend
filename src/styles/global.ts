@@ -4,7 +4,7 @@ export const GlobalStyle = createGlobalStyle`
     *{
     padding: 0;
     margin: 0;
-    font-family: 'poppins';
+    font-family: 'poppins', sans-serif;
     }
     
     body{
