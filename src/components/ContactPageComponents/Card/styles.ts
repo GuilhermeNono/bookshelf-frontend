@@ -20,7 +20,7 @@ export const CardContainer = styled.div`
 `;
 export const Lines = styled.div`
   position: absolute;
-  border-radius: 10px;
+  border-radius: 7px;
 
   inset: 0;
 
@@ -118,8 +118,8 @@ export const Button = styled.button`
   width: 99%;
   height: 50px;
   border-style: none;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 7px;
+  border-bottom-right-radius: 7px;
   background-color:#1B8EF2;
   color: #FFF;
   transition: 200ms;

@@ -12,7 +12,6 @@ const Contact = () => {
   return (
     <MainDiv>
       <Header></Header>
-      <Space></Space>
 
       <CardsDiv>
         <Card
