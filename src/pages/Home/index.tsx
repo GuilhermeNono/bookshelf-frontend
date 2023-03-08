@@ -1,6 +1,6 @@
 import React from 'react'
-import Footer from '../../components/Footer'
-import Header from '../../components/Header'
+import Footer from '../../components/ContactPageComponents/Footer'
+import Header from '../../components/ContactPageComponents/Header'
 import {Container} from './styles'
 import { useAuthValue } from '../../context/authContext'
 

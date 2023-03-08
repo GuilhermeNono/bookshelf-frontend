@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Footer from "../components/Footer";
-import Header from "../components/Header";
+import Footer from "../components/ContactPageComponents/Footer";
+import Header from "../components/ContactPageComponents/Header";
 import About from "../pages/About";
 import Home from "../pages/Home";
 import { getACep } from "../services/getACep";

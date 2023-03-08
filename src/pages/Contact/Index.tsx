@@ -1,12 +1,10 @@
 import React from "react";
-import { Card } from "../../components/Card";
+import { Card } from "../../components/ContactPageComponents/Card";
 import { GlobalStyle } from "../../styles/global";
 import { CardsDiv, MainDiv, Space, Poly } from "./styles";
-import Footer from "../../components/Footer";
-import Header from "../../components/Header";
-import HeaderPolygon from "../../components/HeaderPolygon/Index";
-import Svg from "../../components/HeaderPolygon/Index";
-import ContactContainer from "../../components/ContactContainer";
+import Footer from "../../components/ContactPageComponents/Footer";
+import Header from "../../components/ContactPageComponents/Header";
+import ContactContainer from "../../components/ContactPageComponents/ContactContainer";
 
 import image from "public/assets/images/svg/Back.svg";
 
