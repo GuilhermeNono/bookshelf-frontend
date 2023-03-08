@@ -3,7 +3,7 @@ import { Card } from "../../components/Card";
 import { GlobalStyle } from "../../styles/global";
 import { CardsDiv, MainDiv, Space, Poly } from "./styles";
 import Footer from "../../components/Footer";
-import Header from "../../components/Header/Index";
+import Header from "../../components/Header";
 import HeaderPolygon from "../../components/HeaderPolygon/Index";
 import Svg from "../../components/HeaderPolygon/Index";
 import ContactContainer from "../../components/ContactContainer";

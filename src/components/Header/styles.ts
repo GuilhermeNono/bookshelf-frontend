@@ -7,6 +7,7 @@ export const Nav = styled.nav`
   height: 46px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 0.2rem calc((100vw - 1000px) / 2);
   z-index: 12;
   /* Third Nav */
@@ -115,5 +116,5 @@ export const Logo = styled.a`
 `
 
 export const LogoImg = styled.img`
-  width: 180px;
+  width: 150px;
 `
