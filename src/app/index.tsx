@@ -4,6 +4,7 @@ import Footer from "../components/ContactPageComponents/Footer";
 import Header from "../components/ContactPageComponents/Header";
 import About from "../pages/About";
 import Home from "../pages/Home";
+import Login from "../pages/Login";
 import { getACep } from "../services/getACep";
 import { AuthProvider } from "../context/authContext";
 import { GlobalStyle } from "../styles/global";
@@ -13,12 +14,11 @@ function App() {
   return (
     <div className="App">
         <BrowserRouter>
-        <GlobalStyle />
+          <Header />
           <Routes>
  
             <Route element={<Home />} path={"/"} />
             <Route element={<About />} path={"/about"} />
-            <Route element={<Contact />} path={"/Contact"} />
           </Routes>
         </BrowserRouter>
     </div>
