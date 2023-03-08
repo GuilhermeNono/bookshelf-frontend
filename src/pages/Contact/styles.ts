@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import Svg from "../../components/HeaderPolygon/Index"
 
 
 export const MainDiv = styled.div`
