@@ -8,6 +8,7 @@ import Login from "../pages/Login";
 import { getACep } from "../services/getACep";
 import { AuthProvider } from "../context/authContext";
 import { GlobalStyle } from "../styles/global";
+import Pricing from "../pages/Pricing";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
             <Route element={<Home />} path={"/"} />
             <Route element={<About />} path={"/about"} />
             <Route element={<Login />} path={"/Login"} />
+            <Route element={<Pricing />} path={"/Pricing"} />
           </Routes>
         </BrowserRouter>
     </div>
