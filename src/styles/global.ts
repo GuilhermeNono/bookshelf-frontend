@@ -25,7 +25,8 @@ export const GlobalStyle = createGlobalStyle`
         background: #ffffff;
         color: #1A2E40;
     }
+
     section{
-	padding: 80px 13%;
+	    padding: 80px 13%;
     }
 `;
