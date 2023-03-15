@@ -1,17 +1,15 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-    position: absolute;
-    width: 100%;
-    height: 100%;
-
-    background-image: linear-gradient( to bottom, #335675 65%, #61A9EB 35%);
+    background-image: url("/assets/images/svg/Pricing.svg");
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
 `
 
 export const H1Chamativo = styled.h1`
     font-weight: 600;
-    font-size: 64px;
-    line-height: 96px;
+    font-size: 4em;
 
     display: flex;
     justify-content: center;
@@ -21,12 +19,9 @@ export const H1Chamativo = styled.h1`
 
 export const H4Chamativo = styled.h4`
     font-weight: 400;
-    font-size: 24px;
-    line-height: 36px;
-
+    font-size: 1.6em;
     display: flex;
     justify-content: center;
-
     color: #F1F1F1;
 `
 
@@ -42,6 +37,7 @@ export const CardLite = styled.div`
     background: #FFFFFF;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 0.3rem;
+    width: 27rem;
 `
 
 export const CardPro = styled.div`
@@ -49,18 +45,19 @@ export const CardPro = styled.div`
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 0.3rem;
     z-index: 1;
+    width: 27rem;
 `
 
 export const CardEssentials = styled.div`
     background: #FFFFFF;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 0.3rem;
+    width: 27rem;
 `
 
 export const List = styled.ul`
     margin: 1rem 2rem 0rem 2rem;
     display: flex;
-    justify-content: center;
     flex-direction: column;
     list-style-type: none;
 `
@@ -68,11 +65,24 @@ export const List = styled.ul`
 export const Linha = styled.li`
     padding: 0.6rem 0;
     list-style-image: url("/assets/images/svg/Checking.svg");
+    list-style-position: inside;
+
+    font-weight: 400;
+    font-size: 1.3em;
+
+    color: #0D4373;
 `
 
 export const LiPrice = styled.li`
     font-weight: 400;
     font-size: 3.7em;
+    color: #1A2E40;
+`
+
+export const LiTitle = styled.li`
+    margin-top: 1.4rem;
+    font-weight: 700;
+    font-size: 1.3em;
     color: #1A2E40;
 `
 
@@ -86,7 +96,6 @@ export const ButtonOne = styled.input`
 
     font-weight: 400;
     font-size: 1.25em;
-    line-height: 100%;
 `
 
 export const ButtonTwo = styled.input`
@@ -98,7 +107,6 @@ export const ButtonTwo = styled.input`
     border: none;
     cursor: pointer;
 
-    font-weight: 400;
+    font-weight: 600;
     font-size: 1.25em;
-    line-height: 100%;
 `
