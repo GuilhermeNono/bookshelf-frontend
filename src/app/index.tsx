@@ -5,17 +5,18 @@ import About from "../pages/About";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
 
-
 function App() {
   return (
     <div className="App">
-        <BrowserRouter>
-          <Routes>
-            <Route element={<Home />} path={"/"} />
-            <Route element={<About />} path={"/about"} />
-            <Route element={<Login />} path={"/Login"} />
-          </Routes>
-        </BrowserRouter>
+      <BrowserRouter>
+        <Header />
+        <Routes>
+          <Route element={<Home />} path={"/"} />
+          <Route element={<About />} path={"/about"} />
+          <Route element={<Login />} path={"/Login"} />
+        </Routes>
+        <Footer />
+      </BrowserRouter>
     </div>
   );
 }

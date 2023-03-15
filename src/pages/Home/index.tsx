@@ -1,15 +1,4 @@
-// import Footer from '../../components/Footer'
-// import Header from '../../components/Header'
 import {
-  Header,
-  LinkLogo,
-  Logo,
-  NavBar,
-  NavBarLinks,
-  HeaderIcons,
-  HeaderIcon,
-  HeaderLink,
-  MenuIcon,
   HomeSec,
   HomeText,
   Latter,
@@ -38,51 +27,11 @@ import {
   AboutSec,
   AboutImage,
   AboutText,
-  ContactSec,
-  MainContact,
-  ContactContent,
 } from "./styles";
 
 const Home = () => {
   return (
     <>
-      <Header>
-        <LinkLogo href="#" className="logo">
-          <Logo src="img/logo.svg" />
-        </LinkLogo>
-
-        <NavBar>
-          <NavBarLinks>
-            <a href="#home">Home</a>
-          </NavBarLinks>
-          <NavBarLinks>
-            <a href="#categories">Categories</a>
-          </NavBarLinks>
-          <NavBarLinks>
-            <a href="#courses">Courses</a>
-          </NavBarLinks>
-          <NavBarLinks>
-            <a href="#about">About Us</a>
-          </NavBarLinks>
-          <NavBarLinks>
-            <a href="#contact">Contact</a>
-          </NavBarLinks>
-        </NavBar>
-
-        <HeaderIcons>
-          <HeaderLink href="#">
-            <HeaderIcon className="bx bx-user"></HeaderIcon>
-          </HeaderLink>
-          <HeaderLink href="#">
-            <HeaderIcon className="bx bx-heart"></HeaderIcon>
-          </HeaderLink>
-          <HeaderLink href="#">
-            <HeaderIcon className="bx bx-cart"></HeaderIcon>
-          </HeaderLink>
-          <MenuIcon className="bx bx-menu"></MenuIcon>
-        </HeaderIcons>
-      </Header>
-
       {/*start home section*/}
       <HomeSec id="home">
         <HomeText className="home-text">
@@ -98,7 +47,7 @@ const Home = () => {
         </HomeText>
 
         <HomeImage>
-          <img src="img/home.png" />
+          <img src="assets/images/svg/home.svg" />
         </HomeImage>
       </HomeSec>
 
@@ -106,41 +55,41 @@ const Home = () => {
       <ContainerSec>
         <ContainerBox>
           <ContainerImage>
-            <img src="img/con1.svg" />
+            <img src="assets/images/svg/InterfaceAmigavel.svg" />
           </ContainerImage>
           <ContainerText>
-            <h4>5K</h4>
-            <p>Online Courses</p>
+            <h4>Interface amigavel</h4>
+            <p>Simples de aprender</p>
           </ContainerText>
         </ContainerBox>
 
         <ContainerBox>
           <ContainerImage>
-            <img src="img/con2.svg" />
+            <img src="assets/images/svg/Security.svg" />
           </ContainerImage>
           <ContainerText>
-            <h4>5K</h4>
-            <p>Online Courses</p>
+            <h4>Seguro</h4>
+            <p>Segurança de dados</p>
           </ContainerText>
         </ContainerBox>
 
         <ContainerBox>
           <ContainerImage>
-            <img src="img/con3.svg" />
+            <img src="assets/images/svg/Gear.svg" />
           </ContainerImage>
           <ContainerText>
-            <h4>5K</h4>
-            <p>Online Courses</p>
+            <h4>Gerenciavel</h4>
+            <p>Gerenciamento completo</p>
           </ContainerText>
         </ContainerBox>
 
         <ContainerBox>
           <ContainerImage>
-            <img src="img/con4.svg" />
+            <img src="assets/images/svg/Handshake.svg" />
           </ContainerImage>
           <ContainerText>
-            <h4>5K</h4>
-            <p>Online Courses</p>
+            <h4>Para todos</h4>
+            <p>Disponivel para todos</p>
           </ContainerText>
         </ContainerBox>
       </ContainerSec>
@@ -148,38 +97,38 @@ const Home = () => {
       {/*start categories section*/}
       <Categories id="categories">
         <CenterText>
-          <h5>CATEGORIES</h5>
-          <h2>Popular Categories</h2>
+          <h5>Serviços</h5>
+          <h2>Principais Serviços</h2>
         </CenterText>
 
         <CategoriesContent>
           <Box>
-            <img src="img/cate1.png" />
-            <h3>Angular Development</h3>
-            <p>5 Courses</p>
+            <img src="assets/images/svg/cate1.svg" />
+            <h3>Controle de emprestimos</h3>
+            <p>Tenha total controle nos emprestimos de livros.</p>
           </Box>
 
           <Box>
-            <img src="img/cate2.png" />
-            <h3>Angular Development</h3>
-            <p>5 Courses</p>
+            <img src="assets/images/svg/cate2.svg" />
+            <h3>Acervo Digital</h3>
+            <p>Adicione, remova e Controle seu acervo de maneira digital.</p>
           </Box>
 
           <Box>
-            <img src="img/cate3.png" />
-            <h3>Angular Development</h3>
-            <p>5 Courses</p>
+            <img src="assets/images/svg/cate3.svg" />
+            <h3>Gerenciamento de usuarios</h3>
+            <p>Cadastre e gerencie todos os seus leitores.</p>
           </Box>
 
           <Box>
-            <img src="img/cate4.png" />
-            <h3>Angular Development</h3>
-            <p>5 Courses</p>
+            <img src="assets/images/svg/cate4.svg" />
+            <h3>Relatorio final</h3>
+            <p>Possibilidade de emitir um relatorio mensal da biblioteca.</p>
           </Box>
         </CategoriesContent>
 
         <MainBtn>
-          <Btn href="#">All Categories</Btn>
+          <Btn href="#">Contratar serviços</Btn>
         </MainBtn>
       </Categories>
 
@@ -435,79 +384,6 @@ const Home = () => {
           <Btn href="#">Read More</Btn>
         </AboutText>
       </AboutSec>
-
-      {/*start contact section*/}
-      <ContactSec id="contact">
-        <MainContact>
-          <ContactContent>
-            <img src="img/logo.svg" />
-            <li>
-              <a href="#">Facebook</a>
-            </li>
-            <li>
-              <a href="#">Instagram</a>
-            </li>
-            <li>
-              <a href="#">Twitter</a>
-            </li>
-          </ContactContent>
-
-          <ContactContent>
-            <li>
-              <a href="#home">Home</a>
-            </li>
-            <li>
-              <a href="#categories">Categories</a>
-            </li>
-            <li>
-              <a href="#courses">Courses</a>
-            </li>
-            <li>
-              <a href="#about">About Us</a>
-            </li>
-            <li>
-              <a href="#contact">Contact</a>
-            </li>
-          </ContactContent>
-
-          <ContactContent>
-            <li>
-              <a href="#">Profile</a>
-            </li>
-            <li>
-              <a href="#">Login</a>
-            </li>
-            <li>
-              <a href="#">Register</a>
-            </li>
-            <li>
-              <a href="#">Instructor</a>
-            </li>
-            <li>
-              <a href="#">Dashboard</a>
-            </li>
-          </ContactContent>
-
-          <ContactContent>
-            <li>
-              <a href="#">
-                San Francisco,
-                <br /> California, CA 94108{" "}
-              </a>
-            </li>
-            <li>
-              <a href="#">dreamslms@example.com</a>
-            </li>
-            <li>
-              <a href="#">01646895741</a>
-            </li>
-          </ContactContent>
-        </MainContact>
-      </ContactSec>
-
-      <div className="last-text">
-        <p>© 2022 Tahmid Ahmed. All rights reserved.</p>
-      </div>
     </>
   );
 };

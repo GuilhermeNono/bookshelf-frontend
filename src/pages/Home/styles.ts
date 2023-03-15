@@ -1,120 +1,10 @@
 import styled from "styled-components";
 
-export const Header = styled.header`
-  position: fixed;
-  width: 100%;
-  top: 0;
-  right: 0;
-  z-index: 1000;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: transparent;
-  padding: 23px 13%;
-  transition: all 0.4s ease;
-
-  @media (max-width: 1410px) {
-    padding: 10px 3%;
-    transition: 0.2s;
-
-    &.sticky {
-      padding: 12px 3%;
-      transition: 0.2s;
-    }
-
-    section {
-      padding: 70px 3%;
-      transition: 0.2s;
-    }
-  }
-`;
-
-export const LinkLogo = styled.a``;
-
-export const Logo = styled.img`
-  height: auto;
-  width: 160px;
-  max-width: 100%;
-`;
-
-export const NavBar = styled.ul`
-  display: flex;
-  & a {
-    color: var(--text-color);
-    font-weight: 600;
-    font-size: var(--p-font);
-    padding: 10px 22px;
-    transition: all 0.4s ease;
-  }
-  & a:hover {
-    color: var(--main-color);
-  }
-
-  @media (max-width: 1025px) {
-    position: absolute;
-    top: 100%;
-    right: -100%;
-    width: 300px;
-    height: 110vh;
-    background: var(--main-color);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 170px 30px;
-    transition: all 0.4s ease;
-
-    a {
-      display: block;
-      margin: 1.3rem 0;
-      color: var(--bg-color);
-    }
-    a:hover {
-      color: var(--bg-color);
-      transform: translateY(-5px);
-    }
-    &.open {
-      right: 0;
-    }
-  }
-`;
-
-export const NavBarLinks = styled.li``;
-
-export const NavLink = styled.a``;
-
-export const HeaderIcons = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-export const HeaderLink = styled.a``;
-
-export const HeaderIcon = styled.i`
-  margin-left: 10px;
-  font-size: 24px;
-  color: var(--text-color);
-  transition: all 0.4s ease;
-  margin-right: 15px;
-
-  &:hover {
-    transform: scale(1.2);
-    color: var(--main-color);
-  }
-`;
-
-export const MenuIcon = styled.div`
-  font-size: 34px;
-  color: var(--text-color);
-  z-index: 10001;
-  cursor: pointer;
-  display: none;
-`;
-
 export const HomeSec = styled.section`
   position: relative;
   height: 100vh;
   width: 100%;
-  background: url(../img/background.png);
+  background: var(--bg-color);
   background-size: cover;
   background-position: center;
   display: grid;
@@ -148,14 +38,14 @@ export const HomeText = styled.div`
   }
 
   h6 {
-    color: var(--main-color);
+    color: var(--text-subtitle);
     font-size: 18px;
     font-weight: 600;
     letter-spacing: 2px;
   }
 
   p {
-    color: var(--second-color);
+    color: var(--text-subtitle);
     font-size: var(--p-font);
     font-weight: 500;
     margin-bottom: 48px;
@@ -187,7 +77,7 @@ export const LatterForm = styled.form`
     border: none;
     outline: none;
     background: var(--main-color);
-    color: var(--bg-color);
+    color: var(--text-subtitle);
     padding: 16px 40px;
     border-radius: 30px;
     cursor: pointer;
@@ -213,6 +103,9 @@ export const HomeImage = styled.div`
 export const ContainerSec = styled.section`
   padding: 70px 13%;
   display: grid;
+  background: var(--bg-second-color);
+  background-size: cover;
+  background-position: center;
   grid-template-columns: repeat(auto-fit, minmax(300px, auto));
   gap: 1.5rem;
   align-items: center;
@@ -261,7 +154,7 @@ export const CenterText = styled.div`
   text-align: center;
 
   h5 {
-    color: var(--main-color);
+    color: var(--text-subtitle);
     font-size: 16px;
     font-weight: 600;
     letter-spacing: 1px;
@@ -325,9 +218,9 @@ export const Btn = styled.a`
   display: inline-block;
   padding: 16px 30px;
   font-size: var(--p-font);
-  font-weight: 700;
+  font-weight: 500;
   background: var(--main-color);
-  color: var(--bg-color);
+  color: var(--text-color);
   border-radius: 30px;
   transition: all 0.4s ease;
 
@@ -337,7 +230,7 @@ export const Btn = styled.a`
 `;
 
 export const CourseSec = styled.section`
-  background: url(../img/coursebg.png);
+  background: var(--bg-second-color);
   background-size: cover;
   background-position: center;
 `;
@@ -436,7 +329,7 @@ export const CtaContent = styled.div`
 export const CtaImage = styled.div``;
 
 export const AboutSec = styled.section`
-  background: url(../img/aboutbg.png);
+  background: var(--bg-second-color);
   background-size: cover;
   background-position: center;
   display: grid;
@@ -476,55 +369,5 @@ export const AboutText = styled.div`
   h5 {
     font-size: 20px;
     margin-bottom: 40px;
-  }
-`;
-
-export const ContactSec = styled.section`
-  padding: 60px 13%;
-  background: var(--bg-color);
-
-  @media (max-width: 1410px) {
-    padding: 60px 3%;
-    transition: 0.2s;
-  }
-`;
-
-export const MainContact = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, auto));
-  gap: 2rem;
-`;
-
-export const ContactContent = styled.div`
-  img {
-    height: auto;
-    width: 160px;
-    max-width: 100%;
-    margin-bottom: 30px;
-  }
-  li {
-    margin-bottom: 18px;
-  }
-  li a {
-    display: block;
-    color: var(--text-color);
-    font-weight: 500;
-    font-size: 15px;
-    transition: all 0.4s ease;
-  }
-  li a:hover {
-    transform: translateX(10px);
-    color: var(--main-color);
-  }
-`;
-
-export const LastText = styled.div`
-  p {
-    text-align: center;
-    padding: 18px;
-    color: var(--second-color);
-    font-size: 15px;
-    font-weight: 500;
-    letter-spacing: 1px;
   }
 `;
