@@ -47,16 +47,13 @@ const Header = () => {
             <a href="/#home">Home</a>
           </NavBarLinks>
           <NavBarLinks>
-            <a href="/#categories">Categories</a>
+            <a href="/#categories">Serviços</a>
           </NavBarLinks>
           <NavBarLinks>
-            <a href="/#courses">Courses</a>
+            <a href="/#about">Sobre Nós</a>
           </NavBarLinks>
           <NavBarLinks>
-            <a href="/#about">About Us</a>
-          </NavBarLinks>
-          <NavBarLinks>
-            <a href="/#contact">Contact</a>
+            <a href="/#contact">Contato</a>
           </NavBarLinks>
         </NavBar>
 

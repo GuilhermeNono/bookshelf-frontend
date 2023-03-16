@@ -28,16 +28,13 @@ const Footer = () => {
               <a href="#home">Home</a>
             </li>
             <li>
-              <a href="#categories">Categories</a>
+              <a href="#categories">Serviços</a>
             </li>
             <li>
-              <a href="#courses">Courses</a>
+              <a href="#about">Sobre nós</a>
             </li>
             <li>
-              <a href="#about">About Us</a>
-            </li>
-            <li>
-              <a href="#contact">Contact</a>
+              <a href="#contact">Contato</a>
             </li>
           </ContactContent>
 
@@ -52,9 +49,6 @@ const Footer = () => {
               <a href="#">Register</a>
             </li>
             <li>
-              <a href="#">Instructor</a>
-            </li>
-            <li>
               <a href="#">Dashboard</a>
             </li>
           </ContactContent>
@@ -62,12 +56,12 @@ const Footer = () => {
           <ContactContent>
             <li>
               <a href="#">
-                San Francisco,
-                <br /> California, CA 94108{" "}
+                São paulo, BR,
+                <br /> Barra bonita, Jorge mauricio, 402,{" "}
               </a>
             </li>
             <li>
-              <a href="#">dreamslms@example.com</a>
+              <a href="#">Bookshelf@support.com</a>
             </li>
             <li>
               <a href="#">01646895741</a>

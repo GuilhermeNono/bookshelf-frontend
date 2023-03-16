@@ -45,12 +45,14 @@ export const Logo = styled.img`
 
 export const NavBar = styled.ul`
   display: flex;
+  margin: 0;
   & a {
     color: var(--text-color);
+    text-align: center;
     font-weight: 400;
     text-decoration: none;
     font-size: var(--p-font);
-    padding: 10px 22px;
+    padding: 0 22px;
     transition: all 0.4s ease;
   }
   & a:hover {
@@ -65,6 +67,7 @@ export const NavBar = styled.ul`
     height: 110vh;
     background: var(--main-color);
     display: flex;
+    justify-content: center;
     flex-direction: column;
     align-items: center;
     padding: 170px 30px;
