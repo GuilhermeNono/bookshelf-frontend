@@ -5,6 +5,8 @@ export const Container = styled.div`
     background-attachment: fixed;
     background-size: cover;
     background-repeat: no-repeat;
+    width: 100vw;
+    height: 100vh;
 `
 
 export const H1Chamativo = styled.h1`
@@ -109,4 +111,11 @@ export const ButtonTwo = styled.input`
 
     font-weight: 600;
     font-size: 1.25em;
+`
+
+export const Marker = styled.svg`
+    background-image: url("/assets/images/svg/Checking.svg");
+    background-repeat: no-repeat;
+    width: 24px;
+    height: 24px;
 `
