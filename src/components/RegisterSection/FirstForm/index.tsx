@@ -22,15 +22,13 @@ const FirstForm = () => {
   let [email, setEmail] = useState("");
   let [password, setPassword] = useState("");
   let [confirmPassword, setConfirmPassword] = useState("");
-  let [fisrtFormComplete, setFirstFormComplete] = useState(false);
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
 
-    setFirstFormComplete(!fisrtFormComplete);
+
   };
 
-  console.log(fisrtFormComplete);
 
   return (
     <Box>
