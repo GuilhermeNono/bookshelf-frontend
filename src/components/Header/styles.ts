@@ -48,6 +48,7 @@ export const NavBar = styled.ul`
   & a {
     color: var(--text-color);
     font-weight: 400;
+    text-decoration: none;
     font-size: var(--p-font);
     padding: 10px 22px;
     transition: all 0.4s ease;

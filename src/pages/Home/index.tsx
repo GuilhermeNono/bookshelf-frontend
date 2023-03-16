@@ -1,3 +1,7 @@
+import { Button, Form, FormGroup, Input } from "reactstrap";
+import CategoriesSection from "./Components/CategoriesSec";
+import ContainerSection from "./Components/ContainerSec";
+import HomeSection from "./Components/HomeSec";
 import {
   HomeSec,
   HomeText,
@@ -27,309 +31,60 @@ import {
   AboutSec,
   AboutImage,
   AboutText,
+  FormContact,
+  ContainerContact,
+  IconContact,
 } from "./styles";
 
 const Home = () => {
   return (
     <>
       {/*start home section*/}
-      <HomeSec id="home">
-        <HomeText className="home-text">
-          <h6>Best online learning platform</h6>
-          <h1>Accessible Online Courses For All</h1>
-          <p>Own your future learning new skills online</p>
-          <Latter>
-            <LatterForm>
-              <input type="email" placeholder="Write Your Email" required />
-              <input type="submit" value="Let's Start" required />
-            </LatterForm>
-          </Latter>
-        </HomeText>
 
-        <HomeImage>
-          <img src="assets/images/svg/home.svg" />
-        </HomeImage>
-      </HomeSec>
+      <HomeSection />
 
       {/*start container section*/}
-      <ContainerSec>
-        <ContainerBox>
-          <ContainerImage>
-            <img src="assets/images/svg/InterfaceAmigavel.svg" />
-          </ContainerImage>
-          <ContainerText>
-            <h4>Interface amigavel</h4>
-            <p>Simples de aprender</p>
-          </ContainerText>
-        </ContainerBox>
 
-        <ContainerBox>
-          <ContainerImage>
-            <img src="assets/images/svg/Security.svg" />
-          </ContainerImage>
-          <ContainerText>
-            <h4>Seguro</h4>
-            <p>Segurança de dados</p>
-          </ContainerText>
-        </ContainerBox>
-
-        <ContainerBox>
-          <ContainerImage>
-            <img src="assets/images/svg/Gear.svg" />
-          </ContainerImage>
-          <ContainerText>
-            <h4>Gerenciavel</h4>
-            <p>Gerenciamento completo</p>
-          </ContainerText>
-        </ContainerBox>
-
-        <ContainerBox>
-          <ContainerImage>
-            <img src="assets/images/svg/Handshake.svg" />
-          </ContainerImage>
-          <ContainerText>
-            <h4>Para todos</h4>
-            <p>Disponivel para todos</p>
-          </ContainerText>
-        </ContainerBox>
-      </ContainerSec>
+      <ContainerSection />
 
       {/*start categories section*/}
-      <Categories id="categories">
-        <CenterText>
-          <h5>Serviços</h5>
-          <h2>Principais Serviços</h2>
-        </CenterText>
 
-        <CategoriesContent>
-          <Box>
-            <img src="assets/images/svg/cate1.svg" />
-            <h3>Controle de emprestimos</h3>
-            <p>Tenha total controle nos emprestimos de livros.</p>
-          </Box>
-
-          <Box>
-            <img src="assets/images/svg/cate2.svg" />
-            <h3>Acervo Digital</h3>
-            <p>Adicione, remova e Controle seu acervo de maneira digital.</p>
-          </Box>
-
-          <Box>
-            <img src="assets/images/svg/cate3.svg" />
-            <h3>Gerenciamento de usuarios</h3>
-            <p>Cadastre e gerencie todos os seus leitores.</p>
-          </Box>
-
-          <Box>
-            <img src="assets/images/svg/cate4.svg" />
-            <h3>Relatorio final</h3>
-            <p>Possibilidade de emitir um relatorio mensal da biblioteca.</p>
-          </Box>
-        </CategoriesContent>
-
-        <MainBtn>
-          <Btn href="#">Contratar serviços</Btn>
-        </MainBtn>
-      </Categories>
+      <CategoriesSection />
 
       {/*start course section*/}
+      
       <CourseSec id="courses">
         <CourseText>
-          <h5>COURSES</h5>
-          <h2>Explore Popular Courses</h2>
+          <h5>Sobre nós</h5>
+          <h2>Saiba um pouco mais sobre a Bookshelf</h2>
         </CourseText>
 
         <CourseContent>
-          <Row>
-            <img src="img/course1.jpg" />
-            <CourseText>
-              <h5>$20.00</h5>
-              <h3>The Complete HTML CSS JS Course 2022</h3>
-              <h6>05 hours 15 minutes</h6>
-              <Rating>
-                <Star>
-                  <a href="#">
-                    <i className="bx bxs-star"></i>
-                  </a>
-                  <a href="#">
-                    <i className="bx bxs-star"></i>
-                  </a>
-                  <a href="#">
-                    <i className="bx bxs-star"></i>
-                  </a>
-                  <a href="#">
-                    <i className="bx bxs-star"></i>
-                  </a>
-                  <a href="#">
-                    <i className="bx bxs-star"></i>
-                  </a>
-                </Star>
-                <Review>
-                  <p>5 Reviews</p>
-                </Review>
-              </Rating>
-            </CourseText>
-          </Row>
+          <AboutImage>
+            <img src="img/about.png" />
+          </AboutImage>
 
-          <Row>
-            <img src="img/course2.jpg" />
-            <CourseText>
-              <h5>$20.00</h5>
-              <h3>The Complete HTML CSS JS Course 2022</h3>
-              <h6>05 hours 15 minutes</h6>
-              <Rating>
-                <Star>
-                  <a href="#">
-                    <i className="bx bxs-star"></i>
-                  </a>
-                  <a href="#">
-                    <i className="bx bxs-star"></i>
-                  </a>
-                  <a href="#">
-                    <i className="bx bxs-star"></i>
-                  </a>
-                  <a href="#">
-                    <i className="bx bxs-star"></i>
-                  </a>
-                  <a href="#">
-                    <i className="bx bxs-star"></i>
-                  </a>
-                </Star>
-                <Review>
-                  <p>{"5 Reviews"}</p>
-                </Review>
-              </Rating>
-            </CourseText>
-          </Row>
-
-          <Row>
-            <img src="img/course3.jpg" />
-            <CourseText>
-              <h5>$20.00</h5>
-              <h3>The Complete HTML CSS JS Course 2022</h3>
-              <h6>05 hours 15 minutes</h6>
-              <Rating>
-                <Star>
-                  <a href="#">
-                    <i className="bx bxs-star"></i>
-                  </a>
-                  <a href="#">
-                    <i className="bx bxs-star"></i>
-                  </a>
-                  <a href="#">
-                    <i className="bx bxs-star"></i>
-                  </a>
-                  <a href="#">
-                    <i className="bx bxs-star"></i>
-                  </a>
-                  <a href="#">
-                    <i className="bx bxs-star"></i>
-                  </a>
-                </Star>
-                <Review>
-                  <p>{"5 Reviews"}</p>
-                </Review>
-              </Rating>
-            </CourseText>
-          </Row>
-
-          <Row>
-            <img src="img/course4.jpg" />
-            <CourseText>
-              <h5>$20.00</h5>
-              <h3>The Complete HTML CSS JS Course 2022</h3>
-              <h6>05 hours 15 minutes</h6>
-              <Rating>
-                <Star>
-                  <a href="#">
-                    <i className="bx bxs-star"></i>
-                  </a>
-                  <a href="#">
-                    <i className="bx bxs-star"></i>
-                  </a>
-                  <a href="#">
-                    <i className="bx bxs-star"></i>
-                  </a>
-                  <a href="#">
-                    <i className="bx bxs-star"></i>
-                  </a>
-                  <a href="#">
-                    <i className="bx bxs-star"></i>
-                  </a>
-                </Star>
-                <Review>
-                  <p>{"5 Reviews"}</p>
-                </Review>
-              </Rating>
-            </CourseText>
-          </Row>
-
-          <Row>
-            <img src="img/course5.jpg" />
-            <CourseText>
-              <h5>$20.00</h5>
-              <h3>The Complete HTML CSS JS Course 2022</h3>
-              <h6>05 hours 15 minutes</h6>
-              <Rating>
-                <Star>
-                  <a href="#">
-                    <i className="bx bxs-star"></i>
-                  </a>
-                  <a href="#">
-                    <i className="bx bxs-star"></i>
-                  </a>
-                  <a href="#">
-                    <i className="bx bxs-star"></i>
-                  </a>
-                  <a href="#">
-                    <i className="bx bxs-star"></i>
-                  </a>
-                  <a href="#">
-                    <i className="bx bxs-star"></i>
-                  </a>
-                </Star>
-                <Review>
-                  <p>{"5 Reviews"}</p>
-                </Review>
-              </Rating>
-            </CourseText>
-          </Row>
-
-          <Row>
-            <img src="img/course1.jpg" />
-            <CourseText>
-              <h5>$20.00</h5>
-              <h3>The Complete HTML CSS JS Course 2022</h3>
-              <h6>05 hours 15 minutes</h6>
-              <Rating>
-                <Star>
-                  <a href="#">
-                    <i className="bx bxs-star"></i>
-                  </a>
-                  <a href="#">
-                    <i className="bx bxs-star"></i>
-                  </a>
-                  <a href="#">
-                    <i className="bx bxs-star"></i>
-                  </a>
-                  <a href="#">
-                    <i className="bx bxs-star"></i>
-                  </a>
-                  <a href="#">
-                    <i className="bx bxs-star"></i>
-                  </a>
-                </Star>
-                <Review>
-                  <p>{"5 Reviews"}</p>
-                </Review>
-              </Rating>
-            </CourseText>
-          </Row>
+          <AboutText>
+            <h2>Oque é a Bookshelf</h2>
+            <p>
+              Somos uma Startup com o foco de trazer uma melhor experiencia para
+              usuarios que frequentam bibliotecas. Além disso, o sistema foi
+              desenvolvido e pensado para que tenha uma curva de aprendizado
+              baixa para qualquer pessoa de qualquer idade. Organização é muito
+              importante quando falamos de uma biblioteca, por isso a BookShelf
+              veio para resolver esse problema e trazer a oportunidade para
+              qualquer biblioteca, seja ela, de pequeno ou medio porte com um
+              preço acessivel.
+            </p>
+            <h4>Prezamos pela qualidade</h4>
+            <h5>Sempre trazendo novidades</h5>
+            <Btn href="/register">Crie sua conta</Btn>
+          </AboutText>
         </CourseContent>
 
-        <MainBtn>
+        {/* <MainBtn>
           <Btn href="#">Buy Now</Btn>
-        </MainBtn>
+        </MainBtn> */}
       </CourseSec>
 
       {/*start cta section*/}
@@ -368,21 +123,58 @@ const Home = () => {
 
       {/*start about section*/}
       <AboutSec id="about">
-        <AboutImage>
-          <img src="img/about.png" />
-        </AboutImage>
-
         <AboutText>
-          <h2>Want to share your knowledge? Join us a Mentor</h2>
+          <h2>Ficou com alguma duvida?</h2>
           <p>
-            High-definition video is video of higher resolution and quality than
-            standard-definition. While there is no standardized meaning for
-            high-definition, generally any video.
+            Caso tenha alguma duvida, por favor, nos contate pelos canais
+            abaixo, ou preencha o formulario ao lado e retornaremos o mais breve
+            possivel.
           </p>
-          <h4>Best Courses</h4>
-          <h5>Top rated Instructors</h5>
-          <Btn href="#">Read More</Btn>
+          <h4>Entre em contato usando os canais abaixo</h4>
+          <h5>ou Complete o formulario ao lado</h5>
+
+          <ContainerContact>
+            <IconContact>
+              <img src="/assets/images/svg/phone.svg" alt="phone"/>
+              <h4>Phone</h4>
+            </IconContact>
+            <h5>+55 14 99999-9999</h5>
+          </ContainerContact>
+
+          <ContainerContact>
+            <IconContact>
+              <img src="/assets/images/svg/email.svg" alt="phone"/>
+              <h4>E-mail</h4>
+            </IconContact>
+            <h5>Bookshelf@support.com</h5>
+          </ContainerContact>
+
+          <ContainerContact>
+            <IconContact>
+              <img src="/assets/images/svg/location.svg" alt="phone"/>
+              <h4>Location</h4>
+            </IconContact>
+            <h5>Blablabla 402, Jorge mauricio, Barra bonita, BR</h5>
+          </ContainerContact>
         </AboutText>
+
+        <Form>
+          <FormGroup className="mb-5">
+            <Input placeholder="Seu nome" />
+          </FormGroup>
+          <FormGroup className="mb-5">
+            <Input placeholder="Endereço de e-mail" />
+          </FormGroup>
+          <FormGroup className="mb-5">
+            <Input placeholder="Título" />
+          </FormGroup>
+          <FormGroup className="mb-5">
+            <Input type="textarea" placeholder="Menssagem" />
+          </FormGroup>
+          <Button type="submit" color="primary">
+            Enviar
+          </Button>
+        </Form>
       </AboutSec>
     </>
   );

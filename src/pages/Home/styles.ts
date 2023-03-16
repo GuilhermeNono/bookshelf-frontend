@@ -371,3 +371,32 @@ export const AboutText = styled.div`
     margin-bottom: 40px;
   }
 `;
+
+export const FormContact = styled.form`
+
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+
+  button{
+    width: 50%;
+  }
+
+`;
+
+export const ContainerContact = styled.div`
+  display: flex;
+  flex-direction: column;
+  h5{
+    color: var(--bg-color);
+  }
+`;
+
+export const IconContact = styled.div`
+  display: flex;
+  gap: 20px;
+  h4{
+    text-align: center;
+    margin: 0;
+  }
+`;
