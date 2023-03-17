@@ -13,7 +13,14 @@ import {
   ButtonOne,
   ButtonTwo,
   Marker,
+  Td,
+  Tr,
+  Table,
+  ThLeft,
+  ThTop,
+  Thv,
 } from "./styles";
+import "./teste.css";
 
 const Pricing = () => {
   return (
@@ -67,55 +74,79 @@ const Pricing = () => {
           <ButtonTwo type="button" value="Ler mais" />
         </CardEssentials>
       </Cards>
-      <h2 className="display-6 text-center mb-4">Compare plans</h2>
 
-<div className="table-responsive">
-  <table className="table text-center">
-    <thead>
-      <tr>
-        <th style={{width: "34%"}}>Vantagens</th>
-        <th style={{width: "22%"}}>Plano Lite</th>
-        <th style={{width: "22%"}}>Plano Essentials</th>
-        <th style={{width: "22%"}}>Plano Pro</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <th className="text-start">Sistema de emprestimo online</th>
-        <td><Marker /></td>
-        <td><Marker /></td>
-        <td><Marker /></td>
-      </tr>
-      <tr>
-        <th className="text-start">Controle dos usuarios</th>
-        <td></td>
-        <td><Marker /></td>
-        <td><Marker /></td>
-      </tr>
-    </tbody>
-
-    <tbody>
-      <tr>
-        <th className="text-start">Relatorios mensais</th>
-        <td><Marker /></td>
-        <td><Marker /></td>
-        <td><Marker /></td>
-      </tr>
-      <tr>
-        <th className="text-start">Acesso ao acervo digital</th>
-        <td></td>
-        <td><Marker /></td>
-        <td><Marker /></td>
-      </tr>
-      <tr>
-        <th className="text-start">Acesso a 3 telas para a dashboard</th>
-        <td></td>
-        <td><Marker /></td>
-        <td><Marker /></td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+      <div className="table-responsive">
+        <Table>
+          <thead>
+            <Tr>
+              <Thv style={{ width: "34%" }}>Vantagens</Thv>
+              <ThTop style={{ width: "22%" }}>Plano Lite</ThTop>
+              <ThTop style={{ width: "22%" }}>Plano Essentials</ThTop>
+              <ThTop style={{ width: "22%" }}>Plano Pro</ThTop>
+            </Tr>
+          </thead>
+          <tbody>
+            <Tr>
+              <ThLeft>
+                Sistema de emprestimo online
+              </ThLeft>
+              <Td>
+                <Marker />
+              </Td>
+              <Td>
+                <Marker />
+              </Td>
+              <Td>
+                <Marker />
+              </Td>
+            </Tr>
+            <Tr>
+              <ThLeft>Controle dos usuarios</ThLeft>
+              <Td>
+                <Marker />
+              </Td>
+              <Td>
+                <Marker />
+              </Td>
+              <Td>
+                <Marker />
+              </Td>
+            </Tr>
+            <Tr>
+              <ThLeft>Relatorios mensais</ThLeft>
+              <Td>
+                <Marker />
+              </Td>
+              <Td>
+                <Marker />
+              </Td>
+              <Td>
+                <Marker />
+              </Td>
+            </Tr>
+            <Tr>
+              <ThLeft>Acesso ao acervo digital</ThLeft>
+              <Td></Td>
+              <Td>
+                <Marker />
+              </Td>
+              <Td>
+                <Marker />
+              </Td>
+            </Tr>
+            <Tr>
+              <ThLeft>
+                Acesso a 3 telas para a dashboard
+              </ThLeft>
+              <Td></Td>
+              <Td></Td>
+              <Td>
+                <Marker />
+              </Td>
+            </Tr>
+          </tbody>
+        </Table>
+      </div>
     </Container>
   );
 };
