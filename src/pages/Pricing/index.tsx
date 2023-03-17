@@ -10,15 +10,20 @@ import {
   Linha,
   LiPrice,
   LiTitle,
+  LiLite,
+  LiPro,
+  LiEssentials,
+  LiTipo,
   ButtonOne,
   ButtonTwo,
   Marker,
   Td,
-  Tr,
   Table,
   ThLeft,
   ThTop,
   Thv,
+  Row,
+  TextPopular,
 } from "./styles";
 import "./teste.css";
 
@@ -33,8 +38,8 @@ const Pricing = () => {
       <Cards>
         <CardLite>
           <List>
-            <Linha>Plano Lite</Linha>
-            <Linha>Plano Simples</Linha>
+              <LiLite>Plano Lite</LiLite>
+            <LiTipo>Plano Simples</LiTipo>
             <LiPrice>R$ 79</LiPrice>
             <ButtonOne type="button" value="Contratar pacote" />
             <LiTitle>Vantagens do Plano Lite:</LiTitle>
@@ -46,8 +51,11 @@ const Pricing = () => {
         </CardLite>
         <CardPro>
           <List>
-            <Linha>Plano Pro</Linha>
-            <Linha>Plano completo</Linha>
+            <Row>
+              <LiPro>Plano Pro</LiPro>
+              <TextPopular>Popular</TextPopular>
+            </Row>
+            <LiTipo>Plano completo</LiTipo>
             <LiPrice>R$ 159</LiPrice>
             <ButtonOne type="button" value="Contratar pacote" />
             <LiTitle>Vantagens do Plano Pro:</LiTitle>
@@ -61,8 +69,8 @@ const Pricing = () => {
         </CardPro>
         <CardEssentials>
           <List>
-            <Linha>Plano Essentials</Linha>
-            <Linha>Plano padrão</Linha>
+            <LiEssentials>Plano Essentials</LiEssentials>
+            <LiTipo>Plano padrão</LiTipo>
             <LiPrice>R$ 109</LiPrice>
             <ButtonOne type="button" value="Contratar pacote" />
             <LiTitle>Vantagens do Plano Essentials:</LiTitle>
@@ -78,15 +86,15 @@ const Pricing = () => {
       <div className="table-responsive">
         <Table>
           <thead>
-            <Tr>
+            <tr>
               <Thv style={{ width: "34%" }}>Vantagens</Thv>
               <ThTop style={{ width: "22%" }}>Plano Lite</ThTop>
               <ThTop style={{ width: "22%" }}>Plano Essentials</ThTop>
               <ThTop style={{ width: "22%" }}>Plano Pro</ThTop>
-            </Tr>
+            </tr>
           </thead>
           <tbody>
-            <Tr>
+            <tr>
               <ThLeft>
                 Sistema de emprestimo online
               </ThLeft>
@@ -99,8 +107,8 @@ const Pricing = () => {
               <Td>
                 <Marker />
               </Td>
-            </Tr>
-            <Tr>
+            </tr>
+            <tr>
               <ThLeft>Controle dos usuarios</ThLeft>
               <Td>
                 <Marker />
@@ -111,8 +119,8 @@ const Pricing = () => {
               <Td>
                 <Marker />
               </Td>
-            </Tr>
-            <Tr>
+            </tr>
+            <tr>
               <ThLeft>Relatorios mensais</ThLeft>
               <Td>
                 <Marker />
@@ -123,8 +131,8 @@ const Pricing = () => {
               <Td>
                 <Marker />
               </Td>
-            </Tr>
-            <Tr>
+            </tr>
+            <tr>
               <ThLeft>Acesso ao acervo digital</ThLeft>
               <Td></Td>
               <Td>
@@ -133,8 +141,8 @@ const Pricing = () => {
               <Td>
                 <Marker />
               </Td>
-            </Tr>
-            <Tr>
+            </tr>
+            <tr>
               <ThLeft>
                 Acesso a 3 telas para a dashboard
               </ThLeft>
@@ -143,7 +151,7 @@ const Pricing = () => {
               <Td>
                 <Marker />
               </Td>
-            </Tr>
+            </tr>
           </tbody>
         </Table>
       </div>

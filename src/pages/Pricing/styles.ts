@@ -48,7 +48,7 @@ export const CardPro = styled.div`
     border-radius: 0.3rem;
     z-index: 1;
     width: 27rem;
-    transform: scale(1.05);
+    transform: scale(1.12);
 `
 
 export const CardEssentials = styled.div`
@@ -78,6 +78,40 @@ export const Linha = styled.li`
     color: #0D4373;
 `
 
+export const LiLite = styled.li`
+    list-style-image: url("/assets/images/svg/zero.svg");
+    list-style-position: inside;
+
+    font-weight: 700;
+    font-size: 26px;
+    color: #1B8EF2;
+`
+
+export const LiPro = styled.li`
+    list-style-image: url("/assets/images/svg/dois.svg");
+    list-style-position: inside;
+
+    font-weight: 700;
+    font-size: 26px;
+    color: #1B8EF2;
+`
+
+export const LiEssentials = styled.li`
+    list-style-image: url("/assets/images/svg/um.svg");
+    list-style-position: inside;
+    
+    font-weight: 700;
+    font-size: 26px;
+    color: #1B8EF2;
+`
+
+export const LiTipo = styled.li`
+    font-weight: 400;
+    font-size: 20px;
+    color: #22A2F2;
+    padding-left: 50px;
+`
+
 export const LiPrice = styled.li`
     font-weight: 400;
     font-size: 3.7em;
@@ -89,6 +123,24 @@ export const LiTitle = styled.li`
     font-weight: 700;
     font-size: 1.3em;
     color: #1A2E40;
+`
+
+export const Row = styled.div`
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+`
+
+export const TextPopular = styled.span`
+    position: absolute;
+    right: 0;
+    text-align: center;
+    background: #1B8EF2;
+    border-radius: 10px;
+    width: 6.6rem;
+    margin: auto 0;
+    color: white;
+
 `
 
 export const ButtonOne = styled.input`
@@ -113,7 +165,6 @@ export const ButtonTwo = styled.input`
     cursor: pointer;
     font-weight: 600;
     font-size: 1.25em;
-
     position: absolute;
     bottom: 0;
 
@@ -163,8 +214,4 @@ export const Td = styled.td`
 export const Table = styled.table`
     border-collapse: collapse;
     margin: 3rem auto;
-`
-
-export const Tr = styled.tr`
-
 `
