@@ -13,7 +13,12 @@ export const H1Chamativo = styled.h1`
     font-size: 4em;
     display: flex;
     justify-content: center;
+    text-align: center;
     color: #FFFFFF;
+
+    @media only screen and (max-width: 600px){
+        font-size: 2em;
+    }
 `
 
 export const H4Chamativo = styled.h4`
@@ -21,15 +26,25 @@ export const H4Chamativo = styled.h4`
     font-size: 1.6em;
     display: flex;
     justify-content: center;
+    text-align: center;
     color: #F1F1F1;
+
+    @media only screen and (max-width: 600px){
+        font-size: 1em;
+        margin-top: 15px;
+    }
 `
 
 export const Cards = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-wrap: wrap;
-    margin-top: 5rem;
+    margin: 5rem 1rem;
+
+    @media only screen and (max-width: 1200px){
+        justify-content: space-evenly;
+        flex-wrap: wrap;
+    }
 `
 
 export const CardLite = styled.div`
@@ -39,6 +54,10 @@ export const CardLite = styled.div`
     border-radius: 0.3rem;
     width: 27rem;
     height: 40.4rem;
+
+    @media only screen and (max-width: 1200px){
+        margin-bottom: 50px;
+    }
 `
 
 export const CardPro = styled.div`
@@ -49,6 +68,13 @@ export const CardPro = styled.div`
     z-index: 1;
     width: 27rem;
     transform: scale(1.12);
+
+    @media only screen and (max-width: 1200px) {
+        height: 40.4rem;
+        transform: scale(1.0);
+        z-index: 0;
+        margin-bottom: 50px;
+    }
 `
 
 export const CardEssentials = styled.div`
@@ -114,8 +140,9 @@ export const LiTipo = styled.li`
 
 export const LiPrice = styled.li`
     font-weight: 400;
-    font-size: 3.7em;
+    font-size: 3.5em;
     color: #1A2E40;
+    padding: 0.3rem 0 ;
 `
 
 export const LiTitle = styled.li`
@@ -167,7 +194,6 @@ export const ButtonTwo = styled.input`
     font-size: 1.25em;
     position: absolute;
     bottom: 0;
-
 `
 
 
@@ -186,6 +212,10 @@ export const ThTop = styled.th`
     font-weight: 500;
     font-size: 1.5em;
     color: #FFFFFF;
+
+    @media only screen and (max-width: 600px){
+        font-size: 1.2em;
+    }
 `
 
 export const Thv = styled.th`
@@ -194,6 +224,10 @@ export const Thv = styled.th`
     font-weight: 500;
     font-size: 1.5em;
     color: #FFFFFF;
+
+    @media only screen and (max-width: 600px){
+        font-size: 1.2em;
+    }
 `
 
 export const ThLeft = styled.th`
@@ -202,6 +236,10 @@ export const ThLeft = styled.th`
     font-weight: 400;
     font-size: 1.3em;
     color: #0D4373;
+
+    @media only screen and (max-width: 600px){
+        font-size: 1.07em;
+    }
 `
 
 export const Td = styled.td`

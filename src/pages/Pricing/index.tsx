@@ -53,7 +53,7 @@ const Pricing = () => {
           <List>
             <Row>
               <LiPro>Plano Pro</LiPro>
-              <TextPopular>Popular</TextPopular>
+                <TextPopular>Popular</TextPopular>
             </Row>
             <LiTipo>Plano completo</LiTipo>
             <LiPrice>R$ 159</LiPrice>
