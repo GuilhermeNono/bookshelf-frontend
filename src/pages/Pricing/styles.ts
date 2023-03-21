@@ -6,6 +6,14 @@ export const Container = styled.div`
     background-repeat: no-repeat;
     height: 100%;
     min-height: 100vh;
+
+    @media only screen and (max-width: 600px){
+        background-image: linear-gradient(180deg, #335675 47rem, #61A9EB 10%);
+    }
+
+    @media only screen and (min-width: 600px){
+        background-image: linear-gradient(180deg, #335675 47rem, #61A9EB 20%);
+    }
 `
 
 export const H1Chamativo = styled.h1`
@@ -16,8 +24,26 @@ export const H1Chamativo = styled.h1`
     text-align: center;
     color: #FFFFFF;
 
+    
+    
     @media only screen and (max-width: 600px){
         font-size: 2em;
+    }
+
+    @media only screen and (min-width: 600px){
+        font-size: 2.5em;
+    }
+    
+    @media only screen and (min-width: 768px) {
+        font-size: 3em;
+    }
+
+    @media only screen and (min-width: 992px) {
+        font-size: 3.5em;
+    }
+
+    @media only screen and (min-width: 1296px){
+        font-size: 4em;
     }
 `
 
@@ -28,10 +54,26 @@ export const H4Chamativo = styled.h4`
     justify-content: center;
     text-align: center;
     color: #F1F1F1;
+    margin-top: 15px;
 
     @media only screen and (max-width: 600px){
         font-size: 1em;
-        margin-top: 15px;
+    }
+
+    @media only screen and (min-width: 600px){
+        font-size: 1.1em;
+    }
+
+    @media only screen and (min-width: 768px){
+        font-size: 1.35em;
+    }
+
+    @media only screen and (min-width: 992px){
+        font-size: 1.5em;
+    }
+
+    @media only screen and (min-width: 1296px){
+        font-size: 1.6em;
     }
 `
 
@@ -216,6 +258,22 @@ export const ThTop = styled.th`
     @media only screen and (max-width: 600px){
         font-size: 1.2em;
     }
+
+    @media only screen and (min-width: 600px){
+        font-size: 1.2em;
+    }
+
+    @media only screen and (min-width: 768px){
+        font-size: 1.35em;
+    }
+
+    @media only screen and (min-width: 992px){
+        font-size: 1.5em;
+    }
+
+    @media only screen and (min-width: 1296px){
+        font-size: 1.6em;
+    }
 `
 
 export const Thv = styled.th`
@@ -226,7 +284,23 @@ export const Thv = styled.th`
     color: #FFFFFF;
 
     @media only screen and (max-width: 600px){
+        font-size: 1em;
+    }
+
+    @media only screen and (min-width: 600px){
         font-size: 1.2em;
+    }
+
+    @media only screen and (min-width: 768px){
+        font-size: 1.35em;
+    }
+
+    @media only screen and (min-width: 992px){
+        font-size: 1.5em;
+    }
+
+    @media only screen and (min-width: 1296px){
+        font-size: 1.6em;
     }
 `
 
@@ -239,6 +313,22 @@ export const ThLeft = styled.th`
 
     @media only screen and (max-width: 600px){
         font-size: 1.07em;
+    }
+
+    @media only screen and (min-width: 600px){
+        font-size: 1.07em;
+    }
+    
+    @media only screen and (min-width: 768px){
+        font-size: 1.35em;
+    }
+
+    @media only screen and (min-width: 992px){
+        font-size: 1.5em;
+    }
+
+    @media only screen and (min-width: 1296px){
+        font-size: 1.6em;
     }
 `
 
