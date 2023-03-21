@@ -4,7 +4,7 @@ export const Categories = styled.section``;
 
 export const CategoriesContent = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, auto));
+  grid-template-columns: repeat(auto-fit, minmax(250px, auto));
   gap: 1.5rem;
   align-items: center;
   cursor: pointer;
@@ -39,7 +39,7 @@ export const Box = styled.div`
   }
   p {
     font-size: var(--p-font);
-    color: var(--second-color);
+    color: var(--text-subtitle);
     font-weight: 500;
   }
 `;

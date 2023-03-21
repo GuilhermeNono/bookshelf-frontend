@@ -17,9 +17,6 @@ const Header = () => {
   const menuIcon = useRef<any>()
   const navbar =  useRef<any>()
 
-  
-
-
   window.addEventListener("scroll", function() {
     if(header.current){
       header.current.classList.toggle("sticky", window.scrollY > 0);

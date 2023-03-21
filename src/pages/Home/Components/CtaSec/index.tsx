@@ -1,41 +1,28 @@
 import { CenterText } from "../../styles";
-import { CtaContent, CtaImage, CtaSec } from "./styles";
+import { CtaContent, CtaImage, CtaSec, CtaText} from "./styles";
 
 const CtaSection = () => {
     return (
-        <CtaSec>
+      <CtaSec>
         <CenterText>
-          <h5>Trusted By</h5>
-          <h2>500+ Leading Universities And Companies</h2>
+          <h5>Dashboard</h5>
+          <h2>Painel para todos os usuario</h2>
         </CenterText>
 
         <CtaContent>
           <CtaImage>
-            <img src="img/cta1.png" />
-          </CtaImage>
-
-          <CtaImage>
-            <img src="img/cta2.png" />
-          </CtaImage>
-
-          <CtaImage>
-            <img src="img/cta3.png" />
-          </CtaImage>
-
-          <CtaImage>
-            <img src="img/cta4.png" />
-          </CtaImage>
-
-          <CtaImage>
-            <img src="img/cta5.png" />
-          </CtaImage>
-
-          <CtaImage>
-            <img src="img/cta6.png" />
+            <img src="assets/images/svg/dash.svg" />
+            <CtaText>
+            <h2>Painel de controle para todo o tipo de usuario</h2>
+            <p>
+              Todos os usuarios que possuirem uma conta no site da Bookshelf
+              poderão usufruir de uma dashboard com dezenas de serviços.
+            </p>
+            </CtaText>
           </CtaImage>
         </CtaContent>
       </CtaSec>
-    )
+    );
 }
 
 export default CtaSection;

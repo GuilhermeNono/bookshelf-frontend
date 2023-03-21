@@ -39,7 +39,7 @@ export const LinkLogo = styled.a``;
 
 export const Logo = styled.img`
   height: auto;
-  width: 200px;
+  width: 150px;
   max-width: 100%;
 `;
 
