@@ -97,8 +97,21 @@ export const CardLite = styled.div`
     width: 27rem;
     height: 40.4rem;
 
+    
+    @media only screen and (min-width: 768px){
+        padding-bottom: 5rem;
+    }
+    
+    @media only screen and (min-width: 992px){
+        padding-bottom: 5rem;
+    }
+    
     @media only screen and (max-width: 1200px){
         margin-bottom: 50px;
+    }
+
+    @media only screen and (min-width: 1296px){
+        padding-bottom: 0rem;
     }
 `
 
@@ -117,7 +130,33 @@ export const CardPro = styled.div`
         z-index: 0;
         margin-bottom: 50px;
     }
+
+    @media only screen and (max-width: 600px){
+        height: auto;
+        padding-bottom: 5rem;
+    }
+
+    @media only screen and (min-width: 600px){
+        padding-bottom: 5rem;
+    }
+
+    @media only screen and (min-width: 768px){
+        padding-bottom: 5rem;
+    }
+    
+    @media only screen and (min-width: 992px){
+        padding-bottom: 5rem;
+    }
+    
+    @media only screen and (max-width: 1200px){
+        margin-bottom: 50px;
+    }
+
+    @media only screen and (min-width: 1296px){
+        padding-bottom: 0rem;
+    }
 `
+
 
 export const CardEssentials = styled.div`
     position: relative;
@@ -126,6 +165,23 @@ export const CardEssentials = styled.div`
     border-radius: 0.3rem;
     width: 27rem;
     height: 40.4rem;
+
+    @media only screen and (max-width: 600px){
+        height: auto;
+        padding-bottom: 5rem;
+    }
+
+    @media only screen and (min-width: 768px){
+        padding-bottom: 5rem;
+    }
+
+    @media only screen and (min-width: 992px){
+        padding-bottom: 5rem;
+    }
+
+    @media only screen and (min-width: 1296px){
+        padding-bottom: 0rem;
+    }
 `
 
 export const List = styled.ul`
@@ -144,6 +200,10 @@ export const Linha = styled.li`
     font-size: 1.3em;
 
     color: #0D4373;
+
+    @media only screen and (max-width: 600px){
+        font-size: 1.1em;
+    }
 `
 
 export const LiLite = styled.li`
@@ -151,7 +211,7 @@ export const LiLite = styled.li`
     list-style-position: inside;
 
     font-weight: 700;
-    font-size: 26px;
+    font-size: 1.6em;
     color: #1B8EF2;
 `
 
@@ -184,7 +244,11 @@ export const LiPrice = styled.li`
     font-weight: 400;
     font-size: 3.5em;
     color: #1A2E40;
-    padding: 0.3rem 0 ;
+    padding: 0.3rem 0;
+
+    @media only screen and (max-width: 600px){
+        font-size: 3em;
+    }
 `
 
 export const LiTitle = styled.li`
@@ -192,6 +256,10 @@ export const LiTitle = styled.li`
     font-weight: 700;
     font-size: 1.3em;
     color: #1A2E40;
+
+    @media only screen and (max-width: 600px){
+        font-size: 1.15em;
+    }
 `
 
 export const Row = styled.div`
