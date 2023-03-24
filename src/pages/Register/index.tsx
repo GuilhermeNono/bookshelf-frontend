@@ -1,12 +1,9 @@
 import { useState } from "react";
-import RegisterForm from "../../components/RegisterSection/RegisterForm";
-import {Container} from "./styles"
+import RegisterForm from "../../components/RegisterForm";
 
 function Register() {
-
-
   return (
-      <RegisterForm/>
+      <RegisterForm />
   );
 }
 

@@ -1,9 +1,6 @@
 import React from "react";
-import "./fonts/linearicons/style.css";
 import "./css/style.css";
-import "./vendor/date-picker/css/datepicker.min.css";
-import "./fonts/material-design-iconic-font/css/material-design-iconic-font.min.css";
-import "./fonts/linearicons/style.css";
+
 import { useState } from "react";
 import { Container } from "./styles";
 
@@ -116,9 +113,9 @@ function RegisterForm() {
                   <div className="form-wrapper">
                     <label>Sexo</label>
                     <select name="" id="" className="form-control">
-                      <option value="0">Selecionar gênero</option>
-                      <option value="1">M</option>
-                      <option value="2">F</option>
+                      <option value="0">Selecionar</option>
+                      <option value="1">Masculino</option>
+                      <option value="2">Feminino</option>
                     </select>
                   </div>
                 </div>
@@ -153,8 +150,6 @@ function RegisterForm() {
         </div>
 
         <script src="js/jquery-3.3.1.min.js"></script>
-        <script src="vendor/date-picker/js/datepicker.js"></script>
-        <script src="vendor/date-picker/js/datepicker.en.js"></script>
 
         <script src="js/main.js"></script>
     </Container>
