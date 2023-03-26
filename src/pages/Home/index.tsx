@@ -1,10 +1,10 @@
 import { Button, Form, FormGroup, Input } from "reactstrap";
-import AboutSection from "./components/AboutSec";
-import CategoriesSection from "./components/CategoriesSec";
-import ContactSection from "./components/ContactSec";
-import ContainerSection from "./components/ContainerSec";
-import CtaSection from "./components/CtaSec";
-import HomeSection from "./components/HomeSec";
+import AboutSection from "./Components/AboutSec";
+import CategoriesSection from "./Components/CategoriesSec";
+import ContactSection from "./Components/ContactSec";
+import ContainerSection from "./Components/ContainerSec";
+import CtaSection from "./Components/CtaSec";
+import HomeSection from "./Components/HomeSec";
 
 const Home = () => {
   return (
