@@ -47,6 +47,9 @@ const Header = () => {
             <a href="/#categories">Serviços</a>
           </NavBarLinks>
           <NavBarLinks>
+            <a href="/pricing">Preços</a>
+          </NavBarLinks>
+          <NavBarLinks>
             <a href="/#about">Sobre Nós</a>
           </NavBarLinks>
           <NavBarLinks>

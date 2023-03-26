@@ -2,6 +2,11 @@ import { Button, Form, FormGroup, Input } from "reactstrap";
 import { ContactSec, ContactText, ContainerContact, IconContact } from "./styles";
 
 const ContactSection = () => {
+
+  const handleSubmit = (e:any) => {
+    e.preventDefault();
+  }
+
     return (
         <ContactSec id="contact">
         <ContactText>
@@ -39,7 +44,7 @@ const ContactSection = () => {
           </ContainerContact>
         </ContactText>
 
-        <Form>
+        <Form onSubmit={handleSubmit}>
           <FormGroup className="mb-5">
             <Input placeholder="Seu nome" />
           </FormGroup>
@@ -52,7 +57,7 @@ const ContactSection = () => {
           <FormGroup className="mb-5">
             <Input type="textarea" placeholder="Menssagem" />
           </FormGroup>
-          <Button type="submit" color="primary">
+          <Button size="lg" type="submit" color="primary">
             Enviar
           </Button>
         </Form>

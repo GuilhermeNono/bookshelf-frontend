@@ -1,34 +1,19 @@
 import { Button, Form, FormGroup, Input } from "reactstrap";
-import AboutSection from "./Components/AboutSec";
-import CategoriesSection from "./Components/CategoriesSec";
-import ContactSection from "./Components/ContactSec";
-import ContainerSection from "./Components/ContainerSec";
-import CtaSection from "./Components/CtaSec";
-import HomeSection from "./Components/HomeSec";
+import AboutSection from "./components/AboutSec";
+import CategoriesSection from "./components/CategoriesSec";
+import ContactSection from "./components/ContactSec";
+import ContainerSection from "./components/ContainerSec";
+import CtaSection from "./components/CtaSec";
+import HomeSection from "./components/HomeSec";
 
 const Home = () => {
   return (
     <>
-      {/*start home section*/}
-
       <HomeSection />
-
-      {/*start container section*/}
-
       <ContainerSection />
-
-      {/*start categories section*/}
-
       <CategoriesSection />
-
-      {/*start about section*/}
-      
       <AboutSection />
-
-      {/*start cta section*/}
       <CtaSection />
-
-      {/*start contact section*/}
       <ContactSection />
     </>
   );

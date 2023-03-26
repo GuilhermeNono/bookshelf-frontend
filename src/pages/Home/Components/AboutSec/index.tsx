@@ -1,13 +1,13 @@
-import { Btn } from "../../styles";
+import { Btn, CenterText } from "../../styles";
 import { AboutContent, AboutSec, AboutText, AboutImage} from "./styles";
 
 const AboutSection = () => {
   return (
     <AboutSec id="about">
-    <AboutText>
+    <CenterText>
       <h5>Sobre nós</h5>
       <h2>Saiba um pouco mais sobre a Bookshelf</h2>
-    </AboutText>
+    </CenterText>
 
     <AboutContent>
       <AboutImage>

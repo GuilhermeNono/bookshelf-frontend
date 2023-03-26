@@ -12,24 +12,35 @@ export const CtaContent = styled.div`
 `;
 
 export const CtaImage = styled.div`
-
-  display: flex;
-
-  img{
+ img{
     height: auto;
-    width: 550px;
+    width: 100%;
     border-radius: 6px;
   }
 
-  gap: 50px;
+  @media (min-width: 540px) {
+    img{
+      width: 75%;
+    }
+  }
+
 
 `;
 
 export const CtaText = styled.div`
-  h2{
-    text-align: left;
+text-align: left;
+  h3 {
+    color: var(--text-color);
+    font-size: var(--p-font);
+    font-weight: 500;
+    line-height: 30px;
+    letter-spacing: 1px;
+    font-size: 1.2em;
   }
-  p{
-    text-align: left;
+  h4 {
+    color: var(--text-color);
+    font-size: 1.2em;
+    font-weight: 500;
+    margin-bottom: 2em;
   }
 `

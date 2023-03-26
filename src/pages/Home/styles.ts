@@ -60,6 +60,7 @@ export const Btn = styled.a`
   padding: 16px 30px;
   font-size: var(--p-font);
   font-weight: 500;
+  cursor: pointer;
   background: var(--main-color);
   color: var(--text-color);
   border-radius: 30px;

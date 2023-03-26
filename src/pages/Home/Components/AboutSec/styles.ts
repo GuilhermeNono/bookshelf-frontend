@@ -13,7 +13,7 @@ export const AboutText = styled.div`
     font-size: 18px;
     font-weight: 500;
   }
-  h3 {
+  h4 {
     font-size: 24px;
     font-weight: 700;
     line-height: 34px;
@@ -35,7 +35,7 @@ export const AboutText = styled.div`
 
 export const AboutContent = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(400px, auto));
+  grid-template-columns: repeat(auto-fit, minmax(170px, auto));
   gap: 2rem;
   align-items: center;
   margin-top: 4rem;
@@ -46,5 +46,12 @@ export const AboutImage = styled.div`
   img {
     width: 100%;
     height: auto;
+  }
+
+  
+  @media (max-width: 540px){
+    img {
+      width: 75%;
+  }
   }
 `;
