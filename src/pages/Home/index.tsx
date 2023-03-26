@@ -1,18 +1,22 @@
-import React from 'react'
-import Footer from '../../components/Footer'
-import Header from '../../components/Header'
-import {Container} from './styles'
-import { useAuthValue } from '../../context/authContext'
+import { Button, Form, FormGroup, Input } from "reactstrap";
+import AboutSection from "./components/AboutSec";
+import CategoriesSection from "./components/CategoriesSec";
+import ContactSection from "./components/ContactSec";
+import ContainerSection from "./components/ContainerSec";
+import CtaSection from "./components/CtaSec";
+import HomeSection from "./components/HomeSec";
 
 const Home = () => {
-
-    const value = useAuthValue();
-
   return (
-    <Container>
-        Content {value}
-    </Container>
-  )
-}
+    <>
+      <HomeSection />
+      <ContainerSection />
+      <CategoriesSection />
+      <AboutSection />
+      <CtaSection />
+      <ContactSection />
+    </>
+  );
+};
 
-export default Home
+export default Home;
