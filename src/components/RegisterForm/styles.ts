@@ -246,4 +246,52 @@ export const Check = styled.div`
   }
 `;
 
+// export const MQuery = styled.div`
+//   @media (max-width: 1199px) {
+//   Wrapper {
+//     background-position: center center;
+//   }
+// }
 
+// @media (max-width: 991px) {
+//   Inner {
+//     width: 60%;
+//   }
+// }
+
+// @media (max-width: 767px) {
+//   Inner {
+//     width: 100%;
+//     transform: translateY(0);
+//     position: static;
+//     padding: 0;
+//     box-shadow: none;
+//     -webkit-box-shadow: none;
+//     -moz-box-shadow: none;
+//     -ms-box-shadow: none;
+//     -o-box-shadow: none;
+//   }
+
+//   Wrapper {
+//     background: none;
+//     display: block;
+//   }
+
+//   RegForm {
+//     padding: 30px 20px;
+//   }
+
+//   .form-row {
+//     display: block;
+//   }
+
+//   .form-row .form-wrapper {
+//     width: 100%;
+//     margin-bottom: 25px;
+//   }
+
+//   .form-row .form-wrapper:first-child {
+//     margin-right: 0;
+//   }
+// }
+// `
