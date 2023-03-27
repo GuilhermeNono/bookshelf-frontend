@@ -25,7 +25,7 @@ import {
   Row,
   TextPopular,
 } from "./styles";
-import "./teste.css";
+import "./style.css";
 
 const Pricing = () => {
   return (
@@ -83,7 +83,7 @@ const Pricing = () => {
         </CardEssentials>
       </Cards>
 
-      <div className="table-responsive">
+      <div className="tableResponsive">
         <Table>
           <thead>
             <tr>
