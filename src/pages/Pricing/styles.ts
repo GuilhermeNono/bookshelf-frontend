@@ -2,8 +2,6 @@ import styled from "styled-components";
 
 export const Container = styled.div`
     background-image: linear-gradient(180deg, #335675 47rem, #61A9EB 40%);
-    background-size: cover;
-    background-repeat: no-repeat;
     height: 100%;
     min-height: 100vh;
 
@@ -18,7 +16,7 @@ export const Container = styled.div`
 
 export const H1Chamativo = styled.h1`
     font-weight: 600;
-    font-size: 4em;
+    font-size: 3em;
     display: flex;
     justify-content: center;
     text-align: center;
@@ -43,13 +41,13 @@ export const H1Chamativo = styled.h1`
     }
 
     @media only screen and (min-width: 1296px){
-        font-size: 4em;
+        font-size: 3em;
     }
 `
 
 export const H4Chamativo = styled.h4`
     font-weight: 400;
-    font-size: 1.6em;
+    font-size: 1.3em;
     display: flex;
     justify-content: center;
     text-align: center;
@@ -65,16 +63,13 @@ export const H4Chamativo = styled.h4`
     }
 
     @media only screen and (min-width: 768px){
-        font-size: 1.35em;
+        font-size: 1.2em;
     }
 
     @media only screen and (min-width: 992px){
-        font-size: 1.5em;
+        font-size: 1.3em;
     }
 
-    @media only screen and (min-width: 1296px){
-        font-size: 1.6em;
-    }
 `
 
 export const Cards = styled.div`
@@ -122,6 +117,7 @@ export const CardPro = styled.div`
     border-radius: 0.3rem;
     z-index: 1;
     width: 27rem;
+    height: 670px;
     transform: scale(1.12);
 
     @media only screen and (max-width: 1200px) {
@@ -197,7 +193,7 @@ export const Linha = styled.li`
     list-style-position: inside;
 
     font-weight: 400;
-    font-size: 1.3em;
+    font-size: 1em;
 
     color: #0D4373;
 
@@ -211,7 +207,7 @@ export const LiLite = styled.li`
     list-style-position: inside;
 
     font-weight: 700;
-    font-size: 1.6em;
+    font-size: 1.2em;
     color: #1B8EF2;
 `
 
@@ -220,7 +216,7 @@ export const LiPro = styled.li`
     list-style-position: inside;
 
     font-weight: 700;
-    font-size: 26px;
+    font-size: 1.2em;
     color: #1B8EF2;
 `
 
@@ -229,7 +225,7 @@ export const LiEssentials = styled.li`
     list-style-position: inside;
     
     font-weight: 700;
-    font-size: 26px;
+    font-size: 1.2em;
     color: #1B8EF2;
 `
 
@@ -254,7 +250,7 @@ export const LiPrice = styled.li`
 export const LiTitle = styled.li`
     margin-top: 1.4rem;
     font-weight: 700;
-    font-size: 1.3em;
+    font-size: 1.2em;
     color: #1A2E40;
 
     @media only screen and (max-width: 600px){
@@ -275,7 +271,7 @@ export const TextPopular = styled.span`
     background: #1B8EF2;
     border-radius: 10px;
     width: 6.6rem;
-    margin: auto 0;
+    margin: auto 5px;
     color: white;
 
 `
@@ -376,28 +372,8 @@ export const ThLeft = styled.th`
     text-align: start;
     border-bottom: 0.1rem solid #E1E1E1;
     font-weight: 400;
-    font-size: 1.3em;
+    font-size: 1em;
     color: #0D4373;
-
-    @media only screen and (max-width: 600px){
-        font-size: 1.07em;
-    }
-
-    @media only screen and (min-width: 600px){
-        font-size: 1.07em;
-    }
-    
-    @media only screen and (min-width: 768px){
-        font-size: 1.35em;
-    }
-
-    @media only screen and (min-width: 992px){
-        font-size: 1.5em;
-    }
-
-    @media only screen and (min-width: 1296px){
-        font-size: 1.6em;
-    }
 `
 
 export const Td = styled.td`
