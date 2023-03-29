@@ -24,12 +24,14 @@ import {
   Thv,
   Row,
   TextPopular,
+  TableResponsive,
 } from "./styles";
-import "./style.css";
+import { GlobalStyle } from "../../styles/global";
 
 const Pricing = () => {
   return (
     <Container>
+      <GlobalStyle></GlobalStyle>
       <H1Chamativo>Contrate o melhor plano para você</H1Chamativo>
       <H4Chamativo>
         Temos planos para todos os portes, contrate oque melhor combina com sua
@@ -83,7 +85,7 @@ const Pricing = () => {
         </CardEssentials>
       </Cards>
 
-      <div className="tableResponsive">
+      <TableResponsive>
         <Table>
           <thead>
             <tr>
@@ -154,7 +156,7 @@ const Pricing = () => {
             </tr>
           </tbody>
         </Table>
-      </div>
+      </TableResponsive>
     </Container>
   );
 };

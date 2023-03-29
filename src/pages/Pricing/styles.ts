@@ -387,3 +387,7 @@ export const Table = styled.table`
     border-collapse: collapse;
     margin: 3rem auto;
 `
+
+export const TableResponsive = styled.div`
+    overflow-x: auto;
+`
