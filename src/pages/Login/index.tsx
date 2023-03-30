@@ -25,7 +25,7 @@ function Login() {
         <TitleBox>
           <Titulo>Login</Titulo>
         </TitleBox>
-        <BoxForm> 
+        <BoxForm>
           <OneRow>
             <Logo />
             <TituloContainer>BookShelf</TituloContainer>
