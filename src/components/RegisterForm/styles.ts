@@ -6,9 +6,9 @@ export const Container = styled.div`
   -moz-box-sizing: border-box;
   box-sizing: border-box;
   scroll-behavior: smooth;
+  font-family: "Poppins", sans-serif;
 
   overflow-x: hidden;
-  font-family: "Poppins-Regular";
   font-size: 13px;
   margin: 0;
   color: #999;
@@ -16,7 +16,6 @@ export const Container = styled.div`
   input,
   textarea,
   select {
-    font-family: "Muli-Regular";
     font-size: 13px;
     color: #666;
   }
@@ -69,7 +68,6 @@ export const Container = styled.div`
 
     .form-wrapper label {
       display: block;
-      font-family: "Muli-SemiBold";
       font-size: 17px;
       color: #4c4c4c;
       margin-bottom: 8px;
@@ -119,6 +117,22 @@ export const Inner = styled.div`
   -o-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
   background: url("../assets/bg-inner.png") repeat;
   padding: 0px;
+
+  @media (max-width: 991px) {
+    width: 60%;
+  }
+
+  @media (max-width: 767px) {
+    width: 100%;
+    transform: translateY(0);
+    position: static;
+    padding: 0;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    -ms-box-shadow: none;
+    -o-box-shadow: none;
+  }
 `;
 
 export const RegForm = styled.form`
@@ -127,12 +141,29 @@ export const RegForm = styled.form`
   overflow-y: auto;
   padding: 12px 46px 12px;
   background: #fff;
+
+  @media (max-width: 767px) {
+    padding: 30px 20px;
+
+    .form-row {
+      display: block;
+    }
+
+    .form-row .form-wrapper {
+      width: 100%;
+      margin-bottom: 25px;
+    }
+
+    .form-row .form-wrapper:first-child {
+      margin-right: 0;
+    }
+  }
 `;
 
 export const Title = styled.h3`
   text-transform: uppercase;
   font-size: 35px;
-  font-family: "Poppins-Medium";
+
   color: #3e91f7;
   letter-spacing: 3px;
   margin-bottom: 22px;
@@ -149,6 +180,17 @@ export const Wrapper = styled.div`
   background-size: cover;
   min-height: 100%;
   height: 100vh;
+
+  @media (max-width: 1199px) {
+    background-position: center center;
+  }
+
+  @media (max-width: 767px) {
+    .wrapper {
+      background: none;
+      display: block;
+    }
+  }
 `;
 
 export const Submit = styled.button`
@@ -160,11 +202,11 @@ export const Submit = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
+  text-align: center;
   padding: 0;
   background: #3e91f7;
   color: #fff;
   text-transform: uppercase;
-  font-family: "Muli-SemiBold";
   font-size: 15px;
   position: relative;
   transition: all 0.3s ease;
@@ -177,41 +219,14 @@ export const Submit = styled.button`
     transition: all 0.3s;
   }
 
-  &:after {
-    content: attr(data-text);
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 50%;
-    left: 0;
-    opacity: 0;
-    letter-spacing: 3px;
-    -webkit-transform: translate(-30%, -25%);
-    transform: translate(-30%, -25%);
-    -webkit-transition: all 0.3s;
-    -moz-transition: all 0.3s;
-    -o-transition: all 0.3s;
-    transition: all 0.3s;
-  }
-
   &:hover {
     background: #0072fd;
-  }
-
-  &:hover span {
-    opacity: 0;
-    -webkit-transform: translate(0px, 40px);
-    transform: translate(0px, 40px);
-  }
-
-  &:hover:after {
-    opacity: 1;
-    -webkit-transform: translate(0, -25%);
-    transform: translate(0, -25%);
   }
 `;
 
 export const Check = styled.div`
+
+
   label {
     cursor: pointer;
   }
@@ -231,7 +246,6 @@ export const Check = styled.div`
     border-radius: 2px;
     background-color: #ebebeb;
     border: none;
-    font-family: Material-Design-Iconic-Font;
     font-size: 10px;
     font-weight: bolder;
     &:after {
@@ -272,12 +286,12 @@ export const Check = styled.div`
 //     -o-box-shadow: none;
 //   }
 
-//   Wrapper {
+//   .wrapper {
 //     background: none;
 //     display: block;
 //   }
 
-//   RegForm {
+//   Form {
 //     padding: 30px 20px;
 //   }
 
