@@ -109,7 +109,7 @@ export const CardEssentials = styled.div`
 `
 
 export const List = styled.ul`
-    margin: 1rem 2rem 0rem 2rem;
+    margin: 1rem 2rem 0rem 0rem;
     display: flex;
     flex-direction: column;
     list-style-type: none;

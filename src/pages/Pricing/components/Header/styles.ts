@@ -7,6 +7,7 @@ export const H1Chamativo = styled.h1`
     justify-content: center;
     text-align: center;
     color: #FFFFFF;
+    margin-top: 6rem;
 
     
     
