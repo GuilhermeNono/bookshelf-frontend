@@ -1,12 +1,15 @@
-import { useState } from "react";
-import RegisterForm from "../../components/RegisterForm";
-import { GlobalStyle } from "../../styles/global";
+import RegForm from "./components/RegForm";
+import { Inner, Wrapper, Container } from "./styles";
 
 function Register() {
   return (
-    <>
-      <RegisterForm />
-    </>
+    <Container>
+      <Wrapper>
+        <Inner>
+          <RegForm />
+        </Inner>
+      </Wrapper>
+    </Container>
   );
 }
 
