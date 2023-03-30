@@ -5,11 +5,13 @@ import About from "../pages/About";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Pricing from "../pages/Pricing";
+import { GlobalStyle } from "../styles/global";
 
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
+      <GlobalStyle />
         <Header />
         <Routes>
           <Route element={<Home />} path={"/"} />
