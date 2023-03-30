@@ -4,20 +4,24 @@ import Header from "../components/Header";
 import About from "../pages/About";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
+import Pricing from "../pages/Pricing";
 import Register from "../pages/Register";
+import { GlobalStyle } from "../styles/global";
 
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        {/*<Header />*/}
+      <GlobalStyle />
+        <Header />
         <Routes>
           <Route element={<Home />} path={"/"} />
           <Route element={<About />} path={"/about"} />
           <Route element={<Login />} path={"/Login"} />
           <Route element={<Register />} path={"/Register"} />
+          <Route element={<Pricing />} path={"/Pricing"} />
         </Routes>
-        {/*<Footer />*/}
+        <Footer />
       </BrowserRouter>
     </div>
   );
