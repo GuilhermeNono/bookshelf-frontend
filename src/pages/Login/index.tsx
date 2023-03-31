@@ -50,7 +50,7 @@ function Login() {
           </form>
           <OneRow style={{ paddingTop: 0 }}>
             <Info>
-              Não tem uma conta? <Link href="#">Crie uma!</Link>
+              Não tem uma conta? <Link href="/register">Crie uma!</Link>
             </Info>
           </OneRow>
           <Spacing>
