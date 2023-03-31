@@ -7,6 +7,12 @@ export const Form = styled.form`
   padding: 12px 46px 12px;
   background: #fff;
 
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
   @media (max-width: 767px) {
     padding: 30px 20px;
 
