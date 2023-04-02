@@ -38,11 +38,17 @@ import { useMaterialUIController } from "context";
 
 function Basic() {
   const [rememberMe, setRememberMe] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   // eslint-disable-next-line no-unused-vars
   const [controller, dispatch] = useMaterialUIController();
 
   const { darkMode } = controller;
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
 
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
 
@@ -109,12 +115,24 @@ function Basic() {
         </MDBox>
 
         <MDBox pt={4} pb={3} px={3}>
-          <MDBox component="form" role="form">
+          <MDBox onSubmit={handleSubmit} component="form" role="form">
             <MDBox mb={2}>
-              <MDInput type="email" label="Email" fullWidth />
+              <MDInput
+                onChange={(e) => setEmail(e.target.value)}
+                value={email}
+                type="email"
+                label="Email"
+                fullWidth
+              />
             </MDBox>
             <MDBox mb={2}>
-              <MDInput type="password" label="Password" fullWidth />
+              <MDInput
+                onChange={(e) => setPassword(e.target.value)}
+                value={password}
+                type="password"
+                label="Password"
+                fullWidth
+              />
             </MDBox>
             <MDBox display="flex" alignItems="center" ml={-1}>
               <Switch checked={rememberMe} onChange={handleSetRememberMe} />
@@ -129,7 +147,7 @@ function Basic() {
               </MDTypography>
             </MDBox>
             <MDBox mt={4} mb={1}>
-              <MDButton variant="contained" color="info" fullWidth>
+              <MDButton type="submit" variant="contained" color="info" fullWidth>
                 Entrar
               </MDButton>
             </MDBox>

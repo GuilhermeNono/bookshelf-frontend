@@ -33,12 +33,46 @@ import bgImage from "assets/images/bg-register.svg";
 // eslint-disable-next-line import/order
 import { Inner } from "assets/styledComponents/registerStyles";
 import { useMaterialUIController } from "context";
+import { useEffect, useState } from "react";
 import BasicLayout from "../components/BasicLayout";
 
 function Cover() {
+  const [name, setName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [cpf, setCpf] = useState("");
+  const [birthDay, setBirthDay] = useState("");
+  const [phone, setPhone] = useState("");
+  const [gender, setGender] = useState("");
+  const [lockButton, setLockButton] = useState(true);
+
   // eslint-disable-next-line no-unused-vars
   const [controller, dispatch] = useMaterialUIController();
   const { darkMode } = controller;
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
+
+  // Check if all fields are filled
+  useEffect(() => {
+    if (
+      name &&
+      lastName &&
+      email &&
+      password &&
+      confirmPassword &&
+      cpf &&
+      birthDay &&
+      phone &&
+      gender
+    ) {
+      return setLockButton(false);
+    }
+    return setLockButton(true);
+  }, [name, lastName, email, password, confirmPassword, cpf, birthDay, phone, gender]);
 
   return (
     <BasicLayout image={bgImage}>
@@ -58,7 +92,7 @@ function Cover() {
             </MDTypography>
           </MDBox>
           <MDBox pt={4} pb={3} px={3}>
-            <MDBox component="form" role="form">
+            <MDBox onSubmit={handleSubmit} component="form" role="form">
               <MDBox
                 mb={2}
                 sx={{
@@ -67,11 +101,30 @@ function Cover() {
                   gridTemplateColumns: "repeat(2, 1fr)",
                 }}
               >
-                <MDInput type="text" label="Nome" variant="outlined" />
-                <MDInput type="text" label="Sobrenome" variant="outlined" />
+                <MDInput
+                  onChange={(e) => setName(e.target.value)}
+                  value={name}
+                  type="text"
+                  label="Nome"
+                  variant="outlined"
+                />
+                <MDInput
+                  onChange={(e) => setLastName(e.target.value)}
+                  value={lastName}
+                  type="text"
+                  label="Sobrenome"
+                  variant="outlined"
+                />
               </MDBox>
               <MDBox mb={5}>
-                <MDInput type="email" label="E-mail" variant="outlined" fullWidth />
+                <MDInput
+                  onChange={(e) => setEmail(e.target.value)}
+                  value={email}
+                  type="email"
+                  label="E-mail"
+                  variant="outlined"
+                  fullWidth
+                />
               </MDBox>
               <MDBox
                 mb={2}
@@ -81,8 +134,20 @@ function Cover() {
                   gridTemplateColumns: "repeat(2, 1fr)",
                 }}
               >
-                <MDInput type="password" label="Senha" variant="outlined" />
-                <MDInput type="password" label="Confirmar senha" variant="outlined" />
+                <MDInput
+                  onChange={(e) => setPassword(e.target.value)}
+                  value={password}
+                  type="password"
+                  label="Senha"
+                  variant="outlined"
+                />
+                <MDInput
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  value={confirmPassword}
+                  type="password"
+                  label="Confirmar senha"
+                  variant="outlined"
+                />
               </MDBox>
               <MDBox
                 mb={5}
@@ -92,8 +157,19 @@ function Cover() {
                   gridTemplateColumns: "repeat(2, 1fr)",
                 }}
               >
-                <MDInput type="number" label="CPF" variant="outlined" />
-                <MDInput type="date" variant="outlined" />
+                <MDInput
+                  onChange={(e) => setCpf(e.target.value)}
+                  value={cpf}
+                  type="number"
+                  label="CPF"
+                  variant="outlined"
+                />
+                <MDInput
+                  onChange={(e) => setBirthDay(e.target.value)}
+                  value={birthDay}
+                  type="date"
+                  variant="outlined"
+                />
               </MDBox>
               <MDBox
                 mb={5}
@@ -103,8 +179,20 @@ function Cover() {
                   gridTemplateColumns: "repeat(2, 1fr)",
                 }}
               >
-                <MDInput type="number" label="Celular" variant="outlined" />
-                <MDInput type="Text" label="Sexo" variant="outlined" />
+                <MDInput
+                  onChange={(e) => setPhone(e.target.value)}
+                  value={phone}
+                  type="number"
+                  label="Celular"
+                  variant="outlined"
+                />
+                <MDInput
+                  onChange={(e) => setGender(e.target.value)}
+                  value={gender}
+                  type="Text"
+                  label="Sexo"
+                  variant="outlined"
+                />
               </MDBox>
               <MDBox display="flex" alignItems="center" ml={-1}>
                 <Checkbox />
@@ -128,7 +216,13 @@ function Cover() {
                 </MDTypography>
               </MDBox>
               <MDBox mt={4} mb={1}>
-                <MDButton variant="gradient" color="info" fullWidth>
+                <MDButton
+                  type="submit"
+                  variant="gradient"
+                  color="info"
+                  disabled={lockButton}
+                  fullWidth
+                >
                   Continuar
                 </MDButton>
               </MDBox>
