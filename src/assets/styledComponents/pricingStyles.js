@@ -2,9 +2,9 @@ import styled from "styled-components";
 
 import checkingPlans from "assets/images/CheckingPlans.svg";
 import checking from "assets/images/Checking.svg";
-import zero from "assets/images/zero.svg";
-import um from "assets/images/um.svg";
-import dois from "assets/images/dois.svg";
+import Lite from "assets/images/Lite.svg";
+import Pro from "assets/images/Pro.svg";
+import Essentials from "assets/images/Essentials.svg";
 
 export const Container = styled.div`
   background-image: linear-gradient(180deg, #335675 47rem, #61a9eb 40%);
@@ -78,7 +78,7 @@ export const CardPro = styled.div`
   z-index: 1;
   width: 27rem;
   height: 670px;
-  transform: scale(1.12);
+  transform: scale(1.05);
 
   @media only screen and (max-width: 1200px) {
     height: 40.4rem;
@@ -144,11 +144,12 @@ export const List = styled.ul`
   display: flex;
   flex-direction: column;
   list-style-type: none;
+  padding-left: 1rem;
 `;
 
 export const Linha = styled.li`
   padding: 0.6rem 0;
-  list-style-image: ${checking};
+  list-style-image: url(${checking});
   list-style-position: inside;
 
   font-weight: 400;
@@ -162,7 +163,7 @@ export const Linha = styled.li`
 `;
 
 export const LiLite = styled.li`
-  list-style-image: ${zero};
+  list-style-image: url(${Lite});
   list-style-position: inside;
 
   font-weight: 700;
@@ -171,20 +172,21 @@ export const LiLite = styled.li`
 `;
 
 export const LiPro = styled.li`
-  list-style-image: ${dois};
+  list-style-image: url(${Pro});
   list-style-position: inside;
 
+  text-align: center;
   font-weight: 700;
-  font-size: 1rem;
+  font-size: 1em;
   color: #1b8ef2;
 `;
 
 export const LiEssentials = styled.li`
-  list-style-image: ${um};
+  list-style-image: url(${Essentials});
   list-style-position: inside;
 
   font-weight: 700;
-  font-size: 0.95em;
+  font-size: 1em;
   color: #1b8ef2;
 `;
 
@@ -311,7 +313,7 @@ export const H4Chamativo = styled.h4`
 `;
 
 export const Marker = styled.svg`
-  background-image: ${checkingPlans};
+  background-image: url(${checkingPlans});
   background-repeat: no-repeat;
   width: 24px;
   height: 24px;
