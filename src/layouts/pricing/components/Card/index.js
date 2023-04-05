@@ -52,7 +52,7 @@ function Card() {
         <ButtonTwo type="button" value="Ler mais" />
       </CardPro>
       <CardEssentials>
-        <List>
+        <List style={{ paddingLeft: "2rem" }}>
           <LiEssentials>Plano Essentials</LiEssentials>
           <LiTipo>Plano padrão</LiTipo>
           <LiPrice>R$ 109</LiPrice>
