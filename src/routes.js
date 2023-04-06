@@ -49,6 +49,7 @@ import SignUp from "layouts/authentication/sign-up";
 import Icon from "@mui/material/Icon";
 import Home from "layouts/home";
 import Pricing from "layouts/pricing";
+import ForgetPassword from "layouts/authentication/forgetPassword";
 
 const routes = [
   {
@@ -132,6 +133,14 @@ const routes = [
     icon: <Icon fontSize="small">assignment</Icon>,
     route: "/authentication/sign-up",
     component: <SignUp />,
+  },
+  {
+    type: "collapse",
+    name: "Forget Password",
+    key: "forgetPassword",
+    icon: <Icon fontSize="small">forgetPassword</Icon>,
+    route: "/authentication/forgetPassword",
+    component: <ForgetPassword />,
   },
 ];
 
