@@ -49,7 +49,7 @@ import SignUp from "layouts/authentication/sign-up";
 import Icon from "@mui/material/Icon";
 import Home from "layouts/home";
 import Pricing from "layouts/pricing";
-import ForgetPassword from "layouts/authentication/forgetPassword";
+import Cover from "layouts/authentication/reset-password/cover";
 
 const routes = [
   {
@@ -136,11 +136,11 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Forget Password",
-    key: "forgetPassword",
-    icon: <Icon fontSize="small">forgetPassword</Icon>,
-    route: "/authentication/forgetPassword",
-    component: <ForgetPassword />,
+    name: "ResetPassword",
+    key: "resetPassword",
+    icon: <Icon fontSize="small">reset_Password</Icon>,
+    route: "/authentication/reset-password",
+    component: <Cover />,
   },
 ];
 
