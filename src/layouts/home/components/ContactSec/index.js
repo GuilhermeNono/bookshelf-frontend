@@ -55,16 +55,16 @@ function ContactSection() {
 
       <MDBox component="form" onSubmit={handleSubmit} role="form">
         <MDBox mb={5}>
-          <MDInput type="text" label="Seu nome" />
+          <MDInput type="text" label="Seu nome" fullWidth />
         </MDBox>
         <MDBox mb={5}>
-          <MDInput type="text" label="Endereço de e-mail" />
+          <MDInput type="text" label="Endereço de e-mail" fullWidth />
         </MDBox>
         <MDBox mb={5}>
-          <MDInput type="text" label="Título" />
+          <MDInput type="text" label="Título" fullWidth />
         </MDBox>
         <MDBox mb={5}>
-          <MDInput type="textarea" label="Menssagem" />
+          <MDInput type="textarea" label="Menssagem" fullWidth />
         </MDBox>
         <MDButton type="submit" color="primary">
           Enviar
