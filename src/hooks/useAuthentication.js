@@ -76,6 +76,71 @@ export const useAuthentication = () => {
     return req;
   };
 
+  const createUser = async (
+    firstName, 
+    lastName, 
+    email, 
+    password, 
+    confirmPassword, 
+    birthDay,
+    phone,
+    gender,
+    profileId,
+    cpf 
+    ) => {
+    checkIfIsCancelled();
+    checkIfIsAlreadyLogged();
+    setLoading(true);
+    setError(null);
+    // header da requisição
+    const headers = {
+      "Content-Type": "application/json",
+    };
+
+    // Json da requisição
+
+    const registerBody = {
+      firstName, 
+      lastName, 
+      email, 
+      password, 
+      confirmPassword, 
+      birthDay,
+      phone,
+      gender,
+      profileId,
+      cpf 
+    };
+
+    // Montando a requisição
+
+    const requestOptions = {
+      method: "POST",
+      headers,
+      body: JSON.stringify(registerBody),
+    };
+
+    // Executando requisição
+
+    const req = fetch(ApiRouteBuild.buildRoute("user"), requestOptions)
+      // Convertendo string para json
+      .then(handleResponse)
+      // Manipulando json de resposta
+      .then((user) => {
+        console.log(user);
+
+        return user;
+      })
+      // Tratativa de erro
+      .catch(() => {
+        setError("Email e/ou senha incorretos.");
+        setLoading(false);
+        return null;
+      });
+      // Retornando resultado
+    return req;
+  }
+
   const validateToken = (userToken) => {
     checkIfIsCancelled();
     setLoading(true);
@@ -114,6 +179,7 @@ export const useAuthentication = () => {
 
   return {
     loginUser,
+    createUser,
     validateToken,
     error,
     loading,

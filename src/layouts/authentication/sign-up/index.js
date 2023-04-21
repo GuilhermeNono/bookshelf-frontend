@@ -35,6 +35,7 @@ import { Inner } from "assets/styledComponents/registerStyles";
 import { useMaterialUIController } from "context";
 import { useEffect, useState } from "react";
 import BasicLayout from "../components/BasicLayout";
+import { useAuthentication } from "hooks/useAuthentication";
 
 function Cover() {
   const [name, setName] = useState("");
@@ -48,11 +49,25 @@ function Cover() {
   const [gender, setGender] = useState("");
   const [lockButton, setLockButton] = useState(true);
 
+  const auth = useAuthentication();
   // eslint-disable-next-line no-unused-vars
   const [controller, dispatch] = useMaterialUIController();
   const { darkMode } = controller;
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
+    const authentication = await auth.createUser(
+      name, 
+      lastName, 
+      email, 
+      password, 
+      confirmPassword, 
+      birthDay,
+      phone,
+      gender,
+      1,
+      cpf 
+      )
+      console.log(authentication);
     e.preventDefault();
   };
 
