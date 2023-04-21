@@ -36,6 +36,7 @@ import bgImage from "assets/images/bg-sign-in.svg";
 import logoImage from "assets/images/logos/Logo.svg";
 import { useMaterialUIController, setToken } from "context";
 import { useAuthentication } from "hooks/useAuthentication";
+import MDAlert from "components/MDAlert";
 
 function Basic() {
   const [rememberMe, setRememberMe] = useState(false);
@@ -54,7 +55,6 @@ function Basic() {
     e.preventDefault();
 
     const login = await authentication.loginUser(email, password);
-    console.log(login);
     if (login != null) {
       setToken(dispatch, login.token);
       return navigate("/dashboard");
@@ -66,6 +66,11 @@ function Basic() {
 
   return (
     <BasicLayout image={bgImage}>
+      {authentication.error !== "" && !authentication.loading && (
+        <MDAlert in color="error" dismissible>
+          {authentication.error}
+        </MDAlert>
+      )}
       <Card>
         <MDBox
           variant="contained"
@@ -158,11 +163,13 @@ function Basic() {
                 &nbsp;&nbsp;Remember me
               </MDTypography>
             </MDBox>
+
             <MDBox mt={4} mb={1}>
               <MDButton type="submit" variant="contained" color="info" fullWidth>
                 Entrar
               </MDButton>
             </MDBox>
+
             <MDBox mt={3} mb={1} textAlign="center">
               <MDTypography variant="button" color="text">
                 Não tem uma conta?{" "}
