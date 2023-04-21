@@ -16,7 +16,7 @@ Coded by www.creative-tim.com
 import { useState } from "react";
 
 // react-router-dom components
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 // @mui material components
 import Card from "@mui/material/Card";
@@ -34,22 +34,34 @@ import BasicLayout from "layouts/authentication/components/BasicLayout";
 // Images
 import bgImage from "assets/images/bg-sign-in.svg";
 import logoImage from "assets/images/logos/Logo.svg";
-import { useMaterialUIController } from "context";
+import { useMaterialUIController, setToken } from "context";
+import { useAuthentication } from "hooks/useAuthentication";
 
 function Basic() {
   const [rememberMe, setRememberMe] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   // eslint-disable-next-line no-unused-vars
+  const authentication = useAuthentication();
+
   const [controller, dispatch] = useMaterialUIController();
 
   const { darkMode } = controller;
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-  };
 
+    const login = await authentication.loginUser(email, password);
+    console.log(login);
+    if (login != null) {
+      setToken(dispatch, login.token);
+      return navigate("/dashboard");
+    }
+    console.log(authentication.error);
+    return null;
+  };
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
 
   return (
