@@ -7,7 +7,7 @@ import {
   CtaText,
 } from "assets/styledComponents/homeStyles";
 
-// import dashSvg from "assets/images/dash.svg";
+import dashSvg from "assets/images/dash.jpg";
 
 function CtaSection() {
   return (
@@ -18,7 +18,9 @@ function CtaSection() {
       </CenterText>
 
       <CtaContent>
-        <CtaImage>{/* <img src={dashSvg} alt="dash" /> */}</CtaImage>
+        <CtaImage>
+          <img src={dashSvg} alt="dash" />
+        </CtaImage>
         <CtaText>
           <h2>Painel de controle para todo o tipo de usuario</h2>
           <p>

@@ -61,7 +61,7 @@ export const Box = styled.div`
     transition: all 0.4s ease;
   }
   h3:hover {
-    color: var(--main-color);
+    color: #1b8ef2;
   }
   p {
     font-size: 1.1rem;
@@ -82,7 +82,7 @@ export const Btn = styled.a`
   font-size: 1.1rem;
   font-weight: 500;
   cursor: pointer;
-  background: var(--main-color);
+  background: #1b8ef2;
   color: #ffffff;
   border-radius: 30px;
   transition: all 0.4s ease;
@@ -91,7 +91,15 @@ export const Btn = styled.a`
     transform: scale(0.9) translateY(-5px);
   }
 `;
-
+/*
+#1b8ef2 | Destaque
+#335675 | Background-dark
+#61a9eb | Background-light
+#0d4373 | Secondary
+#ffffff | Destaque
+#1a2e40 | Text Color
+#cecece | Subtitle
+*/
 export const AboutSec = styled.section`
   background: #61a9eb;
   background-size: cover;
@@ -100,10 +108,15 @@ export const AboutSec = styled.section`
 
 export const AboutText = styled.div`
   padding: 35px 20px;
+  p {
+    color: #335675;
+    text-align: justify;
+  }
   h5 {
-    color: #ffffff;
+    color: #335675;
     font-size: 18px;
     font-weight: 500;
+    margin-bottom: 1rem;
   }
   h4 {
     font-size: 24px;
@@ -111,17 +124,6 @@ export const AboutText = styled.div`
     line-height: 34px;
     margin: 15px 0 15px;
     transition: all 0.4s ease;
-  }
-  h3:hover {
-    color: var(--main-color);
-  }
-  h6 {
-    color: #696969;
-    font-size: 1.1rem;
-    font-weight: 400;
-    line-height: 30px;
-    letter-spacing: 1px;
-    margin-bottom: 30px;
   }
 `;
 
@@ -131,7 +133,6 @@ export const AboutContent = styled.div`
   gap: 2rem;
   align-items: center;
   margin-top: 4rem;
-  cursor: pointer;
   border-radius: 15px;
 `;
 
@@ -304,12 +305,21 @@ export const CtaText = styled.div`
     line-height: 30px;
     letter-spacing: 1px;
     font-size: 1.2em;
+    margin-top: 1rem;
   }
   h4 {
-    color: #ffffff;
-    font-size: 1.2em;
+    color: #cecece;
+    font-size: 1em;
     font-weight: 500;
-    margin-bottom: 2em;
+    margin-top: 1rem;
+    padding-left: 10px;
+  }
+  strong {
+    color: #cecece;
+  }
+  p {
+    color: #1a2e40;
+    text-align: justify;
   }
 `;
 
@@ -379,7 +389,7 @@ export const LatterForm = styled.form`
     width: 100%;
     outline: none;
     padding: 16px 140px 16px 15px;
-    border: 2px solid var(--main-color);
+    border: 2px solid #1b8ef2;
     border-radius: 30px;
   }
 
@@ -388,7 +398,7 @@ export const LatterForm = styled.form`
     display: inline-block;
     border: none;
     outline: none;
-    background: var(--main-color);
+    background: #1b8ef2;
     color: #cecece;
     padding: 16px 40px;
     border-radius: 30px;

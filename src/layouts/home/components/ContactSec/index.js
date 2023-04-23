@@ -66,7 +66,7 @@ function ContactSection() {
         <MDBox mb={5}>
           <MDInput type="textarea" label="Menssagem" fullWidth />
         </MDBox>
-        <MDButton type="submit" color="primary">
+        <MDButton type="submit" color="info">
           Enviar
         </MDButton>
       </MDBox>
