@@ -14,7 +14,7 @@ Coded by www.creative-tim.com
 */
 
 // react-router-dom components
-// import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 // @mui material components
 // import Card from "@mui/material/Card";
@@ -34,8 +34,8 @@ import bgImage from "assets/images/bg-register.svg";
 import { Inner } from "assets/styledComponents/registerStyles";
 import { useMaterialUIController } from "context";
 import { useEffect, useState } from "react";
-import BasicLayout from "../components/BasicLayout";
 import { useAuthentication } from "hooks/useAuthentication";
+import BasicLayout from "../components/BasicLayout";
 
 function Cover() {
   const [name, setName] = useState("");
@@ -55,19 +55,18 @@ function Cover() {
   const { darkMode } = controller;
 
   const handleSubmit = async (e) => {
-    const authentication = await auth.createUser(
-      name, 
-      lastName, 
-      email, 
-      password, 
-      confirmPassword, 
+    await auth.createUser(
+      name,
+      lastName,
+      email,
+      password,
+      confirmPassword,
       birthDay,
       phone,
       gender,
       1,
-      cpf 
-      )
-      console.log(authentication);
+      cpf
+    );
     e.preventDefault();
   };
 
@@ -123,6 +122,7 @@ function Cover() {
                   label="Nome"
                   variant="outlined"
                 />
+                {name !== "" && <span color="error">aa</span>}
                 <MDInput
                   onChange={(e) => setLastName(e.target.value)}
                   value={lastName}
@@ -232,6 +232,8 @@ function Cover() {
               </MDBox>
               <MDBox mt={4} mb={1}>
                 <MDButton
+                  component={Link}
+                  to="/"
                   type="submit"
                   variant="gradient"
                   color="info"

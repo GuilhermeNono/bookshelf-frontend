@@ -77,17 +77,17 @@ export const useAuthentication = () => {
   };
 
   const createUser = async (
-    firstName, 
-    lastName, 
-    email, 
-    password, 
-    confirmPassword, 
+    firstName,
+    lastName,
+    email,
+    password,
+    confirmPassword,
     birthDay,
     phone,
     gender,
     profileId,
-    cpf 
-    ) => {
+    cpf
+  ) => {
     checkIfIsCancelled();
     checkIfIsAlreadyLogged();
     setLoading(true);
@@ -100,16 +100,16 @@ export const useAuthentication = () => {
     // Json da requisição
 
     const registerBody = {
-      firstName, 
-      lastName, 
-      email, 
-      password, 
-      confirmPassword, 
+      firstName,
+      lastName,
+      email,
+      password,
+      confirmPassword,
       birthDay,
       phone,
       gender,
       profileId,
-      cpf 
+      cpf,
     };
 
     // Montando a requisição
@@ -137,9 +137,9 @@ export const useAuthentication = () => {
         setLoading(false);
         return null;
       });
-      // Retornando resultado
+    // Retornando resultado
     return req;
-  }
+  };
 
   const validateToken = (userToken) => {
     checkIfIsCancelled();
