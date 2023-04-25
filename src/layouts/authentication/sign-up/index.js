@@ -14,7 +14,7 @@ Coded by www.creative-tim.com
 */
 
 // react-router-dom components
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 // @mui material components
 // import Card from "@mui/material/Card";
@@ -50,11 +50,13 @@ function Cover() {
   const [lockButton, setLockButton] = useState(true);
 
   const auth = useAuthentication();
+  const navigate = useNavigate();
   // eslint-disable-next-line no-unused-vars
   const [controller, dispatch] = useMaterialUIController();
   const { darkMode } = controller;
 
   const handleSubmit = async (e) => {
+    e.preventDefault();
     await auth.createUser(
       name,
       lastName,
@@ -67,7 +69,7 @@ function Cover() {
       1,
       cpf
     );
-    e.preventDefault();
+    return navigate("/dashboard");
   };
 
   // Check if all fields are filled
@@ -122,7 +124,6 @@ function Cover() {
                   label="Nome"
                   variant="outlined"
                 />
-                {name !== "" && <span color="error">aa</span>}
                 <MDInput
                   onChange={(e) => setLastName(e.target.value)}
                   value={lastName}
@@ -232,8 +233,6 @@ function Cover() {
               </MDBox>
               <MDBox mt={4} mb={1}>
                 <MDButton
-                  component={Link}
-                  to="/"
                   type="submit"
                   variant="gradient"
                   color="info"
