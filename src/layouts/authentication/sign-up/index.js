@@ -76,11 +76,15 @@ function Cover() {
   useEffect(() => {
     if (
       name &&
+      name.length >= 3 &&
       lastName &&
       email &&
       password &&
+      password.length >= 8 &&
       confirmPassword &&
+      confirmPassword === password &&
       cpf &&
+      cpf.length >= 11 &&
       birthDay &&
       phone &&
       gender
