@@ -1,5 +1,4 @@
 import {
-  Btn,
   CenterText,
   CtaContent,
   CtaImage,
@@ -7,7 +6,7 @@ import {
   CtaText,
 } from "assets/styledComponents/homeStyles";
 
-import dashSvg from "assets/images/dash.jpg";
+import dashPng from "assets/images/dash.png";
 
 function CtaSection() {
   return (
@@ -19,7 +18,7 @@ function CtaSection() {
 
       <CtaContent>
         <CtaImage>
-          <img src={dashSvg} alt="dash" />
+          <img src={dashPng} alt="dash" />
         </CtaImage>
         <CtaText>
           <h2>Painel de controle para todo o tipo de usuario</h2>
@@ -32,9 +31,6 @@ function CtaSection() {
             serviços diretamente da nossa <strong>Dashboard</strong>, trazendo assim maior controle
             e velocidade durante o gerencimento do estabelecimento.
           </p>
-          <h3>Deixe a gente te ajudar nessas tarefas</h3>
-          <h4>Junte-se a Bookshelf</h4>
-          <Btn href="/authentication/sign-up">Contratar Serviços</Btn>
         </CtaText>
       </CtaContent>
     </CtaSec>

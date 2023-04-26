@@ -25,15 +25,13 @@ function ContactSection() {
           Caso tenha alguma duvida, por favor, nos contate pelos canais abaixo, ou preencha o
           formulario ao lado e retornaremos o mais breve possivel.
         </p>
-        <h4>Entre em contato usando os canais abaixo</h4>
-        <h5>ou Complete o formulario ao lado</h5>
 
         <ContainerContact>
           <IconContact>
             <img src={phone} alt="phone" />
             <h4>Phone</h4>
           </IconContact>
-          <h5>+55 14 99999-9999</h5>
+          <h6>+55 14 99999-9999</h6>
         </ContainerContact>
 
         <ContainerContact>
@@ -41,7 +39,7 @@ function ContactSection() {
             <img src={email} alt="phone" />
             <h4>E-mail</h4>
           </IconContact>
-          <h5>Bookshelf@support.com</h5>
+          <h6>Bookshelf@support.com</h6>
         </ContainerContact>
 
         <ContainerContact>
@@ -49,7 +47,7 @@ function ContactSection() {
             <img src={location} alt="phone" />
             <h4>Location</h4>
           </IconContact>
-          <h5>Blablabla 402, Jorge mauricio, Barra bonita, BR</h5>
+          <h6>Blablabla 402, Jorge mauricio, Barra bonita, BR</h6>
         </ContainerContact>
       </ContactText>
 
@@ -64,7 +62,7 @@ function ContactSection() {
           <MDInput type="text" label="Título" fullWidth />
         </MDBox>
         <MDBox mb={5}>
-          <MDInput type="textarea" label="Menssagem" fullWidth />
+          <MDInput multiline rows={5} type="textarea" label="Menssagem" fullWidth />
         </MDBox>
         <MDButton type="submit" color="info">
           Enviar

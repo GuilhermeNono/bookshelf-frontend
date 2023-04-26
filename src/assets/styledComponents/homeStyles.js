@@ -35,6 +35,7 @@ export const CenterText = styled.div`
   h2 {
     font-size: 2.6rem;
     line-height: 1.2;
+    font-weight: 500;
   }
 `;
 
@@ -65,7 +66,7 @@ export const Box = styled.div`
   }
   p {
     font-size: 1.1rem;
-    color: #1a2e40;
+    color: #c7dffc;
     font-weight: 500;
   }
 `;
@@ -86,6 +87,7 @@ export const Btn = styled.a`
   color: #ffffff;
   border-radius: 30px;
   transition: all 0.4s ease;
+  margin-top: 1rem;
 
   &:hover {
     transform: scale(0.9) translateY(-5px);
@@ -109,8 +111,12 @@ export const AboutSec = styled.section`
 export const AboutText = styled.div`
   padding: 35px 20px;
   p {
-    color: #335675;
+    color: rgb(51, 86, 117);
     text-align: justify;
+  }
+  h2 {
+    line-height: 1.2;
+    font-weight: 500;
   }
   h5 {
     color: #335675;
@@ -120,7 +126,7 @@ export const AboutText = styled.div`
   }
   h4 {
     font-size: 24px;
-    font-weight: 700;
+    font-weight: 500;
     line-height: 34px;
     margin: 15px 0 15px;
     transition: all 0.4s ease;
@@ -178,21 +184,24 @@ export const ContactText = styled.div`
     font-size: 2.6rem;
     line-height: 1.2;
     margin-bottom: 20px;
+    font-weight: 500;
   }
   p {
-    font-size: 1.1rem;
+    font-size: 0.8em;
     color: #1a2e40;
     font-weight: 500;
     line-height: 30px;
     margin-bottom: 30px;
   }
   h4 {
-    font-size: 20px;
+    font-size: 1em;
     margin-bottom: 10px;
   }
-  h5 {
-    font-size: 20px;
+  h6 {
+    font-size: 0.8em;
     margin-bottom: 40px;
+    color: #1a2e40;
+    font-weight: 500;
   }
 `;
 
@@ -209,9 +218,6 @@ export const FormContact = styled.form`
 export const ContainerContact = styled.div`
   display: flex;
   flex-direction: column;
-  h5 {
-    color: #335675;
-  }
 `;
 
 export const IconContact = styled.div`
@@ -300,15 +306,18 @@ export const CtaText = styled.div`
   text-align: left;
   h3 {
     color: #ffffff;
-    font-size: 1.1rem;
     font-weight: 500;
     line-height: 30px;
     letter-spacing: 1px;
     font-size: 1.2em;
     margin-top: 1rem;
   }
-  h4 {
-    color: #cecece;
+  h2 {
+    line-height: 1.2;
+    font-weight: 500;
+    margin-bottom: 1rem;
+  }
+  h3 {
     font-size: 1em;
     font-weight: 500;
     margin-top: 1rem;
@@ -318,7 +327,7 @@ export const CtaText = styled.div`
     color: #cecece;
   }
   p {
-    color: #1a2e40;
+    color: #c7dffc;
     text-align: justify;
   }
 `;
