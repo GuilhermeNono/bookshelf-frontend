@@ -25,6 +25,7 @@ import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDInput from "components/MDInput";
 import MDButton from "components/MDButton";
+import { FormControl, Select, InputLabel, MenuItem } from "@mui/material";
 
 // Authentication layout components
 
@@ -48,25 +49,19 @@ function Cover() {
   const [phone, setPhone] = useState("");
   const [gender, setGender] = useState("");
   const [lockButton, setLockButton] = useState(true);
-  const [errors, setErrors] = useState({
-    name: "",
-    lastName: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-    cpf: "",
-    birthDay: "",
-    phone: "",
-    gender: "",
-  });
+
   // errors
   const [nameError, setNameError] = useState(false);
+  const [lastNameError, setLastNameError] = useState(false);
+  const [emailError, setEmailError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
+  const [confirmPasswordError, setConfirmPasswordError] = useState(false);
+  const [cpfError, setCpfError] = useState(false);
+  const [birthDayError, setBirthDayError] = useState(false);
+  const [phoneError, setPhoneError] = useState(false);
+  const [genderError, setGenderError] = useState(false);
 
   // functions
-  function handleChangeName(e) {
-    setName(e.target.value);
-    setNameError(e.target.value.length < 3 && e.target.value.length > 0);
-  }
 
   const auth = useAuthentication();
   const navigate = useNavigate();
@@ -91,23 +86,6 @@ function Cover() {
     return navigate("/dashboard");
   };
 
-  /* function textGreaterOrEqual() {
-     // caso retorne true, o componente está com erro
-     if (name.length < 3 && name.length > 0) {
-       setLockButton(true);
-       return true;
-     }
-     setLockButton(false);
-     return false;
-   }
-   */
-
-  /*  useEffect(() => {
-      const verifica = textGreaterOrEqual();
-      setErrorName(verifica);
-    }, [name, setErrorName]);
-    */
-
   // Check if all fields are filled
   useEffect(() => {
     const isNameValid = name && name.length >= 3;
@@ -117,46 +95,8 @@ function Cover() {
     const isConfirmPasswordValid = confirmPassword && confirmPassword === password;
     const isCpfValid = cpf && cpf.length === 11;
     const isBirthDayValid = birthDay;
-    const isPhoneValid = phone;
-    const isGenderValid = gender;
-
-    const errorsObj = {};
-
-    if (!isNameValid) {
-      errorsObj.name = "O nome deve ter pelo menos 3 caracteres";
-    }
-
-    if (!isLastNameValid) {
-      errorsObj.lastName = "O sobrenome deve ter pelo menos 3 caracteres";
-    }
-
-    if (!isEmailValid) {
-      errorsObj.email = "O e-mail deve ser válido";
-    }
-
-    if (!isPasswordValid) {
-      errorsObj.password = "A senha deve ter pelo menos 6 caracteres";
-    }
-
-    if (!isConfirmPasswordValid) {
-      errorsObj.confirmPassword = "As senhas não conferem";
-    }
-
-    if (!isCpfValid) {
-      errorsObj.cpf = "O CPF deve ter 11 caracteres";
-    }
-
-    if (!isBirthDayValid) {
-      errorsObj.birthDay = "A data de nascimento é obrigatória";
-    }
-
-    if (!isPhoneValid) {
-      errorsObj.phone = "O telefone é obrigatório";
-    }
-
-    if (!isGenderValid) {
-      errorsObj.gender = "O gênero é obrigatório";
-    }
+    const isPhoneValid = phone && phone.length >= 10;
+    const isGenderValid = gender && (gender === "Male" || gender === "Female");
 
     if (
       isNameValid &&
@@ -169,9 +109,21 @@ function Cover() {
       isPhoneValid &&
       isGenderValid
     ) {
-      setErrors(errorsObj);
       return setLockButton(false);
     }
+    const setErrors = () => {
+      setNameError(name ? !isNameValid : false);
+      setLastNameError(lastName ? !isLastNameValid : false);
+      setEmailError(email ? !isEmailValid : false);
+      setPasswordError(password ? !isPasswordValid : false);
+      setConfirmPasswordError(confirmPassword ? !isConfirmPasswordValid : false);
+      setCpfError(cpf ? !isCpfValid : false);
+      setBirthDayError(birthDay ? !isBirthDayValid : false);
+      setPhoneError(phone ? !isPhoneValid : false);
+      setGenderError(gender ? !isGenderValid : false);
+    };
+
+    setErrors();
     return setLockButton(true);
   }, [name, lastName, email, password, confirmPassword, cpf, birthDay, phone, gender]);
 
@@ -203,7 +155,7 @@ function Cover() {
                 }}
               >
                 <MDInput
-                  onChange={(e) => handleChangeName(e)}
+                  onChange={(e) => setName(e.target.value)}
                   value={name}
                   type="text"
                   label="Nome"
@@ -217,7 +169,8 @@ function Cover() {
                   type="text"
                   label="Sobrenome"
                   variant="outlined"
-                  error={errors}
+                  error={lastNameError}
+                  helperText={lastNameError ? "O sobrenome deve ter pelo menos 3 caracteres" : ""}
                 />
               </MDBox>
               <MDBox mb={5}>
@@ -227,7 +180,8 @@ function Cover() {
                   type="email"
                   label="E-mail"
                   variant="outlined"
-                  error={errors}
+                  error={emailError}
+                  helperText={emailError ? "O e-mail deve ser válido" : ""}
                   fullWidth
                 />
               </MDBox>
@@ -245,7 +199,8 @@ function Cover() {
                   type="password"
                   label="Senha"
                   variant="outlined"
-                  error={errors}
+                  error={passwordError}
+                  helperText={passwordError ? "A senha deve ter pelo menos 6 caracteres" : ""}
                 />
                 <MDInput
                   onChange={(e) => setConfirmPassword(e.target.value)}
@@ -253,7 +208,8 @@ function Cover() {
                   type="password"
                   label="Confirmar senha"
                   variant="outlined"
-                  error={errors}
+                  error={confirmPasswordError}
+                  helperText={confirmPasswordError ? "As senhas não conferem" : ""}
                 />
               </MDBox>
               <MDBox
@@ -270,13 +226,16 @@ function Cover() {
                   type="number"
                   label="CPF"
                   variant="outlined"
-                  error={errors}
+                  error={cpfError}
+                  helperText={cpfError ? "O CPF está incorreto" : ""}
                 />
                 <MDInput
                   onChange={(e) => setBirthDay(e.target.value)}
                   value={birthDay}
                   type="date"
                   variant="outlined"
+                  error={birthDayError}
+                  helperText={birthDayError ? "A data de nascimento é obrigatória" : ""}
                 />
               </MDBox>
               <MDBox
@@ -293,15 +252,26 @@ function Cover() {
                   type="number"
                   label="Celular"
                   variant="outlined"
+                  error={phoneError}
+                  helperText={phoneError ? "O telefone é obrigatório" : ""}
                 />
-                <MDInput
-                  onChange={(e) => setGender(e.target.value)}
-                  value={gender}
-                  type="Text"
-                  label="Sexo"
-                  variant="outlined"
-                  error={errors}
-                />
+                <FormControl variant="outlined" fullWidth>
+                  <InputLabel id="gender-label">Sexo</InputLabel>
+                  <Select
+                    labelId="gender-label"
+                    id="gender"
+                    value={gender}
+                    onChange={(e) => setGender(e.target.value)}
+                    label="Sexo"
+                    style={{ height: "44.13px" }}
+                    error={genderError}
+                    helperText={genderError ? "O gênero é obrigatório" : ""}
+                  >
+                    <MenuItem value="">Selecione</MenuItem>
+                    <MenuItem value="Male">Masculino</MenuItem>
+                    <MenuItem value="Female">Feminino</MenuItem>
+                  </Select>
+                </FormControl>
               </MDBox>
               <MDBox display="flex" alignItems="center" ml={-1}>
                 <Checkbox />
