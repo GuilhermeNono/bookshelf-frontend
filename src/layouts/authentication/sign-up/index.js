@@ -48,6 +48,18 @@ function Cover() {
   const [phone, setPhone] = useState("");
   const [gender, setGender] = useState("");
   const [lockButton, setLockButton] = useState(true);
+  const [errors, setErrors] = useState({
+    name: "",
+    lastName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    cpf: "",
+    birthDay: "",
+    phone: "",
+    gender: "",
+  });
+  // errors
 
   const auth = useAuthentication();
   const navigate = useNavigate();
@@ -72,23 +84,89 @@ function Cover() {
     return navigate("/dashboard");
   };
 
+  /* function textGreaterOrEqual() {
+     // caso retorne true, o componente está com erro
+     if (name.length < 3 && name.length > 0) {
+       setLockButton(true);
+       return true;
+     }
+     setLockButton(false);
+     return false;
+   }
+   */
+
+  function handleChangeName(e) {
+    setName(e.target.value);
+  }
+
+  /*  useEffect(() => {
+      const verifica = textGreaterOrEqual();
+      setErrorName(verifica);
+    }, [name, setErrorName]);
+    */
+
   // Check if all fields are filled
   useEffect(() => {
+    const isNameValid = name && name.length >= 3;
+    const isLastNameValid = lastName && lastName.length >= 3;
+    const isEmailValid = email && email.includes("@");
+    const isPasswordValid = password && password.length >= 6;
+    const isConfirmPasswordValid = confirmPassword && confirmPassword === password;
+    const isCpfValid = cpf && cpf.length === 11;
+    const isBirthDayValid = birthDay;
+    const isPhoneValid = phone;
+    const isGenderValid = gender;
+
+    const errorsObj = {};
+
+    if (!isNameValid) {
+      errorsObj.name = "O nome deve ter pelo menos 3 caracteres";
+    }
+
+    if (!isLastNameValid) {
+      errorsObj.lastName = "O sobrenome deve ter pelo menos 3 caracteres";
+    }
+
+    if (!isEmailValid) {
+      errorsObj.email = "O e-mail deve ser válido";
+    }
+
+    if (!isPasswordValid) {
+      errorsObj.password = "A senha deve ter pelo menos 6 caracteres";
+    }
+
+    if (!isConfirmPasswordValid) {
+      errorsObj.confirmPassword = "As senhas não conferem";
+    }
+
+    if (!isCpfValid) {
+      errorsObj.cpf = "O CPF deve ter 11 caracteres";
+    }
+
+    if (!isBirthDayValid) {
+      errorsObj.birthDay = "A data de nascimento é obrigatória";
+    }
+
+    if (!isPhoneValid) {
+      errorsObj.phone = "O telefone é obrigatório";
+    }
+
+    if (!isGenderValid) {
+      errorsObj.gender = "O gênero é obrigatório";
+    }
+
     if (
-      name &&
-      name.length >= 3 &&
-      lastName &&
-      email &&
-      password &&
-      password.length >= 8 &&
-      confirmPassword &&
-      confirmPassword === password &&
-      cpf &&
-      cpf.length >= 11 &&
-      birthDay &&
-      phone &&
-      gender
+      isNameValid &&
+      isLastNameValid &&
+      isEmailValid &&
+      isPasswordValid &&
+      isConfirmPasswordValid &&
+      isCpfValid &&
+      isBirthDayValid &&
+      isPhoneValid &&
+      isGenderValid
     ) {
+      setErrors(errorsObj);
       return setLockButton(false);
     }
     return setLockButton(true);
@@ -122,11 +200,12 @@ function Cover() {
                 }}
               >
                 <MDInput
-                  onChange={(e) => setName(e.target.value)}
+                  onChange={(e) => handleChangeName(e)}
                   value={name}
                   type="text"
                   label="Nome"
                   variant="outlined"
+                  error={errors}
                 />
                 <MDInput
                   onChange={(e) => setLastName(e.target.value)}
@@ -134,6 +213,7 @@ function Cover() {
                   type="text"
                   label="Sobrenome"
                   variant="outlined"
+                  error={errors}
                 />
               </MDBox>
               <MDBox mb={5}>
@@ -143,6 +223,7 @@ function Cover() {
                   type="email"
                   label="E-mail"
                   variant="outlined"
+                  error={errors}
                   fullWidth
                 />
               </MDBox>
@@ -160,6 +241,7 @@ function Cover() {
                   type="password"
                   label="Senha"
                   variant="outlined"
+                  error={errors}
                 />
                 <MDInput
                   onChange={(e) => setConfirmPassword(e.target.value)}
@@ -167,6 +249,7 @@ function Cover() {
                   type="password"
                   label="Confirmar senha"
                   variant="outlined"
+                  error={errors}
                 />
               </MDBox>
               <MDBox
@@ -183,6 +266,7 @@ function Cover() {
                   type="number"
                   label="CPF"
                   variant="outlined"
+                  error={errors}
                 />
                 <MDInput
                   onChange={(e) => setBirthDay(e.target.value)}
@@ -212,6 +296,7 @@ function Cover() {
                   type="Text"
                   label="Sexo"
                   variant="outlined"
+                  error={errors}
                 />
               </MDBox>
               <MDBox display="flex" alignItems="center" ml={-1}>
