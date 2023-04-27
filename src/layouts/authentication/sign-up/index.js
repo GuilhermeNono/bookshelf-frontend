@@ -60,6 +60,13 @@ function Cover() {
     gender: "",
   });
   // errors
+  const [nameError, setNameError] = useState(false);
+
+  // functions
+  function handleChangeName(e) {
+    setName(e.target.value);
+    setNameError(e.target.value.length < 3 && e.target.value.length > 0);
+  }
 
   const auth = useAuthentication();
   const navigate = useNavigate();
@@ -94,10 +101,6 @@ function Cover() {
      return false;
    }
    */
-
-  function handleChangeName(e) {
-    setName(e.target.value);
-  }
 
   /*  useEffect(() => {
       const verifica = textGreaterOrEqual();
@@ -205,7 +208,8 @@ function Cover() {
                   type="text"
                   label="Nome"
                   variant="outlined"
-                  error={errors}
+                  error={nameError}
+                  helperText={nameError ? "O nome precisa ter pelo menos 3 caracteres" : ""}
                 />
                 <MDInput
                   onChange={(e) => setLastName(e.target.value)}
