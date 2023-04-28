@@ -11,10 +11,10 @@ export const useAuthentication = () => {
   const [error, setError] = useState("");
   // const [isLogged, setIsLogged] = useState(false);
   // eslint-disable-next-line no-unused-vars
-  const [loading, setLoading] = useState("");
+  const [loading, setLoading] = useState(false);
   const [cancelled, setCancelled] = useState(false);
   // eslint-disable-next-line no-unused-vars
-  const [controller, dispatch] = useMaterialUIController();
+  const [controller] = useMaterialUIController();
   const { token } = controller;
 
   const checkIfIsCancelled = () => {
