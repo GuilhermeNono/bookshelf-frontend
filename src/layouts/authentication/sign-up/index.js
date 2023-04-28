@@ -36,6 +36,7 @@ import { Inner } from "assets/styledComponents/registerStyles";
 import { useMaterialUIController } from "context";
 import { useEffect, useState } from "react";
 import { useAuthentication } from "hooks/useAuthentication";
+import { isValid, parseISO } from "date-fns";
 import BasicLayout from "../components/BasicLayout";
 
 function Cover() {
@@ -60,8 +61,6 @@ function Cover() {
   const [birthDayError, setBirthDayError] = useState(false);
   const [phoneError, setPhoneError] = useState(false);
   const [genderError, setGenderError] = useState(false);
-
-  // functions
 
   const auth = useAuthentication();
   const navigate = useNavigate();
@@ -94,11 +93,11 @@ function Cover() {
     const isPasswordValid = password && password.length >= 6;
     const isConfirmPasswordValid = confirmPassword && confirmPassword === password;
     const isCpfValid = cpf && cpf.length === 11;
-    const isBirthDayValid = birthDay;
+    const isBirthDayValid = birthDay && isValid(parseISO(birthDay));
     const isPhoneValid = phone && phone.length >= 10;
     const isGenderValid = gender && (gender === "Male" || gender === "Female");
 
-    if (
+    const isFormValid =
       isNameValid &&
       isLastNameValid &&
       isEmailValid &&
@@ -107,24 +106,18 @@ function Cover() {
       isCpfValid &&
       isBirthDayValid &&
       isPhoneValid &&
-      isGenderValid
-    ) {
-      return setLockButton(false);
-    }
-    const setErrors = () => {
-      setNameError(name ? !isNameValid : false);
-      setLastNameError(lastName ? !isLastNameValid : false);
-      setEmailError(email ? !isEmailValid : false);
-      setPasswordError(password ? !isPasswordValid : false);
-      setConfirmPasswordError(confirmPassword ? !isConfirmPasswordValid : false);
-      setCpfError(cpf ? !isCpfValid : false);
-      setBirthDayError(birthDay ? !isBirthDayValid : false);
-      setPhoneError(phone ? !isPhoneValid : false);
-      setGenderError(gender ? !isGenderValid : false);
-    };
+      isGenderValid;
 
-    setErrors();
-    return setLockButton(true);
+    setLockButton(!isFormValid);
+    setNameError(name ? !isNameValid : false);
+    setLastNameError(lastName ? !isLastNameValid : false);
+    setEmailError(email ? !isEmailValid : false);
+    setPasswordError(password ? !isPasswordValid : false);
+    setConfirmPasswordError(confirmPassword ? !isConfirmPasswordValid : false);
+    setCpfError(cpf ? !isCpfValid : false);
+    setBirthDayError(birthDay ? !isBirthDayValid : false);
+    setPhoneError(phone ? !isPhoneValid : false);
+    setGenderError(gender ? !isGenderValid : false);
   }, [name, lastName, email, password, confirmPassword, cpf, birthDay, phone, gender]);
 
   return (
@@ -161,7 +154,7 @@ function Cover() {
                   label="Nome"
                   variant="outlined"
                   error={nameError}
-                  helperText={nameError ? "O nome precisa ter pelo menos 3 caracteres" : ""}
+                  helpertext={nameError ? "O nome precisa ter pelo menos 3 caracteres" : ""}
                 />
                 <MDInput
                   onChange={(e) => setLastName(e.target.value)}
@@ -170,7 +163,7 @@ function Cover() {
                   label="Sobrenome"
                   variant="outlined"
                   error={lastNameError}
-                  helperText={lastNameError ? "O sobrenome deve ter pelo menos 3 caracteres" : ""}
+                  helpertext={lastNameError ? "O sobrenome deve ter pelo menos 3 caracteres" : ""}
                 />
               </MDBox>
               <MDBox mb={5}>
@@ -181,7 +174,7 @@ function Cover() {
                   label="E-mail"
                   variant="outlined"
                   error={emailError}
-                  helperText={emailError ? "O e-mail deve ser válido" : ""}
+                  helpertext={emailError ? "O e-mail deve ser válido" : ""}
                   fullWidth
                 />
               </MDBox>
@@ -200,7 +193,7 @@ function Cover() {
                   label="Senha"
                   variant="outlined"
                   error={passwordError}
-                  helperText={passwordError ? "A senha deve ter pelo menos 6 caracteres" : ""}
+                  helpertext={passwordError ? "A senha deve ter pelo menos 6 caracteres" : ""}
                 />
                 <MDInput
                   onChange={(e) => setConfirmPassword(e.target.value)}
@@ -209,7 +202,7 @@ function Cover() {
                   label="Confirmar senha"
                   variant="outlined"
                   error={confirmPasswordError}
-                  helperText={confirmPasswordError ? "As senhas não conferem" : ""}
+                  helpertext={confirmPasswordError ? "As senhas não conferem" : ""}
                 />
               </MDBox>
               <MDBox
@@ -227,7 +220,7 @@ function Cover() {
                   label="CPF"
                   variant="outlined"
                   error={cpfError}
-                  helperText={cpfError ? "O CPF está incorreto" : ""}
+                  helpertext={cpfError ? "O CPF está incorreto" : ""}
                 />
                 <MDInput
                   onChange={(e) => setBirthDay(e.target.value)}
@@ -235,7 +228,7 @@ function Cover() {
                   type="date"
                   variant="outlined"
                   error={birthDayError}
-                  helperText={birthDayError ? "A data de nascimento é obrigatória" : ""}
+                  helpertext={birthDayError ? "A data de nascimento é obrigatória" : ""}
                 />
               </MDBox>
               <MDBox
@@ -253,7 +246,7 @@ function Cover() {
                   label="Celular"
                   variant="outlined"
                   error={phoneError}
-                  helperText={phoneError ? "O telefone é obrigatório" : ""}
+                  helpertext={phoneError ? "O telefone é obrigatório" : ""}
                 />
                 <FormControl variant="outlined" fullWidth>
                   <InputLabel id="gender-label">Sexo</InputLabel>
@@ -265,7 +258,7 @@ function Cover() {
                     label="Sexo"
                     style={{ height: "44.13px" }}
                     error={genderError}
-                    helperText={genderError ? "O gênero é obrigatório" : ""}
+                    helpertext={genderError ? "O gênero é obrigatório" : ""}
                   >
                     <MenuItem value="">Selecione</MenuItem>
                     <MenuItem value="Male">Masculino</MenuItem>
