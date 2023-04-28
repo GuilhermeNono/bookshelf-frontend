@@ -64,7 +64,7 @@ function Projects() {
       <MDBox display="flex" justifyContent="space-between" alignItems="center" p={3}>
         <MDBox>
           <MDTypography variant="h6" gutterBottom>
-            Projects
+            Livros mais recentes
           </MDTypography>
           <MDBox display="flex" alignItems="center" lineHeight={0}>
             <Icon
@@ -77,7 +77,7 @@ function Projects() {
               done
             </Icon>
             <MDTypography variant="button" fontWeight="regular" color="text">
-              &nbsp;<strong>30 done</strong> this month
+              &nbsp;<strong>30 novos</strong> nesse mês
             </MDTypography>
           </MDBox>
         </MDBox>
@@ -88,7 +88,9 @@ function Projects() {
         </MDBox>
         {renderMenu}
       </MDBox>
+      {/* eslint-disable-next-line react/jsx-no-comment-textnodes */}
       <MDBox>
+        //TODO: Refazer esse datatable com os livros mais recentes do sistema.
         <DataTable
           table={{ columns, rows }}
           showTotalEntries={false}
