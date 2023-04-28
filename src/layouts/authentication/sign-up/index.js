@@ -49,6 +49,7 @@ function Cover() {
   const [birthDay, setBirthDay] = useState("");
   const [phone, setPhone] = useState("");
   const [gender, setGender] = useState("");
+  const [checkButton, setCheckButton] = useState(false);
   const [lockButton, setLockButton] = useState(true);
 
   // errors
@@ -96,6 +97,7 @@ function Cover() {
     const isBirthDayValid = birthDay && isValid(parseISO(birthDay));
     const isPhoneValid = phone && phone.length >= 10;
     const isGenderValid = gender && (gender === "Male" || gender === "Female");
+    const isCheckValid = checkButton === true;
 
     const isFormValid =
       isNameValid &&
@@ -106,7 +108,8 @@ function Cover() {
       isCpfValid &&
       isBirthDayValid &&
       isPhoneValid &&
-      isGenderValid;
+      isGenderValid &&
+      isCheckValid;
 
     setLockButton(!isFormValid);
     setNameError(name ? !isNameValid : false);
@@ -118,7 +121,7 @@ function Cover() {
     setBirthDayError(birthDay ? !isBirthDayValid : false);
     setPhoneError(phone ? !isPhoneValid : false);
     setGenderError(gender ? !isGenderValid : false);
-  }, [name, lastName, email, password, confirmPassword, cpf, birthDay, phone, gender]);
+  }, [name, lastName, email, password, confirmPassword, cpf, birthDay, phone, gender, checkButton]);
 
   return (
     <BasicLayout image={bgImage}>
@@ -154,7 +157,8 @@ function Cover() {
                   label="Nome"
                   variant="outlined"
                   error={nameError}
-                  helpertext={nameError ? "O nome precisa ter pelo menos 3 caracteres" : ""}
+                  helperText={nameError ? "O nome precisa ter pelo menos 3 caracteres" : ""}
+                  FormHelperTextProps={{ style: { color: "red" } }}
                 />
                 <MDInput
                   onChange={(e) => setLastName(e.target.value)}
@@ -163,7 +167,8 @@ function Cover() {
                   label="Sobrenome"
                   variant="outlined"
                   error={lastNameError}
-                  helpertext={lastNameError ? "O sobrenome deve ter pelo menos 3 caracteres" : ""}
+                  helperText={lastNameError ? "O sobrenome deve ter pelo menos 3 caracteres" : ""}
+                  FormHelperTextProps={{ style: { color: "red" } }}
                 />
               </MDBox>
               <MDBox mb={5}>
@@ -174,7 +179,8 @@ function Cover() {
                   label="E-mail"
                   variant="outlined"
                   error={emailError}
-                  helpertext={emailError ? "O e-mail deve ser válido" : ""}
+                  helperText={emailError ? "O e-mail deve ser válido" : ""}
+                  FormHelperTextProps={{ style: { color: "red" } }}
                   fullWidth
                 />
               </MDBox>
@@ -193,7 +199,8 @@ function Cover() {
                   label="Senha"
                   variant="outlined"
                   error={passwordError}
-                  helpertext={passwordError ? "A senha deve ter pelo menos 6 caracteres" : ""}
+                  helperText={passwordError ? "A senha deve ter pelo menos 6 caracteres" : ""}
+                  FormHelperTextProps={{ style: { color: "red" } }}
                 />
                 <MDInput
                   onChange={(e) => setConfirmPassword(e.target.value)}
@@ -202,7 +209,8 @@ function Cover() {
                   label="Confirmar senha"
                   variant="outlined"
                   error={confirmPasswordError}
-                  helpertext={confirmPasswordError ? "As senhas não conferem" : ""}
+                  helperText={confirmPasswordError ? "As senhas não conferem" : ""}
+                  FormHelperTextProps={{ style: { color: "red" } }}
                 />
               </MDBox>
               <MDBox
@@ -220,7 +228,8 @@ function Cover() {
                   label="CPF"
                   variant="outlined"
                   error={cpfError}
-                  helpertext={cpfError ? "O CPF está incorreto" : ""}
+                  helperText={cpfError ? "O CPF está incorreto" : ""}
+                  FormHelperTextProps={{ style: { color: "red" } }}
                 />
                 <MDInput
                   onChange={(e) => setBirthDay(e.target.value)}
@@ -228,7 +237,8 @@ function Cover() {
                   type="date"
                   variant="outlined"
                   error={birthDayError}
-                  helpertext={birthDayError ? "A data de nascimento é obrigatória" : ""}
+                  helperText={birthDayError ? "A data de nascimento é obrigatória" : ""}
+                  FormHelperTextProps={{ style: { color: "red" } }}
                 />
               </MDBox>
               <MDBox
@@ -246,7 +256,8 @@ function Cover() {
                   label="Celular"
                   variant="outlined"
                   error={phoneError}
-                  helpertext={phoneError ? "O telefone é obrigatório" : ""}
+                  helperText={phoneError ? "O telefone é obrigatório" : ""}
+                  FormHelperTextProps={{ style: { color: "red" } }}
                 />
                 <FormControl variant="outlined" fullWidth>
                   <InputLabel id="gender-label">Sexo</InputLabel>
@@ -258,7 +269,8 @@ function Cover() {
                     label="Sexo"
                     style={{ height: "44.13px" }}
                     error={genderError}
-                    helpertext={genderError ? "O gênero é obrigatório" : ""}
+                    helperText={genderError ? "O gênero é obrigatório" : ""}
+                    FormHelperTextProps={{ style: { color: "red" } }}
                   >
                     <MenuItem value="">Selecione</MenuItem>
                     <MenuItem value="Male">Masculino</MenuItem>
@@ -267,7 +279,10 @@ function Cover() {
                 </FormControl>
               </MDBox>
               <MDBox display="flex" alignItems="center" ml={-1}>
-                <Checkbox />
+                <Checkbox
+                  checked={checkButton}
+                  onChange={(e) => setCheckButton(e.target.checked)}
+                />
                 <MDTypography
                   variant="button"
                   fontWeight="regular"
