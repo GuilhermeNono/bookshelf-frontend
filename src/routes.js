@@ -52,7 +52,7 @@ import Pricing from "layouts/pricing";
 
 const routes = [
   {
-    type: "collapse",
+    type: "title",
     name: "Home",
     key: "home",
     icon: <Icon fontSize="small">dashboard</Icon>,
@@ -61,7 +61,7 @@ const routes = [
     component: <Home />,
   },
   {
-    type: "collapse",
+    type: "title",
     name: "pricing",
     key: "pricing",
     icon: <Icon fontSize="small">dashboard</Icon>,
@@ -118,7 +118,7 @@ const routes = [
     component: <Profile />,
   },
   {
-    type: "collapse",
+    type: "divider",
     name: "Sign In",
     key: "sign-in",
     icon: <Icon fontSize="small">login</Icon>,
@@ -126,7 +126,7 @@ const routes = [
     component: <SignIn />,
   },
   {
-    type: "collapse",
+    type: "title",
     name: "Sign Up",
     key: "sign-up",
     icon: <Icon fontSize="small">assignment</Icon>,
