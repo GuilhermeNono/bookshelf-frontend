@@ -10,7 +10,8 @@
 /build
 
 #idea
-/.idea
+/.idea/*
+!.idea/rcb-settings.xml
 
 # misc
 .DS_Store
