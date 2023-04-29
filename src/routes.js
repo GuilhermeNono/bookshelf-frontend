@@ -48,6 +48,7 @@ import SignUp from "layouts/authentication/sign-up";
 import Icon from "@mui/material/Icon";
 import Home from "layouts/home";
 import Pricing from "layouts/pricing";
+import Books from "layouts/books-test-page";
 
 const routes = [
   {
@@ -83,6 +84,14 @@ const routes = [
     icon: <Icon fontSize="small">table_view</Icon>,
     route: "/tables",
     component: <Tables />,
+  },
+  {
+    type: "collapse",
+    name: "Books",
+    key: "books",
+    icon: <Icon fontSize="small">table_view</Icon>,
+    route: "/books",
+    component: <Books />,
   },
   {
     type: "collapse",
