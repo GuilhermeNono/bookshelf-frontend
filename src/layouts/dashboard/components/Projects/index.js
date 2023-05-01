@@ -1,17 +1,17 @@
 /**
-=========================================================
-* Material Dashboard 2 React - v2.1.0
-=========================================================
+ =========================================================
+ * Material Dashboard 2 React - v2.1.0
+ =========================================================
 
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
+ * Product Page: https://www.creative-tim.com/product/material-dashboard-react
+ * Copyright 2022 Creative Tim (https://www.creative-tim.com)
 
-Coded by www.creative-tim.com
+ Coded by www.creative-tim.com
 
  =========================================================
 
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+ */
 
 import { useState } from "react";
 
@@ -31,7 +31,7 @@ import DataTable from "examples/Tables/DataTable";
 // Data
 import data from "layouts/dashboard/components/Projects/data";
 
-function Projects() {
+function RecentBooks() {
   const { columns, rows } = data();
   const [menu, setMenu] = useState(null);
 
@@ -77,7 +77,7 @@ function Projects() {
               done
             </Icon>
             <MDTypography variant="button" fontWeight="regular" color="text">
-              &nbsp;<strong>30 novos</strong> nesse mês
+              &nbsp;<strong>30 novos</strong> Livros nesse mês
             </MDTypography>
           </MDBox>
         </MDBox>
@@ -89,8 +89,8 @@ function Projects() {
         {renderMenu}
       </MDBox>
       {/* eslint-disable-next-line react/jsx-no-comment-textnodes */}
-      <MDBox>
-        //TODO: Refazer esse datatable com os livros mais recentes do sistema.
+      <MDBox p={3}>
+        {/* TODO: Refazer esse datatable com os livros mais recentes do sistema. */}
         <DataTable
           table={{ columns, rows }}
           showTotalEntries={false}
@@ -103,4 +103,4 @@ function Projects() {
   );
 }
 
-export default Projects;
+export default RecentBooks;
