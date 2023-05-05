@@ -24,10 +24,10 @@ import Footer from "examples/Footer";
 import DataTable from "examples/Tables/DataTable";
 
 // Data
-import booksTableData from "./data/usersTableData";
+import usersTableData from "./data/usersTableData";
 
 function UserList() {
-  const { columns, rows } = booksTableData();
+  const { columns, rows } = usersTableData();
 
   return (
     <DashboardLayout>
@@ -47,7 +47,7 @@ function UserList() {
                 coloredShadow="info"
               >
                 <MDTypography variant="h6" color="white">
-                  Lista de livros
+                  Lista de Usuários
                 </MDTypography>
               </MDBox>
               <MDBox pt={3}>

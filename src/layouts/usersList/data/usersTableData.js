@@ -16,8 +16,8 @@ import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDBadge from "components/MDBadge";
 
-export default function data() {
-  const BookTitle = ({ name }) => (
+function data() {
+  const UserName = ({ name }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
       <MDBox ml={2} lineHeight={1}>
         <MDTypography display="block" variant="button" fontWeight="medium">
@@ -27,171 +27,67 @@ export default function data() {
     </MDBox>
   );
 
-  const Author = ({ name }) => (
+  const RmOrCpf = ({ number }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
       <MDBox ml={2} lineHeight={1}>
         <MDTypography display="block" variant="button" fontWeight="medium">
-          {name}
+          {number}
         </MDTypography>
       </MDBox>
     </MDBox>
   );
 
-  const Categories = ({ title }) => (
+  const State = ({ name }) => (
     <MDBox lineHeight={1} textAlign="left">
-      <MDTypography display="block" variant="caption" color="text" fontWeight="medium">
-        {title}
-      </MDTypography>
+      <MDBox ml={-1}>
+        <MDBadge badgeContent={name} color="success" variant="gradient" size="lg" />
+      </MDBox>
     </MDBox>
   );
 
-  const BookNumber = ({ number }) => (
+  const Action = ({ name }) => (
     <MDBox lineHeight={1} textAlign="left">
-      <MDTypography display="block" variant="caption" color="text" fontWeight="medium">
-        {number}
+      <MDTypography component="a" href="#" variant="caption" fontWeight="medium">
+        {name}
       </MDTypography>
     </MDBox>
   );
 
   return {
     columns: [
-      { Header: "titulo", accessor: "bookTitle", align: "left" },
-      { Header: "author", accessor: "author", align: "left" },
-      { Header: "categorias", accessor: "categories", align: "left" },
+      { Header: "Nome", accessor: "userName", align: "center" },
+      { Header: "RM/CPF", accessor: "rmCpf", align: "center" },
       { Header: "status", accessor: "status", align: "center" },
-      { Header: "Tombo", accessor: "number", align: "center" },
-      { Header: "Ano de Publicação", accessor: "release", align: "center" },
+      { Header: "Ações", accessor: "acoes", align: "center" },
     ],
 
     rows: [
       {
-        bookTitle: <BookTitle name="Animais Fantásticos e Onde Habitam" />,
-        author: <Author name="J. K. Rowling" />,
-        categories: <Categories title="Fantasia" />,
-        release: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            23/04/18
-          </MDTypography>
-        ),
-        status: (
-          <MDBox ml={-1}>
-            <MDBadge badgeContent="disponivel" color="success" variant="gradient" size="sm" />
-          </MDBox>
-        ),
-        number: <BookNumber number="2123" />,
+        userName: <UserName name="Kauan Moreira Pereira" />,
+        rmCpf: <RmOrCpf number="123.456.789-10" />,
+        status: <State name="Ativo" />,
+        acoes: <Action name="Edit" />,
       },
       {
-        bookTitle: <BookTitle name="A revolução dos bichos" />,
-        author: <Author name="George Orwell" />,
-        categories: <Categories title="Distopia, Ficção" />,
-        release: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            23/04/18
-          </MDTypography>
-        ),
-        status: (
-          <MDBox ml={-1}>
-            <MDBadge badgeContent="indisponivel" color="error" variant="gradient" size="sm" />
-          </MDBox>
-        ),
-        number: <BookNumber number="2123" />,
+        userName: <UserName name="Gabriel de Costa" />,
+        rmCpf: <RmOrCpf number="123.456.789-10" />,
+        status: <State name="Ativo" />,
+        acoes: <Action name="Edit" />,
       },
       {
-        bookTitle: <BookTitle name="Animais Fantásticos e Onde Habitam" />,
-        author: <Author name="J. K. Rowling" />,
-        categories: <Categories title="Fantasia" />,
-        release: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            23/04/18
-          </MDTypography>
-        ),
-        status: (
-          <MDBox ml={-1}>
-            <MDBadge badgeContent="disponivel" color="success" variant="gradient" size="sm" />
-          </MDBox>
-        ),
-        number: <BookNumber number="2123" />,
+        userName: <UserName name="Guilherme Nono" />,
+        rmCpf: <RmOrCpf number="123.456.789-10" />,
+        status: <State name="Ativo" />,
+        acoes: <Action name="Edit" />,
       },
       {
-        bookTitle: <BookTitle name="A revolução dos bichos" />,
-        author: <Author name="George Orwell" />,
-        categories: <Categories title="Distopia, Ficção" />,
-        release: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            23/04/18
-          </MDTypography>
-        ),
-        status: (
-          <MDBox ml={-1}>
-            <MDBadge badgeContent="indisponivel" color="error" variant="gradient" size="sm" />
-          </MDBox>
-        ),
-        number: <BookNumber number="2123" />,
-      },
-      {
-        bookTitle: <BookTitle name="Animais Fantásticos e Onde Habitam" />,
-        author: <Author name="J. K. Rowling" />,
-        categories: <Categories title="Fantasia" />,
-        release: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            23/04/18
-          </MDTypography>
-        ),
-        status: (
-          <MDBox ml={-1}>
-            <MDBadge badgeContent="disponivel" color="success" variant="gradient" size="sm" />
-          </MDBox>
-        ),
-        number: <BookNumber number="2123" />,
-      },
-      {
-        bookTitle: <BookTitle name="A revolução dos bichos" />,
-        author: <Author name="George Orwell" />,
-        categories: <Categories title="Distopia, Ficção" />,
-        release: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            23/04/18
-          </MDTypography>
-        ),
-        status: (
-          <MDBox ml={-1}>
-            <MDBadge badgeContent="indisponivel" color="error" variant="gradient" size="sm" />
-          </MDBox>
-        ),
-        number: <BookNumber number="2123" />,
-      },
-      {
-        bookTitle: <BookTitle name="Animais Fantásticos e Onde Habitam" />,
-        author: <Author name="J. K. Rowling" />,
-        categories: <Categories title="Fantasia" />,
-        release: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            23/04/18
-          </MDTypography>
-        ),
-        status: (
-          <MDBox ml={-1}>
-            <MDBadge badgeContent="disponivel" color="success" variant="gradient" size="sm" />
-          </MDBox>
-        ),
-        number: <BookNumber number="2123" />,
-      },
-      {
-        bookTitle: <BookTitle name="A revolução dos bichos" />,
-        author: <Author name="George Orwell" />,
-        categories: <Categories title="Distopia, Ficção" />,
-        release: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            23/04/18
-          </MDTypography>
-        ),
-        status: (
-          <MDBox ml={-1}>
-            <MDBadge badgeContent="indisponivel" color="error" variant="gradient" size="sm" />
-          </MDBox>
-        ),
-        number: <BookNumber number="2123" />,
+        userName: <UserName name="João Pedro Maria" />,
+        rmCpf: <RmOrCpf number="123.456.789-10" />,
+        status: <State name="Ativo" />,
+        acoes: <Action name="Edit" />,
       },
     ],
   };
 }
+
+export default data;
