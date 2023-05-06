@@ -27,6 +27,14 @@ function data() {
     </MDBox>
   );
 
+  const Permissions = ({ name }) => (
+    <MDBox lineHeight={1} textAlign="left">
+      <MDBox ml={-1}>
+        <MDBadge badgeContent={name} color="info" variant="gradient" size="lg" />
+      </MDBox>
+    </MDBox>
+  );
+
   const RmOrCpf = ({ number }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
       <MDBox ml={2} lineHeight={1}>
@@ -56,6 +64,7 @@ function data() {
   return {
     columns: [
       { Header: "Nome", accessor: "userName", align: "center" },
+      { Header: "Permissões", accessor: "userPermission", align: "center" },
       { Header: "RM/CPF", accessor: "rmCpf", align: "center" },
       { Header: "status", accessor: "status", align: "center" },
       { Header: "Ações", accessor: "acoes", align: "center" },
@@ -64,24 +73,28 @@ function data() {
     rows: [
       {
         userName: <UserName name="Kauan Moreira Pereira" />,
+        userPermission: <Permissions name="Administrador" />,
         rmCpf: <RmOrCpf number="123.456.789-10" />,
         status: <State name="Ativo" />,
         acoes: <Action name="Edit" />,
       },
       {
         userName: <UserName name="Gabriel de Costa" />,
+        userPermission: <Permissions name="Administrador" />,
         rmCpf: <RmOrCpf number="123.456.789-10" />,
         status: <State name="Ativo" />,
         acoes: <Action name="Edit" />,
       },
       {
         userName: <UserName name="Guilherme Nono" />,
+        userPermission: <Permissions name="Administrador" />,
         rmCpf: <RmOrCpf number="123.456.789-10" />,
         status: <State name="Ativo" />,
         acoes: <Action name="Edit" />,
       },
       {
         userName: <UserName name="João Pedro Maria" />,
+        userPermission: <Permissions name="Administrador" />,
         rmCpf: <RmOrCpf number="123.456.789-10" />,
         status: <State name="Ativo" />,
         acoes: <Action name="Edit" />,
