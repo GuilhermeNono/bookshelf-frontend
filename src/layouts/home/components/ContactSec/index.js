@@ -6,11 +6,11 @@ import {
 } from "assets/styledComponents/homeStyles";
 import MDBox from "components/MDBox";
 import MDButton from "components/MDButton";
-import MDInput from "components/MDInput";
 
 import phone from "assets/images/phone.svg";
 import email from "assets/images/email.svg";
 import location from "assets/images/location.svg";
+import TextField from "@mui/material/TextField";
 
 function ContactSection() {
   const handleSubmit = (e) => {
@@ -53,16 +53,23 @@ function ContactSection() {
 
       <MDBox component="form" onSubmit={handleSubmit} role="form">
         <MDBox mb={5}>
-          <MDInput type="text" label="Seu nome" fullWidth />
+          <TextField type="text" label="Nome" variant="standard" fullWidth />
         </MDBox>
         <MDBox mb={5}>
-          <MDInput type="text" label="Endereço de e-mail" fullWidth />
+          <TextField type="text" label="Endereço de e-mail" variant="standard" fullWidth />
         </MDBox>
         <MDBox mb={5}>
-          <MDInput type="text" label="Título" fullWidth />
+          <TextField type="text" label="Título" variant="standard" fullWidth />
         </MDBox>
         <MDBox mb={5}>
-          <MDInput multiline rows={5} type="textarea" label="Menssagem" fullWidth />
+          <TextField
+            multiline
+            rows={5}
+            type="textarea"
+            label="Menssagem"
+            variant="standard"
+            fullWidth
+          />
         </MDBox>
         <MDButton type="submit" color="info">
           Enviar

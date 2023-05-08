@@ -226,6 +226,7 @@ export const IconContact = styled.div`
   h4 {
     text-align: center;
     margin: 0;
+    font-weight: 500;
   }
 `;
 
