@@ -22,7 +22,7 @@ const textField = {
   styleOverrides: {
     root: {
       backgroundColor: white.main,
-      borderRadius: "6.5px",
+      borderRadius: "6.5px 6.5px 0 0",
     },
   },
 };
