@@ -10,7 +10,22 @@ import MDButton from "components/MDButton";
 import phone from "assets/images/phone.svg";
 import email from "assets/images/email.svg";
 import location from "assets/images/location.svg";
-import TextField from "@mui/material/TextField";
+import InputHome from "../../../../assets/theme/components/form/inputHome";
+
+/**
+ =========================================================
+ * Material Dashboard 2 React - v2.1.0
+ =========================================================
+
+ * Product Page: https://www.creative-tim.com/product/material-dashboard-react
+ * Copyright 2022 Creative Tim (https://www.creative-tim.com)
+
+ Coded by www.creative-tim.com
+
+ =========================================================
+
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+ */
 
 function ContactSection() {
   const handleSubmit = (e) => {
@@ -53,23 +68,16 @@ function ContactSection() {
 
       <MDBox component="form" onSubmit={handleSubmit} role="form">
         <MDBox mb={5}>
-          <TextField type="text" label="Nome" variant="standard" fullWidth />
+          <InputHome type="text" placeholder="Nome" fullWidth />
         </MDBox>
         <MDBox mb={5}>
-          <TextField type="text" label="Endereço de e-mail" variant="standard" fullWidth />
+          <InputHome type="text" placeholder="Endereço de e-mail" fullWidth />
         </MDBox>
         <MDBox mb={5}>
-          <TextField type="text" label="Título" variant="standard" fullWidth />
+          <InputHome type="text" placeholder="Título" fullWidth />
         </MDBox>
         <MDBox mb={5}>
-          <TextField
-            multiline
-            rows={5}
-            type="textarea"
-            label="Menssagem"
-            variant="standard"
-            fullWidth
-          />
+          <InputHome multiline rows={5} type="textarea" placeholder="Menssagem" fullWidth />
         </MDBox>
         <MDButton type="submit" color="info">
           Enviar

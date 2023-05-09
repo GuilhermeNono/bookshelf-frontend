@@ -45,6 +45,7 @@ export const Box = styled.div`
   border-radius: 20px;
   box-shadow: -11.729px -11.729px 32px rgb(255 255 255 / 15%);
   transition: all 0.4s ease;
+  height: 380px;
 
   img {
     height: auto;

@@ -44,7 +44,6 @@ import iconButton from "assets/theme/components/iconButton";
 import input from "assets/theme/components/form/input";
 import inputLabel from "assets/theme/components/form/inputLabel";
 import inputOutlined from "assets/theme/components/form/inputOutlined";
-import textField from "assets/theme/components/form/textField";
 import menu from "assets/theme/components/menu";
 import menuItem from "assets/theme/components/menu/menuItem";
 import switchButton from "assets/theme/components/form/switchButton";
@@ -82,6 +81,7 @@ import dialogTitle from "assets/theme/components/dialog/dialogTitle";
 import dialogContent from "assets/theme/components/dialog/dialogContent";
 import dialogContentText from "assets/theme/components/dialog/dialogContentText";
 import dialogActions from "assets/theme/components/dialog/dialogActions";
+import TesteField from "./components/form/textField";
 
 export default createTheme({
   breakpoints: { ...breakpoints },
@@ -116,7 +116,7 @@ export default createTheme({
     MuiInput: { ...input },
     MuiInputLabel: { ...inputLabel },
     MuiOutlinedInput: { ...inputOutlined },
-    MuiTextField: { ...textField },
+    MuiTextField: { ...TesteField },
     MuiMenu: { ...menu },
     MuiMenuItem: { ...menuItem },
     MuiSwitch: { ...switchButton },
