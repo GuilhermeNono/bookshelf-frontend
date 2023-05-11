@@ -20,27 +20,9 @@ import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 
 // Images
-import MDBadge from "../../../../../components/MDBadge";
+import MDBadge from "../../../components/MDBadge";
 
-export default function data() {
-  // const Book = ({ image, name }) => (
-  //   <MDBox display="flex" alignItems="center" lineHeight={1}>
-  //     <MDAvatar
-  //       src={image}
-  //       name={name}
-  //       size="sm"
-  //       sx={{
-  //         borderRadius: "0",
-  //         alignContent: "center",
-  //         boxShadow: "3px 3px 5px 0px rgba(0,0,0,0.19)",
-  //       }}
-  //     />
-  //     <MDTypography variant="button" fontWeight="medium" ml={1} lineHeight={1}>
-  //       {name}
-  //     </MDTypography>
-  //   </MDBox>
-  // );
-
+function data() {
   return {
     columns: [
       { Header: "Status", accessor: "status", width: "10%", align: "left" },
@@ -303,3 +285,5 @@ export default function data() {
     ],
   };
 }
+
+export default data;
