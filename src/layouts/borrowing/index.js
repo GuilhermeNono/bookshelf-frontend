@@ -23,6 +23,7 @@ import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import DataTable from "examples/Tables/DataTable";
 import data from "./data";
+import ComplexStatisticsCard from "../../examples/Cards/StatisticsCards/ComplexStatisticsCard";
 
 function borrowing() {
   const { columns, rows } = data();
@@ -30,6 +31,18 @@ function borrowing() {
   return (
     <DashboardLayout>
       <DashboardNavbar />
+      <Grid container spacing={3} mt={3}>
+        <Grid item xs={12} md={6} lg={4}>
+          <MDBox mb={1.5}>
+            <ComplexStatisticsCard icon="collectionsbookmark" title="Empréstimos" count="10" />
+          </MDBox>
+        </Grid>
+        <Grid item xs={12} md={6} lg={4}>
+          <MDBox mb={1.5}>
+            <ComplexStatisticsCard color="error" icon="alarmoff" title="Em atraso" count="7" />
+          </MDBox>
+        </Grid>
+      </Grid>
       <MDBox pt={6} pb={3}>
         <Grid container spacing={6}>
           <Grid item xs={12}>
