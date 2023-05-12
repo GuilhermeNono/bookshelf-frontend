@@ -19,9 +19,29 @@ Coded by www.creative-tim.com
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDBadge from "components/MDBadge";
+import MDAvatar from "components/MDAvatar";
+import bookCape from "assets/images/book/harry_potter_pf.jpg";
+import { Link } from "react-router-dom";
 
 export default function data() {
-  const BookTitle = ({ name }) => (
+  const Book = ({ image, name }) => (
+    <MDBox display="flex" alignItems="center" lineHeight={1}>
+      <MDAvatar
+        src={image}
+        name={name}
+        size="sm"
+        sx={{
+          borderRadius: "0",
+          alignContent: "center",
+          boxShadow: "3px 3px 5px 0px rgba(0,0,0,0.19)",
+        }}
+      />
+      <MDTypography variant="button" fontWeight="medium" ml={1} lineHeight={1}>
+        {name}
+      </MDTypography>
+    </MDBox>
+  );
+  const Author = ({ name }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
       <MDBox ml={2} lineHeight={1}>
         <MDTypography display="block" variant="button" fontWeight="medium">
@@ -30,8 +50,7 @@ export default function data() {
       </MDBox>
     </MDBox>
   );
-
-  const Author = ({ name }) => (
+  const Publisher = ({ name }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
       <MDBox ml={2} lineHeight={1}>
         <MDTypography display="block" variant="button" fontWeight="medium">
@@ -49,152 +68,243 @@ export default function data() {
     </MDBox>
   );
 
-  const BookNumber = ({ number }) => (
+  const BookPages = ({ pages }) => (
     <MDBox lineHeight={1} textAlign="left">
       <MDTypography display="block" variant="caption" color="text" fontWeight="medium">
-        {number}
+        {pages}
+      </MDTypography>
+    </MDBox>
+  );
+
+  const Details = () => (
+    <MDBox lineHeight={1} textAlign="left">
+      <MDTypography display="block" variant="caption" color="text" fontWeight="medium">
+        <MDTypography
+          component={Link}
+          to="/authentication/sign-in"
+          variant="button"
+          color="info"
+          fontWeight="bold"
+          fontSize="25px"
+          textGradient
+        >
+          +
+        </MDTypography>
       </MDTypography>
     </MDBox>
   );
 
   return {
     columns: [
-      { Header: "titulo", accessor: "bookTitle", align: "left" },
-      { Header: "author", accessor: "author", align: "left" },
+      { Header: "titulo", accessor: "book", align: "left" },
+      { Header: "Autores", accessor: "author", align: "left" },
+      { Header: "Editora", accessor: "publisher", align: "left" },
       { Header: "categorias", accessor: "categories", align: "left" },
       { Header: "status", accessor: "status", align: "center" },
-      { Header: "Tombo", accessor: "number", align: "center" },
+      { Header: "Páginas", accessor: "pages", align: "center" },
       { Header: "Ano de Publicação", accessor: "release", align: "center" },
+      { Header: "Detalhes", accessor: "details", align: "center" },
     ],
 
     rows: [
       {
-        bookTitle: <BookTitle name="Animais Fantásticos e Onde Habitam" />,
+        book: <Book image={bookCape} name="Harry Potter e a Pedra Filosofal" />,
         author: <Author name="J. K. Rowling" />,
-        categories: <Categories title="Fantasia" />,
+        publisher: <Publisher name="Rocco" />,
+        categories: <Categories title="Fantasia, Aventura, Ficção" />,
         release: (
           <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
             23/04/18
           </MDTypography>
         ),
+        pages: <BookPages pages="300" />,
         status: (
           <MDBox ml={-1}>
             <MDBadge badgeContent="disponivel" color="success" variant="gradient" size="sm" />
           </MDBox>
         ),
-        number: <BookNumber number="2123" />,
+        details: <Details />,
       },
       {
-        bookTitle: <BookTitle name="A revolução dos bichos" />,
-        author: <Author name="George Orwell" />,
-        categories: <Categories title="Distopia, Ficção" />,
-        release: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            23/04/18
-          </MDTypography>
-        ),
-        status: (
-          <MDBox ml={-1}>
-            <MDBadge badgeContent="indisponivel" color="error" variant="gradient" size="sm" />
-          </MDBox>
-        ),
-        number: <BookNumber number="2123" />,
-      },
-      {
-        bookTitle: <BookTitle name="Animais Fantásticos e Onde Habitam" />,
+        book: <Book image={bookCape} name="Harry Potter e a Pedra Filosofal" />,
         author: <Author name="J. K. Rowling" />,
-        categories: <Categories title="Fantasia" />,
+        publisher: <Publisher name="Rocco" />,
+        categories: <Categories title="Fantasia, Aventura, Ficção" />,
         release: (
           <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
             23/04/18
           </MDTypography>
         ),
+        pages: <BookPages pages="300" />,
         status: (
           <MDBox ml={-1}>
             <MDBadge badgeContent="disponivel" color="success" variant="gradient" size="sm" />
           </MDBox>
         ),
-        number: <BookNumber number="2123" />,
+        details: <Details />,
       },
       {
-        bookTitle: <BookTitle name="A revolução dos bichos" />,
-        author: <Author name="George Orwell" />,
-        categories: <Categories title="Distopia, Ficção" />,
-        release: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            23/04/18
-          </MDTypography>
-        ),
-        status: (
-          <MDBox ml={-1}>
-            <MDBadge badgeContent="indisponivel" color="error" variant="gradient" size="sm" />
-          </MDBox>
-        ),
-        number: <BookNumber number="2123" />,
-      },
-      {
-        bookTitle: <BookTitle name="Animais Fantásticos e Onde Habitam" />,
+        book: <Book image={bookCape} name="Harry Potter e a Pedra Filosofal" />,
         author: <Author name="J. K. Rowling" />,
-        categories: <Categories title="Fantasia" />,
+        publisher: <Publisher name="Rocco" />,
+        categories: <Categories title="Fantasia, Aventura, Ficção" />,
         release: (
           <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
             23/04/18
           </MDTypography>
         ),
+        pages: <BookPages pages="300" />,
         status: (
           <MDBox ml={-1}>
             <MDBadge badgeContent="disponivel" color="success" variant="gradient" size="sm" />
           </MDBox>
         ),
-        number: <BookNumber number="2123" />,
+        details: <Details />,
       },
       {
-        bookTitle: <BookTitle name="A revolução dos bichos" />,
-        author: <Author name="George Orwell" />,
-        categories: <Categories title="Distopia, Ficção" />,
-        release: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            23/04/18
-          </MDTypography>
-        ),
-        status: (
-          <MDBox ml={-1}>
-            <MDBadge badgeContent="indisponivel" color="error" variant="gradient" size="sm" />
-          </MDBox>
-        ),
-        number: <BookNumber number="2123" />,
-      },
-      {
-        bookTitle: <BookTitle name="Animais Fantásticos e Onde Habitam" />,
+        book: <Book image={bookCape} name="Harry Potter e a Pedra Filosofal" />,
         author: <Author name="J. K. Rowling" />,
-        categories: <Categories title="Fantasia" />,
+        publisher: <Publisher name="Rocco" />,
+        categories: <Categories title="Fantasia, Aventura, Ficção" />,
         release: (
           <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
             23/04/18
           </MDTypography>
         ),
+        pages: <BookPages pages="300" />,
         status: (
           <MDBox ml={-1}>
             <MDBadge badgeContent="disponivel" color="success" variant="gradient" size="sm" />
           </MDBox>
         ),
-        number: <BookNumber number="2123" />,
+        details: <Details />,
       },
       {
-        bookTitle: <BookTitle name="A revolução dos bichos" />,
-        author: <Author name="George Orwell" />,
-        categories: <Categories title="Distopia, Ficção" />,
+        book: <Book image={bookCape} name="Harry Potter e a Pedra Filosofal" />,
+        author: <Author name="J. K. Rowling" />,
+        publisher: <Publisher name="Rocco" />,
+        categories: <Categories title="Fantasia, Aventura, Ficção" />,
         release: (
           <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
             23/04/18
           </MDTypography>
         ),
+        pages: <BookPages pages="300" />,
         status: (
           <MDBox ml={-1}>
-            <MDBadge badgeContent="indisponivel" color="error" variant="gradient" size="sm" />
+            <MDBadge badgeContent="disponivel" color="success" variant="gradient" size="sm" />
           </MDBox>
         ),
-        number: <BookNumber number="2123" />,
+        details: <Details />,
+      },
+      {
+        book: <Book image={bookCape} name="Harry Potter e a Pedra Filosofal" />,
+        author: <Author name="J. K. Rowling" />,
+        publisher: <Publisher name="Rocco" />,
+        categories: <Categories title="Fantasia, Aventura, Ficção" />,
+        release: (
+          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+            23/04/18
+          </MDTypography>
+        ),
+        pages: <BookPages pages="300" />,
+        status: (
+          <MDBox ml={-1}>
+            <MDBadge badgeContent="disponivel" color="success" variant="gradient" size="sm" />
+          </MDBox>
+        ),
+        details: <Details />,
+      },
+      {
+        book: <Book image={bookCape} name="Harry Potter e a Pedra Filosofal" />,
+        author: <Author name="J. K. Rowling" />,
+        publisher: <Publisher name="Rocco" />,
+        categories: <Categories title="Fantasia, Aventura, Ficção" />,
+        release: (
+          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+            23/04/18
+          </MDTypography>
+        ),
+        pages: <BookPages pages="300" />,
+        status: (
+          <MDBox ml={-1}>
+            <MDBadge badgeContent="disponivel" color="success" variant="gradient" size="sm" />
+          </MDBox>
+        ),
+        details: <Details />,
+      },
+      {
+        book: <Book image={bookCape} name="Harry Potter e a Pedra Filosofal" />,
+        author: <Author name="J. K. Rowling" />,
+        publisher: <Publisher name="Rocco" />,
+        categories: <Categories title="Fantasia, Aventura, Ficção" />,
+        release: (
+          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+            23/04/18
+          </MDTypography>
+        ),
+        pages: <BookPages pages="300" />,
+        status: (
+          <MDBox ml={-1}>
+            <MDBadge badgeContent="disponivel" color="success" variant="gradient" size="sm" />
+          </MDBox>
+        ),
+        details: <Details />,
+      },
+      {
+        book: <Book image={bookCape} name="Harry Potter e a Pedra Filosofal" />,
+        author: <Author name="J. K. Rowling" />,
+        publisher: <Publisher name="Rocco" />,
+        categories: <Categories title="Fantasia, Aventura, Ficção" />,
+        release: (
+          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+            23/04/18
+          </MDTypography>
+        ),
+        pages: <BookPages pages="300" />,
+        status: (
+          <MDBox ml={-1}>
+            <MDBadge badgeContent="disponivel" color="success" variant="gradient" size="sm" />
+          </MDBox>
+        ),
+        details: <Details />,
+      },
+
+      {
+        book: <Book image={bookCape} name="Harry Potter e a Pedra Filosofal" />,
+        author: <Author name="J. K. Rowling" />,
+        publisher: <Publisher name="Rocco" />,
+        categories: <Categories title="Fantasia, Aventura, Ficção" />,
+        release: (
+          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+            23/04/18
+          </MDTypography>
+        ),
+        pages: <BookPages pages="300" />,
+        status: (
+          <MDBox ml={-1}>
+            <MDBadge badgeContent="disponivel" color="success" variant="gradient" size="sm" />
+          </MDBox>
+        ),
+        details: <Details />,
+      },
+      {
+        book: <Book image={bookCape} name="Harry Potter e a Pedra Filosofal" />,
+        author: <Author name="J. K. Rowling" />,
+        publisher: <Publisher name="Rocco" />,
+        categories: <Categories title="Fantasia, Aventura, Ficção" />,
+        release: (
+          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+            23/04/18
+          </MDTypography>
+        ),
+        pages: <BookPages pages="300" />,
+        status: (
+          <MDBox ml={-1}>
+            <MDBadge badgeContent="disponivel" color="success" variant="gradient" size="sm" />
+          </MDBox>
+        ),
+        details: <Details />,
       },
     ],
   };
