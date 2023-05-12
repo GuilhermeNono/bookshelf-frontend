@@ -28,7 +28,7 @@ import Footer from "examples/Footer";
 import DataTable from "examples/Tables/DataTable";
 
 // Data
-import booksTableData from "layouts/books-test-page/data/booksTableData";
+import booksTableData from "layouts/books/data/booksTableData";
 
 function Books() {
   const { columns, rows } = booksTableData();
