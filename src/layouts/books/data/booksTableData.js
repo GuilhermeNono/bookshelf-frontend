@@ -48,9 +48,9 @@ export default async function data(books) {
       books.forEach((element) => {
         resp.push({
           book: <Book image={element.cape} name={element.name} />,
-          author: <Author name="element.author" />, // ver essa parte: author e categories são vetores
+          author: <Author name={element.authors.join(", ")} />,
           publisher: <Publisher name={element.publisher} />,
-          categories: <Categories title="element.categories" />,
+          categories: <Categories categoryName={element.categories.join(", ")} />,
           release: (
             <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
               {element.publicationDate}
@@ -89,10 +89,10 @@ export default async function data(books) {
     </MDBox>
   );
 
-  const Categories = ({ title }) => (
+  const Categories = ({ categoryName }) => (
     <MDBox lineHeight={1} textAlign="left">
       <MDTypography display="block" variant="caption" color="text" fontWeight="medium">
-        {title}
+        {categoryName}
       </MDTypography>
     </MDBox>
   );
