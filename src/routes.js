@@ -65,7 +65,7 @@ const routes = [
     name: "pricing",
     key: "pricing",
     icon: <Icon fontSize="small">dashboard</Icon>,
-    route: "/pricing",
+    route: "/dashboard/pricing",
     ignoreNav: true,
     component: <Pricing />,
   },
@@ -82,7 +82,7 @@ const routes = [
     name: "Tables",
     key: "tables",
     icon: <Icon fontSize="small">table_view</Icon>,
-    route: "/tables",
+    route: "/dashboard/tables",
     component: <Tables />,
   },
   {
@@ -90,7 +90,7 @@ const routes = [
     name: "Books",
     key: "books",
     icon: <Icon fontSize="small">table_view</Icon>,
-    route: "/books",
+    route: "/dashboard/books",
     component: <Books />,
   },
   {
@@ -98,7 +98,7 @@ const routes = [
     name: "Billing",
     key: "billing",
     icon: <Icon fontSize="small">receipt_long</Icon>,
-    route: "/billing",
+    route: "/dashboard/billing",
     component: <Billing />,
   },
   {
@@ -106,7 +106,7 @@ const routes = [
     name: "Notifications",
     key: "notifications",
     icon: <Icon fontSize="small">notifications</Icon>,
-    route: "/notifications",
+    route: "/dashboard/notifications",
     component: <Notifications />,
   },
   {
@@ -114,7 +114,7 @@ const routes = [
     name: "Profile",
     key: "profile",
     icon: <Icon fontSize="small">person</Icon>,
-    route: "/profile",
+    route: "/dashboard/profile",
     component: <Profile />,
   },
   {

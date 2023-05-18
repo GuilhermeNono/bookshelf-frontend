@@ -16,7 +16,7 @@ Coded by www.creative-tim.com
 import { useState, useEffect, useMemo } from "react";
 
 // react-router components
-import { Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation, useNavigate } from "react-router-dom";
 
 // @mui material components
 import { ThemeProvider } from "@mui/material/styles";
@@ -49,12 +49,13 @@ import createCache from "@emotion/cache";
 import routes from "routes";
 
 // Material Dashboard 2 React contexts
-import { useMaterialUIController, setMiniSidenav } from "context";
+import { useMaterialUIController, setMiniSidenav, setToken } from "context";
 
 // Images
 // import brandWhite from "assets/images/logo-ct.png";
 // import brandDark from "assets/images/logo-ct-dark.png";
 import logo from "assets/images/logos/Logo.svg";
+import { useAuthentication } from "hooks/useAuthentication";
 
 export default function App() {
   const [controller, dispatch] = useMaterialUIController();
@@ -71,6 +72,8 @@ export default function App() {
   const [onMouseEnter, setOnMouseEnter] = useState(false);
   const [rtlCache, setRtlCache] = useState(null);
   const { pathname } = useLocation();
+  const navigate = useNavigate();
+  const authentication = useAuthentication();
 
   // Cache for the rtl
   useMemo(() => {
@@ -113,8 +116,21 @@ export default function App() {
   }, [pathname]);
 
   useEffect(() => {
-    console.log(layout);
-  }, [layout]);
+    const token = localStorage.getItem("userAuthorization");
+    if (token) {
+      const tokenSlice = token.slice(10, -2);
+      authentication.validateToken(tokenSlice).then((resp) => {
+        if (resp === 200) {
+          setToken(dispatch, token);
+        } else {
+          localStorage.clear();
+          navigate("/authentication/sign-in");
+        }
+      });
+    } else {
+      navigate("/authentication/sign-in");
+    }
+  }, []);
 
   const getRoutes = (allRoutes) =>
     allRoutes.map((route) => {

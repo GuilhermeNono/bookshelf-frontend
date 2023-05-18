@@ -1,5 +1,5 @@
 // import handleResponse from "helpers/HandleResponse";
-import { useMaterialUIController } from "context";
+import { useMaterialUIController, setToken } from "context";
 import handleResponse from "helpers/HandleResponse";
 import { BehaviorSubject } from "rxjs";
 import { useEffect, useState } from "react";
@@ -14,7 +14,7 @@ export const useAuthentication = () => {
   const [loading, setLoading] = useState(false);
   const [cancelled, setCancelled] = useState(false);
   // eslint-disable-next-line no-unused-vars
-  const [controller] = useMaterialUIController();
+  const [controller, dispatch] = useMaterialUIController();
   const { token } = controller;
 
   const checkIfIsCancelled = () => {
@@ -65,6 +65,7 @@ export const useAuthentication = () => {
         setError(null);
         setLoading(false);
         console.log(user.token);
+        setToken(dispatch, user.token);
         return user;
       })
       .catch(() => {
@@ -151,14 +152,9 @@ export const useAuthentication = () => {
       Authorization: `Bearer ${userToken}`,
     };
 
-    const tokenBody = {
-      token: `${userToken}`,
-    };
-
     const requestOptions = {
       method: "POST",
       headers,
-      body: JSON.stringify(tokenBody),
     };
 
     const req = fetch(`${ApiRouteBuild.buildRoute("authentication")}/validate`, requestOptions)

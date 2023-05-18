@@ -24,14 +24,39 @@ import MDTypography from "components/MDTypography";
 // Material Dashboard 2 React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
+import { useMaterialUIController } from "context";
 import Footer from "examples/Footer";
+// eslint-disable-next-line no-unused-vars
 import DataTable from "examples/Tables/DataTable";
 
 // Data
+// eslint-disable-next-line no-unused-vars
 import booksTableData from "layouts/books/data/booksTableData";
+import { useBooks } from "hooks/useBooks";
+// eslint-disable-next-line no-unused-vars
+import { useEffect, useState } from "react";
 
 function Books() {
-  const { columns, rows } = booksTableData();
+  // eslint-disable-next-line no-unused-vars
+  const [columns, setColumns] = useState();
+  // eslint-disable-next-line no-unused-vars
+  const [rows, setRows] = useState();
+  const [testando, setTestando] = useState();
+  const useBook = useBooks();
+  const [controller] = useMaterialUIController();
+  const { token } = controller;
+
+  useEffect(() => {
+    if (token) {
+      useBook.getAllBooks(token.slice(10, -2)).then((teste) => {
+        if (teste) {
+          booksTableData(teste).then((data) => {
+            setTestando(data);
+          });
+        }
+      });
+    }
+  }, [token]);
 
   return (
     <DashboardLayout>
@@ -55,13 +80,17 @@ function Books() {
                 </MDTypography>
               </MDBox>
               <MDBox pt={3}>
-                <DataTable
-                  table={{ columns, rows }}
-                  isSorted={false}
-                  entriesPerPage={false}
-                  showTotalEntries={false}
-                  noEndBorder
-                />
+                {testando ? (
+                  <DataTable
+                    table={testando}
+                    isSorted={false}
+                    entriesPerPage={false}
+                    showTotalEntries={false}
+                    noEndBorder
+                  />
+                ) : (
+                  <>123</>
+                )}
               </MDBox>
             </Card>
           </Grid>

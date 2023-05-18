@@ -20,10 +20,10 @@ import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDBadge from "components/MDBadge";
 import MDAvatar from "components/MDAvatar";
-import bookCape from "assets/images/book/harry_potter_pf.jpg";
 import { Link } from "react-router-dom";
 
-export default function data() {
+export default async function data(books) {
+  console.log(await books);
   const Book = ({ image, name }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
       <MDAvatar
@@ -41,6 +41,35 @@ export default function data() {
       </MDTypography>
     </MDBox>
   );
+
+  const Books = () => {
+    if (books.length > 0) {
+      const resp = [];
+      books.forEach((element) => {
+        resp.push({
+          book: <Book image={element.cape} name={element.name} />,
+          author: <Author name="element.author" />,
+          publisher: <Publisher name={element.publisher} />,
+          categories: <Categories title="element.categories" />,
+          release: (
+            <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+              {element.publicationDate}
+            </MDTypography>
+          ),
+          pages: <BookPages pages={element.pages} />,
+          status: (
+            <MDBox ml={-1}>
+              <MDBadge badgeContent="disponivel" color="success" variant="gradient" size="sm" />
+            </MDBox>
+          ),
+          details: <Details />,
+        });
+      });
+      return resp;
+    }
+    return [];
+  };
+
   const Author = ({ name }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
       <MDBox ml={2} lineHeight={1}>
@@ -106,206 +135,6 @@ export default function data() {
       { Header: "Detalhes", accessor: "details", align: "center" },
     ],
 
-    rows: [
-      {
-        book: <Book image={bookCape} name="Harry Potter e a Pedra Filosofal" />,
-        author: <Author name="J. K. Rowling" />,
-        publisher: <Publisher name="Rocco" />,
-        categories: <Categories title="Fantasia, Aventura, Ficção" />,
-        release: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            23/04/18
-          </MDTypography>
-        ),
-        pages: <BookPages pages="300" />,
-        status: (
-          <MDBox ml={-1}>
-            <MDBadge badgeContent="disponivel" color="success" variant="gradient" size="sm" />
-          </MDBox>
-        ),
-        details: <Details />,
-      },
-      {
-        book: <Book image={bookCape} name="Harry Potter e a Pedra Filosofal" />,
-        author: <Author name="J. K. Rowling" />,
-        publisher: <Publisher name="Rocco" />,
-        categories: <Categories title="Fantasia, Aventura, Ficção" />,
-        release: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            23/04/18
-          </MDTypography>
-        ),
-        pages: <BookPages pages="300" />,
-        status: (
-          <MDBox ml={-1}>
-            <MDBadge badgeContent="disponivel" color="success" variant="gradient" size="sm" />
-          </MDBox>
-        ),
-        details: <Details />,
-      },
-      {
-        book: <Book image={bookCape} name="Harry Potter e a Pedra Filosofal" />,
-        author: <Author name="J. K. Rowling" />,
-        publisher: <Publisher name="Rocco" />,
-        categories: <Categories title="Fantasia, Aventura, Ficção" />,
-        release: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            23/04/18
-          </MDTypography>
-        ),
-        pages: <BookPages pages="300" />,
-        status: (
-          <MDBox ml={-1}>
-            <MDBadge badgeContent="disponivel" color="success" variant="gradient" size="sm" />
-          </MDBox>
-        ),
-        details: <Details />,
-      },
-      {
-        book: <Book image={bookCape} name="Harry Potter e a Pedra Filosofal" />,
-        author: <Author name="J. K. Rowling" />,
-        publisher: <Publisher name="Rocco" />,
-        categories: <Categories title="Fantasia, Aventura, Ficção" />,
-        release: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            23/04/18
-          </MDTypography>
-        ),
-        pages: <BookPages pages="300" />,
-        status: (
-          <MDBox ml={-1}>
-            <MDBadge badgeContent="disponivel" color="success" variant="gradient" size="sm" />
-          </MDBox>
-        ),
-        details: <Details />,
-      },
-      {
-        book: <Book image={bookCape} name="Harry Potter e a Pedra Filosofal" />,
-        author: <Author name="J. K. Rowling" />,
-        publisher: <Publisher name="Rocco" />,
-        categories: <Categories title="Fantasia, Aventura, Ficção" />,
-        release: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            23/04/18
-          </MDTypography>
-        ),
-        pages: <BookPages pages="300" />,
-        status: (
-          <MDBox ml={-1}>
-            <MDBadge badgeContent="disponivel" color="success" variant="gradient" size="sm" />
-          </MDBox>
-        ),
-        details: <Details />,
-      },
-      {
-        book: <Book image={bookCape} name="Harry Potter e a Pedra Filosofal" />,
-        author: <Author name="J. K. Rowling" />,
-        publisher: <Publisher name="Rocco" />,
-        categories: <Categories title="Fantasia, Aventura, Ficção" />,
-        release: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            23/04/18
-          </MDTypography>
-        ),
-        pages: <BookPages pages="300" />,
-        status: (
-          <MDBox ml={-1}>
-            <MDBadge badgeContent="disponivel" color="success" variant="gradient" size="sm" />
-          </MDBox>
-        ),
-        details: <Details />,
-      },
-      {
-        book: <Book image={bookCape} name="Harry Potter e a Pedra Filosofal" />,
-        author: <Author name="J. K. Rowling" />,
-        publisher: <Publisher name="Rocco" />,
-        categories: <Categories title="Fantasia, Aventura, Ficção" />,
-        release: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            23/04/18
-          </MDTypography>
-        ),
-        pages: <BookPages pages="300" />,
-        status: (
-          <MDBox ml={-1}>
-            <MDBadge badgeContent="disponivel" color="success" variant="gradient" size="sm" />
-          </MDBox>
-        ),
-        details: <Details />,
-      },
-      {
-        book: <Book image={bookCape} name="Harry Potter e a Pedra Filosofal" />,
-        author: <Author name="J. K. Rowling" />,
-        publisher: <Publisher name="Rocco" />,
-        categories: <Categories title="Fantasia, Aventura, Ficção" />,
-        release: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            23/04/18
-          </MDTypography>
-        ),
-        pages: <BookPages pages="300" />,
-        status: (
-          <MDBox ml={-1}>
-            <MDBadge badgeContent="disponivel" color="success" variant="gradient" size="sm" />
-          </MDBox>
-        ),
-        details: <Details />,
-      },
-      {
-        book: <Book image={bookCape} name="Harry Potter e a Pedra Filosofal" />,
-        author: <Author name="J. K. Rowling" />,
-        publisher: <Publisher name="Rocco" />,
-        categories: <Categories title="Fantasia, Aventura, Ficção" />,
-        release: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            23/04/18
-          </MDTypography>
-        ),
-        pages: <BookPages pages="300" />,
-        status: (
-          <MDBox ml={-1}>
-            <MDBadge badgeContent="disponivel" color="success" variant="gradient" size="sm" />
-          </MDBox>
-        ),
-        details: <Details />,
-      },
-
-      {
-        book: <Book image={bookCape} name="Harry Potter e a Pedra Filosofal" />,
-        author: <Author name="J. K. Rowling" />,
-        publisher: <Publisher name="Rocco" />,
-        categories: <Categories title="Fantasia, Aventura, Ficção" />,
-        release: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            23/04/18
-          </MDTypography>
-        ),
-        pages: <BookPages pages="300" />,
-        status: (
-          <MDBox ml={-1}>
-            <MDBadge badgeContent="disponivel" color="success" variant="gradient" size="sm" />
-          </MDBox>
-        ),
-        details: <Details />,
-      },
-      {
-        book: <Book image={bookCape} name="Harry Potter e a Pedra Filosofal" />,
-        author: <Author name="J. K. Rowling" />,
-        publisher: <Publisher name="Rocco" />,
-        categories: <Categories title="Fantasia, Aventura, Ficção" />,
-        release: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            23/04/18
-          </MDTypography>
-        ),
-        pages: <BookPages pages="300" />,
-        status: (
-          <MDBox ml={-1}>
-            <MDBadge badgeContent="disponivel" color="success" variant="gradient" size="sm" />
-          </MDBox>
-        ),
-        details: <Details />,
-      },
-    ],
+    rows: Books(),
   };
 }
