@@ -35,6 +35,7 @@ import booksTableData from "layouts/books/data/booksTableData";
 import { useBooks } from "hooks/useBooks";
 // eslint-disable-next-line no-unused-vars
 import { useEffect, useState } from "react";
+import MDProgress from "components/MDProgress";
 
 function Books() {
   // eslint-disable-next-line no-unused-vars
@@ -89,7 +90,7 @@ function Books() {
                     noEndBorder
                   />
                 ) : (
-                  <>123</>
+                  <MDProgress />
                 )}
               </MDBox>
             </Card>
