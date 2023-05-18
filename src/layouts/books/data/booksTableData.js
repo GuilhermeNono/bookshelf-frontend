@@ -48,7 +48,7 @@ export default async function data(books) {
       books.forEach((element) => {
         resp.push({
           book: <Book image={element.cape} name={element.name} />,
-          author: <Author name="element.author" />,
+          author: <Author name="element.author" />, // ver essa parte: author e categories são vetores
           publisher: <Publisher name={element.publisher} />,
           categories: <Categories title="element.categories" />,
           release: (
