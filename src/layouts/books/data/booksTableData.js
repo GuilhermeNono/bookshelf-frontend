@@ -49,20 +49,21 @@ export default async function data(books) {
         resp.push({
           book: <Book image={element.cape} name={element.name} />,
           author: <Author name={element.authors.join(", ")} />,
-          publisher: <Publisher name={element.publisher} />,
-          categories: <Categories categoryName={element.categories.join(", ")} />,
+          publisher: <Publisher name={element.publisher} />, // Conferir se ira precisar de vetor tambem
+          categories: <Categories categoryName={element.categories.join(", ")} />, // Adicionar mais de 1 categoria em algum livro para testar
           release: (
             <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-              {element.publicationDate}
+              {element.publicationDate} {/* formatar data */}
             </MDTypography>
           ),
-          pages: <BookPages pages={element.pages} />,
+          pages: <BookPages pages={element.numberPages} />,
           status: (
             <MDBox ml={-1}>
               <MDBadge badgeContent="disponivel" color="success" variant="gradient" size="sm" />
+              {/* status estatico por enquanto */}
             </MDBox>
           ),
-          details: <Details />,
+          details: <Details />, // Conferir se ira precisar de vetor tambem
         });
       });
       return resp;
@@ -105,6 +106,7 @@ export default async function data(books) {
     </MDBox>
   );
 
+  // Details está estatico com link apenas como placeHolder
   const Details = () => (
     <MDBox lineHeight={1} textAlign="left">
       <MDTypography display="block" variant="caption" color="text" fontWeight="medium">
@@ -125,16 +127,15 @@ export default async function data(books) {
 
   return {
     columns: [
-      { Header: "titulo", accessor: "book", align: "left" },
+      { Header: "Título", accessor: "book", align: "left" },
       { Header: "Autores", accessor: "author", align: "left" },
       { Header: "Editora", accessor: "publisher", align: "left" },
-      { Header: "categorias", accessor: "categories", align: "left" },
-      { Header: "status", accessor: "status", align: "center" },
+      { Header: "Categorias", accessor: "categories", align: "left" },
+      { Header: "Status", accessor: "status", align: "center" },
       { Header: "Páginas", accessor: "pages", align: "center" },
       { Header: "Ano de Publicação", accessor: "release", align: "center" },
       { Header: "Detalhes", accessor: "details", align: "center" },
     ],
-
     rows: Books(),
   };
 }

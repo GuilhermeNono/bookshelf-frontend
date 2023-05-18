@@ -41,17 +41,17 @@ function Books() {
   const [columns, setColumns] = useState();
   // eslint-disable-next-line no-unused-vars
   const [rows, setRows] = useState();
-  const [testando, setTestando] = useState();
+  const [books, setBooks] = useState();
   const useBook = useBooks();
   const [controller] = useMaterialUIController();
   const { token } = controller;
 
   useEffect(() => {
     if (token) {
-      useBook.getAllBooks(token.slice(10, -2)).then((teste) => {
-        if (teste) {
-          booksTableData(teste).then((data) => {
-            setTestando(data);
+      useBook.getAllBooks(token.slice(10, -2)).then((resp) => {
+        if (resp) {
+          booksTableData(resp).then((data) => {
+            setBooks(data);
           });
         }
       });
@@ -80,9 +80,9 @@ function Books() {
                 </MDTypography>
               </MDBox>
               <MDBox pt={3}>
-                {testando ? (
+                {books ? (
                   <DataTable
-                    table={testando}
+                    table={books}
                     isSorted={false}
                     entriesPerPage={false}
                     showTotalEntries={false}
