@@ -14,6 +14,7 @@ export default class Book {
     this.isbn = obj.isbn;
     this.numberPages = obj.number_pages;
     this.cape = obj.cape;
+    this.available = obj.available;
     this.categories = obj.categories
       ? obj.categories.map((categoryData) => new Category(categoryData.name).name)
       : [];

@@ -49,21 +49,24 @@ export default async function data(books) {
         resp.push({
           book: <Book image={element.cape} name={element.name} />,
           author: <Author name={element.authors.join(", ")} />,
-          publisher: <Publisher name={element.publisher} />, // Conferir se ira precisar de vetor tambem
-          categories: <Categories categoryName={element.categories.join(", ")} />, // Adicionar mais de 1 categoria em algum livro para testar
+          publisher: <Publisher name={element.publisher} />,
+          categories: <Categories categoryName={element.categories.join(", ")} />,
           release: (
             <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-              {element.publicationDate} {/* formatar data */}
+              {element.publicationDate.substring(0, 10).split("-").reverse().join("/")}
             </MDTypography>
           ),
           pages: <BookPages pages={element.numberPages} />,
-          status: (
+          status: element.available ? (
             <MDBox ml={-1}>
               <MDBadge badgeContent="disponivel" color="success" variant="gradient" size="sm" />
-              {/* status estatico por enquanto */}
+            </MDBox>
+          ) : (
+            <MDBox ml={-1}>
+              <MDBadge badgeContent="indisponivel" color="error" variant="gradient" size="sm" />
             </MDBox>
           ),
-          details: <Details />, // Conferir se ira precisar de vetor tambem
+          details: <Details />,
         });
       });
       return resp;

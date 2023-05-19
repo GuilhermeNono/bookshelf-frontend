@@ -32,10 +32,10 @@ import DataTable from "examples/Tables/DataTable";
 // Data
 // eslint-disable-next-line no-unused-vars
 import booksTableData from "layouts/books/data/booksTableData";
-import { useBooks } from "hooks/useBooks";
 // eslint-disable-next-line no-unused-vars
 import { useEffect, useState } from "react";
 import MDProgress from "components/MDProgress";
+import { useLibrary } from "hooks/useLibrary";
 
 function Books() {
   // eslint-disable-next-line no-unused-vars
@@ -43,13 +43,13 @@ function Books() {
   // eslint-disable-next-line no-unused-vars
   const [rows, setRows] = useState();
   const [books, setBooks] = useState();
-  const useBook = useBooks();
+  const useLibraries = useLibrary();
   const [controller] = useMaterialUIController();
   const { token } = controller;
 
   useEffect(() => {
     if (token) {
-      useBook.getAllBooks(token.slice(10, -2)).then((resp) => {
+      useLibraries.getLibraryBooks(token.slice(10, -2), 1).then((resp) => {
         if (resp) {
           booksTableData(resp).then((data) => {
             setBooks(data);
