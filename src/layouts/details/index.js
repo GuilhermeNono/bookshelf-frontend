@@ -9,14 +9,18 @@
  * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
  */
 
+import Cape from "assets/images/book/harry_potter_pf.jpg";
+import JkRowling from "assets/images/avatar/imgAvatar.png";
+
 import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
-import Cape from "assets/images/book/harry_potter_pf.jpg";
 import Box from "@mui/material/Box";
+import Avatar from "@mui/material/Avatar";
+import MDBox from "../../components/MDBox";
 import MDTypography from "../../components/MDTypography";
+
 import DashboardLayout from "../../examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "../../examples/Navbars/DashboardNavbar";
-import MDBox from "../../components/MDBox";
 import Footer from "../../examples/Footer";
 
 function Details() {
@@ -38,7 +42,7 @@ function Details() {
                 coloredShadow="info"
               >
                 <MDTypography variant="h6" color="white">
-                  Lista de Usuários
+                  Detalhes
                 </MDTypography>
               </MDBox>
               <MDBox sx={{ flexGrow: 1, mr: 5, ml: 5, mt: 5 }}>
@@ -52,42 +56,23 @@ function Details() {
                       alt="Capa"
                     />
                   </Grid>
-                  <Grid container xs={12} md={7} lg={8} spacing={4}>
-                    <Grid xs={6} lg={3}>
-                      <p>
-                        <Box>Category A</Box>
-                        <Box component="ul" sx={{ pl: 2 }}>
-                          <li>Link 1.1</li>
-                          <li>Link 1.2</li>
-                          <li>Link 1.3</li>
-                        </Box>
-                      </p>
+                  <Grid xs lg={7.5} sx={{ ml: 5 }}>
+                    <MDTypography align="center">Harry Potter e a Pedra Filosofal</MDTypography>
+                    <Grid container>
+                      <Avatar src={JkRowling} alt="J.k.Rowling" sx={{ width: 130, height: 130 }} />
+                      <MDBox
+                        sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+                      >
+                        <MDTypography variant="h4">J.K.Rowling</MDTypography>
+                        <MDTypography variant="h4">J.K.Rowling</MDTypography>
+                      </MDBox>
                     </Grid>
+                    <Box component="ul" sx={{ pl: 2 }}>
+                      <li>Link 1.1</li>
+                      <li>Link 1.2</li>
+                      <li>Link 1.3</li>
+                    </Box>
                   </Grid>
-                  {/* <Grid
-                    xs={12}
-                    container
-                    justifyContent="space-between"
-                    alignps="center"
-                    flexDirection={{ xs: "column", sm: "row" }}
-                    sx={{ fontSize: "12px" }}
-                  >
-                    <Grid sx={{ order: { xs: 2, sm: 1 } }}>
-                      <p>© Copyright</p>
-                    </Grid>
-                    <Grid container columnSpacing={1} sx={{ order: { xs: 1, sm: 2 } }}>
-                      <Grid>
-                        <p>Link A</p>
-                      </Grid>
-                      <Grid>
-                        <p>Link B</p>
-                      </Grid>
-                      <Grid>
-                        <p>Link C</p>
-                      </Grid>
-                    </Grid>
-                  </Grid>
-                  */}
                 </Grid>
               </MDBox>
             </Card>
@@ -100,3 +85,28 @@ function Details() {
 }
 
 export default Details;
+
+/* <Grid
+        xs={12}
+        container
+        justifyContent="space-between"
+        alignps="center"
+        flexDirection={{ xs: "column", sm: "row" }}
+        sx={{ fontSize: "12px" }}
+      >
+        <Grid sx={{ order: { xs: 2, sm: 1 } }}>
+          <p>© Copyright</p>
+        </Grid>
+        <Grid container columnSpacing={1} sx={{ order: { xs: 1, sm: 2 } }}>
+          <Grid>
+            <p>Link A</p>
+          </Grid>
+          <Grid>
+            <p>Link B</p>
+          </Grid>
+          <Grid>
+            <p>Link C</p>
+          </Grid>
+        </Grid>
+      </Grid>
+      */
