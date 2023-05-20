@@ -45,7 +45,7 @@ function Details() {
                   Detalhes
                 </MDTypography>
               </MDBox>
-              <MDBox sx={{ flexGrow: 1, mr: 5, ml: 5, mt: 5 }}>
+              <MDBox sx={{ m: 5 }}>
                 <Grid container spacing={2}>
                   <Grid xs={12} md={5} lg={4}>
                     <img
@@ -57,14 +57,21 @@ function Details() {
                     />
                   </Grid>
                   <Grid xs lg={7.5} sx={{ ml: 5 }}>
-                    <MDTypography align="center">Harry Potter e a Pedra Filosofal</MDTypography>
+                    <MDTypography variant="h4" align="center">
+                      Harry Potter e a Pedra Filosofal
+                    </MDTypography>
                     <Grid container>
                       <Avatar src={JkRowling} alt="J.k.Rowling" sx={{ width: 130, height: 130 }} />
                       <MDBox
-                        sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+                        sx={{
+                          display: "flex",
+                          justifyContent: "center",
+                          flexDirection: "column",
+                          mb: "15px",
+                        }}
                       >
-                        <MDTypography variant="h4">J.K.Rowling</MDTypography>
-                        <MDTypography variant="h4">J.K.Rowling</MDTypography>
+                        <MDTypography variant="h5">J.K.Rowling</MDTypography>
+                        <MDTypography variant="h6">Autor(a)</MDTypography>
                       </MDBox>
                     </Grid>
                     <Box component="ul" sx={{ pl: 2 }}>
@@ -87,26 +94,26 @@ function Details() {
 export default Details;
 
 /* <Grid
-        xs={12}
-        container
-        justifyContent="space-between"
-        alignps="center"
-        flexDirection={{ xs: "column", sm: "row" }}
-        sx={{ fontSize: "12px" }}
-      >
-        <Grid sx={{ order: { xs: 2, sm: 1 } }}>
-          <p>© Copyright</p>
-        </Grid>
-        <Grid container columnSpacing={1} sx={{ order: { xs: 1, sm: 2 } }}>
-          <Grid>
-            <p>Link A</p>
-          </Grid>
-          <Grid>
-            <p>Link B</p>
-          </Grid>
-          <Grid>
-            <p>Link C</p>
-          </Grid>
-        </Grid>
-      </Grid>
-      */
+         xs={12}
+         container
+         justifyContent="space-between"
+         alignps="center"
+         flexDirection={{ xs: "column", sm: "row" }}
+         sx={{ fontSize: "12px" }}
+       >
+         <Grid sx={{ order: { xs: 2, sm: 1 } }}>
+           <p>© Copyright</p>
+         </Grid>
+         <Grid container columnSpacing={1} sx={{ order: { xs: 1, sm: 2 } }}>
+           <Grid>
+             <p>Link A</p>
+           </Grid>
+           <Grid>
+             <p>Link B</p>
+           </Grid>
+           <Grid>
+             <p>Link C</p>
+           </Grid>
+         </Grid>
+       </Grid>
+       */
