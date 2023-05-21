@@ -13,9 +13,8 @@ import Cape from "assets/images/book/harry_potter_pf.jpg";
 import JkRowling from "assets/images/avatar/imgAvatar.png";
 
 import Card from "@mui/material/Card";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
 import Avatar from "@mui/material/Avatar";
+import { Grid } from "@mui/material";
 import MDBox from "../../components/MDBox";
 import MDTypography from "../../components/MDTypography";
 
@@ -45,18 +44,21 @@ function Details() {
                   Detalhes
                 </MDTypography>
               </MDBox>
-              <MDBox sx={{ m: 5 }}>
-                <Grid container spacing={2}>
-                  <Grid xs={12} md={5} lg={4}>
-                    <img
-                      style={{ maxWidth: "100%" }}
-                      width="400px"
-                      height="500px"
+              <MDBox sx={{ margin: "3rem 1.5rem 1rem 3rem" }}>
+                <Grid container spacing={3}>
+                  <Grid xs={12} sm={9} md={5} lg={4}>
+                    <MDBox
+                      component="img"
+                      sx={{
+                        maxWidth: "100%",
+                        borderRadius: "0.7rem",
+                        width: "400px",
+                      }}
                       src={Cape}
                       alt="Capa"
                     />
                   </Grid>
-                  <Grid xs lg={7.5} sx={{ ml: 5 }}>
+                  <Grid xs={10.5} sm={6.6} lg={7.5} sx={{ ml: 2 }}>
                     <MDTypography variant="h4" align="center">
                       Harry Potter e a Pedra Filosofal
                     </MDTypography>
@@ -71,14 +73,29 @@ function Details() {
                         }}
                       >
                         <MDTypography variant="h5">J.K.Rowling</MDTypography>
-                        <MDTypography variant="h6">Autor(a)</MDTypography>
+                        <MDTypography variant="h6" sx={{ color: "#cecece", fontWeight: "400" }}>
+                          Autor(a)
+                        </MDTypography>
                       </MDBox>
                     </Grid>
-                    <Box component="ul" sx={{ pl: 2 }}>
-                      <li>Link 1.1</li>
-                      <li>Link 1.2</li>
-                      <li>Link 1.3</li>
-                    </Box>
+                    <MDTypography
+                      variant="p"
+                      align="justify"
+                      sx={{
+                        fontSize: "0.8em",
+                        fontWeight: "400",
+                        color: "#cecece",
+                      }}
+                    >
+                      Harry Potter é um garoto cujos pais, feiticeiros, foram assassinados por um
+                      poderosíssimo bruxo quando ele ainda era um bebê. Ele foi levado, então, para
+                      a casa dos tios que nada tinham a ver com o sobrenatural. Pelo contrário. Até
+                      os 10 anos, Harry foi uma espécie de gata borralheira: maltratado pelos tios,
+                      herdava roupas velhas do primo gorducho, tinha óculos remendados e era tratado
+                      como um estorvo. No dia de seu aniversário de 11 anos, entretanto, ele parece
+                      deslizar por um buraco sem fundo, como o de Alice no país das maravilhas, que
+                      o conduz a um mundo mágico.
+                    </MDTypography>
                   </Grid>
                 </Grid>
               </MDBox>
