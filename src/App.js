@@ -49,7 +49,7 @@ import createCache from "@emotion/cache";
 import routes from "routes";
 
 // Material Dashboard 2 React contexts
-import { useMaterialUIController, setMiniSidenav, setToken } from "context";
+import { useMaterialUIController, setMiniSidenav, setToken, setLibrary } from "context";
 
 // Images
 // import brandWhite from "assets/images/logo-ct.png";
@@ -68,6 +68,8 @@ export default function App() {
     transparentSidenav,
     whiteSidenav,
     darkMode,
+    // eslint-disable-next-line no-unused-vars
+    library,
   } = controller;
   const [onMouseEnter, setOnMouseEnter] = useState(false);
   const [rtlCache, setRtlCache] = useState(null);
@@ -129,6 +131,14 @@ export default function App() {
       });
     } else {
       navigate("/authentication/sign-in");
+    }
+  }, []);
+
+  useEffect(() => {
+    const libraryId = localStorage.getItem("bs-lid");
+
+    if (libraryId) {
+      setLibrary(dispatch, libraryId);
     }
   }, []);
 
@@ -200,7 +210,7 @@ export default function App() {
         )}
         <Routes>
           {getRoutes(routes)}
-          <Route path="*" element={<Navigate to="/dashboard" />} />
+          <Route path="*" element={<Navigate to="/dashboard" />} /> 
         </Routes>
       </ThemeProvider>
     </CacheProvider>
