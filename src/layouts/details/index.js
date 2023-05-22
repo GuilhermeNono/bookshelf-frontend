@@ -14,7 +14,7 @@ import JkRowling from "assets/images/avatar/imgAvatar.png";
 
 import Card from "@mui/material/Card";
 import Avatar from "@mui/material/Avatar";
-import { Grid } from "@mui/material";
+import { Grid, useMediaQuery, useTheme } from "@mui/material";
 import MDBox from "../../components/MDBox";
 import MDTypography from "../../components/MDTypography";
 
@@ -23,6 +23,9 @@ import DashboardNavbar from "../../examples/Navbars/DashboardNavbar";
 import Footer from "../../examples/Footer";
 
 function Details() {
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.up("xs"));
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -45,7 +48,16 @@ function Details() {
                 </MDTypography>
               </MDBox>
               <MDBox sx={{ margin: "3rem 1.5rem 1rem 3rem" }}>
-                <Grid container spacing={3}>
+                <Grid
+                  sx={
+                    matches && {
+                      display: "flex",
+                      justifyContent: "center",
+                    }
+                  }
+                  container
+                  spacing={3}
+                >
                   <Grid xs={12} sm={9} md={5} lg={4}>
                     <MDBox
                       component="img"
