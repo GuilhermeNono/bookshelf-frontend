@@ -59,7 +59,7 @@ function Details() {
                     />
                   </Grid>
                   <Grid xs={10.5} sm={6.6} lg={7.5} sx={{ ml: 2 }}>
-                    <MDTypography variant="h4" align="center">
+                    <MDTypography variant="h3" align="center" sx={{ fontWeight: "400" }}>
                       Harry Potter e a Pedra Filosofal
                     </MDTypography>
                     <Grid container>
@@ -78,24 +78,45 @@ function Details() {
                         </MDTypography>
                       </MDBox>
                     </Grid>
-                    <MDTypography
-                      variant="p"
-                      align="justify"
+                    <Grid>
+                      <MDTypography
+                        variant="p"
+                        align="justify"
+                        sx={{
+                          fontSize: "0.7em",
+                          fontWeight: "400",
+                          color: "#cecece",
+                        }}
+                      >
+                        Harry Potter é um garoto cujos pais, feiticeiros, foram assassinados por um
+                        poderosíssimo bruxo quando ele ainda era um bebê. Ele foi levado, então,
+                        para a casa dos tios que nada tinham a ver com o sobrenatural. Pelo
+                        contrário. Até os 10 anos, Harry foi uma espécie de gata borralheira:
+                        maltratado pelos tios, herdava roupas velhas do primo gorducho, tinha óculos
+                        remendados e era tratado como um estorvo. No dia de seu aniversário de 11
+                        anos, entretanto, ele parece deslizar por um buraco sem fundo, como o de
+                        Alice no país das maravilhas, que o conduz a um mundo mágico.
+                      </MDTypography>
+                    </Grid>
+                    <Grid
+                      item
+                      lg={4}
                       sx={{
-                        fontSize: "0.8em",
-                        fontWeight: "400",
-                        color: "#cecece",
+                        mt: "1rem",
+                        display: "flex",
+                        flexDirection: "column",
                       }}
                     >
-                      Harry Potter é um garoto cujos pais, feiticeiros, foram assassinados por um
-                      poderosíssimo bruxo quando ele ainda era um bebê. Ele foi levado, então, para
-                      a casa dos tios que nada tinham a ver com o sobrenatural. Pelo contrário. Até
-                      os 10 anos, Harry foi uma espécie de gata borralheira: maltratado pelos tios,
-                      herdava roupas velhas do primo gorducho, tinha óculos remendados e era tratado
-                      como um estorvo. No dia de seu aniversário de 11 anos, entretanto, ele parece
-                      deslizar por um buraco sem fundo, como o de Alice no país das maravilhas, que
-                      o conduz a um mundo mágico.
-                    </MDTypography>
+                      <MDBox sx={{ display: "flex", flexDirection: "row" }}>
+                        <MDTypography variant="h6" sx={{ mr: "8px" }}>
+                          Editora:
+                        </MDTypography>
+                        <MDTypography variant="h6" sx={{ color: "#cecece", fontWeight: "400" }}>
+                          text
+                        </MDTypography>
+                      </MDBox>
+                    </Grid>
+                    aa
                   </Grid>
                 </Grid>
               </MDBox>
