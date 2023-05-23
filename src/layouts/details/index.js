@@ -14,17 +14,20 @@ import JkRowling from "assets/images/avatar/imgAvatar.png";
 
 import Card from "@mui/material/Card";
 import Avatar from "@mui/material/Avatar";
-import { Grid, useMediaQuery, useTheme } from "@mui/material";
+import { Box, Grid, useMediaQuery, useTheme } from "@mui/material";
+import DataTable from "examples/Tables/DataTable";
 import MDBox from "../../components/MDBox";
 import MDTypography from "../../components/MDTypography";
 
 import DashboardLayout from "../../examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "../../examples/Navbars/DashboardNavbar";
 import Footer from "../../examples/Footer";
+import data from "./data";
 
 function Details() {
   const theme = useTheme();
-  const matches = useMediaQuery(theme.breakpoints.up("xs"));
+  const matches = useMediaQuery(theme.breakpoints.up("xs", "sm"));
+  const { columns, rows } = data();
 
   return (
     <DashboardLayout>
@@ -62,9 +65,11 @@ function Details() {
                     <MDBox
                       component="img"
                       sx={{
-                        maxWidth: "100%",
-                        borderRadius: "0.7rem",
                         width: "400px",
+                        maxWidth: "100%",
+                        height: "auto",
+                        maxHeight: "100%",
+                        borderRadius: "0.7rem",
                       }}
                       src={Cape}
                       alt="Capa"
@@ -92,7 +97,7 @@ function Details() {
                     </Grid>
                     <Grid>
                       <MDTypography
-                        variant="p"
+                        variant="item"
                         align="justify"
                         sx={{
                           fontSize: "0.7em",
@@ -111,25 +116,203 @@ function Details() {
                       </MDTypography>
                     </Grid>
                     <Grid
-                      item
-                      lg={4}
-                      sx={{
-                        mt: "1rem",
-                        display: "flex",
-                        flexDirection: "column",
+                      container
+                      style={{
+                        display: "grid",
+                        gridTemplateColumns: "1fr 1fr",
+                        gridTemplateRows: "repeat(6, 1fr)",
+                        marginTop: "1.5rem",
                       }}
                     >
-                      <MDBox sx={{ display: "flex", flexDirection: "row" }}>
-                        <MDTypography variant="h6" sx={{ mr: "8px" }}>
+                      <Box
+                        gridRow={1}
+                        sx={{
+                          display: "flex",
+                          flexDirection: "row",
+                          mr: "5",
+                          mb: "15px",
+                          alignItems: "flex-end",
+                        }}
+                      >
+                        <MDTypography variant="h6" sx={{ mr: "8px", fontSize: "0.74em" }}>
                           Editora:
                         </MDTypography>
-                        <MDTypography variant="h6" sx={{ color: "#cecece", fontWeight: "400" }}>
-                          text
+                        <MDTypography
+                          variant="h6"
+                          sx={{ color: "#cecece", fontWeight: "400", fontSize: "0.7em" }}
+                        >
+                          Rocco
                         </MDTypography>
-                      </MDBox>
+                      </Box>
+                      <Box
+                        gridRow={2}
+                        sx={{
+                          display: "flex",
+                          flexDirection: "row",
+                          mr: "5",
+                          mb: "15px",
+                          alignItems: "flex-end",
+                        }}
+                      >
+                        <MDTypography variant="h6" sx={{ mr: "8px", fontSize: "0.74em" }}>
+                          ISBN:
+                        </MDTypography>
+                        <MDTypography
+                          variant="h6"
+                          sx={{ color: "#cecece", fontWeight: "400", fontSize: "0.7em" }}
+                        >
+                          8532530788 978-8532530783
+                        </MDTypography>
+                      </Box>
+                      <Box
+                        gridRow={3}
+                        sx={{
+                          display: "flex",
+                          flexDirection: "row",
+                          mr: "5",
+                          mb: "15px",
+                          alignItems: "flex-end",
+                        }}
+                      >
+                        <MDTypography variant="h6" sx={{ mr: "8px", fontSize: "0.74em" }}>
+                          Edição:
+                        </MDTypography>
+                        <MDTypography
+                          variant="h6"
+                          sx={{ color: "#cecece", fontWeight: "400", fontSize: "0.7em" }}
+                        >
+                          1ª edição
+                        </MDTypography>
+                      </Box>
+                      <Box
+                        gridRow={4}
+                        sx={{
+                          display: "flex",
+                          flexDirection: "row",
+                          mr: "5",
+                          mb: "15px",
+                          alignItems: "flex-end",
+                        }}
+                      >
+                        <MDTypography variant="h6" sx={{ mr: "8px", fontSize: "0.74em" }}>
+                          DataDePublicação:
+                        </MDTypography>
+                        <MDTypography
+                          variant="h6"
+                          sx={{ color: "#cecece", fontWeight: "400", fontSize: "0.7em" }}
+                        >
+                          19 agosto 2017
+                        </MDTypography>
+                      </Box>
+                      <Box
+                        gridRow={5}
+                        sx={{
+                          display: "flex",
+                          flexDirection: "row",
+                          mr: "5",
+                          mb: "15px",
+                          alignItems: "flex-end",
+                        }}
+                      >
+                        <MDTypography variant="h6" sx={{ mr: "8px", fontSize: "0.74em" }}>
+                          Paginas:
+                        </MDTypography>
+                        <MDTypography
+                          variant="h6"
+                          sx={{ color: "#cecece", fontWeight: "400", fontSize: "0.7em" }}
+                        >
+                          208
+                        </MDTypography>
+                      </Box>
+                      <Box
+                        gridRow={6}
+                        sx={{
+                          display: "flex",
+                          flexDirection: "row",
+                          mr: "5",
+                          mb: "15px",
+                          alignItems: "flex-end",
+                        }}
+                      >
+                        <MDTypography variant="h6" sx={{ mr: "8px", fontSize: "0.74em" }}>
+                          Linguagem:
+                        </MDTypography>
+                        <MDTypography
+                          variant="h6"
+                          sx={{ color: "#cecece", fontWeight: "400", fontSize: "0.7em" }}
+                        >
+                          Português
+                        </MDTypography>
+                      </Box>
+                      <Box
+                        gridRow={1}
+                        sx={{
+                          display: "flex",
+                          flexDirection: "row",
+                          mr: "5",
+                          mb: "15px",
+                          alignItems: "flex-end",
+                        }}
+                      >
+                        <MDTypography variant="h6" sx={{ mr: "8px", fontSize: "0.74em" }}>
+                          Capa:
+                        </MDTypography>
+                        <MDTypography
+                          variant="h6"
+                          sx={{ color: "#cecece", fontWeight: "400", fontSize: "0.7em" }}
+                        >
+                          Dura
+                        </MDTypography>
+                      </Box>
+                      <Box
+                        gridRow={2}
+                        sx={{
+                          display: "flex",
+                          flexDirection: "row",
+                          mr: "5",
+                          mb: "15px",
+                          alignItems: "flex-end",
+                        }}
+                      >
+                        <MDTypography variant="h6" sx={{ mr: "8px", fontSize: "0.74em" }}>
+                          Copias:
+                        </MDTypography>
+                        <MDTypography
+                          variant="h6"
+                          sx={{ color: "#cecece", fontWeight: "400", fontSize: "0.7em" }}
+                        >
+                          09
+                        </MDTypography>
+                      </Box>
                     </Grid>
-                    aa
                   </Grid>
+                </Grid>
+                <Grid item lg={2}>
+                  <MDBox
+                    mt={3}
+                    py={2}
+                    px={2}
+                    textAlign="center"
+                    variant="gradient"
+                    bgColor="info"
+                    borderRadius="lg"
+                    coloredShadow="info"
+                  >
+                    <MDTypography variant="h6" color="white">
+                      Emprestimos
+                    </MDTypography>
+                  </MDBox>
+                </Grid>
+                <Grid>
+                  <MDBox pt={3}>
+                    <DataTable
+                      table={{ columns, rows }}
+                      isSorted={false}
+                      entriesPerPage={false}
+                      showTotalEntries={false}
+                      noEndBorder
+                    />
+                  </MDBox>
                 </Grid>
               </MDBox>
             </Card>
@@ -142,28 +325,3 @@ function Details() {
 }
 
 export default Details;
-
-/* <Grid
-         xs={12}
-         container
-         justifyContent="space-between"
-         alignps="center"
-         flexDirection={{ xs: "column", sm: "row" }}
-         sx={{ fontSize: "12px" }}
-       >
-         <Grid sx={{ order: { xs: 2, sm: 1 } }}>
-           <p>© Copyright</p>
-         </Grid>
-         <Grid container columnSpacing={1} sx={{ order: { xs: 1, sm: 2 } }}>
-           <Grid>
-             <p>Link A</p>
-           </Grid>
-           <Grid>
-             <p>Link B</p>
-           </Grid>
-           <Grid>
-             <p>Link C</p>
-           </Grid>
-         </Grid>
-       </Grid>
-       */
