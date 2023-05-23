@@ -23,7 +23,6 @@ import MDAvatar from "components/MDAvatar";
 import { Link } from "react-router-dom";
 
 export default async function data(books) {
-  console.log(await books);
   const Book = ({ image, name }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
       <MDAvatar
@@ -36,7 +35,7 @@ export default async function data(books) {
           boxShadow: "3px 3px 5px 0px rgba(0,0,0,0.19)",
         }}
       />
-      <MDTypography variant="button" fontWeight="medium" ml={1} lineHeight={1}>
+      <MDTypography variant="button" fontWeight="medium" ml={2} lineHeight={1}>
         {name}
       </MDTypography>
     </MDBox>
@@ -85,8 +84,13 @@ export default async function data(books) {
   );
   const Publisher = ({ name }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
-      <MDBox ml={2} lineHeight={1}>
-        <MDTypography display="block" variant="button" fontWeight="medium">
+      <MDBox lineHeight={1}>
+        <MDTypography
+          display="block"
+          variant="button"
+          fontWeight="medium"
+          sx={{ textAlign: "center" }}
+        >
           {name}
         </MDTypography>
       </MDBox>
@@ -122,7 +126,7 @@ export default async function data(books) {
           fontSize="25px"
           textGradient
         >
-          +
+          ...
         </MDTypography>
       </MDTypography>
     </MDBox>
@@ -131,9 +135,9 @@ export default async function data(books) {
   return {
     columns: [
       { Header: "Título", accessor: "book", align: "left" },
-      { Header: "Autores", accessor: "author", align: "left" },
-      { Header: "Editora", accessor: "publisher", align: "left" },
-      { Header: "Categorias", accessor: "categories", align: "left" },
+      { Header: "Autores", accessor: "author", align: "center" },
+      { Header: "Editora", accessor: "publisher", align: "center" },
+      { Header: "Categorias", accessor: "categories", align: "center" },
       { Header: "Status", accessor: "status", align: "center" },
       { Header: "Páginas", accessor: "pages", align: "center" },
       { Header: "Ano de Publicação", accessor: "release", align: "center" },

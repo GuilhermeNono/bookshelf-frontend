@@ -64,7 +64,6 @@ export const useAuthentication = () => {
         // setToken(dispatch, user.token);
         setError(null);
         setLoading(false);
-        console.log(user.token);
         setToken(dispatch, user.token);
         return user;
       })
@@ -127,11 +126,7 @@ export const useAuthentication = () => {
       // Convertendo string para json
       .then(handleResponse)
       // Manipulando json de resposta
-      .then((user) => {
-        console.log(user);
-
-        return user;
-      })
+      .then((user) => user)
       // Tratativa de erro
       .catch(() => {
         setError("Email e/ou senha incorretos.");

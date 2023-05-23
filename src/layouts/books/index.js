@@ -19,7 +19,6 @@ import Card from "@mui/material/Card";
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
 
 // Material Dashboard 2 React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
@@ -36,6 +35,8 @@ import booksTableData from "layouts/books/data/booksTableData";
 import { useEffect, useState } from "react";
 import MDProgress from "components/MDProgress";
 import { useLibrary } from "hooks/useLibrary";
+import MDTypography from "components/MDTypography";
+import MDButton from "components/MDButton";
 
 function Books() {
   // eslint-disable-next-line no-unused-vars
@@ -76,9 +77,12 @@ function Books() {
                 borderRadius="lg"
                 coloredShadow="info"
               >
-                <MDTypography variant="h6" color="white">
-                  Lista de livros
-                </MDTypography>
+                <MDBox display="flex" alignItems="center" lineHeight={1}>
+                  <MDTypography variant="h6" color="white">
+                    Lista de livros
+                  </MDTypography>
+                  <MDButton>Adicionar Livro +</MDButton>
+                </MDBox>
               </MDBox>
               <MDBox pt={3}>
                 {books ? (

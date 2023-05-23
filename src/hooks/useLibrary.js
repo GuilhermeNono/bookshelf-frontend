@@ -45,7 +45,6 @@ export const useLibrary = () => {
           resp.content.forEach((element) => {
             books.push(new Book(element));
           });
-          console.log(resp);
           return books;
         })
       )
