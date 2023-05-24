@@ -26,7 +26,7 @@ import data from "./data";
 
 function Details() {
   const theme = useTheme();
-  const matches = useMediaQuery(theme.breakpoints.up("xs", "sm"));
+  const matches = useMediaQuery(theme.breakpoints.down("lg"));
   const { columns, rows } = data();
 
   return (
@@ -95,10 +95,9 @@ function Details() {
                         </MDTypography>
                       </MDBox>
                     </Grid>
-                    <Grid>
+                    <Grid sx={{ textAlign: "justify" }}>
                       <MDTypography
                         variant="item"
-                        align="justify"
                         sx={{
                           fontSize: "0.7em",
                           fontWeight: "400",
@@ -116,13 +115,16 @@ function Details() {
                       </MDTypography>
                     </Grid>
                     <Grid
-                      container
-                      style={{
-                        display: "grid",
-                        gridTemplateColumns: "1fr 1fr",
-                        gridTemplateRows: "repeat(6, 1fr)",
-                        marginTop: "1.5rem",
-                      }}
+                      mt={5}
+                      sx={
+                        matches
+                          ? { display: "block" }
+                          : {
+                              display: "grid",
+                              gridTemplateColumns: "1fr 1fr",
+                              gridTemplateRows: "repeat(6, 1fr)",
+                            }
+                      }
                     >
                       <Box
                         gridRow={1}
@@ -287,7 +289,7 @@ function Details() {
                     </Grid>
                   </Grid>
                 </Grid>
-                <Grid item lg={2}>
+                <Grid item xs={12} sm={4} md={3} lg={2}>
                   <MDBox
                     mt={3}
                     py={2}

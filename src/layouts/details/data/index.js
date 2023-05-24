@@ -27,8 +27,9 @@ function data() {
     columns: [
       { Header: "Status", accessor: "status", width: "10%", align: "left" },
       { Header: "Nome", accessor: "user", width: "10%", align: "left" },
-      { Header: "Livro", accessor: "book", width: "10%", align: "left" },
-      { Header: "Curso", accessor: "course", width: "10%", align: "right" },
+      { Header: "Curso", accessor: "course", width: "10%", align: "center" },
+      { Header: "Tombo", accessor: "fall", width: "10%", align: "center" },
+      { Header: "Data De Emprestimo", accessor: "dateOfBorrowing", width: "10%", align: "center" },
     ],
 
     rows: [
@@ -45,65 +46,20 @@ function data() {
           </MDBox>
         ),
         // TODO: Logo Será a capa do livro
-        user: "Guilherme Nono",
-        book: (
-          <MDTypography variant="caption" color="text" fontWeight="medium" textAlign="left">
-            Harry Potter e a Pedra Filosofal
-          </MDTypography>
-        ),
+        user: "Kauan Moreira Pereira",
         course: (
-          <MDTypography variant="caption" color="text" fontWeight="medium" textAlign="left">
+          <MDTypography variant="caption" color="text" fontWeight="medium">
             3º DS
           </MDTypography>
         ),
-      },
-      {
-        status: (
-          <MDBox>
-            <MDBadge
-              badgeContent="Atraso"
-              color="error"
-              variant="gradient"
-              size="sm"
-              textAlign="left"
-            />
-          </MDBox>
-        ),
-        // TODO: Logo Será a capa do livro
-        user: "Guilherme Nono",
-        book: (
-          <MDTypography variant="caption" color="text" fontWeight="medium" textAlign="left">
-            Harry Potter e a Pedra Filosofal
+        fall: (
+          <MDTypography variant="caption" color="text" fontWeight="medium">
+            01
           </MDTypography>
         ),
-        course: (
-          <MDTypography variant="caption" color="text" fontWeight="medium" textAlign="left">
-            3º DS
-          </MDTypography>
-        ),
-      },
-      {
-        status: (
-          <MDBox>
-            <MDBadge
-              badgeContent="Atraso"
-              color="error"
-              variant="gradient"
-              size="sm"
-              textAlign="left"
-            />
-          </MDBox>
-        ),
-        // TODO: Logo Será a capa do livro
-        user: "Guilherme Nono",
-        book: (
-          <MDTypography variant="caption" color="text" fontWeight="medium" textAlign="left">
-            Harry Potter e a Pedra Filosofal
-          </MDTypography>
-        ),
-        course: (
-          <MDTypography variant="caption" color="text" fontWeight="medium" textAlign="left">
-            3º DS
+        dateOfBorrowing: (
+          <MDTypography variant="caption" color="text" fontWeight="medium">
+            15/04/2023
           </MDTypography>
         ),
       },
@@ -121,89 +77,19 @@ function data() {
         ),
         // TODO: Logo Será a capa do livro
         user: "Guilherme Nono",
-        book: (
-          <MDTypography variant="caption" color="text" fontWeight="medium" textAlign="left">
-            Harry Potter e a Pedra Filosofal
-          </MDTypography>
-        ),
         course: (
-          <MDTypography variant="caption" color="text" fontWeight="medium" textAlign="left">
+          <MDTypography variant="caption" color="text" fontWeight="medium">
             3º DS
           </MDTypography>
         ),
-      },
-      {
-        status: (
-          <MDBox>
-            <MDBadge
-              badgeContent="Atraso"
-              color="warning"
-              variant="gradient"
-              size="sm"
-              textAlign="left"
-            />
-          </MDBox>
-        ),
-        // TODO: Logo Será a capa do livro
-        user: "Guilherme Nono",
-        book: (
-          <MDTypography variant="caption" color="text" fontWeight="medium" textAlign="left">
-            Harry Potter e a Pedra Filosofal
+        fall: (
+          <MDTypography variant="caption" color="text" fontWeight="medium">
+            02
           </MDTypography>
         ),
-        course: (
-          <MDTypography variant="caption" color="text" fontWeight="medium" textAlign="left">
-            3º DS
-          </MDTypography>
-        ),
-      },
-      {
-        status: (
-          <MDBox>
-            <MDBadge
-              badgeContent="Atraso"
-              color="warning"
-              variant="gradient"
-              size="sm"
-              textAlign="left"
-            />
-          </MDBox>
-        ),
-        // TODO: Logo Será a capa do livro
-        user: "Guilherme Nono",
-        book: (
-          <MDTypography variant="caption" color="text" fontWeight="medium" textAlign="left">
-            Harry Potter e a Pedra Filosofal
-          </MDTypography>
-        ),
-        course: (
-          <MDTypography variant="caption" color="text" fontWeight="medium" textAlign="left">
-            3º DS
-          </MDTypography>
-        ),
-      },
-      {
-        status: (
-          <MDBox>
-            <MDBadge
-              badgeContent="Atraso"
-              color="warning"
-              variant="gradient"
-              size="sm"
-              textAlign="left"
-            />
-          </MDBox>
-        ),
-        // TODO: Logo Será a capa do livro
-        user: "Guilherme Nono",
-        book: (
-          <MDTypography variant="caption" color="text" fontWeight="medium" textAlign="left">
-            Harry Potter e a Pedra Filosofal
-          </MDTypography>
-        ),
-        course: (
-          <MDTypography variant="caption" color="text" fontWeight="medium" textAlign="left">
-            3º DS
+        dateOfBorrowing: (
+          <MDTypography variant="caption" color="text" fontWeight="medium">
+            26/04/2023
           </MDTypography>
         ),
       },
@@ -220,65 +106,20 @@ function data() {
           </MDBox>
         ),
         // TODO: Logo Será a capa do livro
-        user: "Guilherme Nono",
-        book: (
-          <MDTypography variant="caption" color="text" fontWeight="medium" textAlign="left">
-            Harry Potter e a Pedra Filosofal
-          </MDTypography>
-        ),
+        user: "Gabriel Morais",
         course: (
-          <MDTypography variant="caption" color="text" fontWeight="medium" textAlign="left">
+          <MDTypography variant="caption" color="text" fontWeight="medium">
             3º DS
           </MDTypography>
         ),
-      },
-      {
-        status: (
-          <MDBox>
-            <MDBadge
-              badgeContent="Em dia"
-              color="success"
-              variant="gradient"
-              size="sm"
-              textAlign="left"
-            />
-          </MDBox>
-        ),
-        // TODO: Logo Será a capa do livro
-        user: "Guilherme Nono",
-        book: (
-          <MDTypography variant="caption" color="text" fontWeight="medium" textAlign="left">
-            Harry Potter e a Pedra Filosofal
+        fall: (
+          <MDTypography variant="caption" color="text" fontWeight="medium">
+            03
           </MDTypography>
         ),
-        course: (
-          <MDTypography variant="caption" color="text" fontWeight="medium" textAlign="left">
-            3º DS
-          </MDTypography>
-        ),
-      },
-      {
-        status: (
-          <MDBox>
-            <MDBadge
-              badgeContent="Em dia"
-              color="success"
-              variant="gradient"
-              size="sm"
-              textAlign="left"
-            />
-          </MDBox>
-        ),
-        // TODO: Logo Será a capa do livro
-        user: "Guilherme Nono",
-        book: (
-          <MDTypography variant="caption" color="text" fontWeight="medium" textAlign="left">
-            Harry Potter e a Pedra Filosofal
-          </MDTypography>
-        ),
-        course: (
-          <MDTypography variant="caption" color="text" fontWeight="medium" textAlign="left">
-            3º DS
+        dateOfBorrowing: (
+          <MDTypography variant="caption" color="text" fontWeight="medium">
+            07/05/2023
           </MDTypography>
         ),
       },
