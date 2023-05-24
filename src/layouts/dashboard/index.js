@@ -14,7 +14,7 @@
  */
 
 // @mui material components
-import Grid from "@mui/material/Grid";
+// import Grid from "@mui/material/Grid";
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
@@ -34,11 +34,25 @@ import ComplexStatisticsCard from "examples/Cards/StatisticsCards/ComplexStatist
 // Dashboard components
 import RecentBooks from "layouts/dashboard/components/Projects";
 import OrdersOverview from "layouts/dashboard/components/OrdersOverview";
+import { useMaterialUIController } from "context";
+import { useEffect, useState } from "react";
+// eslint-disable-next-line no-unused-vars
+import { Box, CircularProgress, Grid } from "@mui/material";
 
 function Dashboard() {
   // const { sales, tasks } = reportsLineChartData;
+  const [controller] = useMaterialUIController();
+  const [ready, setReady] = useState(false);
 
-  return (
+  const { token, library } = controller;
+
+  useEffect(() => {
+    if (token && library) {
+      setReady(true);
+    }
+  }, [token, library]);
+
+  return ready ? (
     <DashboardLayout>
       <DashboardNavbar />
       <MDBox py={3}>
@@ -78,6 +92,13 @@ function Dashboard() {
         </MDBox>
       </MDBox>
       <Footer />
+    </DashboardLayout>
+  ) : (
+    <DashboardLayout>
+      <DashboardNavbar />
+      <Box sx={{ height: 100, display: "flex", justifyContent: "center", alignItems: "center" }}>
+        <CircularProgress />
+      </Box>
     </DashboardLayout>
   );
 }

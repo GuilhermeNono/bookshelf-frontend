@@ -48,6 +48,7 @@ import SignUp from "layouts/authentication/sign-up";
 import Icon from "@mui/material/Icon";
 import Home from "layouts/home";
 import Pricing from "layouts/pricing";
+import Books from "layouts/books";
 
 const routes = [
   {
@@ -77,27 +78,35 @@ const routes = [
     component: <Dashboard />,
   },
   {
-    type: "collapse",
+    type: "title",
     name: "Tables",
     key: "tables",
     icon: <Icon fontSize="small">table_view</Icon>,
-    route: "/tables",
+    route: "/dashboard/tables",
     component: <Tables />,
   },
   {
     type: "collapse",
+    name: "Books",
+    key: "books",
+    icon: <Icon fontSize="small">table_view</Icon>,
+    route: "/dashboard/books",
+    component: <Books />,
+  },
+  {
+    type: "title",
     name: "Billing",
     key: "billing",
     icon: <Icon fontSize="small">receipt_long</Icon>,
-    route: "/billing",
+    route: "/dashboard/billing",
     component: <Billing />,
   },
   {
-    type: "collapse",
+    type: "title",
     name: "Notifications",
     key: "notifications",
     icon: <Icon fontSize="small">notifications</Icon>,
-    route: "/notifications",
+    route: "/dashboard/notifications",
     component: <Notifications />,
   },
   {
@@ -105,7 +114,7 @@ const routes = [
     name: "Profile",
     key: "profile",
     icon: <Icon fontSize="small">person</Icon>,
-    route: "/profile",
+    route: "/dashboard/profile",
     component: <Profile />,
   },
   {

@@ -16,7 +16,7 @@ Coded by www.creative-tim.com
 import { useState, useEffect, useMemo } from "react";
 
 // react-router components
-import { Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation, useNavigate } from "react-router-dom";
 
 // @mui material components
 import { ThemeProvider } from "@mui/material/styles";
@@ -49,12 +49,13 @@ import createCache from "@emotion/cache";
 import routes from "routes";
 
 // Material Dashboard 2 React contexts
-import { useMaterialUIController, setMiniSidenav } from "context";
+import { useMaterialUIController, setMiniSidenav, setToken, setLibrary } from "context";
 
 // Images
 // import brandWhite from "assets/images/logo-ct.png";
 // import brandDark from "assets/images/logo-ct-dark.png";
 import logo from "assets/images/logos/Logo.svg";
+import { useAuthentication } from "hooks/useAuthentication";
 
 export default function App() {
   const [controller, dispatch] = useMaterialUIController();
@@ -67,10 +68,15 @@ export default function App() {
     transparentSidenav,
     whiteSidenav,
     darkMode,
+    // eslint-disable-next-line no-unused-vars
+    token: tokenContext,
+    library: libraryContext,
   } = controller;
   const [onMouseEnter, setOnMouseEnter] = useState(false);
   const [rtlCache, setRtlCache] = useState(null);
   const { pathname } = useLocation();
+  const navigate = useNavigate();
+  const authentication = useAuthentication();
 
   // Cache for the rtl
   useMemo(() => {
@@ -112,9 +118,46 @@ export default function App() {
     document.scrollingElement.scrollTop = 0;
   }, [pathname]);
 
+  // eslint-disable-next-line consistent-return
   useEffect(() => {
-    console.log(layout);
-  }, [layout]);
+    const token = localStorage.getItem("userAuthorization");
+    const libraryId = localStorage.getItem("bs-lid");
+
+    if (token) {
+      const tokenSlice = JSON.parse(token);
+      console.log(tokenSlice);
+      // eslint-disable-next-line consistent-return
+      authentication.validateToken(tokenSlice).then((resp) => {
+        console.log(resp);
+        if (resp === 200 && libraryId) {
+          setToken(dispatch, token);
+          setLibrary(dispatch, libraryId);
+        } else {
+          return localStorage.clear();
+        }
+      });
+    }
+  }, []);
+
+  useEffect(() => {
+    const libraryId = localStorage.getItem("bs-lid");
+    if (libraryId) {
+      return setLibrary(dispatch, libraryId);
+    }
+    return null;
+  }, [localStorage.getItem("bs-lid")]);
+
+  useEffect(() => {
+    if (pathname.indexOf("/dashboard") === 0) {
+      if (!tokenContext || !libraryContext) {
+        navigate("/authentication/sign-in");
+      }
+    } else if (pathname.indexOf("/authentication") === 0) {
+      if (tokenContext) {
+        navigate("/dashboard");
+      }
+    }
+  }, [pathname, tokenContext]);
 
   const getRoutes = (allRoutes) =>
     allRoutes.map((route) => {
