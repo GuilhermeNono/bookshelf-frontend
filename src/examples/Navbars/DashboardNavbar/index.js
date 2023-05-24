@@ -61,6 +61,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
   const { miniSidenav, transparentNavbar, fixedNavbar, openConfigurator, darkMode, library } =
     controller;
   const [openMenu, setOpenMenu] = useState(false);
+  const [libraries, setLibraries] = useState([]);
   const route = useLocation().pathname.split("/").slice(1);
   const [libraryId, setLibraryId] = useState("");
 
@@ -73,6 +74,11 @@ function DashboardNavbar({ absolute, light, isMini }) {
       setLibraryId(library);
     }
   }, [library]);
+
+  useEffect(() => {
+    const uid = localStorage.getItem("uid");
+    setLibraries(JSON.parse(uid));
+  }, []);
 
   useEffect(() => {
     if (libraryId) {
@@ -167,14 +173,18 @@ function DashboardNavbar({ absolute, light, isMini }) {
                   sx={{ minHeight: 45 }}
                   onChange={handleChange}
                 >
-                  <MenuItem value={1}>Etec Comendador João Rays</MenuItem>
+                  {libraries &&
+                    libraries.map((lib) => (
+                      <MenuItem value={lib.libraryId}>{lib.library}</MenuItem>
+                    ))}
+                  {/* <MenuItem value={1}>Etec Comendador João Rays</MenuItem>
                   <MenuItem value={2}>Etec 2</MenuItem>
-                  <MenuItem value={3}>Etec 3</MenuItem>
+                  <MenuItem value={3}>Etec 3</MenuItem> */}
                 </Select>
               </FormControl>
             </MDBox>
             <MDBox pr={1}>
-              <MDInput label={library} />
+              <MDInput label="Pesquisar" />
             </MDBox>
             <MDBox color={light ? "white" : "inherit"}>
               <Link to="/authentication/sign-in/basic">

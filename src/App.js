@@ -69,7 +69,8 @@ export default function App() {
     whiteSidenav,
     darkMode,
     // eslint-disable-next-line no-unused-vars
-    library,
+    token: tokenContext,
+    library: libraryContext,
   } = controller;
   const [onMouseEnter, setOnMouseEnter] = useState(false);
   const [rtlCache, setRtlCache] = useState(null);
@@ -117,30 +118,46 @@ export default function App() {
     document.scrollingElement.scrollTop = 0;
   }, [pathname]);
 
+  // eslint-disable-next-line consistent-return
   useEffect(() => {
     const token = localStorage.getItem("userAuthorization");
+    const libraryId = localStorage.getItem("bs-lid");
+
     if (token) {
-      const tokenSlice = token.slice(10, -2);
+      const tokenSlice = JSON.parse(token);
+      console.log(tokenSlice);
+      // eslint-disable-next-line consistent-return
       authentication.validateToken(tokenSlice).then((resp) => {
-        if (resp === 200) {
+        console.log(resp);
+        if (resp === 200 && libraryId) {
           setToken(dispatch, token);
+          setLibrary(dispatch, libraryId);
         } else {
-          localStorage.clear();
-          navigate("/authentication/sign-in");
+          return localStorage.clear();
         }
       });
-    } else {
-      navigate("/authentication/sign-in");
     }
   }, []);
 
   useEffect(() => {
     const libraryId = localStorage.getItem("bs-lid");
-
     if (libraryId) {
-      setLibrary(dispatch, libraryId);
+      return setLibrary(dispatch, libraryId);
     }
-  }, []);
+    return null;
+  }, [localStorage.getItem("bs-lid")]);
+
+  useEffect(() => {
+    if (pathname.indexOf("/dashboard") === 0) {
+      if (!tokenContext || !libraryContext) {
+        navigate("/authentication/sign-in");
+      }
+    } else if (pathname.indexOf("/authentication") === 0) {
+      if (tokenContext) {
+        navigate("/dashboard");
+      }
+    }
+  }, [pathname, tokenContext]);
 
   const getRoutes = (allRoutes) =>
     allRoutes.map((route) => {
@@ -210,7 +227,7 @@ export default function App() {
         )}
         <Routes>
           {getRoutes(routes)}
-          <Route path="*" element={<Navigate to="/dashboard" />} /> 
+          <Route path="*" element={<Navigate to="/dashboard" />} />
         </Routes>
       </ThemeProvider>
     </CacheProvider>

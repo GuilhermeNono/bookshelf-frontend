@@ -13,7 +13,8 @@
  * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
  */
 
-import { useState } from "react";
+// eslint-disable-next-line no-unused-vars
+import { useEffect, useState } from "react";
 
 // react-router-dom components
 import { Link, useNavigate } from "react-router-dom";
@@ -34,7 +35,8 @@ import BasicLayout from "layouts/authentication/components/BasicLayout";
 // Images
 import bgImage from "assets/images/bg-sign-in.svg";
 import logoImage from "assets/images/logos/Logo.svg";
-import { useMaterialUIController, setToken } from "context";
+// eslint-disable-next-line no-unused-vars
+import { useMaterialUIController, setToken, setLibrary } from "context";
 import { useAuthentication } from "hooks/useAuthentication";
 import MDAlert from "components/MDAlert";
 
@@ -47,6 +49,7 @@ function Basic() {
   // eslint-disable-next-line no-unused-vars
   const authentication = useAuthentication();
 
+  // eslint-disable-next-line no-unused-vars
   const [controller, dispatch] = useMaterialUIController();
 
   const { darkMode } = controller;
@@ -56,7 +59,9 @@ function Basic() {
 
     const login = await authentication.loginUser(email, password);
     if (login != null) {
+      const bslid = login.librariesAccount[0].libraryId ? login.librariesAccount[0].libraryId : 0;
       setToken(dispatch, login.token);
+      setLibrary(dispatch, bslid);
       return navigate("/dashboard");
     }
     console.log(authentication.error);

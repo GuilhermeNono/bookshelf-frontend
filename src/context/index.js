@@ -66,7 +66,7 @@ function reducer(state, action) {
       return { ...state, token: action.value };
     }
     case "LIBRARY": {
-      return { ...state, token: action.value };
+      return { ...state, library: action.value };
     }
     default: {
       throw new Error(`Unhandled action type: ${action.type}`);
@@ -88,7 +88,7 @@ function MaterialUIControllerProvider({ children }) {
     layout: "home",
     darkMode: true,
     token: "",
-    library: null,
+    library: 0,
   };
 
   const [controller, dispatch] = useReducer(reducer, initialState);

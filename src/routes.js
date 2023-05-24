@@ -65,7 +65,7 @@ const routes = [
     name: "pricing",
     key: "pricing",
     icon: <Icon fontSize="small">dashboard</Icon>,
-    route: "/dashboard/pricing",
+    route: "/pricing",
     ignoreNav: true,
     component: <Pricing />,
   },
@@ -78,7 +78,7 @@ const routes = [
     component: <Dashboard />,
   },
   {
-    type: "collapse",
+    type: "title",
     name: "Tables",
     key: "tables",
     icon: <Icon fontSize="small">table_view</Icon>,
@@ -94,7 +94,7 @@ const routes = [
     component: <Books />,
   },
   {
-    type: "collapse",
+    type: "title",
     name: "Billing",
     key: "billing",
     icon: <Icon fontSize="small">receipt_long</Icon>,
@@ -102,7 +102,7 @@ const routes = [
     component: <Billing />,
   },
   {
-    type: "collapse",
+    type: "title",
     name: "Notifications",
     key: "notifications",
     icon: <Icon fontSize="small">notifications</Icon>,

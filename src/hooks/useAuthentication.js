@@ -58,13 +58,16 @@ export const useAuthentication = () => {
     const req = fetch(ApiRouteBuild.buildRoute("authentication"), requestOptions)
       .then(handleResponse)
       .then((user) => {
-        localStorage.setItem("userAuthorization", JSON.stringify(user));
-        currentUserSubject.next(user);
+        localStorage.setItem("userAuthorization", JSON.stringify(user.token));
+        localStorage.setItem("uid", JSON.stringify(user.accountId));
+        localStorage.setItem("uid", JSON.stringify(user.librariesAccount));
+        const bslid = user.librariesAccount[0].libraryId ? user.librariesAccount[0].libraryId : 0;
+        localStorage.setItem("bs-lid", JSON.stringify(bslid));
+        currentUserSubject.next(user.token);
 
         // setToken(dispatch, user.token);
         setError(null);
         setLoading(false);
-        console.log(user.token);
         setToken(dispatch, user.token);
         return user;
       })
