@@ -18,6 +18,10 @@ export const APICONFIG = {
       name: "library",
       route: "/api/v1/library",
     },
+    {
+      name: "book",
+      route: "/api/v1/book",
+    },
   ],
 };
 
