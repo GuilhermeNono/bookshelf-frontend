@@ -197,7 +197,7 @@ function Details() {
                         }}
                       >
                         <MDTypography variant="h6" sx={{ mr: "8px", fontSize: "0.74em" }}>
-                          DataDePublicação:
+                          Data de Publicação:
                         </MDTypography>
                         <MDTypography
                           variant="h6"
