@@ -21,6 +21,7 @@ import MDTypography from "components/MDTypography";
 import MDBadge from "components/MDBadge";
 import MDAvatar from "components/MDAvatar";
 import { Link } from "react-router-dom";
+import ArticleOutlinedIcon from "@mui/icons-material/ArticleOutlined";
 
 export default async function data(books) {
   const Book = ({ image, name }) => (
@@ -45,9 +46,14 @@ export default async function data(books) {
     if (books.length > 0) {
       const resp = [];
       books.forEach((element) => {
+        let authors = element.authors.slice(0, 2).join(", "); // Limita o a quantiade de autores a ser exibido (2)
+        if (element.authors.length > 2) {
+          authors += " ..."; // Adiciona reticências caso a quantidade de autores seja maior que indicado (2)
+        }
+
         resp.push({
           book: <Book image={element.cape} name={element.name} />,
-          author: <Author name={element.authors.join(", ")} />,
+          author: <Author name={authors} />,
           publisher: <Publisher name={element.publisher} />,
           categories: <Categories categoryName={element.categories.join(", ")} />,
           release: (
@@ -89,7 +95,7 @@ export default async function data(books) {
           display="block"
           variant="button"
           fontWeight="medium"
-          sx={{ textAlign: "center" }}
+          sx={{ textalign: "center" }}
         >
           {name}
         </MDTypography>
@@ -114,19 +120,20 @@ export default async function data(books) {
   );
 
   // Details está estatico com link apenas como placeHolder
+  // Necessitando de uma ligação com a página details
   const Details = () => (
     <MDBox lineHeight={1} textAlign="left">
       <MDTypography display="block" variant="caption" color="text" fontWeight="medium">
         <MDTypography
           component={Link}
-          to="/authentication/sign-in"
+          to="/dashboard/books"
           variant="button"
           color="info"
           fontWeight="bold"
           fontSize="25px"
           textGradient
         >
-          ...
+          <ArticleOutlinedIcon style={{ marginLeft: "0.5em" }} color="white" />
         </MDTypography>
       </MDTypography>
     </MDBox>

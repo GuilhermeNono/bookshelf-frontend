@@ -25,6 +25,7 @@ import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import { useMaterialUIController } from "context";
 import Footer from "examples/Footer";
+
 // eslint-disable-next-line no-unused-vars
 import DataTable from "examples/Tables/DataTable";
 
@@ -50,7 +51,7 @@ function Books() {
 
   useEffect(() => {
     if (token) {
-      useLibraries.getLibraryBooks(token.slice(10, -2), 1).then((resp) => {
+      useLibraries.getLibraryBooks(JSON.parse(token), 1).then((resp) => {
         if (resp) {
           booksTableData(resp).then((data) => {
             setBooks(data);
@@ -71,17 +72,15 @@ function Books() {
                 mx={2}
                 mt={-3}
                 py={3}
-                px={2}
+                px={3}
                 variant="gradient"
                 bgColor="info"
                 borderRadius="lg"
                 coloredShadow="info"
               >
-                <MDBox display="flex" alignItems="center" lineHeight={1}>
-                  <MDTypography variant="h6" color="white">
-                    Lista de livros
-                  </MDTypography>
-                  <MDButton>Adicionar Livro +</MDButton>
+                <MDBox display="flex" alignItems="center" justifyContent="space-between">
+                  <MDTypography variant="h6">Livros na biblioteca</MDTypography>
+                  <MDButton color="success">Adicionar Livro</MDButton>
                 </MDBox>
               </MDBox>
               <MDBox pt={3}>
