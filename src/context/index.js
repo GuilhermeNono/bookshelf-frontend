@@ -65,6 +65,9 @@ function reducer(state, action) {
     case "TOKEN": {
       return { ...state, token: action.value };
     }
+    case "LIBRARY": {
+      return { ...state, library: action.value };
+    }
     default: {
       throw new Error(`Unhandled action type: ${action.type}`);
     }
@@ -85,6 +88,7 @@ function MaterialUIControllerProvider({ children }) {
     layout: "home",
     darkMode: true,
     token: "",
+    library: 0,
   };
 
   const [controller, dispatch] = useReducer(reducer, initialState);
@@ -124,6 +128,7 @@ const setDirection = (dispatch, value) => dispatch({ type: "DIRECTION", value })
 const setLayout = (dispatch, value) => dispatch({ type: "LAYOUT", value });
 const setDarkMode = (dispatch, value) => dispatch({ type: "DARKMODE", value });
 const setToken = (dispatch, value) => dispatch({ type: "TOKEN", value });
+const setLibrary = (dispatch, value) => dispatch({ type: "LIBRARY", value });
 
 export {
   MaterialUIControllerProvider,
@@ -139,4 +144,5 @@ export {
   setLayout,
   setDarkMode,
   setToken,
+  setLibrary,
 };

@@ -51,14 +51,41 @@ import {
   setTransparentNavbar,
   setMiniSidenav,
   setOpenConfigurator,
+  setLibrary,
 } from "context";
+import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 
 function DashboardNavbar({ absolute, light, isMini }) {
   const [navbarType, setNavbarType] = useState();
   const [controller, dispatch] = useMaterialUIController();
-  const { miniSidenav, transparentNavbar, fixedNavbar, openConfigurator, darkMode } = controller;
+  const { miniSidenav, transparentNavbar, fixedNavbar, openConfigurator, darkMode, library } =
+    controller;
   const [openMenu, setOpenMenu] = useState(false);
+  const [libraries, setLibraries] = useState([]);
   const route = useLocation().pathname.split("/").slice(1);
+  const [libraryId, setLibraryId] = useState("");
+
+  const handleChange = (event) => {
+    setLibraryId(event.target.value);
+  };
+
+  useEffect(() => {
+    if (library) {
+      setLibraryId(library);
+    }
+  }, [library]);
+
+  useEffect(() => {
+    const uid = localStorage.getItem("uid");
+    setLibraries(JSON.parse(uid));
+  }, []);
+
+  useEffect(() => {
+    if (libraryId) {
+      setLibrary(dispatch, libraryId);
+      localStorage.setItem("bs-lid", libraryId);
+    }
+  }, [libraryId]);
 
   useEffect(() => {
     // Setting the navbar type
@@ -135,8 +162,29 @@ function DashboardNavbar({ absolute, light, isMini }) {
         </MDBox>
         {isMini ? null : (
           <MDBox sx={(theme) => navbarRow(theme, { isMini })}>
+            <MDBox pr={3}>
+              <FormControl sx={{ m: 1, minWidth: 120 }}>
+                <InputLabel id="demo-simple-select-helper-label">Library</InputLabel>
+                <Select
+                  labelId="demo-simple-select-helper-label"
+                  id="demo-simple-select-helper"
+                  value={libraryId}
+                  label="Library"
+                  sx={{ minHeight: 45 }}
+                  onChange={handleChange}
+                >
+                  {libraries &&
+                    libraries.map((lib) => (
+                      <MenuItem value={lib.libraryId}>{lib.library}</MenuItem>
+                    ))}
+                  {/* <MenuItem value={1}>Etec Comendador João Rays</MenuItem>
+                  <MenuItem value={2}>Etec 2</MenuItem>
+                  <MenuItem value={3}>Etec 3</MenuItem> */}
+                </Select>
+              </FormControl>
+            </MDBox>
             <MDBox pr={1}>
-              <MDInput label="Search here" />
+              <MDInput label="Pesquisar" />
             </MDBox>
             <MDBox color={light ? "white" : "inherit"}>
               <Link to="/authentication/sign-in/basic">
