@@ -5,6 +5,9 @@ export default class Book {
   constructor(obj) {
     // eslint-disable-next-line no-param-reassign
     obj = obj != null ? obj : {};
+    this.code = obj.lib_code;
+    // ? Propriedade Cape_type adicionada recentemente: capeType = Dura | Comum
+    this.capeType = obj.cape_type;
     this.name = obj.name;
     this.publisher = obj.publisher;
     this.edition = obj.edition;

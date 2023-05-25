@@ -58,7 +58,7 @@ export const useAuthentication = () => {
     const req = fetch(ApiRouteBuild.buildRoute("authentication"), requestOptions)
       .then(handleResponse)
       .then((user) => {
-        localStorage.setItem("userAuthorization", JSON.stringify(user.token));
+        localStorage.setItem("userAuthorization", user.token);
         localStorage.setItem("uid", JSON.stringify(user.accountId));
         localStorage.setItem("uid", JSON.stringify(user.librariesAccount));
         const bslid = user.librariesAccount[0].libraryId ? user.librariesAccount[0].libraryId : 0;
