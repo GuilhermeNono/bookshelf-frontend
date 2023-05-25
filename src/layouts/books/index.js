@@ -19,23 +19,25 @@ import Card from "@mui/material/Card";
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
 
 // Material Dashboard 2 React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import { useMaterialUIController } from "context";
 import Footer from "examples/Footer";
+
 // eslint-disable-next-line no-unused-vars
 import DataTable from "examples/Tables/DataTable";
 
 // Data
 // eslint-disable-next-line no-unused-vars
 import booksTableData from "layouts/books/data/booksTableData";
-import { useBooks } from "hooks/useBooks";
 // eslint-disable-next-line no-unused-vars
 import { useEffect, useState } from "react";
 import MDProgress from "components/MDProgress";
+import { useLibrary } from "hooks/useLibrary";
+import MDTypography from "components/MDTypography";
+import MDButton from "components/MDButton";
 
 function Books() {
   // eslint-disable-next-line no-unused-vars
@@ -43,19 +45,21 @@ function Books() {
   // eslint-disable-next-line no-unused-vars
   const [rows, setRows] = useState();
   const [books, setBooks] = useState();
-  const useBook = useBooks();
+  const useLibraries = useLibrary();
   const [controller] = useMaterialUIController();
   const { token } = controller;
 
   useEffect(() => {
     if (token) {
-      useBook.getAllBooks(token.slice(10, -2)).then((resp) => {
-        if (resp) {
-          booksTableData(resp).then((data) => {
-            setBooks(data);
-          });
-        }
-      });
+      useLibraries
+        .getLibraryBooks(JSON.parse(token), localStorage.getItem("bs-lid"))
+        .then((resp) => {
+          if (resp) {
+            booksTableData(resp).then((data) => {
+              setBooks(data);
+            });
+          }
+        });
     }
   }, [token]);
 
@@ -70,15 +74,16 @@ function Books() {
                 mx={2}
                 mt={-3}
                 py={3}
-                px={2}
+                px={3}
                 variant="gradient"
                 bgColor="info"
                 borderRadius="lg"
                 coloredShadow="info"
               >
-                <MDTypography variant="h6" color="white">
-                  Lista de livros
-                </MDTypography>
+                <MDBox display="flex" alignItems="center" justifyContent="space-between">
+                  <MDTypography variant="h6">Livros na biblioteca</MDTypography>
+                  <MDButton color="success">Adicionar Livro</MDButton>
+                </MDBox>
               </MDBox>
               <MDBox pt={3}>
                 {books ? (

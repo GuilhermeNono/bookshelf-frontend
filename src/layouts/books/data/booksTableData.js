@@ -21,9 +21,9 @@ import MDTypography from "components/MDTypography";
 import MDBadge from "components/MDBadge";
 import MDAvatar from "components/MDAvatar";
 import { Link } from "react-router-dom";
+import ArticleOutlinedIcon from "@mui/icons-material/ArticleOutlined";
 
 export default async function data(books) {
-  console.log(await books);
   const Book = ({ image, name }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
       <MDAvatar
@@ -36,7 +36,7 @@ export default async function data(books) {
           boxShadow: "3px 3px 5px 0px rgba(0,0,0,0.19)",
         }}
       />
-      <MDTypography variant="button" fontWeight="medium" ml={1} lineHeight={1}>
+      <MDTypography variant="button" fontWeight="medium" ml={2} lineHeight={1}>
         {name}
       </MDTypography>
     </MDBox>
@@ -46,24 +46,32 @@ export default async function data(books) {
     if (books.length > 0) {
       const resp = [];
       books.forEach((element) => {
+        let authors = element.authors.slice(0, 2).join(", "); // Limita o a quantiade de autores a ser exibido (2)
+        if (element.authors.length > 2) {
+          authors += " ..."; // Adiciona reticências caso a quantidade de autores seja maior que indicado (2)
+        }
+
         resp.push({
           book: <Book image={element.cape} name={element.name} />,
-          author: <Author name={element.authors.join(", ")} />,
-          publisher: <Publisher name={element.publisher} />, // Conferir se ira precisar de vetor tambem
-          categories: <Categories categoryName={element.categories.join(", ")} />, // Adicionar mais de 1 categoria em algum livro para testar
+          author: <Author name={authors} />,
+          publisher: <Publisher name={element.publisher} />,
+          categories: <Categories categoryName={element.categories.join(", ")} />,
           release: (
             <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-              {element.publicationDate} {/* formatar data */}
+              {element.publicationDate.substring(0, 10).split("-").reverse().join("/")}
             </MDTypography>
           ),
           pages: <BookPages pages={element.numberPages} />,
-          status: (
+          status: element.available ? (
             <MDBox ml={-1}>
               <MDBadge badgeContent="disponivel" color="success" variant="gradient" size="sm" />
-              {/* status estatico por enquanto */}
+            </MDBox>
+          ) : (
+            <MDBox ml={-1}>
+              <MDBadge badgeContent="indisponivel" color="error" variant="gradient" size="sm" />
             </MDBox>
           ),
-          details: <Details />, // Conferir se ira precisar de vetor tambem
+          details: <Details />,
         });
       });
       return resp;
@@ -82,8 +90,13 @@ export default async function data(books) {
   );
   const Publisher = ({ name }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
-      <MDBox ml={2} lineHeight={1}>
-        <MDTypography display="block" variant="button" fontWeight="medium">
+      <MDBox lineHeight={1}>
+        <MDTypography
+          display="block"
+          variant="button"
+          fontWeight="medium"
+          sx={{ textalign: "center" }}
+        >
           {name}
         </MDTypography>
       </MDBox>
@@ -107,19 +120,20 @@ export default async function data(books) {
   );
 
   // Details está estatico com link apenas como placeHolder
+  // Necessitando de uma ligação com a página details
   const Details = () => (
     <MDBox lineHeight={1} textAlign="left">
       <MDTypography display="block" variant="caption" color="text" fontWeight="medium">
         <MDTypography
           component={Link}
-          to="/authentication/sign-in"
+          to="/dashboard/books"
           variant="button"
           color="info"
           fontWeight="bold"
           fontSize="25px"
           textGradient
         >
-          +
+          <ArticleOutlinedIcon style={{ marginLeft: "0.5em" }} color="white" />
         </MDTypography>
       </MDTypography>
     </MDBox>
@@ -128,9 +142,9 @@ export default async function data(books) {
   return {
     columns: [
       { Header: "Título", accessor: "book", align: "left" },
-      { Header: "Autores", accessor: "author", align: "left" },
-      { Header: "Editora", accessor: "publisher", align: "left" },
-      { Header: "Categorias", accessor: "categories", align: "left" },
+      { Header: "Autores", accessor: "author", align: "center" },
+      { Header: "Editora", accessor: "publisher", align: "center" },
+      { Header: "Categorias", accessor: "categories", align: "center" },
       { Header: "Status", accessor: "status", align: "center" },
       { Header: "Páginas", accessor: "pages", align: "center" },
       { Header: "Ano de Publicação", accessor: "release", align: "center" },
