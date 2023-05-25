@@ -22,6 +22,7 @@ export const useLibrary = () => {
     checkIfIsCancelled();
     setLoading(true);
     setError(null);
+
     const headers = {
       "Content-Type": "application/json",
       Authorization: `Bearer ${userToken}`,
