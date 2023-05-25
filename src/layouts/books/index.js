@@ -51,13 +51,15 @@ function Books() {
 
   useEffect(() => {
     if (token) {
-      useLibraries.getLibraryBooks(JSON.parse(token), 1).then((resp) => {
-        if (resp) {
-          booksTableData(resp).then((data) => {
-            setBooks(data);
-          });
-        }
-      });
+      useLibraries
+        .getLibraryBooks(JSON.parse(token), localStorage.getItem("bs-lid"))
+        .then((resp) => {
+          if (resp) {
+            booksTableData(resp).then((data) => {
+              setBooks(data);
+            });
+          }
+        });
     }
   }, [token]);
 
