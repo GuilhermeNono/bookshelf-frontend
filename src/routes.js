@@ -37,12 +37,12 @@
 
 // Material Dashboard 2 React layouts
 import Dashboard from "layouts/dashboard";
-import Tables from "layouts/tables";
-import Billing from "layouts/billing";
-import Notifications from "layouts/notifications";
+// import Tables from "layouts/tables";
+// import Billing from "layouts/billing";
+// import Notifications from "layouts/notifications";
 import Profile from "layouts/profile";
-import SignIn from "layouts/authentication/sign-in";
-import SignUp from "layouts/authentication/sign-up";
+// import SignIn from "layouts/authentication/sign-in";
+// import SignUp from "layouts/authentication/sign-up";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
@@ -78,14 +78,14 @@ const routes = [
     route: "/dashboard",
     component: <Dashboard />,
   },
-  {
-    type: "title",
-    name: "Tables",
-    key: "tables",
-    icon: <Icon fontSize="small">table_view</Icon>,
-    route: "/dashboard/tables",
-    component: <Tables />,
-  },
+  // {
+  //   type: "title",
+  //   name: "Tables",
+  //   key: "tables",
+  //   icon: <Icon fontSize="small">table_view</Icon>,
+  //   route: "/dashboard/tables",
+  //   component: <Tables />,
+  // },
   {
     type: "collapse",
     name: "Books",
@@ -94,22 +94,22 @@ const routes = [
     route: "/dashboard/books",
     component: <Books />,
   },
-  {
-    type: "title",
-    name: "Billing",
-    key: "billing",
-    icon: <Icon fontSize="small">receipt_long</Icon>,
-    route: "/dashboard/billing",
-    component: <Billing />,
-  },
-  {
-    type: "title",
-    name: "Notifications",
-    key: "notifications",
-    icon: <Icon fontSize="small">notifications</Icon>,
-    route: "/dashboard/notifications",
-    component: <Notifications />,
-  },
+  // {
+  //   type: "title",
+  //   name: "Billing",
+  //   key: "billing",
+  //   icon: <Icon fontSize="small">receipt_long</Icon>,
+  //   route: "/dashboard/billing",
+  //   component: <Billing />,
+  // },
+  // {
+  //   type: "title",
+  //   name: "Notifications",
+  //   key: "notifications",
+  //   icon: <Icon fontSize="small">notifications</Icon>,
+  //   route: "/dashboard/notifications",
+  //   component: <Notifications />,
+  // },
   {
     type: "collapse",
     name: "Profile",
@@ -118,24 +118,24 @@ const routes = [
     route: "/dashboard/profile",
     component: <Profile />,
   },
-  {
-    type: "divider",
-    name: "Sign In",
-    key: "sign-in",
-    icon: <Icon fontSize="small">login</Icon>,
-    route: "/authentication/sign-in",
-    component: <SignIn />,
-  },
+  // {
+  //   type: "divider",
+  //   name: "Sign In",
+  //   key: "sign-in",
+  //   icon: <Icon fontSize="small">login</Icon>,
+  //   route: "/authentication/sign-in",
+  //   component: <SignIn />,
+  // },
+  // {
+  //   type: "title",
+  //   name: "Sign Up",
+  //   key: "sign-up",
+  //   icon: <Icon fontSize="small">assignment</Icon>,
+  //   route: "/authentication/sign-up",
+  //   component: <SignUp />,
+  // },
   {
     type: "title",
-    name: "Sign Up",
-    key: "sign-up",
-    icon: <Icon fontSize="small">assignment</Icon>,
-    route: "/authentication/sign-up",
-    component: <SignUp />,
-  },
-  {
-    type: "collapse",
     name: "Details",
     key: "details",
     icon: <Icon fontSize="small">table_view</Icon>,
