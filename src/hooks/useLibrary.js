@@ -18,7 +18,7 @@ export const useLibrary = () => {
     }
   };
 
-  const getLibraryBooks = async (userToken, value) => {
+  const getLibraryBooks = async (userToken, libId, filter = []) => {
     checkIfIsCancelled();
     setLoading(true);
     setError(null);
@@ -28,8 +28,16 @@ export const useLibrary = () => {
       Authorization: `Bearer ${userToken}`,
     };
 
+    const filters = [{ filterKey: "id", value: libId, operation: "eq" }];
+
+    if (filter.length > 0) {
+      filter.forEach((fl) => {
+        filters.push(fl);
+      });
+    }
+
     const libraryBody = {
-      searchCriteriaList: [{ filterKey: "id", value, operation: "eq" }],
+      searchCriteriaList: filters,
       dataOption: "all",
     };
 
