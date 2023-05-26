@@ -18,7 +18,13 @@ export const useLibrary = () => {
     }
   };
 
-  const getLibraryBooks = async (userToken, value) => {
+  const getLibraryBooks = async (userToken, libId, filter = []) => {
+    const filters = [{ filterKey: "id", value: libId, operation: "eq" }];
+    if (filter.length > 0) {
+      filter.forEach((element) => {
+        filters.push(element);
+      });
+    }
     checkIfIsCancelled();
     setLoading(true);
     setError(null);
@@ -29,7 +35,7 @@ export const useLibrary = () => {
     };
 
     const libraryBody = {
-      searchCriteriaList: [{ filterKey: "id", value, operation: "eq" }],
+      searchCriteriaList: filters,
       dataOption: "all",
     };
 

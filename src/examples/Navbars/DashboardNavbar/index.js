@@ -58,8 +58,15 @@ import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 function DashboardNavbar({ absolute, light, isMini }) {
   const [navbarType, setNavbarType] = useState();
   const [controller, dispatch] = useMaterialUIController();
-  const { miniSidenav, transparentNavbar, fixedNavbar, openConfigurator, darkMode, library } =
-    controller;
+  const {
+    miniSidenav,
+    transparentNavbar,
+    fixedNavbar,
+    openConfigurator,
+    darkMode,
+    library,
+    currentBook,
+  } = controller;
   const [openMenu, setOpenMenu] = useState(false);
   const [libraries, setLibraries] = useState([]);
   const route = useLocation().pathname.split("/").slice(1);
@@ -150,6 +157,18 @@ function DashboardNavbar({ absolute, light, isMini }) {
     },
   });
 
+  const [abc, setAbc] = useState("");
+
+  useEffect(() => {
+    if (route[route.length - 1] === currentBook.code) {
+      // eslint-disable-next-line no-return-assign
+      return setAbc(currentBook.name);
+    }
+    return setAbc(route[route.length - 1]);
+  }, [route]);
+
+  console.log(route);
+
   return (
     <AppBar
       position={absolute ? "absolute" : navbarType}
@@ -158,7 +177,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
     >
       <Toolbar sx={(theme) => navbarContainer(theme)}>
         <MDBox color="inherit" mb={{ xs: 1, md: 0 }} sx={(theme) => navbarRow(theme, { isMini })}>
-          <Breadcrumbs icon="home" title={route[route.length - 1]} route={route} light={light} />
+          <Breadcrumbs icon="home" title={abc} route={route} light={light} />
         </MDBox>
         {isMini ? null : (
           <MDBox sx={(theme) => navbarRow(theme, { isMini })}>

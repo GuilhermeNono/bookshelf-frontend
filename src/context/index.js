@@ -68,6 +68,9 @@ function reducer(state, action) {
     case "LIBRARY": {
       return { ...state, library: action.value };
     }
+    case "CURRENTBOOK": {
+      return { ...state, currentBook: action.value };
+    }
     default: {
       throw new Error(`Unhandled action type: ${action.type}`);
     }
@@ -89,6 +92,7 @@ function MaterialUIControllerProvider({ children }) {
     darkMode: true,
     token: "",
     library: 0,
+    currentBook: "",
   };
 
   const [controller, dispatch] = useReducer(reducer, initialState);
@@ -129,6 +133,7 @@ const setLayout = (dispatch, value) => dispatch({ type: "LAYOUT", value });
 const setDarkMode = (dispatch, value) => dispatch({ type: "DARKMODE", value });
 const setToken = (dispatch, value) => dispatch({ type: "TOKEN", value });
 const setLibrary = (dispatch, value) => dispatch({ type: "LIBRARY", value });
+const setCurrentBook = (dispatch, value) => dispatch({ type: "CURRENTBOOK", value });
 
 export {
   MaterialUIControllerProvider,
@@ -145,4 +150,5 @@ export {
   setDarkMode,
   setToken,
   setLibrary,
+  setCurrentBook,
 };

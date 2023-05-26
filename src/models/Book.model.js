@@ -20,8 +20,10 @@ export default class Book {
       : [];
     this.authors = obj.authors
       ? obj.authors.map(
-          (authorData) => new Author(authorData.firstName, authorData.lastName).completeName
+          (authorData) => new Author(authorData.firstName, authorData.lastName, authorData.avatar)
         )
       : [];
+    this.code = obj.lib_code;
+    this.typeCape = obj.cape_type;
   }
 }

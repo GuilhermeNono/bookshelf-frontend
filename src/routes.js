@@ -41,8 +41,8 @@ import Dashboard from "layouts/dashboard";
 // import Billing from "layouts/billing";
 // import Notifications from "layouts/notifications";
 import Profile from "layouts/profile";
-// import SignIn from "layouts/authentication/sign-in";
-// import SignUp from "layouts/authentication/sign-up";
+import SignIn from "layouts/authentication/sign-in";
+import SignUp from "layouts/authentication/sign-up";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
@@ -118,30 +118,36 @@ const routes = [
     route: "/dashboard/profile",
     component: <Profile />,
   },
-  // {
-  //   type: "divider",
-  //   name: "Sign In",
-  //   key: "sign-in",
-  //   icon: <Icon fontSize="small">login</Icon>,
-  //   route: "/authentication/sign-in",
-  //   component: <SignIn />,
-  // },
-  // {
-  //   type: "title",
-  //   name: "Sign Up",
-  //   key: "sign-up",
-  //   icon: <Icon fontSize="small">assignment</Icon>,
-  //   route: "/authentication/sign-up",
-  //   component: <SignUp />,
-  // },
+  {
+    type: "divider",
+    name: "Sign In",
+    key: "sign-in",
+    icon: <Icon fontSize="small">login</Icon>,
+    route: "/authentication/sign-in",
+    component: <SignIn />,
+  },
+  {
+    type: "title",
+    name: "Sign Up",
+    key: "sign-up",
+    icon: <Icon fontSize="small">assignment</Icon>,
+    route: "/authentication/sign-up",
+    component: <SignUp />,
+  },
   {
     type: "title",
     name: "Details",
     key: "details",
     icon: <Icon fontSize="small">table_view</Icon>,
-    route: "/details",
+    route: "/dashboard/books/details/:libId",
     component: <Details />,
   },
+  /**
+   * Colapse -> Deixa visivel
+   * Divider -> Deixar visivel incluindo um divisor embaixo dele
+   * title -> Esconde da Sidebar
+   * */
+  // http://localhost:8000/dashboard/books/detail/1475
 ];
 
 export default routes;

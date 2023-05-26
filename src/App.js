@@ -124,10 +124,8 @@ export default function App() {
     const libraryId = localStorage.getItem("bs-lid");
 
     if (token) {
-      const tokenSlice = JSON.parse(token);
-      console.log(tokenSlice);
       // eslint-disable-next-line consistent-return
-      authentication.validateToken(tokenSlice).then((resp) => {
+      authentication.validateToken(token).then((resp) => {
         console.log(resp);
         if (resp === 200 && libraryId) {
           setToken(dispatch, token);
