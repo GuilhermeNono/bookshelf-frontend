@@ -28,6 +28,8 @@ import { setCurrentBook, useMaterialUIController } from "../../context";
 function Details() {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.down("lg"));
+  // eslint-disable-next-line no-unused-vars
+  const [bookInfo, setBookInfo] = useState(null);
   const { columns, rows } = data();
 
   const useLibraries = useLibrary();

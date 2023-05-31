@@ -13,6 +13,7 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
+// eslint-disable-next-line no-unused-vars
 import { useState, useEffect, useMemo } from "react";
 
 // react-router components
@@ -73,8 +74,12 @@ export default function App() {
     library: libraryContext,
   } = controller;
   const [onMouseEnter, setOnMouseEnter] = useState(false);
+  // eslint-disable-next-line no-unused-vars
   const [rtlCache, setRtlCache] = useState(null);
+  // eslint-disable-next-line no-unused-vars
+  const [bsLidState, setBsLidState] = useState(localStorage.getItem("bs-lid"));
   const { pathname } = useLocation();
+  // eslint-disable-next-line no-unused-vars
   const navigate = useNavigate();
   const authentication = useAuthentication();
 
@@ -126,7 +131,6 @@ export default function App() {
     if (token) {
       // eslint-disable-next-line consistent-return
       authentication.validateToken(token).then((resp) => {
-        console.log(resp);
         if (resp === 200 && libraryId) {
           setToken(dispatch, token);
           setLibrary(dispatch, libraryId);
@@ -143,8 +147,9 @@ export default function App() {
       return setLibrary(dispatch, libraryId);
     }
     return null;
-  }, [localStorage.getItem("bs-lid")]);
+  }, [bsLidState]);
 
+  // eslint-disable-next-line consistent-return
   useEffect(() => {
     if (pathname.indexOf("/dashboard") === 0) {
       if (!tokenContext || !libraryContext) {

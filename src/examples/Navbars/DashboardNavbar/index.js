@@ -167,8 +167,6 @@ function DashboardNavbar({ absolute, light, isMini }) {
     return setAbc(route[route.length - 1]);
   }, [route]);
 
-  console.log(route);
-
   return (
     <AppBar
       position={absolute ? "absolute" : navbarType}
