@@ -35,7 +35,6 @@ function Details() {
   const [controller, dispatch] = useMaterialUIController();
   const { token, library } = controller;
   const [book, setBook] = useState(null);
-  console.log(book);
 
   useEffect(() => {
     useLibraries
@@ -101,7 +100,7 @@ function Details() {
                         <Avatar
                           src={book.authors[0].avatar}
                           alt="J.k.Rowling"
-                          sx={{ width: "6rem", height: "6rem" }}
+                          sx={{ width: "6rem", height: "6rem", mr: "20px", mb: "15px" }}
                         />
                         <MDBox
                           sx={{
@@ -218,7 +217,7 @@ function Details() {
                             variant="h6"
                             sx={{ color: "#cecece", fontWeight: "400", fontSize: "0.7em" }}
                           >
-                            {book.publicationDate}
+                            {book.publicationDate.substring(0, 10).split("-").reverse().join("/")}
                           </MDTypography>
                         </Box>
                         <Box
@@ -334,7 +333,13 @@ function Details() {
                 </MDBox>
               ) : (
                 <MDBox>
-                  <CircularProgress />
+                  <CircularProgress
+                    sx={{
+                      display: "flex",
+                      margin: "0 auto",
+                      alignContent: "center",
+                    }}
+                  />
                 </MDBox>
               )}
             </Card>
