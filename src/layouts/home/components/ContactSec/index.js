@@ -4,9 +4,9 @@ import {
   ContainerContact,
   IconContact,
 } from "assets/styledComponents/homeStyles";
-import MDBox from "components/MDBox";
 import MDButton from "components/MDButton";
 import MDInput from "components/MDInput";
+import MDBox from "components/MDBox";
 
 import phone from "assets/images/phone.svg";
 import email from "assets/images/email.svg";

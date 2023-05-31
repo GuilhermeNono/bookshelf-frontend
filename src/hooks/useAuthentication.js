@@ -1,5 +1,5 @@
 // import handleResponse from "helpers/HandleResponse";
-import { useMaterialUIController } from "context";
+import { useMaterialUIController, setToken } from "context";
 import handleResponse from "helpers/HandleResponse";
 import { BehaviorSubject } from "rxjs";
 import { useEffect, useState } from "react";
@@ -14,7 +14,7 @@ export const useAuthentication = () => {
   const [loading, setLoading] = useState(false);
   const [cancelled, setCancelled] = useState(false);
   // eslint-disable-next-line no-unused-vars
-  const [controller] = useMaterialUIController();
+  const [controller, dispatch] = useMaterialUIController();
   const { token } = controller;
 
   const checkIfIsCancelled = () => {
@@ -58,13 +58,17 @@ export const useAuthentication = () => {
     const req = fetch(ApiRouteBuild.buildRoute("authentication"), requestOptions)
       .then(handleResponse)
       .then((user) => {
-        localStorage.setItem("userAuthorization", JSON.stringify(user));
-        currentUserSubject.next(user);
+        localStorage.setItem("userAuthorization", user.token);
+        localStorage.setItem("uid", JSON.stringify(user.accountId));
+        localStorage.setItem("uid", JSON.stringify(user.librariesAccount));
+        const bslid = user.librariesAccount[0].libraryId ? user.librariesAccount[0].libraryId : 0;
+        localStorage.setItem("bs-lid", JSON.stringify(bslid));
+        currentUserSubject.next(user.token);
 
         // setToken(dispatch, user.token);
         setError(null);
         setLoading(false);
-        console.log(user.token);
+        setToken(dispatch, user.token);
         return user;
       })
       .catch(() => {
@@ -126,11 +130,7 @@ export const useAuthentication = () => {
       // Convertendo string para json
       .then(handleResponse)
       // Manipulando json de resposta
-      .then((user) => {
-        console.log(user);
-
-        return user;
-      })
+      .then((user) => user)
       // Tratativa de erro
       .catch(() => {
         setError("Email e/ou senha incorretos.");
@@ -151,14 +151,9 @@ export const useAuthentication = () => {
       Authorization: `Bearer ${userToken}`,
     };
 
-    const tokenBody = {
-      token: `${userToken}`,
-    };
-
     const requestOptions = {
       method: "POST",
       headers,
-      body: JSON.stringify(tokenBody),
     };
 
     const req = fetch(`${ApiRouteBuild.buildRoute("authentication")}/validate`, requestOptions)

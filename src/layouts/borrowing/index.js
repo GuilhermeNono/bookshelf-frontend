@@ -22,11 +22,36 @@ import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import DataTable from "examples/Tables/DataTable";
-import data from "./data";
+import { useEffect, useState } from "react";
+import { useMaterialUIController } from "context";
+import { useLibrary } from "hooks/useLibrary";
+import { useParams } from "react-router-dom";
+import borrowingTableData from "./data/borrowingTableData";
 import ComplexStatisticsCard from "../../examples/Cards/StatisticsCards/ComplexStatisticsCard";
 
 function borrowing() {
-  const { columns, rows } = data();
+  const useLibraries = useLibrary();
+  const [controller] = useMaterialUIController();
+  const { columns, rows } = borrowingTableData();
+  const { token } = controller;
+
+  const [books, setBooks] = useState(null);
+
+  const { id } = useParams();
+
+  useEffect(() => {
+    // TODO: useLibraries.getLibraryBooks(tokenDeAcesso, idDaBiblioteca, filtrosDePesquisa)
+    useLibraries
+      .getLibraryBooks(token, localStorage.getItem("bs-lid"), [
+        { filterKey: "code", value: id, operation: "eq" },
+      ])
+      .then((resp) => {
+        // TODO: Insere o primeiro elemento que vier do metodo getLibraryBooks no state bookInfo.
+        setBooks(resp[0]);
+      });
+  }, []);
+
+  console.log(`${books}`);
 
   return (
     <DashboardLayout>
@@ -58,7 +83,7 @@ function borrowing() {
                 coloredShadow="info"
               >
                 <MDTypography variant="h6" color="white">
-                  Lista de Emprestimos
+                  teste
                 </MDTypography>
               </MDBox>
               <MDBox pt={3}>
