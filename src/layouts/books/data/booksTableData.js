@@ -1,19 +1,19 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/function-component-definition */
 /**
-=========================================================
-* Material Dashboard 2 React - v2.1.0
-=========================================================
+ =========================================================
+ * Material Dashboard 2 React - v2.1.0
+ =========================================================
 
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
+ * Product Page: https://www.creative-tim.com/product/material-dashboard-react
+ * Copyright 2022 Creative Tim (https://www.creative-tim.com)
 
-Coded by www.creative-tim.com
+ Coded by www.creative-tim.com
 
  =========================================================
 
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+ */
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
@@ -46,7 +46,11 @@ export default async function data(books) {
     if (books.length > 0) {
       const resp = [];
       books.forEach((element) => {
-        let authors = element.authors.slice(0, 2).join(", "); // Limita o a quantiade de autores a ser exibido (2)
+        const newAuthors = [];
+        element.authors.forEach((fn) => {
+          newAuthors.push(fn.completeName);
+        });
+        let authors = newAuthors.slice(0, 2).join(", "); // Limita o a quantiade de autores a ser exibido (2)
         if (element.authors.length > 2) {
           authors += " ..."; // Adiciona reticências caso a quantidade de autores seja maior que indicado (2)
         }
@@ -71,8 +75,7 @@ export default async function data(books) {
               <MDBadge badgeContent="indisponivel" color="error" variant="gradient" size="sm" />
             </MDBox>
           ),
-          // TODO: Enviando o codigo do livro para o metodo de detalhes.
-          details: <Details bookId={element.code} />,
+          details: <Details code={element.code} />,
         });
       });
       return resp;
@@ -122,13 +125,12 @@ export default async function data(books) {
 
   // Details está estatico com link apenas como placeHolder
   // Necessitando de uma ligação com a página details
-  const Details = ({ bookId }) => (
+  const Details = ({ code }) => (
     <MDBox lineHeight={1} textAlign="left">
       <MDTypography display="block" variant="caption" color="text" fontWeight="medium">
         <MDTypography
           component={Link}
-          // TODO: Enviando o usuario para a aba de detalhes do livro em especifico
-          to={`/dashboard/books/details/${bookId}`}
+          to={`/dashboard/books/details/${code}`}
           variant="button"
           color="info"
           fontWeight="bold"

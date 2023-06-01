@@ -9,20 +9,12 @@
  * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
  */
 
-// import Cape from "assets/images/book/harry_potter_pf.jpg";
-import JkRowling from "assets/images/avatar/imgAvatar.png";
-
 import Card from "@mui/material/Card";
 import Avatar from "@mui/material/Avatar";
 import { Box, CircularProgress, Grid, useMediaQuery, useTheme } from "@mui/material";
 import DataTable from "examples/Tables/DataTable";
-// eslint-disable-next-line no-unused-vars
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { useLibrary } from "hooks/useLibrary";
-import { useMaterialUIController } from "context";
-// eslint-disable-next-line no-unused-vars
-import Book from "models/Book.model";
 import MDBox from "../../components/MDBox";
 import MDTypography from "../../components/MDTypography";
 
@@ -30,29 +22,26 @@ import DashboardLayout from "../../examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "../../examples/Navbars/DashboardNavbar";
 import Footer from "../../examples/Footer";
 import data from "./data";
+import { useLibrary } from "../../hooks/useLibrary";
+import { setCurrentBook, useMaterialUIController } from "../../context";
 
 function Details() {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.down("lg"));
-  const useLibraries = useLibrary();
-  // eslint-disable-next-line no-unused-vars
-  const [bookInfo, setBookInfo] = useState(null);
-  const [controller] = useMaterialUIController();
-  const { token } = controller;
   const { columns, rows } = data();
 
-  // TODO: Constante responsavel por pegar os parametos presentes na url: http://localhost:8080/dashboard/book/details/(:id do livro)
-  const { id } = useParams();
+  const useLibraries = useLibrary();
+  const { libId } = useParams();
+  const [controller, dispatch] = useMaterialUIController();
+  const { token, library } = controller;
+  const [book, setBook] = useState(null);
 
   useEffect(() => {
-    // TODO: useLibraries.getLibraryBooks(tokenDeAcesso, idDaBiblioteca, filtrosDePesquisa)
     useLibraries
-      .getLibraryBooks(token, localStorage.getItem("bs-lid"), [
-        { filterKey: "code", value: id, operation: "eq" },
-      ])
-      .then((resp) => {
-        // TODO: Insere o primeiro elemento que vier do metodo getLibraryBooks no state bookInfo.
-        setBookInfo(resp[0]);
+      .getLibraryBooks(token, library, [{ filterKey: "code", operation: "eq", value: libId }])
+      .then((response) => {
+        setBook(response[0]);
+        setCurrentBook(dispatch, response[0]);
       });
   }, []);
 
@@ -77,8 +66,7 @@ function Details() {
                   Detalhes
                 </MDTypography>
               </MDBox>
-              {/* TODO: Caso o state bookInfo tenho informações dentro dele, será mostrado a pagina completo, se não mostrara um circulo carregando */}
-              {bookInfo ? (
+              {book ? (
                 <MDBox sx={{ margin: "3rem 1.5rem 1rem 3rem" }}>
                   <Grid
                     sx={
@@ -100,19 +88,19 @@ function Details() {
                           maxHeight: "100%",
                           borderRadius: "0.7rem",
                         }}
-                        src={bookInfo.cape}
-                        alt="Capa"
+                        src={book.cape}
+                        alt="cape"
                       />
                     </Grid>
                     <Grid xs={10.5} sm={6.6} lg={7.5} sx={{ ml: 2 }}>
                       <MDTypography variant="h3" align="center" sx={{ fontWeight: "400" }}>
-                        {bookInfo.name}
+                        {book.name}
                       </MDTypography>
                       <Grid container>
                         <Avatar
-                          src={JkRowling}
+                          src={book.authors[0].avatar}
                           alt="J.k.Rowling"
-                          sx={{ width: 130, height: 130 }}
+                          sx={{ width: "6rem", height: "6rem" }}
                         />
                         <MDBox
                           sx={{
@@ -122,7 +110,7 @@ function Details() {
                             mb: "15px",
                           }}
                         >
-                          <MDTypography variant="h5">{bookInfo.authors[0]}</MDTypography>
+                          <MDTypography variant="h5">{book.authors[0].completeName}</MDTypography>
                           <MDTypography variant="h6" sx={{ color: "#cecece", fontWeight: "400" }}>
                             Autor(a)
                           </MDTypography>
@@ -137,7 +125,7 @@ function Details() {
                             color: "#cecece",
                           }}
                         >
-                          {bookInfo.sinopse}
+                          {book.sinopse}
                         </MDTypography>
                       </Grid>
                       <Grid
@@ -169,7 +157,7 @@ function Details() {
                             variant="h6"
                             sx={{ color: "#cecece", fontWeight: "400", fontSize: "0.7em" }}
                           >
-                            {bookInfo.publisher}
+                            {book.publisher}
                           </MDTypography>
                         </Box>
                         <Box
@@ -189,7 +177,7 @@ function Details() {
                             variant="h6"
                             sx={{ color: "#cecece", fontWeight: "400", fontSize: "0.7em" }}
                           >
-                            {bookInfo.isbn}
+                            {book.isbn}
                           </MDTypography>
                         </Box>
                         <Box
@@ -209,7 +197,7 @@ function Details() {
                             variant="h6"
                             sx={{ color: "#cecece", fontWeight: "400", fontSize: "0.7em" }}
                           >
-                            {bookInfo.edition}
+                            {book.edition}
                           </MDTypography>
                         </Box>
                         <Box
@@ -229,7 +217,7 @@ function Details() {
                             variant="h6"
                             sx={{ color: "#cecece", fontWeight: "400", fontSize: "0.7em" }}
                           >
-                            {bookInfo.publicationDate}
+                            {book.publicationDate}
                           </MDTypography>
                         </Box>
                         <Box
@@ -249,7 +237,7 @@ function Details() {
                             variant="h6"
                             sx={{ color: "#cecece", fontWeight: "400", fontSize: "0.7em" }}
                           >
-                            {bookInfo.numberPages}
+                            {book.numberPages}
                           </MDTypography>
                         </Box>
                         <Box
@@ -269,7 +257,7 @@ function Details() {
                             variant="h6"
                             sx={{ color: "#cecece", fontWeight: "400", fontSize: "0.7em" }}
                           >
-                            {bookInfo.language}
+                            {book.language}
                           </MDTypography>
                         </Box>
                         <Box
@@ -289,7 +277,7 @@ function Details() {
                             variant="h6"
                             sx={{ color: "#cecece", fontWeight: "400", fontSize: "0.7em" }}
                           >
-                            {bookInfo.capeType}
+                            {book.typeCape}
                           </MDTypography>
                         </Box>
                         <Box
@@ -344,17 +332,9 @@ function Details() {
                   </Grid>
                 </MDBox>
               ) : (
-                <Box
-                  sx={{
-                    height: 100,
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  {/* Circulo de carregamento */}
+                <MDBox>
                   <CircularProgress />
-                </Box>
+                </MDBox>
               )}
             </Card>
           </Grid>

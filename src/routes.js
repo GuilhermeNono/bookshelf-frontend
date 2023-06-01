@@ -49,6 +49,7 @@ import Icon from "@mui/material/Icon";
 import Home from "layouts/home";
 import Pricing from "layouts/pricing";
 import Books from "layouts/books";
+import AddBook from "layouts/add-book";
 import Details from "./layouts/details";
 
 const routes = [
@@ -94,6 +95,14 @@ const routes = [
     route: "/dashboard/books",
     component: <Books />,
   },
+  {
+    type: "collapse",
+    name: "AddBook",
+    key: "addbook",
+    icon: <Icon fontSize="small">table_view</Icon>,
+    route: "/dashboard/add-book",
+    component: <AddBook />,
+  },
   // {
   //   type: "title",
   //   name: "Billing",
@@ -119,7 +128,7 @@ const routes = [
     component: <Profile />,
   },
   {
-    type: "title",
+    type: "divider",
     name: "Sign In",
     key: "sign-in",
     icon: <Icon fontSize="small">login</Icon>,
@@ -135,14 +144,19 @@ const routes = [
     component: <SignUp />,
   },
   {
-    type: "collapse",
+    type: "title",
     name: "Details",
     key: "details",
     icon: <Icon fontSize="small">table_view</Icon>,
-    // TODO: Quando adicionado :item na url da rota o mesmo passa a ser uma parametro dinamico.
-    route: "/dashboard/books/details/:id",
+    route: "/dashboard/books/details/:libId",
     component: <Details />,
   },
+  /**
+   * Colapse -> Deixa visivel
+   * Divider -> Deixar visivel incluindo um divisor embaixo dele
+   * title -> Esconde da Sidebar
+   * */
+  // http://localhost:8000/dashboard/books/detail/1475
 ];
 
 export default routes;
