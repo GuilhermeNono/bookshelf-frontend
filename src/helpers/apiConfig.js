@@ -1,10 +1,8 @@
 export const APICONFIG = {
-  protocol: "http",
-  //   baseDomain: "192.168.1.4",
-  baseDomain: "localhost",
-  port: "8080",
+  protocol: `${process.env.REACT_APP_PROTOCOL}`,
+  baseDomain: `${process.env.REACT_APP_URL_BASE_DOMAIN}`,
+  port: `${process.env.REACT_APP_URL_PORT}`,
   context: "",
-  // context: "homloggi",
   services: [
     {
       name: "authentication",
