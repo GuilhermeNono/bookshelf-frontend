@@ -119,7 +119,7 @@ const routes = [
     component: <Profile />,
   },
   {
-    type: "title",
+    type: "divider",
     name: "Sign In",
     key: "sign-in",
     icon: <Icon fontSize="small">login</Icon>,
@@ -135,14 +135,27 @@ const routes = [
     component: <SignUp />,
   },
   {
-    type: "collapse",
+    type: "title",
+    name: "Sign Up",
+    key: "sign-up",
+    icon: <Icon fontSize="small">assignment</Icon>,
+    route: "/authentication/sign-up",
+    component: <SignUp />,
+  },
+  {
+    type: "title",
     name: "Details",
     key: "details",
     icon: <Icon fontSize="small">table_view</Icon>,
-    // TODO: Quando adicionado :item na url da rota o mesmo passa a ser uma parametro dinamico.
-    route: "/dashboard/books/details/:id",
+    route: "/dashboard/books/details/:libId",
     component: <Details />,
   },
+  /**
+   * Colapse -> Deixa visivel
+   * Divider -> Deixar visivel incluindo um divisor embaixo dele
+   * title -> Esconde da Sidebar
+   * */
+  // http://localhost:8000/dashboard/books/detail/1475
 ];
 
 export default routes;
