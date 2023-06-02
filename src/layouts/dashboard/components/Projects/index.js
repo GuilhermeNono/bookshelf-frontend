@@ -13,7 +13,7 @@
  * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
  */
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // @mui material components
 import Card from "@mui/material/Card";
@@ -30,10 +30,48 @@ import DataTable from "examples/Tables/DataTable";
 
 // Data
 import data from "layouts/dashboard/components/Projects/data";
+import { useMaterialUIController } from "context";
+import { useLibrary } from "hooks/useLibrary";
 
 function RecentBooks() {
-  const { columns, rows } = data();
   const [menu, setMenu] = useState(null);
+  // eslint-disable-next-line no-unused-vars
+  const [books, setBooks] = useState();
+  const [newBooksCount, setNewBooksCount] = useState(0);
+
+  // eslint-disable-next-line no-unused-vars
+  const [controller, dispatch] = useMaterialUIController();
+  const { library, token } = controller;
+  const useLib = useLibrary();
+
+  useEffect(() => {
+    useLib.getLibraryBooksOfMonth(token, library).then((resp) => {
+      if (resp) {
+        data(resp).then((bookList) => {
+          setBooks(bookList);
+        });
+        setNewBooksCount(resp.length);
+      }
+    });
+  }, []);
+
+  const handleNewBooksCount = () => {
+    if (newBooksCount > 0) {
+      if (newBooksCount > 1) {
+        return (
+          <>
+            &nbsp;<strong>{newBooksCount} novos</strong> Livros nesse mês
+          </>
+        );
+      }
+      return (
+        <>
+          &nbsp;<strong>{newBooksCount} novo</strong> Livro nesse mês
+        </>
+      );
+    }
+    return "";
+  };
 
   const openMenu = ({ currentTarget }) => setMenu(currentTarget);
   const closeMenu = () => setMenu(null);
@@ -77,7 +115,7 @@ function RecentBooks() {
               done
             </Icon>
             <MDTypography variant="button" fontWeight="regular" color="text">
-              &nbsp;<strong>30 novos</strong> Livros nesse mês
+              {handleNewBooksCount()}
             </MDTypography>
           </MDBox>
         </MDBox>
@@ -91,13 +129,15 @@ function RecentBooks() {
       {/* eslint-disable-next-line react/jsx-no-comment-textnodes */}
       <MDBox p={3}>
         {/* TODO: Refazer esse datatable com os livros mais recentes do sistema. */}
-        <DataTable
-          table={{ columns, rows }}
-          showTotalEntries={false}
-          isSorted={false}
-          noEndBorder
-          entriesPerPage={false}
-        />
+        {books && (
+          <DataTable
+            table={books}
+            showTotalEntries={false}
+            isSorted={false}
+            noEndBorder
+            entriesPerPage={false}
+          />
+        )}
       </MDBox>
     </Card>
   );

@@ -20,13 +20,34 @@ import Icon from "@mui/material/Icon";
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
-import DataTable from "../../../../examples/Tables/DataTable";
+import { useMaterialUIController } from "context";
+import { useEffect, useState } from "react";
+import { useLoan } from "hooks/useLoan";
 import data from "./data";
+import DataTable from "../../../../examples/Tables/DataTable";
 
 // Material Dashboard 2 React example components
 
 function OrdersOverview() {
-  const { columns, rows } = data();
+  const [loanList, setLoanList] = useState();
+  // eslint-disable-next-line no-unused-vars
+  const [newLoanCount, setNewLoanCount] = useState(0);
+
+  // eslint-disable-next-line no-unused-vars
+  const [controller, dispatch] = useMaterialUIController();
+  const { library, token } = controller;
+  const useBorrowing = useLoan();
+
+  useEffect(() => {
+    useBorrowing.getLibraryLoanOfMonth(token, library).then((resp) => {
+      if (resp) {
+        data(resp).then((loan) => {
+          setLoanList(loan);
+        });
+        setNewLoanCount(resp.length);
+      }
+    });
+  }, []);
 
   return (
     <Card sx={{ height: "100%" }}>
@@ -50,13 +71,15 @@ function OrdersOverview() {
       <MDBox p={2} sx={{ height: "100%" }}>
         <MDBox>
           {/* TODO: Refazer esse datatable com os livros mais recentes do sistema. */}
-          <DataTable
-            table={{ columns, rows }}
-            showTotalEntries={false}
-            isSorted={false}
-            noEndBorder
-            entriesPerPage={false}
-          />
+          {loanList && (
+            <DataTable
+              table={loanList}
+              showTotalEntries={false}
+              isSorted={false}
+              noEndBorder
+              entriesPerPage={false}
+            />
+          )}
         </MDBox>
       </MDBox>
     </Card>

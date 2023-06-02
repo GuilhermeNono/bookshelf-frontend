@@ -21,9 +21,10 @@ import MDTypography from "components/MDTypography";
 import MDAvatar from "components/MDAvatar";
 
 // Images
-import bookCape from "assets/images/book/harry_potter_pf.jpg";
 
-export default function data() {
+export default async function data(books) {
+  // eslint-disable-next-line no-unused-vars
+
   const Book = ({ image, name }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
       <MDAvatar
@@ -42,6 +43,40 @@ export default function data() {
     </MDBox>
   );
 
+  const Publisher = ({ publisher }) => (
+    <MDTypography variant="caption" color="text" fontWeight="medium" textAlign="center">
+      {publisher}
+    </MDTypography>
+  );
+
+  const BookIdentifier = ({ identifier }) => (
+    <MDTypography fontSize="1em" fontWeight="medium">
+      {identifier}
+    </MDTypography>
+  );
+
+  const CreatedAt = ({ date }) => (
+    <MDTypography width="8rem" textAlign="center" fontSize="1em" fontWeight="medium">
+      {date}
+    </MDTypography>
+  );
+
+  const handleDataTableRows = () => {
+    const booksRow = [];
+    if (books.length > 0) {
+      // eslint-disable-next-line no-plusplus
+      for (let i = 0; i < 6; i++) {
+        const date = books[i].createdAt.substring(0, 10).split("-").reverse().join("/");
+        booksRow.push({
+          identifier: <BookIdentifier identifier={books[i].code} />,
+          name: <Book image={books[i].cape} name={books[i].name} />,
+          publisher: <Publisher publisher={books[i].publisher} />,
+          added: <CreatedAt date={date} />,
+        });
+      }
+    }
+    return booksRow;
+  };
   return {
     columns: [
       { Header: "Tombo", accessor: "identifier", width: "10%", align: "left" },
@@ -50,92 +85,6 @@ export default function data() {
       { Header: "Adicionado", accessor: "added", width: "10%", align: "center" },
     ],
 
-    rows: [
-      {
-        identifier: <MDTypography fontSize="1em">152485</MDTypography>,
-        // TODO: Logo Será a capa do livro
-        name: <Book image={bookCape} name="Harry Potter e a Pedra Filosofal" />,
-        publisher: (
-          <MDTypography variant="caption" color="text" fontWeight="medium" textAlign="center">
-            Rocco
-          </MDTypography>
-        ),
-        added: (
-          <MDTypography width="8rem" textAlign="center" fontSize="1em">
-            16/04/2023
-          </MDTypography>
-        ),
-      },
-      {
-        identifier: <MDTypography fontSize="1em">152485</MDTypography>,
-        name: <Book image={bookCape} name="Harry Potter e a Pedra Filosofal" />,
-        publisher: (
-          <MDTypography variant="caption" color="text" fontWeight="medium" textAlign="center">
-            Rocco
-          </MDTypography>
-        ),
-        added: (
-          <MDTypography width="8rem" textAlign="center" fontSize="1em">
-            16/04/2023
-          </MDTypography>
-        ),
-      },
-      {
-        identifier: <MDTypography fontSize="1em">152485</MDTypography>,
-        name: <Book image={bookCape} name="Harry Potter e a Pedra Filosofal" />,
-        publisher: (
-          <MDTypography variant="caption" color="text" fontWeight="medium" textAlign="center">
-            Rocco
-          </MDTypography>
-        ),
-        added: (
-          <MDTypography width="8rem" textAlign="center" fontSize="1em">
-            16/04/2023
-          </MDTypography>
-        ),
-      },
-      {
-        identifier: <MDTypography fontSize="1em">152485</MDTypography>,
-        name: <Book image={bookCape} name="Harry Potter e a Pedra Filosofal" />,
-        publisher: (
-          <MDTypography variant="caption" color="text" fontWeight="medium" textAlign="center">
-            Rocco
-          </MDTypography>
-        ),
-        added: (
-          <MDTypography width="8rem" textAlign="center" fontSize="1em">
-            16/04/2023
-          </MDTypography>
-        ),
-      },
-      {
-        identifier: <MDTypography fontSize="1em">152485</MDTypography>,
-        name: <Book image={bookCape} name="Harry Potter e a Pedra Filosofal" />,
-        publisher: (
-          <MDTypography variant="caption" color="text" fontWeight="medium" textAlign="center">
-            Rocco
-          </MDTypography>
-        ),
-        added: (
-          <MDTypography width="8rem" textAlign="center" fontSize="1em">
-            16/04/2023
-          </MDTypography>
-        ),
-      },
-      {
-        identifier: <MDTypography fontSize="1em">152485</MDTypography>,
-        name: <Book image={bookCape} name="Harry Potter e a Pedra Filosofal" />,
-        publisher: (
-          <MDTypography variant="caption" color="text" fontWeight="medium" textAlign="center">
-            Rocco
-          </MDTypography>
-        ),
-        added: (
-          <MDTypography width="8rem" textAlign="center" fontSize="1em">
-            16/04/2023
-          </MDTypography>
-        ),
-      },
-    ],
+    rows: handleDataTableRows(),
   };
 }

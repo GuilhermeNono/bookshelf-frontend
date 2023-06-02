@@ -1,8 +1,8 @@
 import ApiRouteBuild from "helpers/ApiRouteBuild";
-import Book from "models/Book.model";
+import Loan from "models/Loan.model";
 import { useEffect, useState } from "react";
 
-export const useLibrary = () => {
+export const useLoan = () => {
   // eslint-disable-next-line no-unused-vars
   const [error, setError] = useState("");
   // const [isLogged, setIsLogged] = useState(false);
@@ -18,7 +18,7 @@ export const useLibrary = () => {
     }
   };
 
-  const getLibraryBooks = async (userToken, libId, filter = []) => {
+  const getLibraryLoan = async (userToken, libId, filter = []) => {
     const filters = [{ filterKey: "id", value: libId, operation: "eq" }];
     if (filter.length > 0) {
       filter.forEach((element) => {
@@ -54,11 +54,11 @@ export const useLibrary = () => {
     const req = fetch(`${ApiRouteBuild.buildRoute("library")}/books/search`, requestOptions)
       .then((obj) =>
         obj.json().then((resp) => {
-          const books = [];
+          const loanList = [];
           resp.content.forEach((element) => {
-            books.push(new Book(element));
+            loanList.push(new Loan(element));
           });
-          return books;
+          return loanList;
         })
       )
       .catch(() => {
@@ -69,7 +69,7 @@ export const useLibrary = () => {
     return req;
   };
 
-  const getLibraryBooksOfMonth = async (userToken, libId) => {
+  const getLibraryLoanOfMonth = async (userToken, libId) => {
     checkIfIsCancelled();
     setLoading(true);
     setError(null);
@@ -84,18 +84,18 @@ export const useLibrary = () => {
       headers,
     };
 
-    const req = fetch(`${ApiRouteBuild.buildRoute("library")}/${libId}/books/month`, requestOptions)
+    const req = fetch(`${ApiRouteBuild.buildRoute("loan")}/${libId}/month`, requestOptions)
       .then((obj) =>
         obj.json().then((resp) => {
-          const books = [];
+          const loanList = [];
           resp.forEach((element) => {
-            books.push(new Book(element));
+            loanList.push(new Loan(element));
           });
-          return books;
+          return loanList;
         })
       )
       .catch(() => {
-        setError("Ocorreu um erro durante a busca de livros.");
+        setError("Ocorreu um erro durante a busca de emprestimos.");
         setLoading(false);
         return null;
       });
@@ -108,11 +108,11 @@ export const useLibrary = () => {
   }, []);
 
   return {
-    getLibraryBooks,
-    getLibraryBooksOfMonth,
+    getLibraryLoan,
+    getLibraryLoanOfMonth,
     loading,
     error,
   };
 };
 
-export default useLibrary;
+export default useLoan;
