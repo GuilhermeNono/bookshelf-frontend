@@ -54,7 +54,6 @@ export default async function data(loanList) {
       if (loanList.length > 6) {
         // eslint-disable-next-line no-plusplus
         for (let i = 0; i < 6; i++) {
-          console.log(loanList[i]);
           loanListRows.push({
             status: <Status overdue={loanList[i].overdue} />,
             user: loanList[i].userName,
