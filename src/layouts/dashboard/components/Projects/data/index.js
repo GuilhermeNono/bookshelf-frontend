@@ -38,7 +38,7 @@ export default async function data(books) {
         }}
       />
       <MDTypography variant="button" fontWeight="medium" ml={1} lineHeight={1}>
-        {name}
+        {name.length > 35 ? `${name.substring(0, 35)}...` : name}
       </MDTypography>
     </MDBox>
   );

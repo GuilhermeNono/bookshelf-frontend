@@ -51,9 +51,10 @@ export const useLoan = () => {
       body: JSON.stringify(libraryBody),
     };
 
-    const req = fetch(`${ApiRouteBuild.buildRoute("library")}/books/search`, requestOptions)
+    const req = fetch(`${ApiRouteBuild.buildRoute("loan")}/search`, requestOptions)
       .then((obj) =>
         obj.json().then((resp) => {
+          console.log(resp);
           const loanList = [];
           resp.content.forEach((element) => {
             loanList.push(new Loan(element));

@@ -37,7 +37,7 @@ export default async function data(loanList) {
 
   const LoanBook = ({ book }) => (
     <MDTypography variant="caption" color="text" fontWeight="medium" textAlign="left">
-      {book}
+      {book.length > 35 ? `${book.substring(0, 35)}...` : book}
     </MDTypography>
   );
 
@@ -68,7 +68,6 @@ export default async function data(loanList) {
       } else {
         // eslint-disable-next-line no-plusplus
         for (let i = 0; i < loanList.length; i++) {
-          console.log(loanList[i]);
           loanListRows.push({
             status: <Status overdue={loanList[i].overdue} />,
             user: loanList[i].userName,

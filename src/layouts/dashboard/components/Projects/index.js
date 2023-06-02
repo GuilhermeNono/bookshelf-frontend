@@ -30,30 +30,30 @@ import DataTable from "examples/Tables/DataTable";
 
 // Data
 import data from "layouts/dashboard/components/Projects/data";
-import { useMaterialUIController } from "context";
-import { useLibrary } from "hooks/useLibrary";
+import PropTypes from "prop-types";
+import { useNavigate } from "react-router-dom";
 
-function RecentBooks() {
+// eslint-disable-next-line react/prop-types
+function RecentBooks({ books }) {
   const [menu, setMenu] = useState(null);
   // eslint-disable-next-line no-unused-vars
-  const [books, setBooks] = useState();
+  const [booksTable, setBooksTable] = useState();
+  const [ready, setReady] = useState(true);
   const [newBooksCount, setNewBooksCount] = useState(0);
-
-  // eslint-disable-next-line no-unused-vars
-  const [controller, dispatch] = useMaterialUIController();
-  const { library, token } = controller;
-  const useLib = useLibrary();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    useLib.getLibraryBooksOfMonth(token, library).then((resp) => {
-      if (resp) {
-        data(resp).then((bookList) => {
-          setBooks(bookList);
+    if (ready) {
+      if (books) {
+        // eslint-disable-next-line no-unused-vars
+        data(books).then((bookList) => {
+          setBooksTable(bookList);
         });
-        setNewBooksCount(resp.length);
+        setNewBooksCount(books.length);
+        setReady(false);
       }
-    });
-  }, []);
+    }
+  }, [books]);
 
   const handleNewBooksCount = () => {
     if (newBooksCount > 0) {
@@ -76,6 +76,8 @@ function RecentBooks() {
   const openMenu = ({ currentTarget }) => setMenu(currentTarget);
   const closeMenu = () => setMenu(null);
 
+  const navigateToBooks = () => navigate("/dashboard/books");
+
   const renderMenu = (
     <Menu
       id="simple-menu"
@@ -91,9 +93,7 @@ function RecentBooks() {
       open={Boolean(menu)}
       onClose={closeMenu}
     >
-      <MenuItem onClick={closeMenu}>Action</MenuItem>
-      <MenuItem onClick={closeMenu}>Another action</MenuItem>
-      <MenuItem onClick={closeMenu}>Something else</MenuItem>
+      <MenuItem onClick={navigateToBooks}>Ir para livros</MenuItem>
     </Menu>
   );
 
@@ -104,20 +104,22 @@ function RecentBooks() {
           <MDTypography variant="h6" gutterBottom>
             Livros mais recentes
           </MDTypography>
-          <MDBox display="flex" alignItems="center" lineHeight={0}>
-            <Icon
-              sx={{
-                fontWeight: "bold",
-                color: ({ palette: { info } }) => info.main,
-                mt: -0.5,
-              }}
-            >
-              done
-            </Icon>
-            <MDTypography variant="button" fontWeight="regular" color="text">
-              {handleNewBooksCount()}
-            </MDTypography>
-          </MDBox>
+          {booksTable && booksTable.rows.length > 0 && (
+            <MDBox display="flex" alignItems="center" lineHeight={0}>
+              <Icon
+                sx={{
+                  fontWeight: "bold",
+                  color: ({ palette: { info } }) => info.main,
+                  mt: -0.5,
+                }}
+              >
+                done
+              </Icon>
+              <MDTypography variant="button" fontWeight="regular" color="text">
+                {handleNewBooksCount()}
+              </MDTypography>
+            </MDBox>
+          )}
         </MDBox>
         <MDBox color="text" px={2}>
           <Icon sx={{ cursor: "pointer", fontWeight: "bold" }} fontSize="small" onClick={openMenu}>
@@ -127,20 +129,48 @@ function RecentBooks() {
         {renderMenu}
       </MDBox>
       {/* eslint-disable-next-line react/jsx-no-comment-textnodes */}
-      <MDBox p={3}>
+      <MDBox
+        p={3}
+        sx={{
+          height: "100%",
+        }}
+      >
         {/* TODO: Refazer esse datatable com os livros mais recentes do sistema. */}
-        {books && (
+        {booksTable && booksTable.rows.length > 0 ? (
           <DataTable
-            table={books}
+            table={booksTable}
             showTotalEntries={false}
             isSorted={false}
             noEndBorder
             entriesPerPage={false}
           />
+        ) : (
+          <MDBox
+            sx={{
+              height: "100%",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <MDTypography
+              sx={{ textAlign: "center" }}
+              fontWeight="medium"
+              horizontalAlign="middle"
+              verticalAlign="middle"
+            >
+              Não temos registro de novos livros nesse mês até o momento.
+            </MDTypography>
+          </MDBox>
         )}
       </MDBox>
     </Card>
   );
 }
+
+RecentBooks.propTypes = {
+  // eslint-disable-next-line react/forbid-prop-types
+  books: PropTypes.array.isRequired,
+};
 
 export default RecentBooks;
