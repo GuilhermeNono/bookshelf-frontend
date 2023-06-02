@@ -157,14 +157,14 @@ function DashboardNavbar({ absolute, light, isMini }) {
     },
   });
 
-  const [abc, setAbc] = useState("");
+  const [title, setTitle] = useState("");
 
   useEffect(() => {
     if (route[route.length - 1] === currentBook.code) {
       // eslint-disable-next-line no-return-assign
-      return setAbc(currentBook.name);
+      return setTitle(currentBook.name);
     }
-    return setAbc(route[route.length - 1]);
+    return setTitle(route[route.length - 1]);
   }, [route]);
 
   return (
@@ -175,7 +175,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
     >
       <Toolbar sx={(theme) => navbarContainer(theme)}>
         <MDBox color="inherit" mb={{ xs: 1, md: 0 }} sx={(theme) => navbarRow(theme, { isMini })}>
-          <Breadcrumbs icon="home" title={abc} route={route} light={light} />
+          <Breadcrumbs icon="home" title={title} route={route} light={light} />
         </MDBox>
         {isMini ? null : (
           <MDBox sx={(theme) => navbarRow(theme, { isMini })}>
