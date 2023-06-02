@@ -38,6 +38,7 @@ import MDProgress from "components/MDProgress";
 import { useLibrary } from "hooks/useLibrary";
 import MDTypography from "components/MDTypography";
 import MDButton from "components/MDButton";
+import { Link } from "react-router-dom";
 
 function Books() {
   // eslint-disable-next-line no-unused-vars
@@ -80,7 +81,15 @@ function Books() {
               >
                 <MDBox display="flex" alignItems="center" justifyContent="space-between">
                   <MDTypography variant="h6">Livros na biblioteca</MDTypography>
-                  <MDButton color="success">Adicionar Livro</MDButton>
+                  <MDButton
+                    component={Link}
+                    to="/dashboard/add-book"
+                    color="success"
+                    fontWeight="bold"
+                    fontSize="25px"
+                  >
+                    Adicionar Livro
+                  </MDButton>
                 </MDBox>
               </MDBox>
               <MDBox pt={3}>

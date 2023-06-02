@@ -15,11 +15,11 @@ import { Box, CircularProgress, Grid, useMediaQuery, useTheme } from "@mui/mater
 import DataTable from "examples/Tables/DataTable";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import MDBox from "../../components/MDBox";
 import MDTypography from "../../components/MDTypography";
 
 import DashboardLayout from "../../examples/LayoutContainers/DashboardLayout";
-import DashboardNavbar from "../../examples/Navbars/DashboardNavbar";
 import Footer from "../../examples/Footer";
 import data from "./data";
 import { useLibrary } from "../../hooks/useLibrary";

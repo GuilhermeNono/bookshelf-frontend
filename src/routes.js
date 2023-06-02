@@ -50,7 +50,7 @@ import Home from "layouts/home";
 import Pricing from "layouts/pricing";
 import Books from "layouts/books";
 import AddBook from "layouts/add-book";
-import Details from "./layouts/details";
+import Details from "layouts/details";
 
 const routes = [
   {
@@ -128,7 +128,6 @@ const routes = [
     component: <Profile />,
   },
   {
-    type: "divider",
     type: "divider",
     name: "Sign In",
     key: "sign-in",
