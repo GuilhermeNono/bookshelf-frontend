@@ -1,4 +1,4 @@
-export default class Borrowing {
+export default class Loan {
   constructor(obj) {
     // eslint-disable-next-line no-param-reassign
     obj = obj != null ? obj : {};

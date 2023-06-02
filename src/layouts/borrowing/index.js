@@ -24,50 +24,32 @@ import Footer from "examples/Footer";
 import DataTable from "examples/Tables/DataTable";
 import { useEffect, useState } from "react";
 import { useMaterialUIController } from "context";
-import { useLibrary } from "hooks/useLibrary";
-import { useParams } from "react-router-dom";
-import borrowingTableData from "./data/borrowingTableData";
-import ComplexStatisticsCard from "../../examples/Cards/StatisticsCards/ComplexStatisticsCard";
+import { useLoan } from "hooks/useLoan";
+import MDProgress from "components/MDProgress";
+import borrowingTableData from "layouts/borrowing/data/borrowingTableData";
 
 function borrowing() {
-  const useLibraries = useLibrary();
+  const useLoans = useLoan();
   const [controller] = useMaterialUIController();
-  const { columns, rows } = borrowingTableData();
   const { token } = controller;
 
-  const [books, setBooks] = useState(null);
-
-  const { id } = useParams();
+  const [loans, setLoans] = useState();
 
   useEffect(() => {
-    // TODO: useLibraries.getLibraryBooks(tokenDeAcesso, idDaBiblioteca, filtrosDePesquisa)
-    useLibraries
-      .getLibraryBooks(token, localStorage.getItem("bs-lid"), [
-        { filterKey: "code", value: id, operation: "eq" },
-      ])
-      .then((resp) => {
-        // TODO: Insere o primeiro elemento que vier do metodo getLibraryBooks no state bookInfo.
-        setBooks(resp[0]);
+    if (token) {
+      useLoans.getAllLoans(token).then((resp) => {
+        if (resp) {
+          borrowingTableData(resp).then((data) => {
+            setLoans(data);
+          });
+        }
       });
-  }, []);
-
-  console.log(`${books}`);
+    }
+  }, [token]);
 
   return (
     <DashboardLayout>
       <DashboardNavbar />
-      <Grid container spacing={3} mt={3}>
-        <Grid item xs={12} md={6} lg={4}>
-          <MDBox mb={1.5}>
-            <ComplexStatisticsCard icon="collectionsbookmark" title="Empréstimos" count="10" />
-          </MDBox>
-        </Grid>
-        <Grid item xs={12} md={6} lg={4}>
-          <MDBox mb={1.5}>
-            <ComplexStatisticsCard color="error" icon="alarmoff" title="Em atraso" count="7" />
-          </MDBox>
-        </Grid>
-      </Grid>
       <MDBox pt={6} pb={3}>
         <Grid container spacing={6}>
           <Grid item xs={12}>
@@ -83,17 +65,21 @@ function borrowing() {
                 coloredShadow="info"
               >
                 <MDTypography variant="h6" color="white">
-                  teste
+                  Emprestimos na biblioteca
                 </MDTypography>
               </MDBox>
               <MDBox pt={3}>
-                <DataTable
-                  table={{ columns, rows }}
-                  isSorted={false}
-                  entriesPerPage={false}
-                  showTotalEntries={false}
-                  noEndBorder
-                />
+                {loans ? (
+                  <DataTable
+                    table={loans}
+                    isSorted={false}
+                    entriesPerPage={false}
+                    showTotalEntries={false}
+                    noEndBorder
+                  />
+                ) : (
+                  <MDProgress />
+                )}
               </MDBox>
             </Card>
           </Grid>

@@ -40,10 +40,6 @@ import MDTypography from "components/MDTypography";
 import MDButton from "components/MDButton";
 
 function Books() {
-  // eslint-disable-next-line no-unused-vars
-  const [columns, setColumns] = useState();
-  // eslint-disable-next-line no-unused-vars
-  const [rows, setRows] = useState();
   const [books, setBooks] = useState();
   const useLibraries = useLibrary();
   const [controller] = useMaterialUIController();

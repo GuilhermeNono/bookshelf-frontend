@@ -1,8 +1,8 @@
 import ApiRouteBuild from "helpers/ApiRouteBuild";
-import Borrowing from "models/Borrowing.model";
+import Loan from "models/Loan.model";
 import { useEffect, useState } from "react";
 
-export const useBorrowing = () => {
+export const useLoan = () => {
   // eslint-disable-next-line no-unused-vars
   const [error, setError] = useState("");
   // const [isLogged, setIsLogged] = useState(false);
@@ -18,7 +18,7 @@ export const useBorrowing = () => {
     }
   };
 
-  const getAllBorrowing = async (userToken) => {
+  const getAllLoans = async (userToken) => {
     checkIfIsCancelled();
     setLoading(true);
     setError(null);
@@ -35,15 +35,15 @@ export const useBorrowing = () => {
     const req = fetch(`${ApiRouteBuild.buildRoute("borrowing")}`, requestOptions)
       .then((obj) =>
         obj.json().then((resp) => {
-          const loan = [];
+          const loans = [];
           resp.forEach((element) => {
-            loan.push(new Borrowing(element));
+            loans.push(new Loan(element));
           });
-          return loan;
+          return loans;
         })
       )
       .catch(() => {
-        setError("Ocorreu um erro durante a busca de livros.");
+        setError("Ocorreu um erro durante a busca de emprestimos.");
         setLoading(false);
         return null;
       });
@@ -56,10 +56,10 @@ export const useBorrowing = () => {
   }, []);
 
   return {
-    getAllBorrowing,
+    getAllLoans,
     loading,
     error,
   };
 };
 
-export default useBorrowing;
+export default useLoan;
