@@ -21,7 +21,7 @@ export const APICONFIG = {
       route: "/api/v1/book",
     },
     {
-      name: "borrowing",
+      name: "loan",
       route: "/api/v1/borrowing",
     },
   ],

@@ -69,6 +69,39 @@ export const useLibrary = () => {
     return req;
   };
 
+  const getLibraryBooksOfMonth = async (userToken, libId) => {
+    checkIfIsCancelled();
+    setLoading(true);
+    setError(null);
+
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${userToken}`,
+    };
+
+    const requestOptions = {
+      method: "GET",
+      headers,
+    };
+
+    const req = fetch(`${ApiRouteBuild.buildRoute("library")}/${libId}/books/month`, requestOptions)
+      .then((obj) =>
+        obj.json().then((resp) => {
+          const books = [];
+          resp.forEach((element) => {
+            books.push(new Book(element));
+          });
+          return books;
+        })
+      )
+      .catch(() => {
+        setError("Ocorreu um erro durante a busca de livros.");
+        setLoading(false);
+        return null;
+      });
+    return req;
+  };
+
   useEffect(() => {
     setCancelled(true);
     // setError("");
@@ -76,6 +109,7 @@ export const useLibrary = () => {
 
   return {
     getLibraryBooks,
+    getLibraryBooksOfMonth,
     loading,
     error,
   };

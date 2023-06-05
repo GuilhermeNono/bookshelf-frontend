@@ -38,11 +38,19 @@ import { useMaterialUIController } from "context";
 import { useEffect, useState } from "react";
 // eslint-disable-next-line no-unused-vars
 import { Box, CircularProgress, Grid } from "@mui/material";
+import { useLoan } from "hooks/useLoan";
+import { useLibrary } from "hooks/useLibrary";
 
 function Dashboard() {
   // const { sales, tasks } = reportsLineChartData;
   const [controller] = useMaterialUIController();
   const [ready, setReady] = useState(false);
+  const [books, setBooks] = useState();
+  const [overdue, setOverdue] = useState();
+  const [loan, setLoan] = useState();
+
+  const useBorrowing = useLoan();
+  const useLibraries = useLibrary();
 
   const { token, library } = controller;
 
@@ -51,6 +59,28 @@ function Dashboard() {
       setReady(true);
     }
   }, [token, library]);
+
+  useEffect(() => {
+    useBorrowing.getLibraryLoanOfMonth(token, library).then((resp) => {
+      if (resp) {
+        setLoan(resp);
+      }
+    });
+
+    useBorrowing
+      .getLibraryLoan(token, library, [{ filterKey: "overdue", operation: "eq", value: true }])
+      .then((resp) => {
+        if (resp) {
+          setOverdue(resp.length);
+        }
+      });
+
+    useLibraries.getLibraryBooksOfMonth(token, library).then((resp) => {
+      if (resp) {
+        setBooks(resp);
+      }
+    });
+  }, []);
 
   return ready ? (
     <DashboardLayout>
@@ -63,30 +93,37 @@ function Dashboard() {
                 color="dark"
                 icon="book"
                 title="Novos livros"
-                // TODO: Atualizar o valor abaixo pelos livros que entraram no sistema recentemente.
-                count={15}
-                // TODO: Desenvolver um metodo que tras informações mais detalhadas.
+                count={books && books.length}
               />
             </MDBox>
           </Grid>
           <Grid item xs={12} md={6} lg={4}>
             <MDBox mb={1.5}>
-              <ComplexStatisticsCard icon="collectionsbookmark" title="Empréstimos" count="9" />
+              <ComplexStatisticsCard
+                icon="collectionsbookmark"
+                title="Empréstimos"
+                count={loan && loan.length}
+              />
             </MDBox>
           </Grid>
           <Grid item xs={12} md={6} lg={4}>
             <MDBox mb={1.5}>
-              <ComplexStatisticsCard color="error" icon="alarmoff" title="Em atraso" count="2" />
+              <ComplexStatisticsCard
+                color="error"
+                icon="alarmoff"
+                title="Em atraso"
+                count={overdue && overdue}
+              />
             </MDBox>
           </Grid>
         </Grid>
         <MDBox>
           <Grid container spacing={3}>
             <Grid item xs={12} md={6} lg={6}>
-              <RecentBooks />
+              <RecentBooks books={books} />
             </Grid>
             <Grid item xs={12} md={6} lg={6}>
-              <OrdersOverview />
+              <OrdersOverview loanList={loan} />
             </Grid>
           </Grid>
         </MDBox>

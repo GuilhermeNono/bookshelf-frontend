@@ -18,10 +18,63 @@ export const useLoan = () => {
     }
   };
 
-  const getAllLoans = async (userToken) => {
+  const getLibraryLoan = async (userToken, libId, filter = []) => {
+    const filters = [{ filterKey: "id", value: libId, operation: "eq" }];
+    if (filter.length > 0) {
+      filter.forEach((element) => {
+        filters.push(element);
+      });
+    }
     checkIfIsCancelled();
     setLoading(true);
     setError(null);
+
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${userToken}`,
+    };
+
+    if (filter.length > 0) {
+      filter.forEach((fl) => {
+        filters.push(fl);
+      });
+    }
+
+    const libraryBody = {
+      searchCriteriaList: filters,
+      dataOption: "all",
+    };
+
+    const requestOptions = {
+      method: "POST",
+      headers,
+      body: JSON.stringify(libraryBody),
+    };
+
+    const req = fetch(`${ApiRouteBuild.buildRoute("loan")}/search`, requestOptions)
+      .then((obj) =>
+        obj.json().then((resp) => {
+          console.log(resp);
+          const loanList = [];
+          resp.content.forEach((element) => {
+            loanList.push(new Loan(element));
+          });
+          return loanList;
+        })
+      )
+      .catch(() => {
+        setError("Ocorreu um erro durante a busca de livros.");
+        setLoading(false);
+        return null;
+      });
+    return req;
+  };
+
+  const getLibraryLoanOfMonth = async (userToken, libId) => {
+    checkIfIsCancelled();
+    setLoading(true);
+    setError(null);
+
     const headers = {
       "Content-Type": "application/json",
       Authorization: `Bearer ${userToken}`,
@@ -32,14 +85,14 @@ export const useLoan = () => {
       headers,
     };
 
-    const req = fetch(`${ApiRouteBuild.buildRoute("borrowing")}`, requestOptions)
+    const req = fetch(`${ApiRouteBuild.buildRoute("loan")}/${libId}/month`, requestOptions)
       .then((obj) =>
         obj.json().then((resp) => {
-          const loans = [];
+          const loanList = [];
           resp.forEach((element) => {
-            loans.push(new Loan(element));
+            loanList.push(new Loan(element));
           });
-          return loans;
+          return loanList;
         })
       )
       .catch(() => {
@@ -56,7 +109,8 @@ export const useLoan = () => {
   }, []);
 
   return {
-    getAllLoans,
+    getLibraryLoan,
+    getLibraryLoanOfMonth,
     loading,
     error,
   };
