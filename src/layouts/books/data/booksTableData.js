@@ -54,7 +54,6 @@ export default async function data(books) {
         if (element.authors.length > 2) {
           authors += " ..."; // Adiciona reticências caso a quantidade de autores seja maior que indicado (2)
         }
-        console.log(element.name);
 
         resp.push({
           book: <Book image={element.cape} name={element.name} />,

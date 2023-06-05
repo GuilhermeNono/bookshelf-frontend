@@ -10,5 +10,6 @@ export default class Loan {
     this.returnDate = obj.return_date;
     this.renewalDate = obj.renewal_date;
     this.active = obj.is_active;
+    this.overdue = obj.overdue;
   }
 }

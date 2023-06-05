@@ -20,7 +20,7 @@ import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 
 // Images
-// import MDBadge from "../../../components/MDBadge";
+import MDBadge from "../../../components/MDBadge";
 
 export default async function data(loans) {
   const Loans = () => {
@@ -28,13 +28,11 @@ export default async function data(loans) {
       const resp = [];
       loans.forEach((element) => {
         resp.push({
-          // book: <Book image={element.cape} name={element.name} />,
+          status: <Status overdue={element.overdue} />,
           user: <Name name={element.userName} />,
           book: <Book name={element.books} />,
           loanDt: <Dates date={element.loanDate} />,
           returnDt: <Dates date={element.returnDate} />,
-          // pages: <BookPages pages={element.numberPages} />,
-          // details: <Details code={element.code} />,
         });
       });
       return resp;
@@ -70,40 +68,26 @@ export default async function data(loans) {
     </MDBox>
   );
 
+  const Status = ({ overdue }) => (
+    <MDBox>
+      <MDBadge
+        badgeContent={overdue ? "Atraso" : "Em dia"}
+        color={overdue ? "error" : "success"}
+        variant="gradient"
+        size="sm"
+        textAlign="left"
+      />
+    </MDBox>
+  );
+
   return {
     columns: [
-      { Header: "Status", accessor: "status", width: "10%", align: "left" },
-      { Header: "Nome", accessor: "user", width: "10%", align: "left" },
-      { Header: "Livro", accessor: "book", width: "10%", align: "left" },
-      { Header: "Data de Emprestimo", accessor: "loanDt", width: "10%", align: "left" },
-      { Header: "Data de Devolução", accessor: "returnDt", width: "10%", align: "left" },
+      { Header: "Status", accessor: "status", width: "1%", align: "center" },
+      { Header: "Nome", accessor: "user", width: "10%", align: "center" },
+      { Header: "Livro", accessor: "book", width: "10%", align: "center" },
+      { Header: "Data de Emprestimo", accessor: "loanDt", width: "10%", align: "center" },
+      { Header: "Data de Devolução", accessor: "returnDt", width: "10%", align: "center" },
     ],
     rows: Loans(),
   };
 }
-
-// {
-//   status: (
-//     <MDBox>
-//       <MDBadge
-//         badgeContent="Atraso"
-//         color="error"
-//         variant="gradient"
-//         size="sm"
-//         textAlign="left"
-//       />
-//     </MDBox>
-//   ),
-//   // TODO: Logo Será a capa do livro
-//   user: "Guilherme Nono",
-//   book: (
-//     <MDTypography variant="caption" color="text" fontWeight="medium" textAlign="left">
-//       {}----a
-//     </MDTypography>
-//   ),
-//   course: (
-//     <MDTypography variant="caption" color="text" fontWeight="medium" textAlign="left">
-//       3º DS
-//     </MDTypography>
-//   ),
-// },
