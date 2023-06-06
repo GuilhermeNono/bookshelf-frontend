@@ -62,7 +62,7 @@ function AddBook() {
                       <MDInput type="text" label="Título" variant="outlined" />
                       <MDInput type="text" label="Autores" variant="outlined" />
                       <MDInput type="text" label="Categorias" variant="outlined" />
-                      {/* <MDInput
+                      <MDInput
                         type="text"
                         label="Sinopse"
                         variant="outlined"
@@ -70,16 +70,34 @@ function AddBook() {
                         multiline
                         rows={4}
                         maxRows={6}
-                      /> */}
+                      />
                     </MDBox>
                     <MDBox
                       sx={{
                         display: "grid",
+                        gridTemplateColumns: "1fr 1fr",
+                        gridTemplateRows: "repeat(5, 1fr)",
                         gap: 2,
-                        gridTemplateColumns: "repeat(2, 1fr)",
                       }}
                     >
-                      <MDInput type="text" label="Publisher" variant="outlined" />
+                      <MDInput
+                        type="text"
+                        label="Publisher"
+                        variant="outlined"
+                        sx={{ gridColumn: 1, gridRow: 1 }}
+                      />
+                      <MDInput
+                        type="text"
+                        label="Edição"
+                        variant="outlined"
+                        sx={{ gridColumn: 1, gridRow: 2 }}
+                      />
+                      <MDInput
+                        type="text"
+                        label="Tipo de Capa"
+                        variant="outlined"
+                        sx={{ gridColumn: 1, gridRow: 3 }}
+                      />
                       <MDInput
                         type="date"
                         label="Data de Publicação"
@@ -87,9 +105,14 @@ function AddBook() {
                           shrink: true,
                         }}
                         variant="outlined"
+                        sx={{ gridColumn: 2, gridRow: 1 }}
                       />
-                      <MDInput type="text" label="Edição" variant="outlined" />
-                      <MDInput type="number" label="ISBN" variant="outlined" />
+                      <MDInput
+                        type="number"
+                        label="ISBN"
+                        variant="outlined"
+                        sx={{ gridColumn: 2, gridRow: 2 }}
+                      />
                       <MDInput
                         type="url"
                         label="Url capa"
@@ -98,6 +121,7 @@ function AddBook() {
                         InputLabelProps={{
                           shrink: true,
                         }}
+                        sx={{ gridColumn: 2, gridRow: 3 }}
                       />
                     </MDBox>
                   </MDBox>
