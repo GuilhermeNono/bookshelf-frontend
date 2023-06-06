@@ -31,7 +31,7 @@ import borrowingTableData from "layouts/borrowing/data/borrowingTableData";
 function borrowing() {
   const useLoans = useLoan();
   const [controller] = useMaterialUIController();
-  const { token } = controller;
+  const { token, library } = controller;
 
   const [loans, setLoans] = useState();
 
@@ -49,7 +49,7 @@ function borrowing() {
 
   useEffect(() => {
     if (token) {
-      useLoans.getLibraryLoan(token, localStorage.getItem("bs-lid")).then((resp) => {
+      useLoans.getLibraryLoan(token, library).then((resp) => {
         if (resp) {
           borrowingTableData(resp).then((data) => {
             setLoans(data);
