@@ -49,8 +49,8 @@ import Icon from "@mui/material/Icon";
 import Home from "layouts/home";
 import Pricing from "layouts/pricing";
 import Books from "layouts/books";
-import AddBook from "layouts/add-book";
 import Details from "layouts/details";
+import AddCopy from "layouts/add-copy";
 
 const routes = [
   {
@@ -97,11 +97,11 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "AddBook",
-    key: "addbook",
+    name: "AddCopy",
+    key: "AddCopy",
     icon: <Icon fontSize="small">table_view</Icon>,
-    route: "/dashboard/add-book",
-    component: <AddBook />,
+    route: "/dashboard/add-copy",
+    component: <AddCopy />,
   },
   // {
   //   type: "title",
