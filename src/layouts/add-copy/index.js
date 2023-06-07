@@ -203,6 +203,16 @@ function AddCopy() {
                     <MDButton type="submit" variant="gradient" color="success">
                       Adicionar
                     </MDButton>
+                    <MDInput
+                      type="text"
+                      label="Tombo"
+                      variant="outlined"
+                      placeholder="Insira o codigo do tombo aqui"
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                      sx={{ gridColumn: 2, gridRow: 3 }}
+                    />
                   </MDBox>
                 </MDBox>
               </MDBox>
