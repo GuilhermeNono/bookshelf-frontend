@@ -47,6 +47,7 @@ function AddCopy() {
       });
     }
   }, [token, library]);
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -211,7 +212,6 @@ function AddCopy() {
                       InputLabelProps={{
                         shrink: true,
                       }}
-                      sx={{ gridColumn: 2, gridRow: 3 }}
                     />
                   </MDBox>
                 </MDBox>

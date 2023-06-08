@@ -51,6 +51,7 @@ import Pricing from "layouts/pricing";
 import Books from "layouts/books";
 import Details from "layouts/details";
 import AddCopy from "layouts/add-copy";
+import AddBook from "layouts/add-book";
 
 const routes = [
   {
@@ -102,6 +103,14 @@ const routes = [
     icon: <Icon fontSize="small">table_view</Icon>,
     route: "/dashboard/add-copy",
     component: <AddCopy />,
+  },
+  {
+    type: "collapse",
+    name: "AddBook",
+    key: "AddBook",
+    icon: <Icon fontSize="small">table_view</Icon>,
+    route: "/dashboard/add-book",
+    component: <AddBook />,
   },
   // {
   //   type: "title",
