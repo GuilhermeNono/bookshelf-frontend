@@ -27,6 +27,7 @@ import MDInput from "components/MDInput";
 // import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import MDButton from "components/MDButton";
 import capePlaceholder from "assets/images/capePlaceholder.png";
+import { useState } from "react";
 import Header from "./Header";
 
 function AddBook() {
@@ -36,6 +37,8 @@ function AddBook() {
   const onlyXs = useMediaQuery(theme.breakpoints.only("xs"));
   const onlySm = useMediaQuery(theme.breakpoints.only("sm"));
   // const [selectedBook, setSelectedBook] = useState(null);
+
+  const [imageUrl, setImageUrl] = useState(capePlaceholder);
 
   return (
     <DashboardLayout>
@@ -75,7 +78,7 @@ function AddBook() {
                         maxHeight: "100%",
                         borderRadius: "0.7rem",
                       }}
-                      src={capePlaceholder}
+                      src={imageUrl}
                       alt="cape"
                     />
                   </Grid>
@@ -113,6 +116,7 @@ function AddBook() {
                             shrink: true,
                           }}
                           fullWidth
+                          onChange={(e) => setImageUrl(e.target.value)}
                         />
                       </Box>
                       <Box gridRow={5} sx={onlyXs && { mb: 3 }}>
