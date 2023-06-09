@@ -26,6 +26,7 @@ import { Box, useMediaQuery, useTheme } from "@mui/material";
 import MDInput from "components/MDInput";
 // import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import MDButton from "components/MDButton";
+import capePlaceholder from "assets/images/capePlaceholder.png";
 import Header from "./Header";
 
 function AddBook() {
@@ -74,7 +75,7 @@ function AddBook() {
                         maxHeight: "100%",
                         borderRadius: "0.7rem",
                       }}
-                      src="https://static.vecteezy.com/system/resources/previews/005/337/799/original/icon-image-not-found-free-vector.jpg"
+                      src={capePlaceholder}
                       alt="cape"
                     />
                   </Grid>
@@ -108,7 +109,6 @@ function AddBook() {
                           type="url"
                           label="Url Imagem"
                           variant="outlined"
-                          placeholder="Insira a url aqui"
                           InputLabelProps={{
                             shrink: true,
                           }}
@@ -150,10 +150,10 @@ function AddBook() {
                         <MDInput type="text" label="Edição" variant="outlined" fullWidth />
                         <Box mt={3}>
                           <MDInput
-                            type="text"
+                            type="number"
                             label="Tombo"
                             variant="outlined"
-                            placeholder="Insira o codigo do tombo aqui"
+                            placeholder="codigo do tombo"
                             InputLabelProps={{
                               shrink: true,
                             }}
