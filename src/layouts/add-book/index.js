@@ -1,33 +1,15 @@
-/**
- =========================================================
- * Material Dashboard 2 React - v2.1.0
- =========================================================
- * Product Page: https://www.creative-tim.com/product/material-dashboard-react
- * Copyright 2022 Creative Tim (https://www.creative-tim.com)
- Coded by www.creative-tim.com
- =========================================================
- * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
- */
-
-// @mui material components
+import React, { useState } from "react";
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
-
-// Material Dashboard 2 React components
+import { Box, MenuItem, useMediaQuery, useTheme } from "@mui/material";
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
-
-// Material Dashboard 2 React example components
+import MDInput from "components/MDInput";
+import MDButton from "components/MDButton";
+import capePlaceholder from "assets/images/capePlaceholder.png";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
-import { Box, useMediaQuery, useTheme } from "@mui/material";
-// import MDButton from "components/MDButton";
-import MDInput from "components/MDInput";
-// import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
-import MDButton from "components/MDButton";
-import capePlaceholder from "assets/images/capePlaceholder.png";
-import { useState } from "react";
 import Header from "./Header";
 
 function AddBook() {
@@ -36,9 +18,12 @@ function AddBook() {
   const upMd = useMediaQuery(theme.breakpoints.up("md"));
   const onlyXs = useMediaQuery(theme.breakpoints.only("xs"));
   const onlySm = useMediaQuery(theme.breakpoints.only("sm"));
-  // const [selectedBook, setSelectedBook] = useState(null);
-
   const [imageUrl, setImageUrl] = useState(capePlaceholder);
+  const [capeType, setCapeType] = useState("");
+
+  const handleCoverTypeChange = (event) => {
+    setCapeType(event.target.value);
+  };
 
   return (
     <DashboardLayout>
@@ -145,7 +130,19 @@ function AddBook() {
                         <MDInput type="number" label="ISBN" variant="outlined" fullWidth />
                       </Box>
                       <Box gridRow={3} sx={onlyXs && { mb: 3 }}>
-                        <MDInput type="text" label="Tipo de Capa" variant="outlined" fullWidth />
+                        <MDInput
+                          type="text"
+                          label="Tipo de Capa"
+                          variant="outlined"
+                          fullWidth
+                          select
+                          value={capeType}
+                          onChange={handleCoverTypeChange}
+                        >
+                          <MenuItem value="dura">Dura</MenuItem>
+                          <MenuItem value="comum">Comum</MenuItem>
+                        </MDInput>
+                        {/*  Corrigir o tamanho do input */}
                       </Box>
                       <Box gridRow={4} sx={onlyXs && { mb: 3 }}>
                         <MDInput type="text" label="Publisher" variant="outlined" fullWidth />
