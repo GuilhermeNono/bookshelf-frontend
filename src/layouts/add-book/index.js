@@ -1,7 +1,15 @@
 import React, { useState } from "react";
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
-import { Box, MenuItem, useMediaQuery, useTheme } from "@mui/material";
+import {
+  Box,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDInput from "components/MDInput";
@@ -20,10 +28,6 @@ function AddBook() {
   const onlySm = useMediaQuery(theme.breakpoints.only("sm"));
   const [imageUrl, setImageUrl] = useState(capePlaceholder);
   const [capeType, setCapeType] = useState("");
-
-  const handleCoverTypeChange = (event) => {
-    setCapeType(event.target.value);
-  };
 
   return (
     <DashboardLayout>
@@ -97,6 +101,7 @@ function AddBook() {
                           type="url"
                           label="Url Imagem"
                           variant="outlined"
+                          placeholder="Insira a url da capa"
                           InputLabelProps={{
                             shrink: true,
                           }}
@@ -113,6 +118,9 @@ function AddBook() {
                           multiline
                           rows={4}
                           fullWidth
+                          InputLabelProps={{
+                            shrink: true,
+                          }}
                         />
                       </Box>
                       <Box gridRow={1} sx={onlyXs && { mb: 3 }}>
@@ -130,19 +138,21 @@ function AddBook() {
                         <MDInput type="number" label="ISBN" variant="outlined" fullWidth />
                       </Box>
                       <Box gridRow={3} sx={onlyXs && { mb: 3 }}>
-                        <MDInput
-                          type="text"
-                          label="Tipo de Capa"
-                          variant="outlined"
-                          fullWidth
-                          select
-                          value={capeType}
-                          onChange={handleCoverTypeChange}
-                        >
-                          <MenuItem value="dura">Dura</MenuItem>
-                          <MenuItem value="comum">Comum</MenuItem>
-                        </MDInput>
-                        {/*  Corrigir o tamanho do input */}
+                        <FormControl variant="outlined" fullWidth>
+                          <InputLabel id="capeType-label">Tipo de Capa</InputLabel>
+                          <Select
+                            labelId="capeType-label"
+                            id="capeType"
+                            value={capeType}
+                            onChange={(e) => setCapeType(e.target.value)}
+                            label="Tipo de Capa"
+                            style={{ height: "44.13px" }}
+                          >
+                            <MenuItem value="">Selecione</MenuItem>
+                            <MenuItem value="Dura">Dura</MenuItem>
+                            <MenuItem value="Comum">Comum</MenuItem>
+                          </Select>
+                        </FormControl>
                       </Box>
                       <Box gridRow={4} sx={onlyXs && { mb: 3 }}>
                         <MDInput type="text" label="Publisher" variant="outlined" fullWidth />
