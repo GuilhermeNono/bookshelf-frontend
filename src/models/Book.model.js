@@ -16,6 +16,8 @@ export default class Book {
     this.publicationDate = obj.publication_date;
     this.isbn = obj.isbn;
     this.numberPages = obj.number_pages;
+    this.createdAt = obj.created_at;
+    this.updatedAt = obj.updated_at;
     this.cape = obj.cape;
     this.available = obj.available;
     this.categories = obj.categories

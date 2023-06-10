@@ -64,7 +64,6 @@ function Basic() {
       setLibrary(dispatch, bslid);
       return navigate("/dashboard");
     }
-    console.log(authentication.error);
     return null;
   };
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
