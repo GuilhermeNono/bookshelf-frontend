@@ -29,6 +29,8 @@ function AddBook() {
   const [imageUrl, setImageUrl] = useState(capePlaceholder);
   const [capeType, setCapeType] = useState("");
 
+  // TODO: Endpoint para criar novos livros no sistema "/api/v1/book/add" para mais informações, basta olhar o Postman ou Swagger da API.
+
   return (
     <DashboardLayout>
       <DashboardNavbar />

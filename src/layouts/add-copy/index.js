@@ -42,6 +42,7 @@ function AddCopy() {
   const onlyXs = useMediaQuery(theme.breakpoints.only("xs"));
   const onlySm = useMediaQuery(theme.breakpoints.only("sm"));
 
+  // TODO: Endpoint para criar novas copias para uma biblioteca "/api/v1/library/book/add" para mais informações, basta olhar o Postman ou Swagger da API.
   useEffect(() => {
     if (token) {
       useLibraries.getLibraryBooks(token, library).then((resp) => {
