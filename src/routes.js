@@ -145,14 +145,6 @@ const routes = [
   },
   {
     type: "title",
-    name: "Sign Up",
-    key: "sign-up",
-    icon: <Icon fontSize="small">assignment</Icon>,
-    route: "/authentication/sign-up",
-    component: <SignUp />,
-  },
-  {
-    type: "title",
     name: "Details",
     key: "details",
     icon: <Icon fontSize="small">table_view</Icon>,
