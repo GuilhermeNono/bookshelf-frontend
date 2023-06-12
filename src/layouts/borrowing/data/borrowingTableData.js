@@ -32,6 +32,7 @@ export default async function data(loans) {
         resp.push({
           status: <Status overdue={element.overdue} />,
           user: <Name name={element.userName} />,
+          tombo: <Tombo idBook={element.bookId} />,
           book: <Book name={element.books} />,
           loanDt: <Dates date={element.loanDate} />,
           returnDt: <Dates date={element.returnDate} />,
@@ -43,6 +44,18 @@ export default async function data(loans) {
     return [];
   };
 
+  const Status = ({ overdue }) => (
+    <MDBox>
+      <MDBadge
+        badgeContent={overdue ? "Atraso" : "Em dia"}
+        color={overdue ? "error" : "success"}
+        variant="gradient"
+        size="sm"
+        textAlign="left"
+      />
+    </MDBox>
+  );
+
   const Name = ({ name }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
       <MDBox ml={2} lineHeight={1}>
@@ -51,6 +64,12 @@ export default async function data(loans) {
         </MDTypography>
       </MDBox>
     </MDBox>
+  );
+
+  const Tombo = ({ idBook }) => (
+    <MDTypography fontSize="1em" fontWeight="medium">
+      {idBook}
+    </MDTypography>
   );
 
   const Book = ({ name }) => (
@@ -68,18 +87,6 @@ export default async function data(loans) {
           {date.substring(0, 10).split("-").reverse().join("/")}
         </MDTypography>
       </MDBox>
-    </MDBox>
-  );
-
-  const Status = ({ overdue }) => (
-    <MDBox>
-      <MDBadge
-        badgeContent={overdue ? "Atraso" : "Em dia"}
-        color={overdue ? "error" : "success"}
-        variant="gradient"
-        size="sm"
-        textAlign="left"
-      />
     </MDBox>
   );
 
@@ -106,6 +113,7 @@ export default async function data(loans) {
     columns: [
       { Header: "Status", accessor: "status", width: "1%", align: "center" },
       { Header: "Nome", accessor: "user", width: "10%", align: "center" },
+      { Header: "Tombo", accessor: "tombo", width: "10%", align: "center" },
       { Header: "Livro", accessor: "book", width: "10%", align: "center" },
       { Header: "Data de Emprestimo", accessor: "loanDt", width: "10%", align: "center" },
       { Header: "Data de Devolução", accessor: "returnDt", width: "10%", align: "center" },
