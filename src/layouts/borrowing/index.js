@@ -35,18 +35,6 @@ function borrowing() {
 
   const [loans, setLoans] = useState();
 
-  // useEffect(() => {
-  //   if (token) {
-  //     useLoans.getAllLoans(token).then((resp) => {
-  //       if (resp) {
-  //         borrowingTableData(resp).then((data) => {
-  //           setLoans(data);
-  //         });
-  //       }
-  //     });
-  //   }
-  // }, [token]);
-
   useEffect(() => {
     if (token) {
       useLoans.getLibraryLoan(token, library).then((resp) => {

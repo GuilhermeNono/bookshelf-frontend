@@ -20,6 +20,8 @@ import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 
 // Images
+import { Link } from "react-router-dom";
+import ArticleOutlinedIcon from "@mui/icons-material/ArticleOutlined";
 import MDBadge from "../../../components/MDBadge";
 
 export default async function data(loans) {
@@ -33,6 +35,7 @@ export default async function data(loans) {
           book: <Book name={element.books} />,
           loanDt: <Dates date={element.loanDate} />,
           returnDt: <Dates date={element.returnDate} />,
+          detLoans: <DetailLoans code={element.id} />,
         });
       });
       return resp;
@@ -80,6 +83,25 @@ export default async function data(loans) {
     </MDBox>
   );
 
+  // Precisa da detalhes de emprestimos para funcionar
+  const DetailLoans = ({ code }) => (
+    <MDBox lineHeight={1} textAlign="left">
+      <MDTypography display="block" variant="caption" color="text" fontWeight="medium">
+        <MDTypography
+          component={Link}
+          to={`/dashboard/borrowing/#####/${code}`}
+          variant="button"
+          color="info"
+          fontWeight="bold"
+          fontSize="25px"
+          textGradient
+        >
+          <ArticleOutlinedIcon style={{ marginLeft: "0.5em" }} color="white" />
+        </MDTypography>
+      </MDTypography>
+    </MDBox>
+  );
+
   return {
     columns: [
       { Header: "Status", accessor: "status", width: "1%", align: "center" },
@@ -87,6 +109,7 @@ export default async function data(loans) {
       { Header: "Livro", accessor: "book", width: "10%", align: "center" },
       { Header: "Data de Emprestimo", accessor: "loanDt", width: "10%", align: "center" },
       { Header: "Data de Devolução", accessor: "returnDt", width: "10%", align: "center" },
+      { Header: "Detalhes", accessor: "detLoans", width: "10%", align: "center" },
     ],
     rows: Loans(),
   };
