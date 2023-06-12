@@ -20,7 +20,7 @@ export const useLoan = () => {
 
   const getLibraryLoan = async (userToken, libId, filter = []) => {
     // TODO: Trocar o "id" de "filterKey" para "library". O filtro para bibliotecas não existia. Agora existe!"
-    const filters = [{ filterKey: "id", value: libId, operation: "eq" }];
+    const filters = [{ filterKey: "library", value: libId, operation: "eq" }];
     if (filter.length > 0) {
       filter.forEach((element) => {
         filters.push(element);
