@@ -55,7 +55,6 @@ export const useLoan = () => {
     const req = fetch(`${ApiRouteBuild.buildRoute("loan")}/search`, requestOptions)
       .then((obj) =>
         obj.json().then((resp) => {
-          console.log(resp);
           const loanList = [];
           resp.content.forEach((element) => {
             loanList.push(new Loan(element));
