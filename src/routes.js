@@ -49,6 +49,7 @@ import Icon from "@mui/material/Icon";
 import Home from "layouts/home";
 import Pricing from "layouts/pricing";
 import Books from "layouts/books";
+import Borrowing from "./layouts/borrowing";
 import Details from "./layouts/details";
 
 const routes = [
@@ -135,12 +136,12 @@ const routes = [
     component: <SignUp />,
   },
   {
-    type: "title",
-    name: "Sign Up",
-    key: "sign-up",
-    icon: <Icon fontSize="small">assignment</Icon>,
-    route: "/authentication/sign-up",
-    component: <SignUp />,
+    type: "collapse",
+    name: "Borrowing",
+    key: "borrowing",
+    icon: <Icon fontSize="small">table_view</Icon>,
+    route: "/dashboard/borrowing",
+    component: <Borrowing />,
   },
   {
     type: "title",
