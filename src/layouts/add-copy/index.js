@@ -28,6 +28,7 @@ import { useLibrary } from "hooks/useLibrary";
 import { useEffect, useState } from "react";
 import { useMaterialUIController } from "context";
 import capePlaceholder from "assets/images/capePlaceholder.png";
+import { useAddBookCopy } from "hooks/useAddBookCopy";
 import Header from "./Header";
 
 function AddCopy() {
@@ -41,6 +42,23 @@ function AddCopy() {
   const upMd = useMediaQuery(theme.breakpoints.up("md"));
   const onlyXs = useMediaQuery(theme.breakpoints.only("xs"));
   const onlySm = useMediaQuery(theme.breakpoints.only("sm"));
+  const uidData = JSON.parse(localStorage.getItem("uid"));
+  const userId = uidData[0].userLibraryId;
+
+  const [tomboCode, setTomboCode] = useState("");
+
+  const handleAddCopy = (e) => {
+    e.preventDefault();
+    useAddBookCopy(token, selectedBook.bookId, library, userId, tomboCode)
+      .then(() => {
+        // Faça algo com a resposta, como exibir uma mensagem de sucesso ou redirecionar para outra página
+        console.log("sucesso");
+      })
+      .catch(() => {
+        // Trate o erro, como exibir uma mensagem de erro ao usuário
+        console.log("Deu ruim");
+      });
+  };
 
   // TODO: Endpoint para criar novas copias para uma biblioteca "/api/v1/library/book/add" para mais informações, basta olhar o Postman ou Swagger da API.
   useEffect(() => {
@@ -232,7 +250,8 @@ function AddCopy() {
                         <Box mt={3}>
                           <MDInput
                             type="number"
-                            value=""
+                            value={tomboCode}
+                            onChange={(e) => setTomboCode(e.target.value)}
                             label="Tombo"
                             variant="outlined"
                             placeholder="codigo do tombo"
@@ -251,6 +270,7 @@ function AddCopy() {
                         variant="gradient"
                         color="info"
                         sx={onlyXs && { mb: 3 }}
+                        onClick={handleAddCopy}
                       >
                         Adicionar
                       </MDButton>
