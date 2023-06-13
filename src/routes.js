@@ -95,6 +95,14 @@ const routes = [
     route: "/dashboard/books",
     component: <Books />,
   },
+  {
+    type: "collapse",
+    name: "Loan",
+    key: "loan",
+    icon: <Icon fontSize="small">book</Icon>,
+    route: "/dashboard/borrowing",
+    component: <Borrowing />,
+  },
   // {
   //   type: "title",
   //   name: "Billing",
@@ -134,14 +142,6 @@ const routes = [
     icon: <Icon fontSize="small">assignment</Icon>,
     route: "/authentication/sign-up",
     component: <SignUp />,
-  },
-  {
-    type: "collapse",
-    name: "Borrowing",
-    key: "borrowing",
-    icon: <Icon fontSize="small">table_view</Icon>,
-    route: "/dashboard/borrowing",
-    component: <Borrowing />,
   },
   {
     type: "title",
