@@ -73,8 +73,9 @@ function AddCopy() {
     addBookCopy(token, selectedBook.id, libraryId, userLibraryId, tomboCode)
       .then(() => {
         console.log(
-          `sucesso: bookid: ${selectedBook.bookId}, libray id: ${libraryId}, user id: ${userLibraryId} e tombo: ${tomboCode}`
+          `sucesso: bookid: ${selectedBook.id}, libray id: ${libraryId}, user id: ${userLibraryId} e tombo: ${tomboCode}`
         );
+        console.log(selectedBook);
         // TODO resolver problema com bookId e erro 400
         // console.log para testar os campos
       })
@@ -191,6 +192,16 @@ function AddCopy() {
                       <Box gridRow={5} sx={onlyXs && { mb: 3 }}>
                         <MDInput
                           type="text"
+                          label="Linguagem"
+                          variant="outlined"
+                          fullWidth
+                          readOnly
+                          value={selectedBook?.language || ""}
+                        />
+                      </Box>
+                      <Box gridRow={6} sx={onlyXs && { mb: 3 }}>
+                        <MDInput
+                          type="text"
                           label="Sinopse"
                           variant="outlined"
                           placeholder="Insira a descrição do livro aqui"
@@ -201,6 +212,7 @@ function AddCopy() {
                           value={selectedBook?.sinopse || ""}
                         />
                       </Box>
+
                       <Box gridRow={1} sx={onlyXs && { mb: 3 }}>
                         <MDInput
                           type="text"
@@ -259,7 +271,17 @@ function AddCopy() {
                           readOnly
                           value={selectedBook?.edition || ""}
                         />
-                        <Box mt={3}>
+                      </Box>
+                      <Box gridRow={6} sx={onlyXs && { mb: 3 }}>
+                        <MDInput
+                          type="text"
+                          label="Páginas"
+                          variant="outlined"
+                          fullWidth
+                          readOnly
+                          value={selectedBook?.numberPages || ""}
+                        />
+                        <Box sx={{ mt: 3 }}>
                           <MDInput
                             type="number"
                             value={tomboCode}
