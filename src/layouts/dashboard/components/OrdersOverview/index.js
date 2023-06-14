@@ -73,8 +73,6 @@ function OrdersOverview({ loanList }) {
     }
   }, [loanList]);
 
-  console.log(loanTable);
-
   return (
     <Card sx={{ height: "100%" }}>
       <MDBox pt={3} px={3} display="flex" justifyContent="space-between" alignItems="center">

@@ -49,9 +49,10 @@ import Icon from "@mui/material/Icon";
 import Home from "layouts/home";
 import Pricing from "layouts/pricing";
 import Books from "layouts/books";
-import Details from "layouts/details";
 import AddCopy from "layouts/add-copy";
 import AddBook from "layouts/add-book";
+import Borrowing from "./layouts/borrowing";
+import Details from "./layouts/details";
 
 const routes = [
   {
@@ -112,6 +113,14 @@ const routes = [
     route: "/dashboard/add-book",
     component: <AddBook />,
   },
+  {
+    type: "collapse",
+    name: "Loan",
+    key: "loan",
+    icon: <Icon fontSize="small">book</Icon>,
+    route: "/dashboard/borrowing",
+    component: <Borrowing />,
+  },
   // {
   //   type: "title",
   //   name: "Billing",
@@ -143,14 +152,6 @@ const routes = [
     icon: <Icon fontSize="small">login</Icon>,
     route: "/authentication/sign-in",
     component: <SignIn />,
-  },
-  {
-    type: "title",
-    name: "Sign Up",
-    key: "sign-up",
-    icon: <Icon fontSize="small">assignment</Icon>,
-    route: "/authentication/sign-up",
-    component: <SignUp />,
   },
   {
     type: "title",

@@ -2,14 +2,10 @@
  =========================================================
  * Material Dashboard 2 React - v2.1.0
  =========================================================
-
  * Product Page: https://www.creative-tim.com/product/material-dashboard-react
  * Copyright 2022 Creative Tim (https://www.creative-tim.com)
-
  Coded by www.creative-tim.com
-
  =========================================================
-
  * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
  */
 
@@ -19,39 +15,32 @@ import Card from "@mui/material/Card";
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
+import MDTypography from "components/MDTypography";
 
 // Material Dashboard 2 React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
-import { useMaterialUIController } from "context";
 import Footer from "examples/Footer";
-
-// eslint-disable-next-line no-unused-vars
 import DataTable from "examples/Tables/DataTable";
-
-// Data
-// eslint-disable-next-line no-unused-vars
-import booksTableData from "layouts/books/data/booksTableData";
-// eslint-disable-next-line no-unused-vars
 import { useEffect, useState } from "react";
+import { useMaterialUIController } from "context";
+import { useLoan } from "hooks/useLoan";
 import MDProgress from "components/MDProgress";
-import { useLibrary } from "hooks/useLibrary";
-import MDTypography from "components/MDTypography";
-import MDButton from "components/MDButton";
-import { Link } from "react-router-dom";
+import borrowingTableData from "layouts/borrowing/data/borrowingTableData";
 
-function Books() {
-  const [books, setBooks] = useState();
-  const useLibraries = useLibrary();
+function borrowing() {
+  const useLoans = useLoan();
   const [controller] = useMaterialUIController();
-  const { token } = controller;
+  const { token, library } = controller;
+
+  const [loans, setLoans] = useState();
 
   useEffect(() => {
     if (token) {
-      useLibraries.getLibraryBooks(token, localStorage.getItem("bs-lid")).then((resp) => {
+      useLoans.getLibraryLoan(token, library).then((resp) => {
         if (resp) {
-          booksTableData(resp).then((data) => {
-            setBooks(data);
+          borrowingTableData(resp).then((data) => {
+            setLoans(data);
           });
         }
       });
@@ -69,40 +58,20 @@ function Books() {
                 mx={2}
                 mt={-3}
                 py={3}
-                px={3}
+                px={2}
                 variant="gradient"
                 bgColor="info"
                 borderRadius="lg"
                 coloredShadow="info"
               >
-                <MDBox display="flex" alignItems="center" justifyContent="space-between">
-                  <MDTypography variant="h6">Livros na biblioteca</MDTypography>
-                  <MDBox display="flex" alignItems="center">
-                    <MDButton
-                      component={Link}
-                      to="/dashboard/add-book"
-                      color="success"
-                      fontWeight="bold"
-                      fontSize="25px"
-                    >
-                      Adicionar Livro
-                    </MDButton>
-                    <MDButton
-                      component={Link}
-                      to="/dashboard/add-copy"
-                      color="success"
-                      fontWeight="bold"
-                      fontSize="25px"
-                    >
-                      Adicionar cópia
-                    </MDButton>
-                  </MDBox>
-                </MDBox>
+                <MDTypography variant="h6" color="white">
+                  Emprestimos na biblioteca
+                </MDTypography>
               </MDBox>
               <MDBox pt={3}>
-                {books ? (
+                {loans ? (
                   <DataTable
-                    table={books}
+                    table={loans}
                     isSorted={false}
                     entriesPerPage={false}
                     showTotalEntries={false}
@@ -121,4 +90,4 @@ function Books() {
   );
 }
 
-export default Books;
+export default borrowing;

@@ -19,7 +19,7 @@ export const useLoan = () => {
   };
 
   const getLibraryLoan = async (userToken, libId, filter = []) => {
-    const filters = [{ filterKey: "id", value: libId, operation: "eq" }];
+    const filters = [{ filterKey: "library", value: libId, operation: "eq" }];
     if (filter.length > 0) {
       filter.forEach((element) => {
         filters.push(element);
@@ -54,7 +54,6 @@ export const useLoan = () => {
     const req = fetch(`${ApiRouteBuild.buildRoute("loan")}/search`, requestOptions)
       .then((obj) =>
         obj.json().then((resp) => {
-          console.log(resp);
           const loanList = [];
           resp.content.forEach((element) => {
             loanList.push(new Loan(element));
