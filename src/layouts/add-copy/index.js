@@ -28,6 +28,7 @@ import { useLibrary } from "hooks/useLibrary";
 import { useEffect, useState } from "react";
 import { useMaterialUIController } from "context";
 import capePlaceholder from "assets/images/capePlaceholder.png";
+import { useAddBookCopy } from "hooks/useAddBookCopy";
 import Header from "./Header";
 
 function AddCopy() {
@@ -43,6 +44,12 @@ function AddCopy() {
   const onlyXs = useMediaQuery(theme.breakpoints.only("xs"));
   const onlySm = useMediaQuery(theme.breakpoints.only("sm"));
 
+  const uidData = JSON.parse(localStorage.getItem("uid"));
+  const { libraryId, userLibraryId } = uidData[0];
+  const { addBookCopy, loading, error } = useAddBookCopy();
+  // pegando as informações do localstorage
+  // userLibraryId = userId, libraryId= libId
+
   // TODO: Endpoint para criar novas copias para uma biblioteca "/api/v1/library/book/add" para mais informações, basta olhar o Postman ou Swagger da API.
   useEffect(() => {
     if (token) {
@@ -53,6 +60,28 @@ function AddCopy() {
       });
     }
   }, [token, library]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    // Verifique se um livro foi selecionado
+    if (!selectedBook) {
+      console.log("Selecione um livro");
+      return;
+    }
+
+    addBookCopy(token, selectedBook.id, libraryId, userLibraryId, tomboCode)
+      .then(() => {
+        console.log(
+          `sucesso: bookid: ${selectedBook.bookId}, libray id: ${libraryId}, user id: ${userLibraryId} e tombo: ${tomboCode}`
+        );
+        // TODO resolver problema com bookId e erro 400
+        // console.log para testar os campos
+      })
+      .catch(() => {
+        console.log(`Algo deu errado: ${error}`);
+      });
+  };
 
   return (
     <DashboardLayout>
@@ -253,8 +282,10 @@ function AddCopy() {
                         variant="gradient"
                         color="info"
                         sx={onlyXs && { mb: 3 }}
+                        disabled={loading}
+                        onClick={handleSubmit}
                       >
-                        Adicionar
+                        {loading ? "Adicionando..." : "Adicionar"}
                       </MDButton>
                     </Box>
                   </Grid>
