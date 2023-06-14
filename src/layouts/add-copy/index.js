@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+
 /**
  =========================================================
  * Material Dashboard 2 React - v2.1.0
@@ -29,12 +31,14 @@ import { useEffect, useState } from "react";
 import { useMaterialUIController } from "context";
 import capePlaceholder from "assets/images/capePlaceholder.png";
 import { useAddBookCopy } from "hooks/useAddBookCopy";
+// import { useNavigate } from "react-router-dom";
 import Header from "./Header";
 
 function AddCopy() {
   const [controller] = useMaterialUIController();
   const [selectedBook, setSelectedBook] = useState(null);
   const { token, library } = controller;
+  // const navigate = useNavigate();
   const [tomboCode, setTomboCode] = useState([]);
   const [books, setBooks] = useState([]);
   const useLibraries = useLibrary();
@@ -72,14 +76,19 @@ function AddCopy() {
 
     addBookCopy(token, selectedBook.id, libraryId, userLibraryId, tomboCode)
       .then(() => {
-        console.log(
-          `sucesso: bookid: ${selectedBook.id}, libray id: ${libraryId}, user id: ${userLibraryId} e tombo: ${tomboCode}`
-        );
-        console.log(selectedBook);
         // TODO resolver problema com bookId e erro 400
         // console.log para testar os campos
+        console.log(
+          `sucesso: bookId: ${selectedBook.bookId}, libray id: ${libraryId}, user id: ${userLibraryId} e tombo: ${tomboCode}`
+        );
+
+        console.log(selectedBook);
+
+        // return navigate("/dashboard/books");
+        // colocar um pop-up ou algo do tipo avisando foi um sucesso e depois redirecionar para a lista de livros
       })
       .catch(() => {
+        // colocar um pop-up ou algo do tipo avisando que algo deu errado
         console.log(`Algo deu errado: ${error}`);
       });
   };
@@ -147,7 +156,7 @@ function AddCopy() {
                           disablePortal
                           id="combo-box-demo"
                           options={books}
-                          getOptionLabel={(option) => option.name}
+                          getOptionLabel={(option) => option.bookId}
                           renderInput={(params) => <TextField {...params} label="Título" />}
                           value={selectedBook}
                           onChange={(event, value) => setSelectedBook(value)}
@@ -206,7 +215,7 @@ function AddCopy() {
                           variant="outlined"
                           placeholder="Insira a descrição do livro aqui"
                           multiline
-                          rows={4}
+                          rows={6}
                           fullWidth
                           readOnly
                           value={selectedBook?.sinopse || ""}

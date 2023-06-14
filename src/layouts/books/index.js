@@ -81,15 +81,26 @@ function Books() {
               >
                 <MDBox display="flex" alignItems="center" justifyContent="space-between">
                   <MDTypography variant="h6">Livros na biblioteca</MDTypography>
-                  <MDButton
-                    component={Link}
-                    to="/dashboard/add-book"
-                    color="success"
-                    fontWeight="bold"
-                    fontSize="25px"
-                  >
-                    Adicionar Livro
-                  </MDButton>
+                  <MDBox display="flex" alignItems="center">
+                    <MDButton
+                      component={Link}
+                      to="/dashboard/add-book"
+                      color="success"
+                      fontWeight="bold"
+                      fontSize="25px"
+                    >
+                      Adicionar Livro
+                    </MDButton>
+                    <MDButton
+                      component={Link}
+                      to="/dashboard/add-copy"
+                      color="success"
+                      fontWeight="bold"
+                      fontSize="25px"
+                    >
+                      Adicionar cópia
+                    </MDButton>
+                  </MDBox>
                 </MDBox>
               </MDBox>
               <MDBox pt={3}>

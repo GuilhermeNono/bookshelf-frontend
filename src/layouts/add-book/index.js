@@ -69,7 +69,7 @@ function AddBook() {
                         maxHeight: "100%",
                         borderRadius: "0.7rem",
                       }}
-                      src={imageUrl}
+                      src={imageUrl || capePlaceholder}
                       alt="cape"
                     />
                   </Grid>
@@ -112,22 +112,23 @@ function AddBook() {
                         />
                       </Box>
                       <Box gridRow={5} sx={onlyXs && { mb: 3 }}>
+                        <MDInput type="text" label="Linguagem" variant="outlined" fullWidth />
+                      </Box>
+                      <Box gridRow={6} sx={onlyXs && { mb: 3 }}>
                         <MDInput
                           type="text"
                           label="Sinopse"
                           variant="outlined"
                           placeholder="Insira a descrição do livro aqui"
                           multiline
-                          rows={4}
+                          rows={6}
                           fullWidth
-                          InputLabelProps={{
-                            shrink: true,
-                          }}
                         />
                       </Box>
+
                       <Box gridRow={1} sx={onlyXs && { mb: 3 }}>
                         <MDInput
-                          type="date"
+                          type="text"
                           label="Data de Publicação"
                           InputLabelProps={{
                             shrink: true,
@@ -137,7 +138,7 @@ function AddBook() {
                         />
                       </Box>
                       <Box gridRow={2} sx={onlyXs && { mb: 3 }}>
-                        <MDInput type="number" label="ISBN" variant="outlined" fullWidth />
+                        <MDInput type="text" label="ISBN" variant="outlined" fullWidth />
                       </Box>
                       <Box gridRow={3} sx={onlyXs && { mb: 3 }}>
                         <FormControl variant="outlined" fullWidth>
@@ -161,7 +162,10 @@ function AddBook() {
                       </Box>
                       <Box gridRow={5} sx={onlyXs && { mb: 3 }}>
                         <MDInput type="text" label="Edição" variant="outlined" fullWidth />
-                        <Box mt={3}>
+                      </Box>
+                      <Box gridRow={6} sx={onlyXs && { mb: 3 }}>
+                        <MDInput type="text" label="Páginas" variant="outlined" fullWidth />
+                        <Box sx={{ mt: 3 }}>
                           <MDInput
                             type="number"
                             label="Tombo"
@@ -185,7 +189,7 @@ function AddBook() {
                       >
                         Adicionar
                       </MDButton>
-                    </Box>
+                    </Box>{" "}
                   </Grid>
                 </Grid>
               </MDBox>
