@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import {
@@ -27,11 +27,48 @@ function AddBook() {
   const upMd = useMediaQuery(theme.breakpoints.up("md"));
   const onlyXs = useMediaQuery(theme.breakpoints.only("xs"));
   const onlySm = useMediaQuery(theme.breakpoints.only("sm"));
-  const [imageUrl, setImageUrl] = useState(capePlaceholder);
-  const [capeType, setCapeType] = useState("");
-  const { addNewBook, loading } = useBooks;
+  const { addNewBook, loading } = useBooks();
 
-  // TODO: Endpoint para criar novos livros no sistema "/api/v1/book/add" para mais informações, basta olhar o Postman ou Swagger da API.
+  // use states
+  const [bookTitle, setBookTitle] = useState("");
+  const [language, setLanguage] = useState("");
+  const [publicationDate, setPublicationDate] = useState("");
+  const [isbn, setIsbn] = useState("");
+  const [synopsis, setSynopsis] = useState("");
+  const [edition, setEdition] = useState("");
+  const [capeType, setCapeType] = useState("");
+  const [numberPages, setNumberPages] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
+  const [publisher, setPublisher] = useState("");
+  const [categories, setCategories] = useState([]);
+  const [authors, setAuthors] = useState([]);
+
+  const handleAddBook = () => {
+    const bookData = {
+      name: bookTitle,
+      language,
+      publicationDate,
+      isbn,
+      sinopse: synopsis,
+      edition,
+      capeType,
+      numberPages,
+      cape: imageUrl,
+      publisher,
+      categories,
+      authors,
+    };
+
+    addNewBook(bookData)
+      .then((response) => {
+        // Handle success response
+        console.log("Book added successfully", response);
+      })
+      .catch((error) => {
+        // Handle error response
+        console.error("Failed to add book", error);
+      });
+  };
 
   return (
     <DashboardLayout>
@@ -92,29 +129,60 @@ function AddBook() {
                       }
                     >
                       <Box gridRow={1} sx={onlyXs && { mb: 3 }}>
-                        <MDInput type="text" label="Título" variant="outlined" fullWidth />
+                        <MDInput
+                          type="text"
+                          label="Título"
+                          variant="outlined"
+                          fullWidth
+                          value={bookTitle}
+                          onChange={(e) => setBookTitle(e.target.value)}
+                        />
                       </Box>
                       <Box gridRow={2} sx={onlyXs && { mb: 3 }}>
-                        <MDInput type="text" label="Autores" variant="outlined" fullWidth />
+                        <MDInput
+                          type="text"
+                          label="Autores"
+                          variant="outlined"
+                          fullWidth
+                          value={authors}
+                          onChange={(e) => setAuthors(e.target.value)}
+                        />
                       </Box>
                       <Box gridRow={3} sx={onlyXs && { mb: 3 }}>
-                        <MDInput type="text" label="Categorias" variant="outlined" fullWidth />
+                        <MDInput
+                          type="text"
+                          label="Categorias"
+                          variant="outlined"
+                          fullWidth
+                          value={categories}
+                          onChange={(e) => setCategories(e.target.value)}
+                        />
                       </Box>
                       <Box gridRow={4} sx={onlyXs && { mb: 3 }}>
                         <MDInput
-                          type="url"
-                          label="Url Imagem"
+                          type="text"
+                          label="URL da capa"
                           variant="outlined"
-                          placeholder="Insira a url da capa"
-                          InputLabelProps={{
-                            shrink: true,
-                          }}
                           fullWidth
+                          value={imageUrl}
                           onChange={(e) => setImageUrl(e.target.value)}
                         />
                       </Box>
                       <Box gridRow={5} sx={onlyXs && { mb: 3 }}>
-                        <MDInput type="text" label="Linguagem" variant="outlined" fullWidth />
+                        <FormControl fullWidth variant="outlined">
+                          <InputLabel id="language-select-label">Idioma</InputLabel>
+                          <Select
+                            labelId="language-select-label"
+                            id="language-select"
+                            label="Idioma"
+                            value={language}
+                            onChange={(e) => setLanguage(e.target.value)}
+                          >
+                            <MenuItem value="">Selecione</MenuItem>
+                            <MenuItem value="Português">Português</MenuItem>
+                            <MenuItem value="Inglês">Inglês</MenuItem>
+                          </Select>
+                        </FormControl>
                       </Box>
                       <Box gridRow={6} sx={onlyXs && { mb: 3 }}>
                         <MDInput
@@ -125,22 +193,30 @@ function AddBook() {
                           multiline
                           rows={6}
                           fullWidth
+                          value={synopsis}
+                          onChange={(e) => setSynopsis(e.target.value)}
                         />
                       </Box>
 
                       <Box gridRow={1} sx={onlyXs && { mb: 3 }}>
                         <MDInput
-                          type="text"
+                          type="date"
                           label="Data de Publicação"
-                          InputLabelProps={{
-                            shrink: true,
-                          }}
+                          value={publicationDate}
+                          onChange={(e) => setPublicationDate(e.target.value)}
                           variant="outlined"
                           fullWidth
                         />
                       </Box>
                       <Box gridRow={2} sx={onlyXs && { mb: 3 }}>
-                        <MDInput type="text" label="ISBN" variant="outlined" fullWidth />
+                        <MDInput
+                          type="text"
+                          label="ISBN"
+                          variant="outlined"
+                          fullWidth
+                          value={isbn}
+                          onChange={(e) => setIsbn(e.target.value)}
+                        />
                       </Box>
                       <Box gridRow={3} sx={onlyXs && { mb: 3 }}>
                         <FormControl variant="outlined" fullWidth>
@@ -160,13 +236,34 @@ function AddBook() {
                         </FormControl>
                       </Box>
                       <Box gridRow={4} sx={onlyXs && { mb: 3 }}>
-                        <MDInput type="text" label="Publisher" variant="outlined" fullWidth />
+                        <MDInput
+                          type="text"
+                          label="Publisher"
+                          variant="outlined"
+                          fullWidth
+                          value={publisher}
+                          onChange={(e) => setPublisher(e.target.value)}
+                        />
                       </Box>
                       <Box gridRow={5} sx={onlyXs && { mb: 3 }}>
-                        <MDInput type="text" label="Edição" variant="outlined" fullWidth />
+                        <MDInput
+                          type="text"
+                          label="Edição"
+                          variant="outlined"
+                          fullWidth
+                          value={edition}
+                          onChange={(e) => setEdition(e.target.value)}
+                        />
                       </Box>
                       <Box gridRow={6} sx={onlyXs && { mb: 3 }}>
-                        <MDInput type="text" label="Páginas" variant="outlined" fullWidth />
+                        <MDInput
+                          type="text"
+                          label="Páginas"
+                          variant="outlined"
+                          fullWidth
+                          value={numberPages}
+                          onChange={(e) => setNumberPages(e.target.value)}
+                        />
                       </Box>
                     </MDBox>
                   </Grid>
@@ -177,6 +274,7 @@ function AddBook() {
                         variant="gradient"
                         color="info"
                         sx={onlyXs && { mb: 3 }}
+                        onClick={handleAddBook}
                         disabled={loading}
                       >
                         {loading ? "Adicionando..." : "Adicionar"}

@@ -86,35 +86,62 @@ export const useBooks = () => {
     return req;
   };
 
-  const addNewBook = (bookData) => {
+  const addNewBook = (
+    name,
+    language,
+    publicationDate,
+    isbn,
+    sinopse,
+    edition,
+    capeType,
+    numberPages,
+    cape,
+    publisher,
+    categories,
+    authors
+  ) => {
+    checkIfIsCancelled();
     setLoading(true);
     setError(null);
 
+    const headers = {
+      "Content-Type": "application/json",
+    };
+
+    const bookBody = {
+      name,
+      language,
+      publicationDate,
+      isbn,
+      sinopse,
+      edition,
+      capeType,
+      numberPages,
+      cape,
+      publisher,
+      categories,
+      authors,
+    };
+
     const requestOptions = {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(bookData),
+      headers,
+      body: JSON.stringify(bookBody),
     };
 
     const req = fetch(`${ApiRouteBuild.buildRoute("book")}/add`, requestOptions)
       .then((response) => {
         if (!response.ok) {
-          throw new Error("Failed to add book");
+          throw new Error("Failed to add new book");
         }
         return response.json();
       })
-      .then((data) => {
-        setLoading(false);
-        return data;
-      })
       .catch(() => {
-        setError("Failed to add book");
-        console.error(error);
+        setError("Ocorreu um erro ao adicionar um novo livro.");
         setLoading(false);
         return null;
       });
+
     return req;
   };
 
