@@ -39,9 +39,9 @@ function AddBook() {
   const [capeType, setCapeType] = useState("");
   const [numberPages, setNumberPages] = useState("");
   const [imageUrl, setImageUrl] = useState("");
-  const [publisher, setPublisher] = useState("");
-  const [categories, setCategories] = useState([]);
-  const [authors, setAuthors] = useState([]);
+  const [publisherName, setPublisherName] = useState("");
+  const [categoryName, setCategoryName] = useState([]);
+  const [authors, setAuthors] = useState([{ firstName: "", lastName: "", avatar: "" }]);
 
   const handleAddBook = () => {
     const bookData = {
@@ -54,8 +54,12 @@ function AddBook() {
       capeType,
       numberPages,
       cape: imageUrl,
-      publisher,
-      categories,
+      publisher: {
+        name: publisherName,
+      },
+      categories: {
+        name: categoryName,
+      },
       authors,
     };
 
@@ -154,8 +158,8 @@ function AddBook() {
                           label="Categorias"
                           variant="outlined"
                           fullWidth
-                          value={categories}
-                          onChange={(e) => setCategories(e.target.value)}
+                          value={categoryName}
+                          onChange={(e) => setCategoryName(e.target.value)}
                         />
                       </Box>
                       <Box gridRow={4} sx={onlyXs && { mb: 3 }}>
@@ -241,8 +245,8 @@ function AddBook() {
                           label="Publisher"
                           variant="outlined"
                           fullWidth
-                          value={publisher}
-                          onChange={(e) => setPublisher(e.target.value)}
+                          value={publisherName}
+                          onChange={(e) => setPublisherName(e.target.value)}
                         />
                       </Box>
                       <Box gridRow={5} sx={onlyXs && { mb: 3 }}>
