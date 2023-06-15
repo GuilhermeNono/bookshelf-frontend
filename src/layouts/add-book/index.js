@@ -40,7 +40,7 @@ function AddBook() {
   const [numberPages, setNumberPages] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [publisherName, setPublisherName] = useState("");
-  const [categoryName, setCategoryName] = useState([]);
+  const [categoryName, setCategoryName] = useState("");
   const [authors, setAuthors] = useState([{ firstName: "", lastName: "", avatar: "" }]);
 
   const handleAddBook = () => {
@@ -180,6 +180,7 @@ function AddBook() {
                             id="language-select"
                             label="Idioma"
                             value={language}
+                            style={{ height: "44.13px" }}
                             onChange={(e) => setLanguage(e.target.value)}
                           >
                             <MenuItem value="">Selecione</MenuItem>
