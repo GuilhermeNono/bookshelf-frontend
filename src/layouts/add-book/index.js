@@ -18,6 +18,7 @@ import capePlaceholder from "assets/images/capePlaceholder.png";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
+import { useBooks } from "hooks/useBooks";
 import Header from "./Header";
 
 function AddBook() {
@@ -28,8 +29,31 @@ function AddBook() {
   const onlySm = useMediaQuery(theme.breakpoints.only("sm"));
   const [imageUrl, setImageUrl] = useState(capePlaceholder);
   const [capeType, setCapeType] = useState("");
+  const { addNewBook } = useBooks;
 
   // TODO: Endpoint para criar novos livros no sistema "/api/v1/book/add" para mais informações, basta olhar o Postman ou Swagger da API.
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const bookData = {
+      title: "Book Title",
+      authors: "Book Authors",
+      categories: "Book Categories",
+      imageUrl,
+      language: "Book Language",
+      publicationDate: "Book Publication Date",
+      isbn: "Book ISBN",
+      capeType,
+      publisher: "Book Publisher",
+      edition: "Book Edition",
+      numberPages: "Book Number of Pages",
+    };
+    addNewBook(bookData).then((addedBook) => {
+      if (addedBook) {
+        console.log("Book added successfully:", addedBook);
+        // Realize qualquer ação necessária após adicionar o livro
+      }
+    });
+  };
 
   return (
     <DashboardLayout>

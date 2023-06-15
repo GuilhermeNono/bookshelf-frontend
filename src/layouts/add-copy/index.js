@@ -53,7 +53,6 @@ function AddCopy() {
   // pegando as informações do localstorage
   // userLibraryId = userId, libraryId= libId
 
-  // TODO: Endpoint para criar novas copias para uma biblioteca "/api/v1/library/book/add" para mais informações, basta olhar o Postman ou Swagger da API.
   useEffect(() => {
     if (token) {
       useBook.getAllBooks(token).then((resp) => {

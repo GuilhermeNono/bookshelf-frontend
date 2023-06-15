@@ -86,6 +86,38 @@ export const useBooks = () => {
     return req;
   };
 
+  const addNewBook = (bookData) => {
+    setLoading(true);
+    setError(null);
+
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(bookData),
+    };
+
+    const req = fetch(`${ApiRouteBuild.buildRoute("book")}/add`, requestOptions)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to add book");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setLoading(false);
+        return data;
+      })
+      .catch(() => {
+        setError("Failed to add book");
+        console.error(error);
+        setLoading(false);
+        return null;
+      });
+    return req;
+  };
+
   useEffect(() => {
     setCancelled(true);
     // setError("");
@@ -94,6 +126,7 @@ export const useBooks = () => {
   return {
     getAllBooks,
     addBookCopy,
+    addNewBook,
     loading,
     error,
   };
