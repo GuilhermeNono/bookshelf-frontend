@@ -61,6 +61,7 @@ function AddBook() {
         name: categoryName,
       },
       authors,
+      // TODO - Fazer input que suporte 3 dados diferentes e deixei adicionar + de 1 autor
     };
 
     addNewBook(bookData)
