@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import {
@@ -29,23 +29,86 @@ function AddBook() {
   const onlySm = useMediaQuery(theme.breakpoints.only("sm"));
   const [imageUrl, setImageUrl] = useState(capePlaceholder);
   const [capeType, setCapeType] = useState("");
-  const { addNewBook } = useBooks;
+  const { addNewBook, loading } = useBooks;
 
   // TODO: Endpoint para criar novos livros no sistema "/api/v1/book/add" para mais informações, basta olhar o Postman ou Swagger da API.
+
+  // Check if all fields are filled
+  // Check if all fields are filled
+  useEffect(() => {
+    const isTitleValid = title !== "";
+    const isFirstNameValid = firstName !== "";
+    const isLastNameValid = lastName !== "";
+    const isAvatarValid = avatar !== "";
+    const isCategoriesValid = categories !== "";
+    const isImgUrlValid = imageUrl !== "";
+    const isLanguageValid = language !== "";
+    const isPublicationDateValid = publicationDate !== "";
+    const isIsbnValid = isbn !== "";
+    const isCapeTypeValid = capeType === "Comum" || capeType === "Dura";
+    const isPublisherValid = publisher !== "";
+    const isEditionValid = edition !== "";
+    const isNumberPagesValid = numberPages !== "";
+
+    const isFormValid =
+      isTitleValid &&
+      isFirstNameValid &&
+      isLastNameValid &&
+      isAvatarValid &&
+      isCategoriesValid &&
+      isImgUrlValid &&
+      isLanguageValid &&
+      isPublicationDateValid &&
+      isIsbnValid &&
+      isCapeTypeValid &&
+      isPublisherValid &&
+      isEditionValid &&
+      isNumberPagesValid;
+
+    setLockButton(!isFormValid);
+    setNameError(name ? !isTitleValid : false);
+    setFirstNameError(firstName ? !isFirstNameValid : false);
+    setLastNameError(lastName ? !isLastNameValid : false);
+    setAvatarError(avatar ? !isAvatarValid : false);
+    setCategoriesError(categories ? !isCategoriesValid : false);
+    setImageUrlError(imageUrl ? !isImgUrlValid : false);
+    setLanguageError(language ? !isLanguageValid : false);
+    setPublicationDateError(publicationDate ? !isPublicationDateValid : false);
+    setIsbnError(isbn ? !isIsbnValid : false);
+    setCapeTypeError(capeType ? !isCapeTypeValid : false);
+    setPublisherError(publisher ? !isPublisherValid : false);
+    setEditionError(edition ? !isEditionValid : false);
+    setNumberPagesError(numberPages ? !isNumberPagesValid : false);
+  }, [
+    title,
+    firstName,
+    lastName,
+    avatar,
+    categories,
+    imageUrl,
+    language,
+    publicationDate,
+    isbn,
+    capeType,
+    publisher,
+    edition,
+    numberPages,
+  ]);
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const bookData = {
-      title: "Book Title",
-      authors: "Book Authors",
-      categories: "Book Categories",
+      title,
+      authors,
+      categories,
       imageUrl,
-      language: "Book Language",
-      publicationDate: "Book Publication Date",
-      isbn: "Book ISBN",
+      language,
+      publicationDate,
+      isbn,
       capeType,
-      publisher: "Book Publisher",
-      edition: "Book Edition",
-      numberPages: "Book Number of Pages",
+      publisher,
+      edition,
+      numberPages,
     };
     addNewBook(bookData).then((addedBook) => {
       if (addedBook) {
@@ -210,10 +273,12 @@ function AddBook() {
                         variant="gradient"
                         color="info"
                         sx={onlyXs && { mb: 3 }}
+                        onClick={handleSubmit}
+                        disabled={loading}
                       >
-                        Adicionar
+                        {loading ? "Adicionando..." : "Adicionar"}
                       </MDButton>
-                    </Box>{" "}
+                    </Box>
                   </Grid>
                 </Grid>
               </MDBox>
