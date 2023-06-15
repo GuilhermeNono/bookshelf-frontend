@@ -61,7 +61,7 @@ function Dashboard() {
   }, [token, library]);
 
   useEffect(() => {
-    useBorrowing.getLibraryLoanOfMonth(token, library).then((resp) => {
+    useBorrowing.getLibraryLoan(token, library).then((resp) => {
       if (resp) {
         setLoan(resp);
       }

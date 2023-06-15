@@ -49,6 +49,7 @@ import Icon from "@mui/material/Icon";
 import Home from "layouts/home";
 import Pricing from "layouts/pricing";
 import Books from "layouts/books";
+import LoansDetails from "layouts/loansDetails";
 import Borrowing from "./layouts/borrowing";
 import Details from "./layouts/details";
 
@@ -150,6 +151,14 @@ const routes = [
     icon: <Icon fontSize="small">table_view</Icon>,
     route: "/dashboard/books/details/:libId",
     component: <Details />,
+  },
+  {
+    type: "collapse",
+    name: "LoansDetails",
+    key: "loansDetails",
+    icon: <Icon fontSize="small">table_view</Icon>,
+    route: "/dashboard/borrowing/loansDetails/:libId",
+    component: <LoansDetails />,
   },
   /**
    * Colapse -> Deixa visivel

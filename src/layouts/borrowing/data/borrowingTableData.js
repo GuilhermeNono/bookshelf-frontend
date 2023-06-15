@@ -36,8 +36,9 @@ export default async function data(loans) {
           book: <Book name={element.books} />,
           loanDt: <Dates date={element.loanDate} />,
           returnDt: <Dates date={element.returnDate} />,
-          detLoans: <DetailLoans code={element.id} />,
+          detLoans: <DetailLoans id={element.id} />,
         });
+        console.log(element.id);
       });
       return resp;
     }
@@ -91,12 +92,12 @@ export default async function data(loans) {
   );
 
   // Precisa da detalhes de emprestimos para funcionar
-  const DetailLoans = ({ code }) => (
+  const DetailLoans = ({ id }) => (
     <MDBox lineHeight={1} textAlign="left">
       <MDTypography display="block" variant="caption" color="text" fontWeight="medium">
         <MDTypography
           component={Link}
-          to={`/dashboard/borrowing/#####/${code}`}
+          to={`/dashboard/borrowing/loansDetails/${id}`}
           variant="button"
           color="info"
           fontWeight="bold"
