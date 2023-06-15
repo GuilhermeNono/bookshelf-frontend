@@ -167,17 +167,6 @@ function AddBook() {
                       </Box>
                       <Box gridRow={6} sx={onlyXs && { mb: 3 }}>
                         <MDInput type="text" label="Páginas" variant="outlined" fullWidth />
-                        <Box sx={{ mt: 3 }}>
-                          <MDInput
-                            type="number"
-                            label="Tombo"
-                            variant="outlined"
-                            placeholder="codigo do tombo"
-                            InputLabelProps={{
-                              shrink: true,
-                            }}
-                          />
-                        </Box>
                       </Box>
                     </MDBox>
                   </Grid>
