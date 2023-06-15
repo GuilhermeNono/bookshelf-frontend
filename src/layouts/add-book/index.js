@@ -33,91 +33,6 @@ function AddBook() {
 
   // TODO: Endpoint para criar novos livros no sistema "/api/v1/book/add" para mais informações, basta olhar o Postman ou Swagger da API.
 
-  // Check if all fields are filled
-  // Check if all fields are filled
-  useEffect(() => {
-    const isTitleValid = title !== "";
-    const isFirstNameValid = firstName !== "";
-    const isLastNameValid = lastName !== "";
-    const isAvatarValid = avatar !== "";
-    const isCategoriesValid = categories !== "";
-    const isImgUrlValid = imageUrl !== "";
-    const isLanguageValid = language !== "";
-    const isPublicationDateValid = publicationDate !== "";
-    const isIsbnValid = isbn !== "";
-    const isCapeTypeValid = capeType === "Comum" || capeType === "Dura";
-    const isPublisherValid = publisher !== "";
-    const isEditionValid = edition !== "";
-    const isNumberPagesValid = numberPages !== "";
-
-    const isFormValid =
-      isTitleValid &&
-      isFirstNameValid &&
-      isLastNameValid &&
-      isAvatarValid &&
-      isCategoriesValid &&
-      isImgUrlValid &&
-      isLanguageValid &&
-      isPublicationDateValid &&
-      isIsbnValid &&
-      isCapeTypeValid &&
-      isPublisherValid &&
-      isEditionValid &&
-      isNumberPagesValid;
-
-    setLockButton(!isFormValid);
-    setNameError(name ? !isTitleValid : false);
-    setFirstNameError(firstName ? !isFirstNameValid : false);
-    setLastNameError(lastName ? !isLastNameValid : false);
-    setAvatarError(avatar ? !isAvatarValid : false);
-    setCategoriesError(categories ? !isCategoriesValid : false);
-    setImageUrlError(imageUrl ? !isImgUrlValid : false);
-    setLanguageError(language ? !isLanguageValid : false);
-    setPublicationDateError(publicationDate ? !isPublicationDateValid : false);
-    setIsbnError(isbn ? !isIsbnValid : false);
-    setCapeTypeError(capeType ? !isCapeTypeValid : false);
-    setPublisherError(publisher ? !isPublisherValid : false);
-    setEditionError(edition ? !isEditionValid : false);
-    setNumberPagesError(numberPages ? !isNumberPagesValid : false);
-  }, [
-    title,
-    firstName,
-    lastName,
-    avatar,
-    categories,
-    imageUrl,
-    language,
-    publicationDate,
-    isbn,
-    capeType,
-    publisher,
-    edition,
-    numberPages,
-  ]);
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const bookData = {
-      title,
-      authors,
-      categories,
-      imageUrl,
-      language,
-      publicationDate,
-      isbn,
-      capeType,
-      publisher,
-      edition,
-      numberPages,
-    };
-    addNewBook(bookData).then((addedBook) => {
-      if (addedBook) {
-        console.log("Book added successfully:", addedBook);
-        // Realize qualquer ação necessária após adicionar o livro
-      }
-    });
-  };
-
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -273,7 +188,6 @@ function AddBook() {
                         variant="gradient"
                         color="info"
                         sx={onlyXs && { mb: 3 }}
-                        onClick={handleSubmit}
                         disabled={loading}
                       >
                         {loading ? "Adicionando..." : "Adicionar"}
