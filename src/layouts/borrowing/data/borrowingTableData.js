@@ -36,9 +36,8 @@ export default async function data(loans) {
           book: <Book name={element.books} />,
           loanDt: <Dates date={element.loanDate} />,
           returnDt: <Dates date={element.returnDate} />,
-          detLoans: <DetailLoans id={element.id} />,
+          detLoans: <DetailLoans id={element.userId} />,
         });
-        console.log(element.id);
       });
       return resp;
     }

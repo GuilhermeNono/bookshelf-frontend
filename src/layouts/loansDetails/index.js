@@ -12,40 +12,49 @@
 import Card from "@mui/material/Card";
 import { Box, CircularProgress, Grid, useMediaQuery, useTheme } from "@mui/material";
 import { useEffect, useState } from "react";
-import { setCurrentBook, useMaterialUIController } from "context";
-import { useLibrary } from "hooks/useLibrary";
+import { useMaterialUIController, setCurrentBook } from "context";
 import { useLoan } from "hooks/useLoan";
+import { useParams } from "react-router-dom";
+import { useLibrary } from "hooks/useLibrary";
 import MDBox from "../../components/MDBox";
 import MDTypography from "../../components/MDTypography";
-
 import DashboardLayout from "../../examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "../../examples/Navbars/DashboardNavbar";
 import Footer from "../../examples/Footer";
 
-function Details() {
+function LoansDetails() {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.down("lg"));
 
-  // Books
-  const useLibraries = useLibrary();
   const useLoans = useLoan();
+  const useLibraries = useLibrary();
+  const { libId } = useParams();
   const [controller, dispatch] = useMaterialUIController();
-  const { token, library } = controller;
-  const [loans, setLoans] = useState(null);
+  const [loan, setLoans] = useState(null);
   const [book, setBooks] = useState(null);
+  const { token, library } = controller;
 
   useEffect(() => {
     useLibraries.getLibraryBooks(token, library).then((response) => {
-      setBooks(response[0]);
-      setCurrentBook(dispatch, response[0]);
+      if (response) {
+        setBooks(response[0]);
+        setCurrentBook(dispatch, response[0]);
+      }
+      console.log(book);
     });
-  }, []);
+  }, [token]);
 
   useEffect(() => {
-    useLoans.getLibraryLoan(token, library).then((resp) => {
-      setLoans(resp[0]);
-    });
-  }, []);
+    if (token) {
+      useLoans
+        .getLibraryLoan(token, library, [{ filterKey: "userId", operation: "eq", value: libId }])
+        .then((resp) => {
+          if (resp) {
+            setLoans(resp[0]);
+          }
+        });
+    }
+  }, [token]);
 
   return (
     <DashboardLayout>
@@ -68,7 +77,7 @@ function Details() {
                   Detalhes
                 </MDTypography>
               </MDBox>
-              {loans ? (
+              {loan && book ? (
                 <MDBox sx={{ margin: "3rem 1.5rem 1rem 3rem" }}>
                   <Grid
                     sx={
@@ -90,7 +99,7 @@ function Details() {
                           maxHeight: "100%",
                           borderRadius: "0.7rem",
                         }}
-                        src={book.cape}
+                        src="#"
                         alt="cape"
                       />
                     </Grid>
@@ -125,7 +134,7 @@ function Details() {
                             variant="h6"
                             sx={{ color: "#cecece", fontWeight: "400", fontSize: "0.7em" }}
                           >
-                            {loans.userName}
+                            {loan.userName}
                           </MDTypography>
                         </Box>
                         <Box
@@ -145,7 +154,7 @@ function Details() {
                             variant="h6"
                             sx={{ color: "#cecece", fontWeight: "400", fontSize: "0.7em" }}
                           >
-                            {`${loans.courses[0].module}° ${loans.courses[0].name}`}
+                            {`${loan.courses[0].module}° ${loan.courses[0].name} ${loan.courses[0].class}`}
                           </MDTypography>
                         </Box>
                         <Box
@@ -165,7 +174,7 @@ function Details() {
                             variant="h6"
                             sx={{ color: "#cecece", fontWeight: "400", fontSize: "0.7em" }}
                           >
-                            {loans.courses[0].period}
+                            {loan.courses[0].period}
                           </MDTypography>
                         </Box>
                         <Box
@@ -185,7 +194,7 @@ function Details() {
                             variant="h6"
                             sx={{ color: "#cecece", fontWeight: "400", fontSize: "0.7em" }}
                           >
-                            {loans.loanDate}
+                            {loan.loanDate}
                           </MDTypography>
                         </Box>
                         <Box
@@ -205,7 +214,7 @@ function Details() {
                             variant="h6"
                             sx={{ color: "#cecece", fontWeight: "400", fontSize: "0.7em" }}
                           >
-                            {loans.returnDate}
+                            {loan.returnDate}
                           </MDTypography>
                         </Box>
                         <Box
@@ -225,12 +234,12 @@ function Details() {
                             variant="h6"
                             sx={{ color: "#cecece", fontWeight: "400", fontSize: "0.7em" }}
                           >
-                            {loans.renewalDate
-                              ? loans.renewalDate.substring(0, 10).split("-").reverse().join("/")
+                            {loan.renewalDate
+                              ? loan.renewalDate.substring(0, 10).split("-").reverse().join("/")
                               : "N/A"}
                           </MDTypography>
                         </Box>
-                        {loans.overdue ? (
+                        {loan.overdue ? (
                           <Box
                             gridRow={1}
                             sx={{
@@ -290,7 +299,7 @@ function Details() {
                             variant="h6"
                             sx={{ color: "#cecece", fontWeight: "400", fontSize: "0.7em" }}
                           >
-                            {loans.books}
+                            {loan.book}
                           </MDTypography>
                         </Box>
                         <Box
@@ -310,7 +319,7 @@ function Details() {
                             variant="h6"
                             sx={{ color: "#cecece", fontWeight: "400", fontSize: "0.7em" }}
                           >
-                            {book.authors[0].completeName}
+                            {}
                           </MDTypography>
                         </Box>
                         <Box
@@ -350,7 +359,7 @@ function Details() {
                             variant="h6"
                             sx={{ color: "#cecece", fontWeight: "400", fontSize: "0.7em" }}
                           >
-                            {loans.bookId}
+                            {loan.bookId}
                           </MDTypography>
                         </Box>
                       </Grid>
@@ -377,4 +386,4 @@ function Details() {
   );
 }
 
-export default Details;
+export default LoansDetails;
