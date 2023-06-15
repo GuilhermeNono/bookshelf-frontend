@@ -30,6 +30,6 @@ export default class Book {
       : [];
     this.code = obj.lib_code;
     this.typeCape = obj.cape_type;
-    this.bookId = obj.bookId;
+    this.bookId = obj.id;
   }
 }

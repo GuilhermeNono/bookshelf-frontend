@@ -26,22 +26,21 @@ import Footer from "examples/Footer";
 import MDButton from "components/MDButton";
 import MDInput from "components/MDInput";
 import { Autocomplete, Box, TextField, useMediaQuery, useTheme } from "@mui/material";
-import { useLibrary } from "hooks/useLibrary";
 import { useEffect, useState } from "react";
 import { useMaterialUIController } from "context";
 import capePlaceholder from "assets/images/capePlaceholder.png";
-import { useAddBookCopy } from "hooks/useAddBookCopy";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useBooks } from "hooks/useBooks";
 import Header from "./Header";
 
 function AddCopy() {
   const [controller] = useMaterialUIController();
   const [selectedBook, setSelectedBook] = useState(null);
-  const { token, library } = controller;
-  // const navigate = useNavigate();
+  const { token } = controller;
+  const navigate = useNavigate();
   const [tomboCode, setTomboCode] = useState([]);
   const [books, setBooks] = useState([]);
-  const useLibraries = useLibrary();
+  const useBook = useBooks();
   const theme = useTheme();
   const downSm = useMediaQuery(theme.breakpoints.down("sm"));
   const upMd = useMediaQuery(theme.breakpoints.up("md"));
@@ -50,43 +49,31 @@ function AddCopy() {
 
   const uidData = JSON.parse(localStorage.getItem("uid"));
   const { libraryId, userLibraryId } = uidData[0];
-  const { addBookCopy, loading, error } = useAddBookCopy();
+  const { addBookCopy, loading, error } = useBooks();
   // pegando as informações do localstorage
   // userLibraryId = userId, libraryId= libId
 
   // TODO: Endpoint para criar novas copias para uma biblioteca "/api/v1/library/book/add" para mais informações, basta olhar o Postman ou Swagger da API.
   useEffect(() => {
     if (token) {
-      useLibraries.getLibraryBooks(token, library).then((resp) => {
+      useBook.getAllBooks(token).then((resp) => {
         if (resp) {
           setBooks(resp);
         }
       });
     }
-  }, [token, library]);
+  }, [token]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Verifique se um livro foi selecionado
     if (!selectedBook) {
-      console.log("Selecione um livro");
+      // Verifique se um livro foi selecionado
       return;
     }
 
-    addBookCopy(token, selectedBook.id, libraryId, userLibraryId, tomboCode)
-      .then(() => {
-        // TODO resolver problema com bookId e erro 400
-        // console.log para testar os campos
-        console.log(
-          `sucesso: bookId: ${selectedBook.bookId}, libray id: ${libraryId}, user id: ${userLibraryId} e tombo: ${tomboCode}`
-        );
-
-        console.log(selectedBook);
-
-        // return navigate("/dashboard/books");
-        // colocar um pop-up ou algo do tipo avisando foi um sucesso e depois redirecionar para a lista de livros
-      })
+    addBookCopy(token, selectedBook.bookId, libraryId, userLibraryId, tomboCode)
+      .then(() => navigate("/dashboard/books"))
       .catch(() => {
         // colocar um pop-up ou algo do tipo avisando que algo deu errado
         console.log(`Algo deu errado: ${error}`);
@@ -112,7 +99,7 @@ function AddCopy() {
               <MDBox sx={{ margin: "3rem 1.5rem 1rem 3rem" }}>
                 <Grid
                   container
-                  spacing={3}
+                  spac-ing={3}
                   sx={downSm && { display: "flex", justifyContent: "center" }}
                 >
                   <Grid
@@ -156,7 +143,7 @@ function AddCopy() {
                           disablePortal
                           id="combo-box-demo"
                           options={books}
-                          getOptionLabel={(option) => option.bookId}
+                          getOptionLabel={(option) => option.name}
                           renderInput={(params) => <TextField {...params} label="Título" />}
                           value={selectedBook}
                           onChange={(event, value) => setSelectedBook(value)}
@@ -194,6 +181,7 @@ function AddCopy() {
                           InputLabelProps={{
                             shrink: true,
                           }}
+                          value={selectedBook?.cape || ""}
                           fullWidth
                           readOnly
                         />
@@ -316,7 +304,7 @@ function AddCopy() {
                         disabled={loading}
                         onClick={handleSubmit}
                       >
-                        {loading ? "Adicionando..." : "Adicionar"}
+                        {loading ? "Adicionando" : "Adicionar"}
                       </MDButton>
                     </Box>
                   </Grid>

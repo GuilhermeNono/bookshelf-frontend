@@ -81,18 +81,19 @@ function Books() {
                     <MDButton
                       component={Link}
                       to="/dashboard/add-book"
-                      color="success"
                       fontWeight="bold"
                       fontSize="25px"
+                      color="success"
+                      sx={{ mr: 5 }}
                     >
                       Adicionar Livro
                     </MDButton>
                     <MDButton
                       component={Link}
                       to="/dashboard/add-copy"
-                      color="success"
                       fontWeight="bold"
                       fontSize="25px"
+                      color="success"
                     >
                       Adicionar cópia
                     </MDButton>
