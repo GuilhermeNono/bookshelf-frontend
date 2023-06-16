@@ -48,7 +48,7 @@ function Books() {
 
   useEffect(() => {
     if (token) {
-      useLibraries.getLibraryBooks(token, localStorage.getItem("bs-lid")).then((resp) => {
+      useLibraries.getLibraryBooksNoLimit(token, localStorage.getItem("bs-lid")).then((resp) => {
         if (resp) {
           booksTableData(resp).then((data) => {
             setBooks(data);

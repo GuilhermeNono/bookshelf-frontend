@@ -87,6 +87,7 @@ export const useBooks = () => {
   };
 
   const addNewBook = (
+    userToken,
     name,
     language,
     publicationDate,
@@ -106,6 +107,7 @@ export const useBooks = () => {
 
     const headers = {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${userToken}`,
     };
 
     const bookBody = {

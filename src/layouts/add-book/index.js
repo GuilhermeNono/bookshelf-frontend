@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import {
+  Badge,
   Box,
   FormControl,
+  IconButton,
   InputLabel,
   MenuItem,
   Select,
@@ -19,15 +21,18 @@ import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import { useBooks } from "hooks/useBooks";
+import { useMaterialUIController } from "context";
 import Header from "./Header";
 
 function AddBook() {
   const theme = useTheme();
+  const [controller] = useMaterialUIController();
   const downSm = useMediaQuery(theme.breakpoints.down("sm"));
   const upMd = useMediaQuery(theme.breakpoints.up("md"));
   const onlyXs = useMediaQuery(theme.breakpoints.only("xs"));
   const onlySm = useMediaQuery(theme.breakpoints.only("sm"));
   const { addNewBook, loading } = useBooks();
+  const { userToken } = controller;
 
   // use states
   const [bookTitle, setBookTitle] = useState("");
@@ -40,7 +45,7 @@ function AddBook() {
   const [numberPages, setNumberPages] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [publisherName, setPublisherName] = useState("");
-  const [categoryName, setCategoryName] = useState("");
+  const [categoryName, setCategoryName] = useState([{ name: "" }]);
   const [authors, setAuthors] = useState([{ firstName: "", lastName: "", avatar: "" }]);
 
   const handleAddBook = () => {
@@ -57,14 +62,18 @@ function AddBook() {
       publisher: {
         name: publisherName,
       },
-      categories: {
-        name: categoryName,
-      },
-      authors,
+      categories: categoryName.map((category) => ({
+        name: category.name,
+      })),
+      authors: authors.map((author) => ({
+        firstName: author.firstName,
+        lastName: author.lastName,
+        avatar: author.avatar,
+      })),
       // TODO - Fazer input que suporte 3 dados diferentes e deixei adicionar + de 1 autor
     };
 
-    addNewBook(bookData)
+    addNewBook(userToken, bookData)
       .then((response) => {
         // Handle success response
         console.log("Book added successfully", response);
@@ -73,6 +82,55 @@ function AddBook() {
         // Handle error response
         console.error("Failed to add book", error);
       });
+  };
+
+  // Logica input de Autor
+  const handleAuthorChange = (e, index, field) => {
+    const { value } = e.target;
+    setAuthors((prevAuthors) => {
+      const updatedAuthors = [...prevAuthors];
+      updatedAuthors[index] = {
+        ...updatedAuthors[index],
+        [field]: value,
+      };
+      return updatedAuthors;
+    });
+  };
+
+  const addAuthor = () => {
+    setAuthors((prevAuthors) => [...prevAuthors, { firstName: "", lastName: "", avatar: "" }]);
+  };
+
+  const removeAuthor = (index) => {
+    setAuthors((prevAuthors) => {
+      const updatedAuthors = [...prevAuthors];
+      updatedAuthors.splice(index, 1);
+      return updatedAuthors;
+    });
+  };
+
+  // Logica input de categoria
+  const handleCategoryChange = (e, index) => {
+    const { value } = e.target;
+    setCategoryName((prevCategories) => {
+      const updatedCategories = [...prevCategories];
+      updatedCategories[index] = {
+        name: value,
+      };
+      return updatedCategories;
+    });
+  };
+
+  const addCategory = () => {
+    setCategoryName((prevCategories) => [...prevCategories, { name: "" }]);
+  };
+
+  const removeCategory = (index) => {
+    setCategoryName((prevCategories) => {
+      const updatedCategories = [...prevCategories];
+      updatedCategories.splice(index, 1);
+      return updatedCategories;
+    });
   };
 
   return (
@@ -144,24 +202,85 @@ function AddBook() {
                         />
                       </Box>
                       <Box gridRow={2} sx={onlyXs && { mb: 3 }}>
-                        <MDInput
-                          type="text"
-                          label="Autores"
-                          variant="outlined"
-                          fullWidth
-                          value={authors}
-                          onChange={(e) => setAuthors(e.target.value)}
-                        />
+                        {authors.map((author, index) => (
+                          // eslint-disable-next-line react/no-array-index-key
+                          <Grid container spacing={2} key={index}>
+                            <Grid item xs={12} sm={6}>
+                              <MDInput
+                                type="text"
+                                label="Primeiro Nome"
+                                variant="outlined"
+                                fullWidth
+                                value={author.firstName}
+                                onChange={(e) => handleAuthorChange(e, index, "firstName")}
+                              />
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                              <MDInput
+                                type="text"
+                                label="Último Nome"
+                                variant="outlined"
+                                fullWidth
+                                value={author.lastName}
+                                onChange={(e) => handleAuthorChange(e, index, "lastName")}
+                              />
+                            </Grid>
+                            <Grid item xs={12}>
+                              <MDInput
+                                type="text"
+                                label="Avatar"
+                                variant="outlined"
+                                fullWidth
+                                value={author.avatar}
+                                onChange={(e) => handleAuthorChange(e, index, "avatar")}
+                              />
+                            </Grid>
+                            {index > 0 && (
+                              <IconButton
+                                color="secondary"
+                                onClick={() => removeAuthor(index)}
+                                sx={{ ml: 2 }}
+                              >
+                                <Badge>X</Badge>
+                              </IconButton>
+                            )}
+                          </Grid>
+                        ))}
+                        <MDButton variant="outlined" onClick={addAuthor}>
+                          Adicionar Autor
+                        </MDButton>
                       </Box>
+
                       <Box gridRow={3} sx={onlyXs && { mb: 3 }}>
-                        <MDInput
-                          type="text"
-                          label="Categorias"
-                          variant="outlined"
-                          fullWidth
-                          value={categoryName}
-                          onChange={(e) => setCategoryName(e.target.value)}
-                        />
+                        <Grid container spacing={2}>
+                          {categoryName.map((category, index) => (
+                            // eslint-disable-next-line react/no-array-index-key
+                            <Grid item xs={12} sm={6} key={index}>
+                              <Box sx={{ display: "flex", alignItems: "center" }}>
+                                <MDInput
+                                  type="text"
+                                  label={`Categoria ${index + 1}`}
+                                  variant="outlined"
+                                  fullWidth
+                                  value={category.name}
+                                  onChange={(e) => handleCategoryChange(e, index)}
+                                />
+                                {index > 0 && (
+                                  <IconButton
+                                    color="secondary"
+                                    onClick={() => removeCategory(index)}
+                                    sx={{ ml: 2 }}
+                                  >
+                                    X
+                                  </IconButton>
+                                )}
+                              </Box>
+                            </Grid>
+                          ))}
+                        </Grid>
+                        <MDButton variant="outlined" onClick={addCategory}>
+                          Adicionar Categoria
+                        </MDButton>
                       </Box>
                       <Box gridRow={4} sx={onlyXs && { mb: 3 }}>
                         <MDInput
@@ -206,7 +325,7 @@ function AddBook() {
 
                       <Box gridRow={1} sx={onlyXs && { mb: 3 }}>
                         <MDInput
-                          type="date"
+                          type="text"
                           label="Data de Publicação"
                           value={publicationDate}
                           onChange={(e) => setPublicationDate(e.target.value)}
