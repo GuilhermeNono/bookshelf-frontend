@@ -21,6 +21,7 @@ export const useBooks = () => {
     checkIfIsCancelled();
     setLoading(true);
     setError(null);
+
     const headers = {
       "Content-Type": "application/json",
       Authorization: `Bearer ${userToken}`,
@@ -134,27 +135,68 @@ export const useBooks = () => {
     return req;
   };
 
-  const getAllCategories = async () => {
+  const getAllCategories = async (userToken) => {
     setLoading(true);
     setError(null);
 
-    const requestOptions = {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${userToken}`,
     };
 
-    const req = fetch(`${ApiRouteBuild.buildRoute("category")}`, requestOptions)
-      .then((response) => response.json())
-      .then((data) => data)
-      .catch(() => {
-        setError("Ocorreu um erro durante a busca das categorias.");
+    const requestOptions = {
+      method: "GET",
+      headers,
+    };
+
+    return fetch(`${ApiRouteBuild.buildRoute("category")}`, requestOptions)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Erro ao buscar categorias");
+        }
+        return response.json();
+      })
+      .then((data) => {
         setLoading(false);
+        return data;
+      })
+      .catch(() => {
+        setLoading(false);
+        setError(error.message);
         return null;
       });
+  };
 
-    return req;
+  const getAllAuthors = async (userToken) => {
+    setLoading(true);
+    setError(null);
+
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${userToken}`,
+    };
+
+    const requestOptions = {
+      method: "GET",
+      headers,
+    };
+
+    return fetch(`${ApiRouteBuild.buildRoute("author")}`, requestOptions)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Erro ao buscar autores");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setLoading(false);
+        return data;
+      })
+      .catch(() => {
+        setLoading(false);
+        setError("Ocorreu um erro durante a busca de autores.");
+        return null;
+      });
   };
 
   useEffect(() => {
@@ -167,6 +209,7 @@ export const useBooks = () => {
     addBookCopy,
     addNewBook,
     loading,
+    getAllAuthors,
     getAllCategories,
     error,
   };
