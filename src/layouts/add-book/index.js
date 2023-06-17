@@ -54,6 +54,8 @@ function AddBook() {
   const [newAuthor, setNewAuthor] = useState({ firstName: "", lastName: "", avatar: "" });
   const [allAuthors, setAllAuthors] = useState([]);
 
+  // TODO - Corrigir responsividade inputs
+
   // Tratar erros
   const [errors, setErrors] = useState({});
 
@@ -291,6 +293,7 @@ function AddBook() {
                           helperText={errors.bookTitle}
                         />
                       </MDBox>
+
                       <MDBox gridRow={2} sx={onlyXs && { mb: 3 }}>
                         <Autocomplete
                           multiple
@@ -350,7 +353,6 @@ function AddBook() {
                           </MDButton>
                         </MDBox>
                       </MDBox>
-
                       <MDBox gridRow={3} sx={onlyXs && { mb: 3 }}>
                         <Autocomplete
                           multiple
@@ -370,7 +372,6 @@ function AddBook() {
                           isOptionEqualToValue={isOptionEqualToValue}
                         />
                       </MDBox>
-
                       <MDBox gridRow={4} sx={onlyXs && { mb: 3 }}>
                         <MDInput
                           type="text"
@@ -415,7 +416,6 @@ function AddBook() {
                           helperText={errors.publisherName}
                         />
                       </Box>
-
                       <Box gridRow={1} sx={onlyXs && { mb: 3 }}>
                         <MDInput
                           type="date"
