@@ -153,11 +153,11 @@ const routes = [
     component: <Details />,
   },
   {
-    type: "collapse",
+    type: "title",
     name: "LoansDetails",
     key: "loansDetails",
     icon: <Icon fontSize="small">table_view</Icon>,
-    route: "/dashboard/borrowing/loansDetails/:libId",
+    route: "/dashboard/borrowing/loansDetails/:loanId",
     component: <LoansDetails />,
   },
   /**

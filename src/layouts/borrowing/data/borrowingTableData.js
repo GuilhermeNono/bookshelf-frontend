@@ -29,15 +29,17 @@ export default async function data(loans) {
     if (loans) {
       const resp = [];
       loans.forEach((element) => {
-        resp.push({
-          status: <Status overdue={element.overdue} />,
-          user: <Name name={element.userName} />,
-          tombo: <Tombo idBook={element.bookId} />,
-          book: <Book name={element.books} />,
-          loanDt: <Dates date={element.loanDate} />,
-          returnDt: <Dates date={element.returnDate} />,
-          detLoans: <DetailLoans id={element.userId} />,
-        });
+        if (element.active === true) {
+          resp.push({
+            status: <Status overdue={element.overdue} />,
+            user: <Name name={element.userName} />,
+            tombo: <Tombo idBook={element.bookId} />,
+            book: <Book name={element.books} />,
+            loanDt: <Dates date={element.loanDate} />,
+            returnDt: <Dates date={element.returnDate} />,
+            detLoans: <DetailLoans id={element.code} />,
+          });
+        }
       });
       return resp;
     }

@@ -102,6 +102,35 @@ export const useLoan = () => {
     return req;
   };
 
+  const closeLoan = async (userToken, loanId) => {
+    checkIfIsCancelled();
+    setLoading(true);
+    setError(null);
+
+    const headers = {
+      // "Content-Type": "application/json",
+      Authorization: `Bearer ${userToken}`,
+    };
+
+    const requestOptions = {
+      method: "POST",
+      headers,
+    };
+
+    const req = fetch(`${ApiRouteBuild.buildRoute("loan")}/close/${loanId}`, requestOptions)
+      .then((resp) => {
+        if (resp.status === 204) {
+          console.log("Deu certo");
+        }
+      })
+      .catch(() => {
+        setError("Ocorreu um erro durante a busca de emprestimos.");
+        setLoading(false);
+        return null;
+      });
+    return req;
+  };
+
   useEffect(() => {
     setCancelled(true);
     // setError("");
@@ -110,6 +139,7 @@ export const useLoan = () => {
   return {
     getLibraryLoan,
     getLibraryLoanOfMonth,
+    closeLoan,
     loading,
     error,
   };
