@@ -51,48 +51,14 @@ import {
   setTransparentNavbar,
   setMiniSidenav,
   setOpenConfigurator,
-  setLibrary,
 } from "context";
-import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 
 function DashboardNavbar({ absolute, light, isMini }) {
   const [navbarType, setNavbarType] = useState();
   const [controller, dispatch] = useMaterialUIController();
-  const {
-    miniSidenav,
-    transparentNavbar,
-    fixedNavbar,
-    openConfigurator,
-    darkMode,
-    library,
-    currentBook,
-  } = controller;
+  const { miniSidenav, transparentNavbar, fixedNavbar, openConfigurator, darkMode } = controller;
   const [openMenu, setOpenMenu] = useState(false);
-  const [libraries, setLibraries] = useState([]);
   const route = useLocation().pathname.split("/").slice(1);
-  const [libraryId, setLibraryId] = useState("");
-
-  const handleChange = (event) => {
-    setLibraryId(event.target.value);
-  };
-
-  useEffect(() => {
-    if (library) {
-      setLibraryId(library);
-    }
-  }, [library]);
-
-  useEffect(() => {
-    const uid = localStorage.getItem("uid");
-    setLibraries(JSON.parse(uid));
-  }, []);
-
-  useEffect(() => {
-    if (libraryId) {
-      setLibrary(dispatch, libraryId);
-      localStorage.setItem("bs-lid", libraryId);
-    }
-  }, [libraryId]);
 
   useEffect(() => {
     // Setting the navbar type
@@ -157,16 +123,6 @@ function DashboardNavbar({ absolute, light, isMini }) {
     },
   });
 
-  const [title, setTitle] = useState("");
-
-  useEffect(() => {
-    if (route[route.length - 1] === currentBook.code) {
-      // eslint-disable-next-line no-return-assign
-      return setTitle(currentBook.name);
-    }
-    return setTitle(route[route.length - 1]);
-  }, [route]);
-
   return (
     <AppBar
       position={absolute ? "absolute" : navbarType}
@@ -175,33 +131,12 @@ function DashboardNavbar({ absolute, light, isMini }) {
     >
       <Toolbar sx={(theme) => navbarContainer(theme)}>
         <MDBox color="inherit" mb={{ xs: 1, md: 0 }} sx={(theme) => navbarRow(theme, { isMini })}>
-          <Breadcrumbs icon="home" title={title} route={route} light={light} />
+          <Breadcrumbs icon="home" title={route[route.length - 1]} route={route} light={light} />
         </MDBox>
         {isMini ? null : (
           <MDBox sx={(theme) => navbarRow(theme, { isMini })}>
-            <MDBox pr={3}>
-              <FormControl sx={{ m: 1, minWidth: 120 }}>
-                <InputLabel id="demo-simple-select-helper-label">Library</InputLabel>
-                <Select
-                  labelId="demo-simple-select-helper-label"
-                  id="demo-simple-select-helper"
-                  value={libraryId}
-                  label="Library"
-                  sx={{ minHeight: 45 }}
-                  onChange={handleChange}
-                >
-                  {libraries &&
-                    libraries.map((lib) => (
-                      <MenuItem value={lib.libraryId}>{lib.library}</MenuItem>
-                    ))}
-                  {/* <MenuItem value={1}>Etec Comendador João Rays</MenuItem>
-                  <MenuItem value={2}>Etec 2</MenuItem>
-                  <MenuItem value={3}>Etec 3</MenuItem> */}
-                </Select>
-              </FormControl>
-            </MDBox>
             <MDBox pr={1}>
-              <MDInput label="Pesquisar" />
+              <MDInput label="Search here" />
             </MDBox>
             <MDBox color={light ? "white" : "inherit"}>
               <Link to="/authentication/sign-in/basic">

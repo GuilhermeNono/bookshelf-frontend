@@ -1,22 +1,22 @@
 /**
+=========================================================
+* Material Dashboard 2 React - v2.1.0
+=========================================================
+
+* Product Page: https://www.creative-tim.com/product/material-dashboard-react
+* Copyright 2022 Creative Tim (https://www.creative-tim.com)
+
+Coded by www.creative-tim.com
+
  =========================================================
- * Material Dashboard 2 React - v2.1.0
- =========================================================
 
- * Product Page: https://www.creative-tim.com/product/material-dashboard-react
- * Copyright 2022 Creative Tim (https://www.creative-tim.com)
-
- Coded by www.creative-tim.com
-
- =========================================================
-
- * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
- */
+* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+*/
 
 /**
- This file is used for controlling the global states of the components,
- you can customize the states for the different components here.
- */
+  This file is used for controlling the global states of the components,
+  you can customize the states for the different components here.
+*/
 
 import { createContext, useContext, useReducer, useMemo } from "react";
 
@@ -62,21 +62,6 @@ function reducer(state, action) {
     case "DARKMODE": {
       return { ...state, darkMode: action.value };
     }
-    case "TOKEN": {
-      return { ...state, token: action.value };
-    }
-    case "LIBRARY": {
-      return { ...state, library: action.value };
-    }
-    case "CURRENTBOOK": {
-      return { ...state, currentBook: action.value };
-    }
-    case "NEWESTBOOKCOUNT": {
-      return { ...state, currentBook: action.value };
-    }
-    case "NEWESTLOANCOUNT": {
-      return { ...state, currentBook: action.value };
-    }
     default: {
       throw new Error(`Unhandled action type: ${action.type}`);
     }
@@ -95,12 +80,7 @@ function MaterialUIControllerProvider({ children }) {
     openConfigurator: false,
     direction: "ltr",
     layout: "home",
-    darkMode: true,
-    token: "",
-    library: 0,
-    currentBook: "",
-    newestBookCount: 0,
-    newestLoanCount: 0,
+    darkMode: false,
   };
 
   const [controller, dispatch] = useReducer(reducer, initialState);
@@ -139,17 +119,10 @@ const setOpenConfigurator = (dispatch, value) => dispatch({ type: "OPEN_CONFIGUR
 const setDirection = (dispatch, value) => dispatch({ type: "DIRECTION", value });
 const setLayout = (dispatch, value) => dispatch({ type: "LAYOUT", value });
 const setDarkMode = (dispatch, value) => dispatch({ type: "DARKMODE", value });
-const setToken = (dispatch, value) => dispatch({ type: "TOKEN", value });
-const setLibrary = (dispatch, value) => dispatch({ type: "LIBRARY", value });
-const setCurrentBook = (dispatch, value) => dispatch({ type: "CURRENTBOOK", value });
-const setNewestBookCount = (dispatch, value) => dispatch({ type: "NEWESTBOOKCOUNT", value });
-const setNewestLoanCount = (dispatch, value) => dispatch({ type: "NEWESTLOANCOUNT", value });
 
 export {
   MaterialUIControllerProvider,
   useMaterialUIController,
-  setNewestBookCount,
-  setNewestLoanCount,
   setMiniSidenav,
   setTransparentSidenav,
   setWhiteSidenav,
@@ -160,7 +133,4 @@ export {
   setDirection,
   setLayout,
   setDarkMode,
-  setToken,
-  setLibrary,
-  setCurrentBook,
 };

@@ -27,8 +27,8 @@ import MDTypography from "components/MDTypography";
 // Material Dashboard 2 React base styles
 import typography from "assets/theme/base/typography";
 
-// eslint-disable-next-line no-unused-vars
-function Footer({ links }) {
+function Footer({ company, links }) {
+  const { href, name } = company;
   const { size } = typography;
 
   const renderLinks = () =>
@@ -60,19 +60,19 @@ function Footer({ links }) {
         fontSize={size.sm}
         px={1.5}
       >
-        &copy; {new Date().getFullYear()}, desenvolvido com
+        &copy; {new Date().getFullYear()}, made with
         <MDBox fontSize={size.md} color="text" mb={-0.5} mx={0.25}>
           <Icon color="inherit" fontSize="inherit">
             favorite
           </Icon>
         </MDBox>
-        pela equipe
-        <Link href="https://github.com/GuilhermeNono/bookshelf-frontend" target="_blank">
+        by
+        <Link href={href} target="_blank">
           <MDTypography variant="button" fontWeight="medium">
-            &nbsp;Bookshelf&nbsp;
+            &nbsp;{name}&nbsp;
           </MDTypography>
         </Link>
-        .
+        for a better web.
       </MDBox>
       <MDBox
         component="ul"
@@ -99,16 +99,18 @@ function Footer({ links }) {
 
 // Setting default values for the props of Footer
 Footer.defaultProps = {
+  company: { href: "https://www.creative-tim.com/", name: "Creative Tim" },
   links: [
-    { href: "https://github.com/GuilhermeNono", name: "Guilherme" },
-    { href: "https://github.com/Gabe-Morais", name: "Gabriel" },
-    { href: "https://github.com/KauanMP", name: "Kauan" },
-    { href: "https://github.com/GuilhermeNono/bookshelf-frontend", name: "Github Oficial" },
+    { href: "https://www.creative-tim.com/", name: "Creative Tim" },
+    { href: "https://www.creative-tim.com/presentation", name: "About Us" },
+    { href: "https://www.creative-tim.com/blog", name: "Blog" },
+    { href: "https://www.creative-tim.com/license", name: "License" },
   ],
 };
 
 // Typechecking props for the Footer
 Footer.propTypes = {
+  company: PropTypes.objectOf(PropTypes.string),
   links: PropTypes.arrayOf(PropTypes.object),
 };
 
