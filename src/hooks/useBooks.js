@@ -86,21 +86,8 @@ export const useBooks = () => {
     return req;
   };
 
-  const addNewBook = (
-    userToken,
-    name,
-    language,
-    publicationDate,
-    isbn,
-    sinopse,
-    edition,
-    capeType,
-    numberPages,
-    cape,
-    publisher,
-    categories,
-    authors
-  ) => {
+  // const addNewBook = (Parametro1, Parametro2) => {
+  const addNewBook = (userToken, bookData) => {
     checkIfIsCancelled();
     setLoading(true);
     setError(null);
@@ -111,18 +98,18 @@ export const useBooks = () => {
     };
 
     const bookBody = {
-      name,
-      language,
-      publicationDate,
-      isbn,
-      sinopse,
-      edition,
-      capeType,
-      numberPages,
-      cape,
-      publisher,
-      categories,
-      authors,
+      name: bookData.name,
+      language: bookData.language,
+      publicationDate: bookData.publicationDate,
+      isbn: bookData.isbn,
+      sinopse: bookData.sinopse,
+      edition: bookData.edition,
+      capeType: bookData.capeType,
+      numberPages: bookData.numberPages,
+      cape: bookData.cape,
+      publisher: bookData.publisher,
+      categories: bookData.categories,
+      authors: bookData.authors,
     };
 
     const requestOptions = {
@@ -147,6 +134,29 @@ export const useBooks = () => {
     return req;
   };
 
+  const getAllCategories = async () => {
+    setLoading(true);
+    setError(null);
+
+    const requestOptions = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    const req = fetch(`${ApiRouteBuild.buildRoute("category")}`, requestOptions)
+      .then((response) => response.json())
+      .then((data) => data)
+      .catch(() => {
+        setError("Ocorreu um erro durante a busca das categorias.");
+        setLoading(false);
+        return null;
+      });
+
+    return req;
+  };
+
   useEffect(() => {
     setCancelled(true);
     // setError("");
@@ -157,6 +167,7 @@ export const useBooks = () => {
     addBookCopy,
     addNewBook,
     loading,
+    getAllCategories,
     error,
   };
 };

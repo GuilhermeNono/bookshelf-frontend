@@ -76,7 +76,7 @@ function Books() {
                 coloredShadow="info"
               >
                 <MDBox display="flex" alignItems="center" justifyContent="space-between">
-                  <MDTypography variant="h6">Livros na biblioteca</MDTypography>
+                  <MDTypography variant="h6">Acervo da Biblioteca</MDTypography>
                   <MDBox display="flex" alignItems="center">
                     <MDButton
                       component={Link}

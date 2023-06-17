@@ -93,7 +93,7 @@ const routes = [
     type: "collapse",
     name: "Books",
     key: "books",
-    icon: <Icon fontSize="small">table_view</Icon>,
+    icon: <Icon fontSize="small">collections_bookmark</Icon>,
     route: "/dashboard/books",
     component: <Books />,
   },
