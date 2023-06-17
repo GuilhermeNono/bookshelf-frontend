@@ -13,18 +13,19 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
+// eslint-disable-next-line no-unused-vars
 import { useState, useEffect, useMemo } from "react";
 
 // react-router components
-import { Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation, useNavigate } from "react-router-dom";
 
 // @mui material components
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
-import Icon from "@mui/material/Icon";
+// import Icon from "@mui/material/Icon";
 
 // Material Dashboard 2 React components
-import MDBox from "components/MDBox";
+// import MDBox from "components/MDBox";
 import MDHeader from "components/MDHeader";
 import MDFooter from "components/MDFooter";
 
@@ -49,11 +50,13 @@ import createCache from "@emotion/cache";
 import routes from "routes";
 
 // Material Dashboard 2 React contexts
-import { useMaterialUIController, setMiniSidenav, setOpenConfigurator } from "context";
+import { useMaterialUIController, setMiniSidenav, setToken, setLibrary } from "context";
 
 // Images
-import brandWhite from "assets/images/logo-ct.png";
-import brandDark from "assets/images/logo-ct-dark.png";
+// import brandWhite from "assets/images/logo-ct.png";
+// import brandDark from "assets/images/logo-ct-dark.png";
+import logo from "assets/images/logos/Logo.svg";
+import { useAuthentication } from "hooks/useAuthentication";
 
 export default function App() {
   const [controller, dispatch] = useMaterialUIController();
@@ -61,15 +64,24 @@ export default function App() {
     miniSidenav,
     direction,
     layout,
-    openConfigurator,
+    // openConfigurator,
     sidenavColor,
     transparentSidenav,
     whiteSidenav,
     darkMode,
+    // eslint-disable-next-line no-unused-vars
+    token: tokenContext,
+    library: libraryContext,
   } = controller;
   const [onMouseEnter, setOnMouseEnter] = useState(false);
+  // eslint-disable-next-line no-unused-vars
   const [rtlCache, setRtlCache] = useState(null);
+  // eslint-disable-next-line no-unused-vars
+  const [bsLidState, setBsLidState] = useState(localStorage.getItem("bs-lid"));
   const { pathname } = useLocation();
+  // eslint-disable-next-line no-unused-vars
+  const navigate = useNavigate();
+  const authentication = useAuthentication();
 
   // Cache for the rtl
   useMemo(() => {
@@ -98,7 +110,7 @@ export default function App() {
   };
 
   // Change the openConfigurator state
-  const handleConfiguratorOpen = () => setOpenConfigurator(dispatch, !openConfigurator);
+  // const handleConfiguratorOpen = () => setOpenConfigurator(dispatch, !openConfigurator);
 
   // Setting the dir attribute for the body element
   useEffect(() => {
@@ -110,6 +122,45 @@ export default function App() {
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
   }, [pathname]);
+
+  // eslint-disable-next-line consistent-return
+  useEffect(() => {
+    const token = localStorage.getItem("userAuthorization");
+    const libraryId = localStorage.getItem("bs-lid");
+
+    if (token) {
+      // eslint-disable-next-line consistent-return
+      authentication.validateToken(token).then((resp) => {
+        if (resp === 200 && libraryId) {
+          setToken(dispatch, token);
+          setLibrary(dispatch, libraryId);
+        } else {
+          return localStorage.clear();
+        }
+      });
+    }
+  }, []);
+
+  useEffect(() => {
+    const libraryId = localStorage.getItem("bs-lid");
+    if (libraryId) {
+      return setLibrary(dispatch, libraryId);
+    }
+    return null;
+  }, [bsLidState]);
+
+  // eslint-disable-next-line consistent-return
+  useEffect(() => {
+    if (pathname.indexOf("/dashboard") === 0) {
+      if (!tokenContext || !libraryContext) {
+        navigate("/authentication/sign-in");
+      }
+    } else if (pathname.indexOf("/authentication") === 0) {
+      if (tokenContext) {
+        navigate("/dashboard");
+      }
+    }
+  }, [pathname, tokenContext]);
 
   const getRoutes = (allRoutes) =>
     allRoutes.map((route) => {
@@ -124,29 +175,29 @@ export default function App() {
       return null;
     });
 
-  const configsButton = (
-    <MDBox
-      display="flex"
-      justifyContent="center"
-      alignItems="center"
-      width="3.25rem"
-      height="3.25rem"
-      bgColor="white"
-      shadow="sm"
-      borderRadius="50%"
-      position="fixed"
-      right="2rem"
-      bottom="2rem"
-      zIndex={99}
-      color="dark"
-      sx={{ cursor: "pointer" }}
-      onClick={handleConfiguratorOpen}
-    >
-      <Icon fontSize="small" color="inherit">
-        settings
-      </Icon>
-    </MDBox>
-  );
+  // const configsButton = (
+  //   <MDBox
+  //     display="flex"
+  //     justifyContent="center"
+  //     alignItems="center"
+  //     width="3.25rem"
+  //     height="3.25rem"
+  //     bgColor="white"
+  //     shadow="sm"
+  //     borderRadius="50%"
+  //     position="fixed"
+  //     right="2rem"
+  //     bottom="2rem"
+  //     zIndex={99}
+  //     color="dark"
+  //     sx={{ cursor: "pointer" }}
+  //     onClick={handleConfiguratorOpen}
+  //   >
+  //     <Icon fontSize="small" color="inherit">
+  //       settings
+  //     </Icon>
+  //   </MDBox>
+  // );
 
   return direction === "rtl" ? (
     <CacheProvider value={rtlCache}>
@@ -156,18 +207,18 @@ export default function App() {
           <>
             <Sidenav
               color={sidenavColor}
-              brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite}
-              brandName="Material Dashboard 2"
+              brand={(transparentSidenav && !darkMode) || whiteSidenav ? logo : logo}
+              brandName="Bookshelf"
               routes={routes}
               onMouseEnter={handleOnMouseEnter}
               onMouseLeave={handleOnMouseLeave}
             />
             <Configurator />
-            {configsButton}
+            {/* {configsButton} */}
           </>
         )}
-        {layout === "vr" && <Configurator />}
-        {layout === "home" ? (
+        {/* {layout === "vr" && <Configurator />} */}
+        {layout === "home" && (
           <>
             <MDHeader />
             <Routes>
@@ -176,12 +227,11 @@ export default function App() {
             </Routes>
             <MDFooter />
           </>
-        ) : (
-          <Routes>
-            {getRoutes(routes)}
-            <Route path="*" element={<Navigate to="/dashboard" />} />
-          </Routes>
         )}
+        <Routes>
+          {getRoutes(routes)}
+          <Route path="*" element={<Navigate to="/dashboard" />} />
+        </Routes>
       </ThemeProvider>
     </CacheProvider>
   ) : (
@@ -191,18 +241,18 @@ export default function App() {
         <>
           <Sidenav
             color={sidenavColor}
-            brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite}
-            brandName="Material Dashboard 3"
+            brand={(transparentSidenav && !darkMode) || whiteSidenav ? logo : logo}
+            brandName="Bookshelf"
             routes={routes}
             onMouseEnter={handleOnMouseEnter}
             onMouseLeave={handleOnMouseLeave}
           />
           <Configurator />
-          {configsButton}
+          {/* {configsButton} */}
         </>
       )}
       {layout === "vr" && <Configurator />}
-      {layout === "home" ? (
+      {layout === "home" && (
         <>
           <MDHeader />
           <Routes>
@@ -211,12 +261,11 @@ export default function App() {
           </Routes>
           <MDFooter />
         </>
-      ) : (
-        <Routes>
-          {getRoutes(routes)}
-          <Route path="*" element={<Navigate to="/dashboard" />} />
-        </Routes>
       )}
+      <Routes>
+        {getRoutes(routes)}
+        <Route path="*" element={<Navigate to="/dashboard" />} />
+      </Routes>
     </ThemeProvider>
   );
 }

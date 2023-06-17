@@ -16,13 +16,12 @@ Coded by www.creative-tim.com
 // Material Dashboard 2 React Base Styles
 import colors from "assets/theme/base/colors";
 
-const { white } = colors;
+const { transparent } = colors;
 
 const textField = {
   styleOverrides: {
     root: {
-      backgroundColor: white.main,
-      borderRadius: "6.5px 6.5px 0 0",
+      backgroundColor: transparent.main,
     },
   },
 };
