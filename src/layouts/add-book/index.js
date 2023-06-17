@@ -398,6 +398,7 @@ function AddBook() {
                             <MenuItem value="">Selecione</MenuItem>
                             <MenuItem value="Português">Português</MenuItem>
                             <MenuItem value="Inglês">Inglês</MenuItem>
+                            <MenuItem value="Espanhol">Espanhol</MenuItem>
                           </Select>
                         </FormControl>
                       </Box>
