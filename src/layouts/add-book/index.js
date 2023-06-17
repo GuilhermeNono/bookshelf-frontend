@@ -342,7 +342,7 @@ function AddBook() {
                           <MDButton
                             sx={{ mt: 2 }}
                             variant="contained"
-                            color="primary"
+                            color="info"
                             onClick={handleNewAuthorAddition}
                             disabled={
                               !newAuthor.firstName || !newAuthor.lastName || !newAuthor.avatar
