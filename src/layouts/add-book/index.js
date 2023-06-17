@@ -23,7 +23,7 @@ import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import { useBooks } from "hooks/useBooks";
 import { useMaterialUIController } from "context";
-import Header from "./Header";
+import Header from "./components/Header";
 
 function AddBook() {
   const theme = useTheme();
@@ -47,13 +47,12 @@ function AddBook() {
   const [numberPages, setNumberPages] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [publisherName, setPublisherName] = useState("");
-
-  // eslint-disable-next-line no-unused-vars
-  const [categoryName, setCategoryName] = useState([{ name: "" }]);
   const [categories, setCategories] = useState([{ name: "" }]);
   const [selectedCategories, setSelectedCategories] = useState([]);
   const isOptionEqualToValue = (option, value) => option.name === value.name;
-  const [authors, setAuthors] = useState([{ firstName: "", lastName: "", avatar: "" }]);
+  const [authors, setAuthors] = useState([]);
+  const [newAuthor, setNewAuthor] = useState({ firstName: "", lastName: "", avatar: "" });
+  const [allAuthors, setAllAuthors] = useState([]);
 
   // Tratar erros
   const [errors, setErrors] = useState({});
@@ -122,11 +121,13 @@ function AddBook() {
     });
     getAllAuthors(token).then((resp) => {
       if (resp) {
-        setAuthors(resp);
+        setAllAuthors(resp);
+        setAuthors([]);
       }
     });
   }, []);
 
+  console.log(allAuthors);
   console.log(authors);
 
   const bookData = {
@@ -169,9 +170,9 @@ function AddBook() {
           setNumberPages("");
           setImageUrl("");
           setPublisherName("");
-          setCategoryName([{ name: "" }]);
           setCategories([{ name: "" }]);
           setSelectedCategories([]);
+          setAuthors([]);
 
           // Exibe o alerta de sucesso
           Alert("Livro adicionado com sucesso!");
@@ -182,6 +183,43 @@ function AddBook() {
       console.log(bookData);
     }
   };
+
+  const handleAuthorDelete = (author) => {
+    const newAuthors = authors.filter((a) => a !== author);
+    setAuthors(newAuthors);
+  };
+
+  const handleNewAuthorAddition = () => {
+    if (newAuthor.firstName && newAuthor.lastName) {
+      const updatedAllAuthors = [...allAuthors, newAuthor];
+      setAllAuthors(updatedAllAuthors);
+      setAuthors([...authors, newAuthor]);
+      setNewAuthor({ firstName: "", lastName: "", avatar: "" });
+    }
+  };
+
+  const handleNewAuthorChange = (event, value) => {
+    setNewAuthor({
+      ...newAuthor,
+      [event.target.name]: value || event.target.value,
+    });
+  };
+
+  const renderTags = (value, getTagProps) =>
+    value.map((author, index) => (
+      <MDButton
+        // eslint-disable-next-line react/no-array-index-key
+        key={index}
+        variant="contained"
+        color="info"
+        size="small"
+        style={{ marginRight: "8px", marginBottom: "8px" }}
+        {...getTagProps({ index })}
+        onClick={() => handleAuthorDelete(author)}
+      >
+        {`${author.firstName} ${author.lastName}`}
+      </MDButton>
+    ));
 
   return (
     <DashboardLayout>
@@ -253,7 +291,66 @@ function AddBook() {
                           helperText={errors.bookTitle}
                         />
                       </MDBox>
-                      <MDBox gridRow={2} sx={onlyXs && { mb: 3 }} />
+                      <MDBox gridRow={2} sx={onlyXs && { mb: 3 }}>
+                        <Autocomplete
+                          multiple
+                          id="authors"
+                          options={allAuthors}
+                          getOptionLabel={(author) => `${author.firstName} ${author.lastName}`}
+                          value={authors}
+                          onChange={(event, value) => setAuthors(value)}
+                          renderInput={(params) => (
+                            <TextField
+                              {...params}
+                              label="Autores"
+                              variant="outlined"
+                              placeholder="Adicionar autor"
+                            />
+                          )}
+                          renderTags={renderTags}
+                        />
+                        <MDBox mt={2}>
+                          <TextField
+                            label="Novo Autor - Nome"
+                            name="firstName"
+                            value={newAuthor.firstName}
+                            onChange={handleNewAuthorChange}
+                            variant="outlined"
+                            fullWidth
+                          />
+                          <TextField
+                            sx={{ mt: 2 }}
+                            label="Novo Autor - Sobrenome"
+                            name="lastName"
+                            value={newAuthor.lastName}
+                            onChange={handleNewAuthorChange}
+                            variant="outlined"
+                            fullWidth
+                          />
+                          <TextField
+                            sx={{ mt: 2 }}
+                            label="Novo Autor - Avatar"
+                            name="avatar"
+                            value={newAuthor.avatar}
+                            onChange={handleNewAuthorChange}
+                            variant="outlined"
+                            fullWidth
+                          />
+                          <MDButton
+                            sx={{ mt: 2 }}
+                            variant="contained"
+                            color="primary"
+                            onClick={handleNewAuthorAddition}
+                            disabled={
+                              !newAuthor.firstName || !newAuthor.lastName || !newAuthor.avatar
+                            }
+                            style={{ marginTop: "8px" }}
+                          >
+                            Adicionar Autor
+                          </MDButton>
+                        </MDBox>
+                      </MDBox>
+
                       <MDBox gridRow={3} sx={onlyXs && { mb: 3 }}>
                         <Autocomplete
                           multiple
@@ -273,6 +370,7 @@ function AddBook() {
                           isOptionEqualToValue={isOptionEqualToValue}
                         />
                       </MDBox>
+
                       <MDBox gridRow={4} sx={onlyXs && { mb: 3 }}>
                         <MDInput
                           type="text"
@@ -421,6 +519,7 @@ function AddBook() {
           </Grid>
         </Grid>
       </MDBox>
+
       <Footer />
     </DashboardLayout>
   );
