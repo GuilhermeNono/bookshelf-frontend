@@ -27,41 +27,38 @@ import CoverLayout from "layouts/authentication/components/CoverLayout";
 
 // Images
 import bgImage from "assets/images/bg-reset-cover.jpeg";
-import warningPassword from "assets/images/exclamationMark.png";
 
 function Cover() {
-  const handleSubmit = (e) => {
-    e.preventDefault();
-  };
-
   return (
-    <CoverLayout coverHeight="5vh" image={bgImage}>
+    <CoverLayout coverHeight="50vh" image={bgImage}>
       <Card>
-        <img
-          src={warningPassword}
-          style={{ width: "60px", height: "60px", margin: "1rem auto" }}
-          alt=""
-        />
-        <MDBox mt={2} textAlign="center">
-          <MDTypography variant="h5" fontWeight="bold" color="black">
-            Forget Password
+        <MDBox
+          variant="gradient"
+          bgColor="info"
+          borderRadius="lg"
+          coloredShadow="success"
+          mx={2}
+          mt={-3}
+          py={2}
+          mb={1}
+          textAlign="center"
+        >
+          <MDTypography variant="h3" fontWeight="medium" color="white" mt={1}>
+            Reset Password
           </MDTypography>
-          <MDTypography display="block" variant="button" color="black" my={1} mr={5} ml={5}>
-            Digite seu e-mail e enviaremos um link para redefinir sua senha
+          <MDTypography display="block" variant="button" color="white" my={1}>
+            You will receive an e-mail in maximum 60 seconds
           </MDTypography>
         </MDBox>
         <MDBox pt={4} pb={3} px={3}>
-          <MDBox component="form" role="form" onSubmit={handleSubmit}>
+          <MDBox component="form" role="form">
             <MDBox mb={4}>
-              <MDInput type="email" label="Email" fullWidth />
+              <MDInput type="email" label="Email" variant="standard" fullWidth />
             </MDBox>
             <MDBox mt={6} mb={1}>
-              <MDButton variant="gradient" color="success" fullWidth>
-                Submit
+              <MDButton variant="gradient" color="info" fullWidth>
+                reset
               </MDButton>
-              <MDTypography className="" display="block" color="black" my={1} fontWeight="light">
-                Voltar para o login
-              </MDTypography>
             </MDBox>
           </MDBox>
         </MDBox>

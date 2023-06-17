@@ -4,28 +4,13 @@ import {
   ContainerContact,
   IconContact,
 } from "assets/styledComponents/homeStyles";
-import MDBox from "components/MDBox";
 import MDButton from "components/MDButton";
+import MDInput from "components/MDInput";
+import MDBox from "components/MDBox";
 
 import phone from "assets/images/phone.svg";
 import email from "assets/images/email.svg";
 import location from "assets/images/location.svg";
-import InputHome from "../../../../assets/theme/components/form/inputHome";
-
-/**
- =========================================================
- * Material Dashboard 2 React - v2.1.0
- =========================================================
-
- * Product Page: https://www.creative-tim.com/product/material-dashboard-react
- * Copyright 2022 Creative Tim (https://www.creative-tim.com)
-
- Coded by www.creative-tim.com
-
- =========================================================
-
- * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
- */
 
 function ContactSection() {
   const handleSubmit = (e) => {
@@ -40,13 +25,15 @@ function ContactSection() {
           Caso tenha alguma duvida, por favor, nos contate pelos canais abaixo, ou preencha o
           formulario ao lado e retornaremos o mais breve possivel.
         </p>
+        <h4>Entre em contato usando os canais abaixo</h4>
+        <h5>ou Complete o formulario ao lado</h5>
 
         <ContainerContact>
           <IconContact>
             <img src={phone} alt="phone" />
             <h4>Phone</h4>
           </IconContact>
-          <h6>+55 14 99999-9999</h6>
+          <h5>+55 14 99999-9999</h5>
         </ContainerContact>
 
         <ContainerContact>
@@ -54,7 +41,7 @@ function ContactSection() {
             <img src={email} alt="phone" />
             <h4>E-mail</h4>
           </IconContact>
-          <h6>Bookshelf@support.com</h6>
+          <h5>Bookshelf@support.com</h5>
         </ContainerContact>
 
         <ContainerContact>
@@ -62,24 +49,24 @@ function ContactSection() {
             <img src={location} alt="phone" />
             <h4>Location</h4>
           </IconContact>
-          <h6>Blablabla 402, Jorge mauricio, Barra bonita, BR</h6>
+          <h5>Blablabla 402, Jorge mauricio, Barra bonita, BR</h5>
         </ContainerContact>
       </ContactText>
 
       <MDBox component="form" onSubmit={handleSubmit} role="form">
         <MDBox mb={5}>
-          <InputHome type="text" placeholder="Nome" fullWidth />
+          <MDInput type="text" label="Seu nome" />
         </MDBox>
         <MDBox mb={5}>
-          <InputHome type="text" placeholder="Endereço de e-mail" fullWidth />
+          <MDInput type="text" label="Endereço de e-mail" />
         </MDBox>
         <MDBox mb={5}>
-          <InputHome type="text" placeholder="Título" fullWidth />
+          <MDInput type="text" label="Título" />
         </MDBox>
         <MDBox mb={5}>
-          <InputHome multiline rows={5} type="textarea" placeholder="Menssagem" fullWidth />
+          <MDInput type="textarea" label="Menssagem" />
         </MDBox>
-        <MDButton type="submit" color="info">
+        <MDButton type="submit" color="primary">
           Enviar
         </MDButton>
       </MDBox>

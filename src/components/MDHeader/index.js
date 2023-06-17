@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   HeaderCont,
   HeaderIcon,
@@ -18,16 +18,23 @@ function Header() {
   const menuIcon = useRef();
   const navbar = useRef();
 
-  window.addEventListener("scroll", () => {
-    if (header.current) {
-      header.current.classList.toggle("sticky", window.scrollY > 0);
-    }
-  });
+  const [scrolling, setScrolling] = useState(false);
+  // eslint-disable-next-line no-unused-vars
+  const [scrollTop, setScrollTop] = useState(0);
 
-  window.onscroll = () => {
-    menuIcon.current.classList.remove("bx-x");
-    navbar.current.classList.remove("open");
-  };
+  useEffect(() => {
+    function onScroll() {
+      setScrolling(true);
+      const currentPosition = window.scrollY; // or use document.documentElement.scrollTop;
+      if (header.current) {
+        header.current.classList.toggle("sticky", window.scrollY > 0);
+      }
+      setScrollTop(currentPosition <= 0 ? 0 : currentPosition);
+      setScrolling(false);
+    }
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [scrolling]);
 
   const openWindow = () => {
     menuIcon.current.classList.toggle("bx-x");

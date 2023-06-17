@@ -1,22 +1,23 @@
 /**
-=========================================================
-* Material Dashboard 2 React - v2.1.0
-=========================================================
+ =========================================================
+ * Material Dashboard 2 React - v2.1.0
+ =========================================================
 
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
+ * Product Page: https://www.creative-tim.com/product/material-dashboard-react
+ * Copyright 2022 Creative Tim (https://www.creative-tim.com)
 
-Coded by www.creative-tim.com
+ Coded by www.creative-tim.com
 
  =========================================================
 
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+ */
 
-import { useState } from "react";
+// eslint-disable-next-line no-unused-vars
+import { useEffect, useState } from "react";
 
 // react-router-dom components
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 // @mui material components
 import Card from "@mui/material/Card";
@@ -34,26 +35,46 @@ import BasicLayout from "layouts/authentication/components/BasicLayout";
 // Images
 import bgImage from "assets/images/bg-sign-in.svg";
 import logoImage from "assets/images/logos/Logo.svg";
-import { useMaterialUIController } from "context";
+// eslint-disable-next-line no-unused-vars
+import { useMaterialUIController, setToken, setLibrary } from "context";
+import { useAuthentication } from "hooks/useAuthentication";
+import MDAlert from "components/MDAlert";
 
 function Basic() {
   const [rememberMe, setRememberMe] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+
+  // eslint-disable-next-line no-unused-vars
+  const authentication = useAuthentication();
 
   // eslint-disable-next-line no-unused-vars
   const [controller, dispatch] = useMaterialUIController();
 
   const { darkMode } = controller;
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-  };
 
+    const login = await authentication.loginUser(email, password);
+    if (login != null) {
+      const bslid = login.librariesAccount[0].libraryId ? login.librariesAccount[0].libraryId : 0;
+      setToken(dispatch, login.token);
+      setLibrary(dispatch, bslid);
+      return navigate("/dashboard");
+    }
+    return null;
+  };
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
 
   return (
     <BasicLayout image={bgImage}>
+      {authentication.error !== "" && !authentication.loading && (
+        <MDAlert in color="error" dismissible>
+          {authentication.error}
+        </MDAlert>
+      )}
       <Card>
         <MDBox
           variant="contained"
@@ -146,11 +167,19 @@ function Basic() {
                 &nbsp;&nbsp;Remember me
               </MDTypography>
             </MDBox>
+
             <MDBox mt={4} mb={1}>
-              <MDButton type="submit" variant="contained" color="info" fullWidth>
-                Entrar
+              <MDButton
+                type="submit"
+                variant="contained"
+                color="info"
+                disabled={authentication.loading}
+                fullWidth
+              >
+                {authentication.loading ? "Carregando" : "Entrar"}
               </MDButton>
             </MDBox>
+
             <MDBox mt={3} mb={1} textAlign="center">
               <MDTypography variant="button" color="text">
                 Não tem uma conta?{" "}
