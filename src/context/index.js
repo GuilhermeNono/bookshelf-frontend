@@ -62,8 +62,8 @@ function reducer(state, action) {
     case "DARKMODE": {
       return { ...state, darkMode: action.value };
     }
-    case "TOKEN": {
-      return { ...state, token: action.value };
+    case "USERLOGGED": {
+      return { ...state, userLogged: action.value };
     }
     case "LIBRARY": {
       return { ...state, library: action.value };
@@ -96,7 +96,7 @@ function MaterialUIControllerProvider({ children }) {
     direction: "ltr",
     layout: "home",
     darkMode: true,
-    token: "",
+    userLogged: null,
     library: 0,
     currentBook: "",
     newestBookCount: 0,
@@ -139,7 +139,7 @@ const setOpenConfigurator = (dispatch, value) => dispatch({ type: "OPEN_CONFIGUR
 const setDirection = (dispatch, value) => dispatch({ type: "DIRECTION", value });
 const setLayout = (dispatch, value) => dispatch({ type: "LAYOUT", value });
 const setDarkMode = (dispatch, value) => dispatch({ type: "DARKMODE", value });
-const setToken = (dispatch, value) => dispatch({ type: "TOKEN", value });
+const setUserLogged = (dispatch, value) => dispatch({ type: "USERLOGGED", value });
 const setLibrary = (dispatch, value) => dispatch({ type: "LIBRARY", value });
 const setCurrentBook = (dispatch, value) => dispatch({ type: "CURRENTBOOK", value });
 const setNewestBookCount = (dispatch, value) => dispatch({ type: "NEWESTBOOKCOUNT", value });
@@ -160,7 +160,7 @@ export {
   setDirection,
   setLayout,
   setDarkMode,
-  setToken,
+  setUserLogged,
   setLibrary,
   setCurrentBook,
 };

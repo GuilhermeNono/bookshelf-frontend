@@ -50,13 +50,16 @@ import createCache from "@emotion/cache";
 import routes from "routes";
 
 // Material Dashboard 2 React contexts
-import { useMaterialUIController, setMiniSidenav, setToken, setLibrary } from "context";
+import { useMaterialUIController, setMiniSidenav, setLibrary, setUserLogged } from "context";
 
 // Images
 // import brandWhite from "assets/images/logo-ct.png";
 // import brandDark from "assets/images/logo-ct-dark.png";
 import logo from "assets/images/logos/Logo.svg";
 import { useAuthentication } from "hooks/useAuthentication";
+import UserLibraryProfile from "./models/UserLibraryProfile.model";
+import UserLibrary from "./models/UserLibrary.model";
+import UserLogged from "./models/UserLogged.model";
 
 export default function App() {
   const [controller, dispatch] = useMaterialUIController();
@@ -70,7 +73,7 @@ export default function App() {
     whiteSidenav,
     darkMode,
     // eslint-disable-next-line no-unused-vars
-    token: tokenContext,
+    userLogged,
     library: libraryContext,
   } = controller;
   const [onMouseEnter, setOnMouseEnter] = useState(false);
@@ -126,18 +129,37 @@ export default function App() {
   // eslint-disable-next-line consistent-return
   useEffect(() => {
     const token = localStorage.getItem("userAuthorization");
+    const libInfo = localStorage.getItem("uid");
+    const accountId = localStorage.getItem("aid");
     const libraryId = localStorage.getItem("bs-lid");
 
-    if (token) {
+    if (token && libInfo && accountId && libraryId) {
       // eslint-disable-next-line consistent-return
       authentication.validateToken(token).then((resp) => {
         if (resp === 200 && libraryId) {
-          setToken(dispatch, token);
+          const userLoggedInstance = new UserLogged(token, accountId);
+
+          JSON.parse(libInfo).forEach((lib) => {
+            const userLibProfInstance = new UserLibraryProfile(lib.profile);
+
+            const userLibInstance = new UserLibrary(lib.libraryId, lib.library, lib.userLibraryId);
+
+            userLibInstance.userProfile = userLibProfInstance;
+            userLibInstance.userLogged = userLoggedInstance;
+            userLibProfInstance.userLibrary = userLibInstance;
+            userLoggedInstance.librariesAccount = userLibInstance;
+
+            userLibProfInstance.getAllProfileData();
+          });
+
+          setUserLogged(dispatch, userLoggedInstance);
           setLibrary(dispatch, libraryId);
         } else {
           return localStorage.clear();
         }
       });
+    } else {
+      return localStorage.clear();
     }
   }, []);
 
@@ -152,15 +174,15 @@ export default function App() {
   // eslint-disable-next-line consistent-return
   useEffect(() => {
     if (pathname.indexOf("/dashboard") === 0) {
-      if (!tokenContext || !libraryContext) {
+      if (!userLogged || !libraryContext) {
         navigate("/authentication/sign-in");
       }
     } else if (pathname.indexOf("/authentication") === 0) {
-      if (tokenContext) {
+      if (userLogged) {
         navigate("/dashboard");
       }
     }
-  }, [pathname, tokenContext]);
+  }, [pathname, userLogged]);
 
   const getRoutes = (allRoutes) =>
     allRoutes.map((route) => {

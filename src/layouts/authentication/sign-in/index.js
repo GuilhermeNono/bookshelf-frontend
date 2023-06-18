@@ -36,7 +36,7 @@ import BasicLayout from "layouts/authentication/components/BasicLayout";
 import bgImage from "assets/images/bg-sign-in.svg";
 import logoImage from "assets/images/logos/Logo.svg";
 // eslint-disable-next-line no-unused-vars
-import { useMaterialUIController, setToken, setLibrary } from "context";
+import { useMaterialUIController, setLibrary } from "context";
 import { useAuthentication } from "hooks/useAuthentication";
 import MDAlert from "components/MDAlert";
 
@@ -60,7 +60,7 @@ function Basic() {
     const login = await authentication.loginUser(email, password);
     if (login != null) {
       const bslid = login.librariesAccount[0].libraryId ? login.librariesAccount[0].libraryId : 0;
-      setToken(dispatch, login.token);
+      // setToken(dispatch, login.token);
       setLibrary(dispatch, bslid);
       return navigate("/dashboard");
     }

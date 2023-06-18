@@ -43,11 +43,11 @@ function Books() {
   const [books, setBooks] = useState();
   const useLibraries = useLibrary();
   const [controller] = useMaterialUIController();
-  const { token } = controller;
+  const { userLogged, library } = controller;
 
   useEffect(() => {
-    if (token) {
-      useLibraries.getLibraryBooks(token, localStorage.getItem("bs-lid")).then((resp) => {
+    if (userLogged.token) {
+      useLibraries.getLibraryBooks(userLogged.token, library).then((resp) => {
         if (resp) {
           booksTableData(resp).then((data) => {
             setBooks(data);
@@ -55,7 +55,7 @@ function Books() {
         }
       });
     }
-  }, [token]);
+  }, [userLogged.token]);
 
   return (
     <DashboardLayout>

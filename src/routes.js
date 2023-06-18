@@ -51,6 +51,7 @@ import Pricing from "layouts/pricing";
 import Books from "layouts/books";
 import Borrowing from "./layouts/borrowing";
 import Details from "./layouts/details";
+import {} from "./helpers/auth/Permisions";
 
 const routes = [
   {
@@ -61,6 +62,7 @@ const routes = [
     route: "/",
     ignoreNav: true,
     component: <Home />,
+    authorization: null,
   },
   {
     type: "title",
@@ -70,6 +72,7 @@ const routes = [
     route: "/pricing",
     ignoreNav: true,
     component: <Pricing />,
+    authorization: null,
   },
   {
     type: "collapse",
@@ -78,6 +81,62 @@ const routes = [
     icon: <Icon fontSize="small">dashboard</Icon>,
     route: "/dashboard",
     component: <Dashboard />,
+    authorization: null,
+  },
+  {
+    type: "collapse",
+    name: "Books",
+    key: "books",
+    icon: <Icon fontSize="small">table_view</Icon>,
+    route: "/dashboard/books",
+    component: <Books />,
+    authorization: null,
+  },
+  {
+    type: "collapse",
+    name: "Loan",
+    key: "loan",
+    icon: <Icon fontSize="small">book</Icon>,
+    route: "/dashboard/borrowing",
+    component: <Borrowing />,
+    authorization: null,
+  },
+
+  {
+    type: "collapse",
+    name: "Profile",
+    key: "profile",
+    icon: <Icon fontSize="small">person</Icon>,
+    route: "/dashboard/profile",
+    component: <Profile />,
+    authorization: null,
+  },
+  {
+    type: "divider",
+    name: "Sign In",
+    key: "sign-in",
+    icon: <Icon fontSize="small">login</Icon>,
+    route: "/authentication/sign-in",
+    component: <SignIn />,
+    authorization: null,
+  },
+  {
+    type: "title",
+    name: "Sign Up",
+    key: "sign-up",
+    icon: <Icon fontSize="small">assignment</Icon>,
+    route: "/authentication/sign-up",
+    component: <SignUp />,
+    authorization: null,
+  },
+  {
+    type: "title",
+    name: "Details",
+    key: "details",
+    icon: <Icon fontSize="small">table_view</Icon>,
+    route: "/dashboard/books/details/:libId",
+    component: <Details />,
+    authorization: null,
   },
   // {
   //   type: "title",
@@ -87,22 +146,6 @@ const routes = [
   //   route: "/dashboard/tables",
   //   component: <Tables />,
   // },
-  {
-    type: "collapse",
-    name: "Books",
-    key: "books",
-    icon: <Icon fontSize="small">table_view</Icon>,
-    route: "/dashboard/books",
-    component: <Books />,
-  },
-  {
-    type: "collapse",
-    name: "Loan",
-    key: "loan",
-    icon: <Icon fontSize="small">book</Icon>,
-    route: "/dashboard/borrowing",
-    component: <Borrowing />,
-  },
   // {
   //   type: "title",
   //   name: "Billing",
@@ -119,38 +162,6 @@ const routes = [
   //   route: "/dashboard/notifications",
   //   component: <Notifications />,
   // },
-  {
-    type: "collapse",
-    name: "Profile",
-    key: "profile",
-    icon: <Icon fontSize="small">person</Icon>,
-    route: "/dashboard/profile",
-    component: <Profile />,
-  },
-  {
-    type: "divider",
-    name: "Sign In",
-    key: "sign-in",
-    icon: <Icon fontSize="small">login</Icon>,
-    route: "/authentication/sign-in",
-    component: <SignIn />,
-  },
-  {
-    type: "title",
-    name: "Sign Up",
-    key: "sign-up",
-    icon: <Icon fontSize="small">assignment</Icon>,
-    route: "/authentication/sign-up",
-    component: <SignUp />,
-  },
-  {
-    type: "title",
-    name: "Details",
-    key: "details",
-    icon: <Icon fontSize="small">table_view</Icon>,
-    route: "/dashboard/books/details/:libId",
-    component: <Details />,
-  },
   /**
    * Colapse -> Deixa visivel
    * Divider -> Deixar visivel incluindo um divisor embaixo dele

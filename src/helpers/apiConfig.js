@@ -24,6 +24,10 @@ export const APICONFIG = {
       name: "loan",
       route: "/api/v1/borrowing",
     },
+    {
+      name: "libProfile",
+      route: "/api/v1/library/profile",
+    },
   ],
 };
 

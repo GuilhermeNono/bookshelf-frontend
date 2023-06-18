@@ -51,35 +51,61 @@ function Dashboard() {
 
   const useBorrowing = useLoan();
   const useLibraries = useLibrary();
+  const filters = [
+    {
+      filterKey: "loanDateMonth",
+      operation: "eq",
+      value: 6,
+    },
+    {
+      filterKey: "loanDateYear",
+      operation: "eq",
+      value: new Date().getFullYear(),
+    },
+    {
+      filterKey: "returnDateMonth",
+      operation: "eq",
+      value: 6,
+    },
+    {
+      filterKey: "returnDateYear",
+      operation: "eq",
+      value: new Date().getFullYear(),
+    },
+  ];
 
-  const { token, library } = controller;
+  const { userLogged, library } = controller;
 
   useEffect(() => {
-    if (token && library) {
+    if (userLogged && library) {
       setReady(true);
     }
-  }, [token, library]);
+  }, [userLogged, library]);
 
   useEffect(() => {
-    useBorrowing.getLibraryLoanOfMonth(token, library).then((resp) => {
-      if (resp) {
-        setLoan(resp);
-      }
-    });
-
-    useBorrowing
-      .getLibraryLoan(token, library, [{ filterKey: "overdue", operation: "eq", value: true }])
-      .then((resp) => {
+    if (userLogged) {
+      useBorrowing.getLibraryLoan(userLogged.token, library, filters).then((resp) => {
         if (resp) {
-          setOverdue(resp.length);
+          setLoan(resp);
         }
       });
 
-    useLibraries.getLibraryBooksOfMonth(token, library).then((resp) => {
-      if (resp) {
-        setBooks(resp);
-      }
-    });
+      useBorrowing
+        .getLibraryLoan(userLogged.token, library, [
+          { filterKey: "overdue", operation: "eq", value: true },
+        ])
+        .then((resp) => {
+          if (resp) {
+            setOverdue(resp.length);
+          }
+        });
+
+      useLibraries.getLibraryBooksOfMonth(userLogged.token, library).then((resp) => {
+        if (resp) {
+          setBooks(resp);
+        }
+      });
+    }
   }, []);
 
   return ready ? (

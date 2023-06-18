@@ -8,10 +8,11 @@
     "ecmaFeatures": {
       "jsx": true
     },
-    "ecmaVersion": 12,
+    "ecmaVersion": 13,
     "sourceType": "module"
   },
   "plugins": ["react", "prettier"],
+  "ignorePatterns": ["/src/models/*.model.js"],
   "rules": {
     "prettier/prettier": [
       "error",
