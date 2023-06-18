@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useEffect, useState } from "react";
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
@@ -5,6 +6,9 @@ import {
   Alert,
   Autocomplete,
   Box,
+  Dialog,
+  DialogContent,
+  DialogTitle,
   FormControl,
   InputLabel,
   MenuItem,
@@ -53,8 +57,9 @@ function AddBook() {
   const [authors, setAuthors] = useState([]);
   const [newAuthor, setNewAuthor] = useState({ firstName: "", lastName: "", avatar: "" });
   const [allAuthors, setAllAuthors] = useState([]);
+  const [isAddAuthorPopupOpen, setAddAuthorPopupOpen] = useState(false);
 
-  // TODO - Corrigir responsividade inputs
+  // TODO - Mudar a cor do popup(dialog)
 
   // Tratar erros
   const [errors, setErrors] = useState({});
@@ -129,8 +134,8 @@ function AddBook() {
     });
   }, []);
 
-  console.log(allAuthors);
-  console.log(authors);
+  console.log("🚀 ~ file: index.js:137 ~ AddBook ~ allAuthors:", allAuthors);
+  console.log("🚀 ~ file: index.js:139 ~ AddBook ~ authors:", authors);
 
   const bookData = {
     name: bookTitle,
@@ -182,29 +187,12 @@ function AddBook() {
         .catch(() => {
           // Handle error response
         });
-      console.log(bookData);
     }
   };
 
   const handleAuthorDelete = (author) => {
     const newAuthors = authors.filter((a) => a !== author);
     setAuthors(newAuthors);
-  };
-
-  const handleNewAuthorAddition = () => {
-    if (newAuthor.firstName && newAuthor.lastName) {
-      const updatedAllAuthors = [...allAuthors, newAuthor];
-      setAllAuthors(updatedAllAuthors);
-      setAuthors([...authors, newAuthor]);
-      setNewAuthor({ firstName: "", lastName: "", avatar: "" });
-    }
-  };
-
-  const handleNewAuthorChange = (event, value) => {
-    setNewAuthor({
-      ...newAuthor,
-      [event.target.name]: value || event.target.value,
-    });
   };
 
   const renderTags = (value, getTagProps) =>
@@ -223,6 +211,32 @@ function AddBook() {
       </MDButton>
     ));
 
+  const handleOpenAddAuthorPopup = () => {
+    setAddAuthorPopupOpen(true);
+  };
+
+  const handleCloseAddAuthorPopup = () => {
+    setAddAuthorPopupOpen(false);
+  };
+
+  const handleNewAuthorChange = (event, value) => {
+    setNewAuthor({
+      ...newAuthor,
+      [event.target.name]: value || event.target.value,
+    });
+  };
+
+  const handleNewAuthorAddition = () => {
+    if (newAuthor.firstName && newAuthor.lastName) {
+      const updatedAllAuthors = [...allAuthors, newAuthor];
+      setAllAuthors(updatedAllAuthors);
+      setAuthors([...authors, newAuthor]);
+      setNewAuthor({ firstName: "", lastName: "", avatar: "" });
+
+      // Fechar o popup de adição de autor
+      setAddAuthorPopupOpen(false);
+    }
+  };
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -313,44 +327,60 @@ function AddBook() {
                           renderTags={renderTags}
                         />
                         <MDBox mt={2}>
-                          <TextField
-                            label="Novo Autor - Nome"
-                            name="firstName"
-                            value={newAuthor.firstName}
-                            onChange={handleNewAuthorChange}
-                            variant="outlined"
-                            fullWidth
-                          />
-                          <TextField
-                            sx={{ mt: 2 }}
-                            label="Novo Autor - Sobrenome"
-                            name="lastName"
-                            value={newAuthor.lastName}
-                            onChange={handleNewAuthorChange}
-                            variant="outlined"
-                            fullWidth
-                          />
-                          <TextField
-                            sx={{ mt: 2 }}
-                            label="Novo Autor - Avatar"
-                            name="avatar"
-                            value={newAuthor.avatar}
-                            onChange={handleNewAuthorChange}
-                            variant="outlined"
-                            fullWidth
-                          />
                           <MDButton
-                            sx={{ mt: 2 }}
                             variant="contained"
-                            color="info"
-                            onClick={handleNewAuthorAddition}
-                            disabled={
-                              !newAuthor.firstName || !newAuthor.lastName || !newAuthor.avatar
-                            }
-                            style={{ marginTop: "8px" }}
+                            color="primary"
+                            onClick={handleOpenAddAuthorPopup}
                           >
                             Adicionar Autor
                           </MDButton>
+                          {/* Popup de adição de autor */}
+                          <Dialog
+                            open={isAddAuthorPopupOpen}
+                            onClose={handleCloseAddAuthorPopup}
+                            sx={{ color: "#1A2E40" }}
+                          >
+                            <DialogTitle>Novo Autor</DialogTitle>
+                            <DialogContent>
+                              <TextField
+                                label="Nome"
+                                name="firstName"
+                                value={newAuthor.firstName}
+                                onChange={handleNewAuthorChange}
+                                variant="outlined"
+                                fullWidth
+                              />
+                              <TextField
+                                sx={{ mt: 2 }}
+                                label="Sobrenome"
+                                name="lastName"
+                                value={newAuthor.lastName}
+                                onChange={handleNewAuthorChange}
+                                variant="outlined"
+                                fullWidth
+                              />
+                              <TextField
+                                sx={{ mt: 2 }}
+                                label="Avatar"
+                                name="avatar"
+                                value={newAuthor.avatar}
+                                onChange={handleNewAuthorChange}
+                                variant="outlined"
+                                fullWidth
+                              />
+                              <MDButton
+                                sx={{ mt: 2 }}
+                                variant="contained"
+                                color="info"
+                                onClick={handleNewAuthorAddition}
+                                disabled={
+                                  !newAuthor.firstName || !newAuthor.lastName || !newAuthor.avatar
+                                }
+                              >
+                                Adicionar Autor
+                              </MDButton>
+                            </DialogContent>
+                          </Dialog>
                         </MDBox>
                       </MDBox>
                       <MDBox gridRow={3} sx={onlyXs && { mb: 3 }}>
