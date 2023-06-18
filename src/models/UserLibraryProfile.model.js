@@ -12,7 +12,7 @@ export default class UserLibraryProfile{
         this.#id = id;
 	}
 
-    getAllProfileData() {
+    async getAllProfileData() {
         try {
             const headers = {
                 "Content-Type": "application/json",
@@ -37,7 +37,7 @@ export default class UserLibraryProfile{
     }
 
     addPermissions(newPermission) {
-        newPermission.forEach(({description, code}) => {
+            newPermission.forEach(({description, code}) => {
                 this.#permissions.push(new UserLibraryProfilePermission(description, code));
         });
     }
@@ -49,12 +49,20 @@ export default class UserLibraryProfile{
         this.#userLibrary = userLibraryInstance;
     }
 
+    set permissions(permissionss) {
+        this.#permissions = permissionss;
+    }
+
+    set nameProfile(nameProfiles) {
+        this.#nameProfile = nameProfiles;
+    }
+
     get id() {
         return this.#id;
     }
 
     get nameProfile() {
-        return this.nameProfile;
+        return this.#nameProfile;
     }
 
     get permissions() {

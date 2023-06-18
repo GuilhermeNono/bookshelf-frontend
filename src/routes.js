@@ -51,7 +51,7 @@ import Pricing from "layouts/pricing";
 import Books from "layouts/books";
 import Borrowing from "./layouts/borrowing";
 import Details from "./layouts/details";
-import {} from "./helpers/auth/Permisions";
+import { PERM_BOOKSHELF_LIB_DASH_ADMIN } from "./helpers/auth/Permisions";
 
 const routes = [
   {
@@ -81,7 +81,7 @@ const routes = [
     icon: <Icon fontSize="small">dashboard</Icon>,
     route: "/dashboard",
     component: <Dashboard />,
-    authorization: null,
+    authorization: PERM_BOOKSHELF_LIB_DASH_ADMIN,
   },
   {
     type: "collapse",

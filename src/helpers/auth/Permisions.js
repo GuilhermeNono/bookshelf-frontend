@@ -10,7 +10,7 @@ export const ROLE_LIBRARY_ADMIN = "bookshelf_library:admin";
 
 // Bookshelf library permissions
 export const PERM_BOOKSHELF_LIB_DASH_USER = "bookshelf_lib:dashboard_user";
-export const PERM_BOOKSHELF_LIB_DASH_ADMIN = "bookshelf_lib:dashboard_admin";
+export const PERM_BOOKSHELF_LIB_DASH_ADMIN = "BOOKSHELF_LIBRARY:USERS";
 export const PERM_BOOKSHELF_LIB_BOOKS = "bookshelf_lib:dashboard_books";
 export const PERM_BOOKSHELF_LIB_BOOKS_DETAIL = "bookshelf_lib:dashboard_books_detail";
 export const PERM_BOOKSHELF_LIB_BOOKS_COPY_ADD = "bookshelf_lib:dashboard_books_copy_add";

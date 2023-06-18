@@ -25,6 +25,10 @@ export default class UserLibrary {
         return this.#name;
     }
 
+    get id() {
+        return this.#id;
+    }
+
     get libraryId() {
         return this.#id;
     }

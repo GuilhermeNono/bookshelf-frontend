@@ -61,7 +61,7 @@ export const useAuthentication = () => {
 
     const req = fetch(ApiRouteBuild.buildRoute("authentication"), requestOptions)
       .then(handleResponse)
-      .then((user) => {
+      .then(async (user) => {
         const bslid = user.librariesAccount[0].libraryId ? user.librariesAccount[0].libraryId : 0;
 
         localStorage.setItem("userAuthorization", user.token);
@@ -73,7 +73,7 @@ export const useAuthentication = () => {
 
         const userLoggedInstance = new UserLogged(user.token, user.accountId);
 
-        user.librariesAccount.forEach((lib) => {
+        user.librariesAccount.forEach(async (lib) => {
           const userLibProfInstance = new UserLibraryProfile(lib.profile);
 
           const userLibInstance = new UserLibrary(lib.libraryId, lib.library, lib.userLibraryId);
@@ -83,7 +83,7 @@ export const useAuthentication = () => {
           userLibProfInstance.userLibrary = userLibInstance;
           userLoggedInstance.librariesAccount = userLibInstance;
 
-          userLibProfInstance.getAllProfileData();
+          await userLibProfInstance.getAllProfileData();
         });
 
         // setToken(dispatch, user.token);

@@ -57,6 +57,8 @@ import { useMaterialUIController, setMiniSidenav, setLibrary, setUserLogged } fr
 // import brandDark from "assets/images/logo-ct-dark.png";
 import logo from "assets/images/logos/Logo.svg";
 import { useAuthentication } from "hooks/useAuthentication";
+import { usePermission } from "helpers/auth/hasPermission";
+import { getPerm } from "util/PermissionAPI";
 import UserLibraryProfile from "./models/UserLibraryProfile.model";
 import UserLibrary from "./models/UserLibrary.model";
 import UserLogged from "./models/UserLogged.model";
@@ -79,9 +81,11 @@ export default function App() {
   const [onMouseEnter, setOnMouseEnter] = useState(false);
   // eslint-disable-next-line no-unused-vars
   const [rtlCache, setRtlCache] = useState(null);
+  const [alreadyUp, setAlreadyUp] = useState(false);
   // eslint-disable-next-line no-unused-vars
   const [bsLidState, setBsLidState] = useState(localStorage.getItem("bs-lid"));
   const { pathname } = useLocation();
+  const { hasPermission } = usePermission();
   // eslint-disable-next-line no-unused-vars
   const navigate = useNavigate();
   const authentication = useAuthentication();
@@ -140,6 +144,8 @@ export default function App() {
           const userLoggedInstance = new UserLogged(token, accountId);
 
           JSON.parse(libInfo).forEach((lib) => {
+            console.log("🚀 ~ file: App.js:145 ~ JSON.parse ~ lib:", lib);
+
             const userLibProfInstance = new UserLibraryProfile(lib.profile);
 
             const userLibInstance = new UserLibrary(lib.libraryId, lib.library, lib.userLibraryId);
@@ -149,11 +155,19 @@ export default function App() {
             userLibProfInstance.userLibrary = userLibInstance;
             userLoggedInstance.librariesAccount = userLibInstance;
 
-            userLibProfInstance.getAllProfileData();
+            getPerm(token, lib.profile).then((resps) => {
+              userLibProfInstance.nameProfile = resps.name;
+              userLibProfInstance.permissions = resps.libraryPermissions;
+            });
           });
 
-          setUserLogged(dispatch, userLoggedInstance);
+          console.log(
+            "🚀 ~ file: App.js:141 ~ authentication.validateToken ~ userLoggedInstance:",
+            userLoggedInstance
+          );
           setLibrary(dispatch, libraryId);
+          setAlreadyUp(true);
+          setUserLogged(dispatch, userLoggedInstance);
         } else {
           return localStorage.clear();
         }
@@ -184,7 +198,28 @@ export default function App() {
     }
   }, [pathname, userLogged]);
 
+  useEffect(() => {
+    if (alreadyUp && userLogged instanceof UserLogged) {
+      if (userLogged.librariesAccount[0].userProfile) {
+        // TODO: PRECISO FAZER COM QUE AS AUTORIDADES DAS ROTAS SEJAM CHECADAS
+        // TODO: A APLICAÇÃO NÃO ESTA CONSEGUINDO LER O VALOR DE userLogged.librariesAccount[0].userProfile.permission em hasPermission
+        let newRoutes = [];
+        routes.forEach((route) => {
+          const hasPermissionOnContext = hasPermission(route.authorization);
+          console.log(!hasPermission(route.authorization));
+          if (hasPermissionOnContext === true) {
+            console.log("entrou");
+            newRoutes = routes.filter((item) => item !== route);
+          }
+        });
+        console.log("🚀 ~ file: App.js:200 ~ routes.forEach ~ routes:", newRoutes);
+        setAlreadyUp(false);
+      }
+    }
+  }, [alreadyUp, userLogged]);
+
   const getRoutes = (allRoutes) =>
+    // eslint-disable-next-line array-callback-return, consistent-return
     allRoutes.map((route) => {
       if (route.collapse) {
         return getRoutes(route.collapse);
