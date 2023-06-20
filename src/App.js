@@ -252,7 +252,7 @@ export default function App() {
         </>
       )}
       {layout === "vr" && <Configurator />}
-      {layout === "home" && (
+      {layout === "home" ? (
         <>
           <MDHeader />
           <Routes>
@@ -261,11 +261,12 @@ export default function App() {
           </Routes>
           <MDFooter />
         </>
+      ) : (
+        <Routes>
+          {getRoutes(routes)}
+          <Route path="*" element={<Navigate to="/dashboard" />} />
+        </Routes>
       )}
-      <Routes>
-        {getRoutes(routes)}
-        <Route path="*" element={<Navigate to="/dashboard" />} />
-      </Routes>
     </ThemeProvider>
   );
 }

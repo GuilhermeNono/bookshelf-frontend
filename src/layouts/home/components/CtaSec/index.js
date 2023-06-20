@@ -1,15 +1,13 @@
-import {
-  Btn,
-  CenterText,
-  CtaContent,
-  CtaImage,
-  CtaSec,
-  CtaText,
-} from "assets/styledComponents/homeStyles";
+import { CenterText, CtaSec, CtaText } from "assets/styledComponents/homeStyles";
 
-// import dashSvg from "assets/images/dash.svg";
+import dashPng from "assets/images/dash.png";
+import MDBox from "components/MDBox";
+import { Box, Grid, useMediaQuery, useTheme } from "@mui/material";
 
 function CtaSection() {
+  const theme = useTheme();
+  const downLg = useMediaQuery(theme.breakpoints.down("lg"));
+
   return (
     <CtaSec>
       <CenterText>
@@ -17,8 +15,35 @@ function CtaSection() {
         <h2>Painel para todos os usuario</h2>
       </CenterText>
 
-      <CtaContent>
-        <CtaImage>{/* <img src={dashSvg} alt="dash" /> */}</CtaImage>
+      <Grid
+        container
+        sx={
+          downLg
+            ? { display: "block" }
+            : {
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr",
+                gap: "2rem",
+                alignItems: "center",
+                marginTop: "4rem",
+                borderRadius: "15px",
+              }
+        }
+      >
+        <Box sx={{ display: "flex", justifyContent: "center" }}>
+          <MDBox
+            lg={2}
+            component="img"
+            sx={{
+              width: "400px",
+              maxWidth: "100%",
+              height: "auto",
+              maxHeight: "100%",
+            }}
+            src={dashPng}
+            alt="cape"
+          />
+        </Box>
         <CtaText>
           <h2>Painel de controle para todo o tipo de usuario</h2>
           <p>
@@ -30,11 +55,8 @@ function CtaSection() {
             serviços diretamente da nossa <strong>Dashboard</strong>, trazendo assim maior controle
             e velocidade durante o gerencimento do estabelecimento.
           </p>
-          <h3>Deixe a gente te ajudar nessas tarefas</h3>
-          <h4>Junte-se a Bookshelf</h4>
-          <Btn href="/authentication/sign-up">Contratar Serviços</Btn>
         </CtaText>
-      </CtaContent>
+      </Grid>
     </CtaSec>
   );
 }

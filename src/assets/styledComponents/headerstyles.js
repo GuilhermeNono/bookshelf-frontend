@@ -62,6 +62,7 @@ export const NavBar = styled.ul`
 
   & a:hover {
     color: #1b8ef2;
+    transform: translateY(-5px);
   }
 
   @media (max-width: 1025px) {
@@ -69,23 +70,18 @@ export const NavBar = styled.ul`
     top: 100%;
     right: -100%;
     width: 300px;
-    height: 110vh;
-    background: #1b8ef2;
+    height: 100vh;
+    background: #426f96;
     display: flex;
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    padding: 170px 30px;
     transition: all 0.4s ease;
 
     a {
       display: block;
       margin: 1.3rem 0;
-      color: #335675;
-    }
-    a:hover {
-      color: #335675;
-      transform: translateY(-5px);
+      color: #cecece;
     }
     &.open {
       right: 0;
