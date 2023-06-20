@@ -33,7 +33,7 @@ function ContactSection() {
   };
 
   return (
-    <ContactSec>
+    <ContactSec id="contact">
       <ContactText>
         <h2>Ficou com alguma duvida?</h2>
         <p>
@@ -51,7 +51,7 @@ function ContactSection() {
 
         <ContainerContact>
           <IconContact>
-            <img src={email} alt="phone" />
+            <img src={email} alt="email" />
             <h4>E-mail</h4>
           </IconContact>
           <h6>Bookshelf@support.com</h6>
@@ -59,7 +59,7 @@ function ContactSection() {
 
         <ContainerContact>
           <IconContact>
-            <img src={location} alt="phone" />
+            <img src={location} alt="location" />
             <h4>Location</h4>
           </IconContact>
           <h6>Blablabla 402, Jorge mauricio, Barra bonita, BR</h6>

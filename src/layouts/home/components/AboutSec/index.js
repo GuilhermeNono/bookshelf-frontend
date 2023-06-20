@@ -9,7 +9,7 @@ function AboutSection() {
   const downLg = useMediaQuery(theme.breakpoints.down("lg"));
 
   return (
-    <AboutSec>
+    <AboutSec id="about">
       <CenterText>
         <h5>Sobre nós</h5>
         <h2>Saiba um pouco mais sobre a Bookshelf</h2>

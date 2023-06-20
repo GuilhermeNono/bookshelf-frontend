@@ -15,7 +15,7 @@ import categoryFour from "assets/images/cate4.svg";
 
 function CategoriesSection() {
   return (
-    <Categories>
+    <Categories id="categories">
       <CenterText>
         <h5>Serviços</h5>
         <h2>Principais Serviços</h2>
@@ -48,7 +48,7 @@ function CategoriesSection() {
       </CategoriesContent>
 
       <MainBtn>
-        <Btn href="#">Contratar serviços</Btn>
+        <Btn href="/pricing">Contratar serviços</Btn>
       </MainBtn>
     </Categories>
   );

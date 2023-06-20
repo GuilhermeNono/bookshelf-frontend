@@ -9,7 +9,7 @@ import MDButton from "../../../../components/MDButton";
 function HomeSection() {
   const downMd = useMediaQuery(theme.breakpoints.down("md"));
   return (
-    <HomeSec>
+    <HomeSec id="home">
       <MDBox>
         <MDTypography
           variant="h6"
@@ -63,7 +63,13 @@ function HomeSection() {
           Seja o dono do seu futuro aprendendo novas habilidades online
         </MDTypography>
         <MDBox mt={3}>
-          <MDButton type="submit" color="info" size="large" sx={{ borderRadius: "20px" }}>
+          <MDButton
+            href="/authentication/sign-up"
+            type="submit"
+            color="info"
+            size="large"
+            sx={{ borderRadius: "20px" }}
+          >
             Cadastre-se na Bookshelf
           </MDButton>
         </MDBox>
