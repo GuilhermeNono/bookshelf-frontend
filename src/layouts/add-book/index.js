@@ -26,10 +26,12 @@ import MDButton from "components/MDButton";
 import capePlaceholder from "assets/images/capePlaceholder.png";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
+
 import Footer from "examples/Footer";
 import { useBooks } from "hooks/useBooks";
 import { useMaterialUIController } from "context";
-import Header from "./components/Header";
+import Header from "layouts/add-copy/components/Header";
+import BackButton from "layouts/add-copy/components/BackButton";
 
 function AddBook() {
   const theme = useTheme();
@@ -252,6 +254,7 @@ function AddBook() {
             <Card>
               <Header />
               <MDBox ml={3}>
+                <BackButton />
                 <MDTypography variant="h2" fontWeight="medium" color="info" mt={4}>
                   Adicionar Livro
                 </MDTypography>

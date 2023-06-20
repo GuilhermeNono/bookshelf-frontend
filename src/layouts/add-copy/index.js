@@ -33,7 +33,8 @@ import capePlaceholder from "assets/images/capePlaceholder.png";
 
 import { useBooks } from "hooks/useBooks";
 import Alert from "@mui/material/Alert";
-import Header from "components/MDHeader";
+import Header from "./components/Header";
+import BackButton from "./components/BackButton";
 
 function AddCopy() {
   const [controller] = useMaterialUIController();
@@ -92,7 +93,6 @@ function AddCopy() {
 
   return (
     <DashboardLayout>
-      <DashboardNavbar />
       <Snackbar
         open={showSuccessAlert}
         autoHideDuration={3000}
@@ -107,6 +107,7 @@ function AddCopy() {
           Cópia adicionada com sucesso!
         </Alert>
       </Snackbar>
+
       <Snackbar
         open={showErrorAlert}
         autoHideDuration={3000}
@@ -121,12 +122,15 @@ function AddCopy() {
           Por favor, selecione um título e insira um tombo antes de adicionar uma cópia.
         </Alert>
       </Snackbar>
+
+      <DashboardNavbar />
       <MDBox pt={6} pb={3}>
         <Grid container spacing={6}>
           <Grid item xs={12}>
             <Card>
               <Header />
               <MDBox ml={3}>
+                <BackButton />
                 <MDTypography variant="h2" fontWeight="medium" color="info" mt={4}>
                   Adicionar Cópia
                 </MDTypography>
