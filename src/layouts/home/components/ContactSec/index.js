@@ -33,7 +33,7 @@ function ContactSection() {
   };
 
   return (
-    <ContactSec id="contact">
+    <ContactSec>
       <ContactText>
         <h2>Ficou com alguma duvida?</h2>
         <p>

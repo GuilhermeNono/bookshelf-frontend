@@ -1,27 +1,49 @@
-import {
-  Btn,
-  CenterText,
-  AboutContent,
-  AboutSec,
-  AboutText,
-  AboutImage,
-} from "assets/styledComponents/homeStyles";
+import { CenterText, AboutSec, AboutText } from "assets/styledComponents/homeStyles";
 
 import about from "assets/images/about.png";
+import MDBox from "components/MDBox";
+import { Box, Grid, useMediaQuery, useTheme } from "@mui/material";
 
 function AboutSection() {
+  const theme = useTheme();
+  const downLg = useMediaQuery(theme.breakpoints.down("lg"));
+
   return (
-    <AboutSec id="about">
+    <AboutSec>
       <CenterText>
         <h5>Sobre nós</h5>
         <h2>Saiba um pouco mais sobre a Bookshelf</h2>
       </CenterText>
 
-      <AboutContent>
-        <AboutImage>
-          <img src={about} alt="about" />
-        </AboutImage>
-
+      <Grid
+        container
+        sx={
+          downLg
+            ? { display: "block" }
+            : {
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr",
+                gap: "2rem",
+                alignItems: "center",
+                marginTop: "4rem",
+                borderRadius: "15px",
+              }
+        }
+      >
+        <Box sx={{ display: "flex", justifyContent: "center" }}>
+          <MDBox
+            lg={2}
+            component="img"
+            sx={{
+              width: "400px",
+              maxWidth: "100%",
+              height: "auto",
+              maxHeight: "100%",
+            }}
+            src={about}
+            alt="cape"
+          />
+        </Box>
         <AboutText>
           <h2>Oque é a Bookshelf</h2>
           <p>
@@ -34,13 +56,8 @@ function AboutSection() {
           </p>
           <h4>Prezamos pela qualidade</h4>
           <h5>Sempre trazendo novidades</h5>
-          <Btn href="/register">Crie sua conta</Btn>
         </AboutText>
-      </AboutContent>
-
-      {/* <MainBtn>
-      <Btn href="#">Buy Now</Btn>
-    </MainBtn> */}
+      </Grid>
     </AboutSec>
   );
 }

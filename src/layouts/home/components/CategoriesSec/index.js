@@ -15,7 +15,7 @@ import categoryFour from "assets/images/cate4.svg";
 
 function CategoriesSection() {
   return (
-    <Categories id="categories">
+    <Categories>
       <CenterText>
         <h5>Serviços</h5>
         <h2>Principais Serviços</h2>
