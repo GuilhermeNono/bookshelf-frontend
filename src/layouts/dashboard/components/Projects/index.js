@@ -32,6 +32,7 @@ import DataTable from "examples/Tables/DataTable";
 import data from "layouts/dashboard/components/Projects/data";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
+import { Box, CircularProgress } from "@mui/material";
 
 // eslint-disable-next-line react/prop-types
 function RecentBooks({ books }) {
@@ -160,6 +161,16 @@ function RecentBooks({ books }) {
               verticalAlign="middle"
             >
               Não temos registro de novos livros nesse mês até o momento.
+              <Box
+                sx={{
+                  height: 100,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <CircularProgress />
+              </Box>
             </MDTypography>
           </MDBox>
         )}

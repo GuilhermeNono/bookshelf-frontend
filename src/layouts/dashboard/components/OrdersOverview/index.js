@@ -22,7 +22,7 @@ import Icon from "@mui/material/Icon";
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import { useEffect, useState } from "react";
-import { Menu, MenuItem } from "@mui/material";
+import { Box, CircularProgress, Menu, MenuItem } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import data from "./data";
 import DataTable from "../../../../examples/Tables/DataTable";
@@ -131,6 +131,16 @@ function OrdersOverview({ loanList }) {
                 verticalAlign="middle"
               >
                 Não temos registro de emprestimos nesse mês até o momento.
+                <Box
+                  sx={{
+                    height: 100,
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <CircularProgress />
+                </Box>
               </MDTypography>
             </MDBox>
           )}

@@ -63,7 +63,6 @@ export default async function data(books) {
 
   const handleDataTableRows = () => {
     const booksRow = [];
-    console.log(books);
     if (books.length > 0) {
       // eslint-disable-next-line no-plusplus
       for (let i = 0; i < (books.length > 6 ? 6 : books.length); i++) {

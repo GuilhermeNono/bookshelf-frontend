@@ -12,7 +12,7 @@
     "sourceType": "module"
   },
   "plugins": ["react", "prettier"],
-  "ignorePatterns": ["/src/models/*.model.js"],
+  // "ignorePatterns": ["/src/models/*.model.js"],
   "rules": {
     "prettier/prettier": [
       "error",

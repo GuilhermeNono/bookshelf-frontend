@@ -6,8 +6,6 @@ import { BehaviorSubject } from "rxjs";
 import { useEffect, useState } from "react";
 // import defaultHeader from "../helpers/HeaderHelp";
 import UserLogged from "models/UserLogged.model";
-import UserLibrary from "models/UserLibrary.model";
-import UserLibraryProfile from "models/UserLibraryProfile.model";
 import ApiRouteBuild from "../helpers/ApiRouteBuild";
 
 export const useAuthentication = () => {
@@ -71,25 +69,11 @@ export const useAuthentication = () => {
 
         currentUserSubject.next(user.token);
 
-        const userLoggedInstance = new UserLogged(user.token, user.accountId);
-
-        user.librariesAccount.forEach(async (lib) => {
-          const userLibProfInstance = new UserLibraryProfile(lib.profile);
-
-          const userLibInstance = new UserLibrary(lib.libraryId, lib.library, lib.userLibraryId);
-
-          userLibInstance.userProfile = userLibProfInstance;
-          userLibInstance.userLogged = userLoggedInstance;
-          userLibProfInstance.userLibrary = userLibInstance;
-          userLoggedInstance.librariesAccount = userLibInstance;
-
-          await userLibProfInstance.getAllProfileData();
-        });
-
-        // setToken(dispatch, user.token);
+        const libraries = user.librariesAccount;
+        const userLoggedIns = new UserLogged(user.token, user.accountId, libraries);
+        setUserLogged(dispatch, userLoggedIns);
         setError(null);
         setLoading(false);
-        setUserLogged(dispatch, userLoggedInstance);
         return user;
       })
       .catch(() => {
@@ -215,6 +199,10 @@ export const useAuthentication = () => {
     return req;
   };
 
+  const logOut = () => {
+    localStorage.clear();
+  };
+
   useEffect(() => {
     setCancelled(true);
     // setError("");
@@ -225,6 +213,7 @@ export const useAuthentication = () => {
     createUser,
     validateToken,
     userData,
+    logOut,
     error,
     loading,
   };

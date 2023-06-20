@@ -1,32 +1,42 @@
-import UserLibrary from "./UserLibrary.model";
-
+/**
+ * @summary Essa classe faz referencia ao usuario que está logado no momento. Na classe possuem todas as informações do usuario.
+ */
 export default class UserLogged {
+  #token;
 
-    #token;
-    #accountId;
-    #librariesAccount = [];
+  #accountId;
 
-    constructor(token = "", accountId = 0) {
-        this.#token = token;
-        this.#accountId = accountId;
-    }
+  #librariesAccount = [];
 
-    /**
-     * @param {UserLibrary[]} librariesAccountInstance
-     */
-    set librariesAccount(librariesAccountInstance) {
-        this.#librariesAccount.push(librariesAccountInstance);
-    }
+  /**
+   * @constructor
+   * @param {string} token - Token de acesso
+   * @param {number} accountId - Id da conta do usuario
+   * @param {Array} libraries - Bibliotecas pertencentes ao usuario
+   */
+  constructor(token = "", accountId = 0, libraries = []) {
+    this.#token = token;
+    this.#accountId = accountId;
+    this.#librariesAccount = libraries;
+  }
 
-    get token() {
-        return this.#token;
-    }
+  /**
+   * @param {Array} librariesAccountInstance
+   */
+  set librariesAccount(librariesAccountInstance) {
+    // this.#librariesAccount.push(librariesAccountInstance);
+    this.#librariesAccount = librariesAccountInstance;
+  }
 
-    get accountId() {
-        return this.#accountId;
-    }
+  get librariesAccount() {
+    return this.#librariesAccount;
+  }
 
-    get librariesAccount() {
-        return this.#librariesAccount;
-    }
+  get token() {
+    return this.#token;
+  }
+
+  get accountId() {
+    return this.#accountId;
+  }
 }

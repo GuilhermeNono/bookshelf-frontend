@@ -51,11 +51,21 @@ import Pricing from "layouts/pricing";
 import Books from "layouts/books";
 import Borrowing from "./layouts/borrowing";
 import Details from "./layouts/details";
-import { PERM_BOOKSHELF_LIB_DASH_ADMIN } from "./helpers/auth/Permisions";
+import {
+  PERM_BOOKSHELF_LIB_BOOKS,
+  PERM_BOOKSHELF_LIB_BOOKS_DETAIL,
+  PERM_BOOKSHELF_LIB_DASH_ADMIN,
+  // PERM_BOOKSHELF_LIB_DASH_USER,
+  PERM_BOOKSHELF_LIB_LOAN,
+  PERM_BOOKSHELF_LIB_PROFILE,
+  ROLE_LIBRARY_ADMIN,
+  // ROLE_LIBRARY_USER,
+} from "./helpers/auth/Permisions";
+import Converter from "./util/Converter";
 
-const routes = [
+const routesJson = [
   {
-    type: "title",
+    type: "blocked",
     name: "Home",
     key: "home",
     icon: <Icon fontSize="small">dashboard</Icon>,
@@ -63,9 +73,10 @@ const routes = [
     ignoreNav: true,
     component: <Home />,
     authorization: null,
+    profile: null,
   },
   {
-    type: "title",
+    type: "blocked",
     name: "pricing",
     key: "pricing",
     icon: <Icon fontSize="small">dashboard</Icon>,
@@ -73,16 +84,28 @@ const routes = [
     ignoreNav: true,
     component: <Pricing />,
     authorization: null,
+    profile: null,
   },
   {
     type: "collapse",
     name: "Dashboard",
-    key: "dashboard",
+    key: "dashboard_adm",
     icon: <Icon fontSize="small">dashboard</Icon>,
     route: "/dashboard",
     component: <Dashboard />,
     authorization: PERM_BOOKSHELF_LIB_DASH_ADMIN,
+    profile: ROLE_LIBRARY_ADMIN,
   },
+  // {
+  //   type: "collapse",
+  //   name: "Dashboard",
+  //   key: "dashboard_user",
+  //   icon: <Icon fontSize="small">dashboard</Icon>,
+  //   route: "/dashboard",
+  //   component: <Dashboard />,
+  //   authorization: PERM_BOOKSHELF_LIB_DASH_USER,
+  //   profile: ROLE_LIBRARY_USER,
+  // },
   {
     type: "collapse",
     name: "Books",
@@ -90,7 +113,8 @@ const routes = [
     icon: <Icon fontSize="small">table_view</Icon>,
     route: "/dashboard/books",
     component: <Books />,
-    authorization: null,
+    authorization: PERM_BOOKSHELF_LIB_BOOKS,
+    profile: null,
   },
   {
     type: "collapse",
@@ -99,9 +123,39 @@ const routes = [
     icon: <Icon fontSize="small">book</Icon>,
     route: "/dashboard/borrowing",
     component: <Borrowing />,
-    authorization: null,
+    authorization: PERM_BOOKSHELF_LIB_LOAN,
+    profile: ROLE_LIBRARY_ADMIN,
   },
-
+  {
+    type: "blocked",
+    name: "Sign In",
+    key: "sign-in",
+    icon: <Icon fontSize="small">login</Icon>,
+    route: "/authentication/sign-in",
+    component: <SignIn />,
+    authorization: null,
+    profile: null,
+  },
+  {
+    type: "blocked",
+    name: "Sign Up",
+    key: "sign-up",
+    icon: <Icon fontSize="small">assignment</Icon>,
+    route: "/authentication/sign-up",
+    component: <SignUp />,
+    authorization: null,
+    profile: null,
+  },
+  {
+    type: "blocked",
+    name: "Details",
+    key: "details",
+    icon: <Icon fontSize="small">table_view</Icon>,
+    route: "/dashboard/books/details/:libId",
+    component: <Details />,
+    authorization: PERM_BOOKSHELF_LIB_BOOKS_DETAIL,
+    profile: null,
+  },
   {
     type: "collapse",
     name: "Profile",
@@ -109,34 +163,8 @@ const routes = [
     icon: <Icon fontSize="small">person</Icon>,
     route: "/dashboard/profile",
     component: <Profile />,
-    authorization: null,
-  },
-  {
-    type: "divider",
-    name: "Sign In",
-    key: "sign-in",
-    icon: <Icon fontSize="small">login</Icon>,
-    route: "/authentication/sign-in",
-    component: <SignIn />,
-    authorization: null,
-  },
-  {
-    type: "title",
-    name: "Sign Up",
-    key: "sign-up",
-    icon: <Icon fontSize="small">assignment</Icon>,
-    route: "/authentication/sign-up",
-    component: <SignUp />,
-    authorization: null,
-  },
-  {
-    type: "title",
-    name: "Details",
-    key: "details",
-    icon: <Icon fontSize="small">table_view</Icon>,
-    route: "/dashboard/books/details/:libId",
-    component: <Details />,
-    authorization: null,
+    authorization: PERM_BOOKSHELF_LIB_PROFILE,
+    profile: null,
   },
   // {
   //   type: "title",
@@ -169,5 +197,7 @@ const routes = [
    * */
   // http://localhost:8000/dashboard/books/detail/1475
 ];
+
+const routes = Converter.JsonRouteToRoutObject(routesJson);
 
 export default routes;

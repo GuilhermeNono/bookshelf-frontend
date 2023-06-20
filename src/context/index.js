@@ -71,6 +71,9 @@ function reducer(state, action) {
     case "CURRENTBOOK": {
       return { ...state, currentBook: action.value };
     }
+    case "ROUTES": {
+      return { ...state, routes: action.value };
+    }
     case "NEWESTBOOKCOUNT": {
       return { ...state, currentBook: action.value };
     }
@@ -99,6 +102,7 @@ function MaterialUIControllerProvider({ children }) {
     userLogged: null,
     library: 0,
     currentBook: "",
+    routes: [],
     newestBookCount: 0,
     newestLoanCount: 0,
   };
@@ -142,6 +146,7 @@ const setDarkMode = (dispatch, value) => dispatch({ type: "DARKMODE", value });
 const setUserLogged = (dispatch, value) => dispatch({ type: "USERLOGGED", value });
 const setLibrary = (dispatch, value) => dispatch({ type: "LIBRARY", value });
 const setCurrentBook = (dispatch, value) => dispatch({ type: "CURRENTBOOK", value });
+const setRoutes = (dispatch, value) => dispatch({ type: "ROUTES", value });
 const setNewestBookCount = (dispatch, value) => dispatch({ type: "NEWESTBOOKCOUNT", value });
 const setNewestLoanCount = (dispatch, value) => dispatch({ type: "NEWESTLOANCOUNT", value });
 
@@ -154,6 +159,7 @@ export {
   setTransparentSidenav,
   setWhiteSidenav,
   setSidenavColor,
+  setRoutes,
   setTransparentNavbar,
   setFixedNavbar,
   setOpenConfigurator,
