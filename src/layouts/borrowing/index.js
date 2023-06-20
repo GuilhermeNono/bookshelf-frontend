@@ -32,13 +32,13 @@ import MDButton from "components/MDButton";
 function borrowing() {
   const useLoans = useLoan();
   const [controller] = useMaterialUIController();
-  const { token, library } = controller;
+  const { userLogged, library } = controller;
 
   const [loans, setLoans] = useState();
 
   useEffect(() => {
-    if (token) {
-      useLoans.getLibraryLoan(token, library).then((resp) => {
+    if (userLogged) {
+      useLoans.getLibraryLoan(userLogged.token, library).then((resp) => {
         if (resp) {
           borrowingTableData(resp).then((data) => {
             setLoans(data);
@@ -46,7 +46,7 @@ function borrowing() {
         }
       });
     }
-  }, [token]);
+  }, [userLogged]);
 
   return (
     <DashboardLayout>

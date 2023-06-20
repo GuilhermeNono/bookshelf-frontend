@@ -14,7 +14,7 @@ Coded by www.creative-tim.com
 */
 
 // eslint-disable-next-line no-unused-vars
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useLayoutEffect } from "react";
 
 // react-router components
 import { Routes, Route, Navigate, useLocation, useNavigate } from "react-router-dom";
@@ -47,16 +47,26 @@ import { CacheProvider } from "@emotion/react";
 import createCache from "@emotion/cache";
 
 // Material Dashboard 2 React routes
+// eslint-disable-next-line no-unused-vars
 import routes from "routes";
 
 // Material Dashboard 2 React contexts
-import { useMaterialUIController, setMiniSidenav, setToken, setLibrary } from "context";
+import {
+  useMaterialUIController,
+  // eslint-disable-next-line no-unused-vars
+  setMiniSidenav,
+  // eslint-disable-next-line no-unused-vars
+  setLibrary,
+  // eslint-disable-next-line no-unused-vars
+  setUserLogged,
+} from "context";
 
-// Images
-// import brandWhite from "assets/images/logo-ct.png";
-// import brandDark from "assets/images/logo-ct-dark.png";
 import logo from "assets/images/logos/Logo.svg";
 import { useAuthentication } from "hooks/useAuthentication";
+// eslint-disable-next-line no-unused-vars
+import PrivateRoute from "./components/ProtectedRouter/RouteBasedPermission";
+// eslint-disable-next-line no-unused-vars
+import UserLogged from "./models/UserLogged.model";
 
 export default function App() {
   const [controller, dispatch] = useMaterialUIController();
@@ -70,15 +80,22 @@ export default function App() {
     whiteSidenav,
     darkMode,
     // eslint-disable-next-line no-unused-vars
-    token: tokenContext,
+    userLogged,
+    // eslint-disable-next-line no-unused-vars
     library: libraryContext,
+    // routes,
   } = controller;
   const [onMouseEnter, setOnMouseEnter] = useState(false);
   // eslint-disable-next-line no-unused-vars
   const [rtlCache, setRtlCache] = useState(null);
   // eslint-disable-next-line no-unused-vars
+  const [alreadyUp, setAlreadyUp] = useState(false);
+
+  // eslint-disable-next-line no-unused-vars
   const [bsLidState, setBsLidState] = useState(localStorage.getItem("bs-lid"));
+  // eslint-disable-next-line no-unused-vars
   const { pathname } = useLocation();
+  // const { hasPermission } = usePermission();
   // eslint-disable-next-line no-unused-vars
   const navigate = useNavigate();
   const authentication = useAuthentication();
@@ -109,66 +126,99 @@ export default function App() {
     }
   };
 
-  // Change the openConfigurator state
-  // const handleConfiguratorOpen = () => setOpenConfigurator(dispatch, !openConfigurator);
-
-  // Setting the dir attribute for the body element
-  useEffect(() => {
-    document.body.setAttribute("dir", direction);
-  }, [direction]);
-
-  // Setting page scroll to 0 when changing the route
-  useEffect(() => {
-    document.documentElement.scrollTop = 0;
-    document.scrollingElement.scrollTop = 0;
-  }, [pathname]);
-
   // eslint-disable-next-line consistent-return
   useEffect(() => {
+    // setRoutes(dispatch, routesFile);
     const token = localStorage.getItem("userAuthorization");
+    const libInfo = localStorage.getItem("uid");
+    const accountId = localStorage.getItem("aid");
+    const accountProf = localStorage.getItem("aprof");
     const libraryId = localStorage.getItem("bs-lid");
 
-    if (token) {
+    if (token && libInfo && accountId && libraryId) {
       // eslint-disable-next-line consistent-return
       authentication.validateToken(token).then((resp) => {
         if (resp === 200 && libraryId) {
-          setToken(dispatch, token);
+          const libObj = JSON.parse(libInfo);
+          const userLoggedIns = new UserLogged(token, accountId, libObj, accountProf);
+          setUserLogged(dispatch, userLoggedIns);
           setLibrary(dispatch, libraryId);
+          navigate("/dashboard");
         } else {
+          setAlreadyUp(true);
           return localStorage.clear();
         }
       });
+    } else {
+      setAlreadyUp(true);
+      return localStorage.clear();
     }
+    setAlreadyUp(true);
   }, []);
 
+  // eslint-disable-next-line consistent-return
   useEffect(() => {
     const libraryId = localStorage.getItem("bs-lid");
     if (libraryId) {
       return setLibrary(dispatch, libraryId);
     }
-    return null;
   }, [bsLidState]);
 
-  // eslint-disable-next-line consistent-return
+  // eslint-disable-+next-line consistent-return
   useEffect(() => {
     if (pathname.indexOf("/dashboard") === 0) {
-      if (!tokenContext || !libraryContext) {
+      if (!userLogged) {
         navigate("/authentication/sign-in");
       }
-    } else if (pathname.indexOf("/authentication") === 0) {
-      if (tokenContext) {
-        navigate("/dashboard");
-      }
     }
-  }, [pathname, tokenContext]);
+  }, [pathname, userLogged]);
+
+  // eslint-disable-next-line no-unused-vars
+  // const teste = [];
+
+  // useEffect(() => {
+  //   if (alreadyUp && userLogged instanceof UserLogged) {
+  //     try {
+  //       if (userLogged.librariesAccount[0].userProfile) {
+  //         const newRoutes = [];
+  //         routes.forEach((route) => {
+  //           const hasPermissionOnContext = hasPermission(route.authorization);
+  //           if (hasPermissionOnContext) {
+  //             newRoutes.push(route);
+  //           }
+  //         });
+  //         // eslint-disable-next-line no-import-assign
+  //         teste = newRoutes;
+  //         // setRoutes(dispatch, newRoutes);
+  //         setAlreadyUp(false);
+  //       }
+  //     } catch (error) {
+  //
+  //     }
+  //   }
+  // }, [alreadyUp]);
 
   const getRoutes = (allRoutes) =>
+    // eslint-disable-next-line array-callback-return, consistent-return
     allRoutes.map((route) => {
       if (route.collapse) {
         return getRoutes(route.collapse);
       }
 
       if (route.route) {
+        if (route.authorization) {
+          return (
+            <Route
+              exact
+              path={route.route}
+              element={
+                <PrivateRoute requiredPermission={route.authorization}>
+                  {route.component}
+                </PrivateRoute>
+              }
+            />
+          );
+        }
         return <Route exact path={route.route} element={route.component} key={route.key} />;
       }
 
@@ -199,9 +249,45 @@ export default function App() {
   //   </MDBox>
   // );
 
-  return direction === "rtl" ? (
-    <CacheProvider value={rtlCache}>
-      <ThemeProvider theme={darkMode ? themeDarkRTL : themeRTL}>
+  return (
+    alreadyUp &&
+    (direction === "rtl" ? (
+      <CacheProvider value={rtlCache}>
+        <ThemeProvider theme={darkMode ? themeDarkRTL : themeRTL}>
+          <CssBaseline />
+          {layout === "dashboard" && (
+            <>
+              <Sidenav
+                color={sidenavColor}
+                brand={(transparentSidenav && !darkMode) || whiteSidenav ? logo : logo}
+                brandName="Bookshelf"
+                routes={routes}
+                onMouseEnter={handleOnMouseEnter}
+                onMouseLeave={handleOnMouseLeave}
+              />
+              <Configurator />
+              {/* {configsButton} */}
+            </>
+          )}
+          {/* {layout === "vr" && <Configurator />} */}
+          {layout === "home" && (
+            <>
+              <MDHeader />
+              <Routes>
+                {getRoutes(routes)}
+                <Route path="*" element={<Navigate to="/dashboard" />} />
+              </Routes>
+              <MDFooter />
+            </>
+          )}
+          <Routes>
+            {getRoutes(routes)}
+            <Route path="*" element={<Navigate to="/dashboard" />} />
+          </Routes>
+        </ThemeProvider>
+      </CacheProvider>
+    ) : (
+      <ThemeProvider theme={darkMode ? themeDark : theme}>
         <CssBaseline />
         {layout === "dashboard" && (
           <>
@@ -217,7 +303,7 @@ export default function App() {
             {/* {configsButton} */}
           </>
         )}
-        {/* {layout === "vr" && <Configurator />} */}
+        {layout === "vr" && <Configurator />}
         {layout === "home" && (
           <>
             <MDHeader />
@@ -233,40 +319,6 @@ export default function App() {
           <Route path="*" element={<Navigate to="/dashboard" />} />
         </Routes>
       </ThemeProvider>
-    </CacheProvider>
-  ) : (
-    <ThemeProvider theme={darkMode ? themeDark : theme}>
-      <CssBaseline />
-      {layout === "dashboard" && (
-        <>
-          <Sidenav
-            color={sidenavColor}
-            brand={(transparentSidenav && !darkMode) || whiteSidenav ? logo : logo}
-            brandName="Bookshelf"
-            routes={routes}
-            onMouseEnter={handleOnMouseEnter}
-            onMouseLeave={handleOnMouseLeave}
-          />
-          <Configurator />
-          {/* {configsButton} */}
-        </>
-      )}
-      {layout === "vr" && <Configurator />}
-      {layout === "home" ? (
-        <>
-          <MDHeader />
-          <Routes>
-            {getRoutes(routes)}
-            <Route path="*" element={<Navigate to="/dashboard" />} />
-          </Routes>
-          <MDFooter />
-        </>
-      ) : (
-        <Routes>
-          {getRoutes(routes)}
-          <Route path="*" element={<Navigate to="/dashboard" />} />
-        </Routes>
-      )}
-    </ThemeProvider>
+    ))
   );
 }

@@ -194,9 +194,6 @@ function DashboardNavbar({ absolute, light, isMini }) {
                     libraries.map((lib) => (
                       <MenuItem value={lib.libraryId}>{lib.library}</MenuItem>
                     ))}
-                  {/* <MenuItem value={1}>Etec Comendador João Rays</MenuItem>
-                  <MenuItem value={2}>Etec 2</MenuItem>
-                  <MenuItem value={3}>Etec 3</MenuItem> */}
                 </Select>
               </FormControl>
             </MDBox>
@@ -204,7 +201,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
               <MDInput label="Pesquisar" />
             </MDBox>
             <MDBox color={light ? "white" : "inherit"}>
-              <Link to="/authentication/sign-in/basic">
+              <Link to="/dashboard/profile">
                 <IconButton sx={navbarIconButton} size="small" disableRipple>
                   <Icon sx={iconsStyle}>account_circle</Icon>
                 </IconButton>
