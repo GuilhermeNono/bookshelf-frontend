@@ -338,7 +338,12 @@ function AddBook() {
                             <Dialog
                               open={isAddAuthorPopupOpen}
                               onClose={handleCloseAddAuthorPopup}
-                              sx={{ color: "#1A2E40" }}
+                              PaperProps={{
+                                style: {
+                                  backgroundColor: "#202940",
+                                  boxShadow: "none",
+                                },
+                              }}
                             >
                               <DialogTitle>Novo Autor</DialogTitle>
                               <DialogContent>
