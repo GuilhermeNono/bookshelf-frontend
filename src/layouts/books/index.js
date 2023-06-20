@@ -1,17 +1,17 @@
 /**
-=========================================================
-* Material Dashboard 2 React - v2.1.0
-=========================================================
+ =========================================================
+ * Material Dashboard 2 React - v2.1.0
+ =========================================================
 
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
+ * Product Page: https://www.creative-tim.com/product/material-dashboard-react
+ * Copyright 2022 Creative Tim (https://www.creative-tim.com)
 
-Coded by www.creative-tim.com
+ Coded by www.creative-tim.com
 
  =========================================================
 
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+ */
 
 // @mui material components
 import Grid from "@mui/material/Grid";
@@ -38,6 +38,7 @@ import MDProgress from "components/MDProgress";
 import { useLibrary } from "hooks/useLibrary";
 import MDTypography from "components/MDTypography";
 import MDButton from "components/MDButton";
+import { Link } from "react-router-dom";
 
 function Books() {
   const [books, setBooks] = useState();
@@ -47,7 +48,7 @@ function Books() {
 
   useEffect(() => {
     if (token) {
-      useLibraries.getLibraryBooks(token, localStorage.getItem("bs-lid")).then((resp) => {
+      useLibraries.getLibraryBooksNoLimit(token, localStorage.getItem("bs-lid")).then((resp) => {
         if (resp) {
           booksTableData(resp).then((data) => {
             setBooks(data);
@@ -75,8 +76,28 @@ function Books() {
                 coloredShadow="info"
               >
                 <MDBox display="flex" alignItems="center" justifyContent="space-between">
-                  <MDTypography variant="h6">Livros na biblioteca</MDTypography>
-                  <MDButton color="success">Adicionar Livro</MDButton>
+                  <MDTypography variant="h5">Acervo da Biblioteca</MDTypography>
+                  <MDBox display="flex" alignItems="center">
+                    <MDButton
+                      component={Link}
+                      to="/dashboard/add-book"
+                      fontWeight="bold"
+                      fontSize="25px"
+                      color="success"
+                      sx={{ mr: 5 }}
+                    >
+                      Adicionar Livro
+                    </MDButton>
+                    <MDButton
+                      component={Link}
+                      to="/dashboard/add-copy"
+                      fontWeight="bold"
+                      fontSize="25px"
+                      color="success"
+                    >
+                      Adicionar cópia
+                    </MDButton>
+                  </MDBox>
                 </MDBox>
               </MDBox>
               <MDBox pt={3}>

@@ -29,6 +29,11 @@ const colors = {
     focus: "#7b809a",
   },
 
+  darkText: {
+    main: "#1A2E40",
+    focus: "#1A2E40",
+  },
+
   transparent: {
     main: "transparent",
   },
