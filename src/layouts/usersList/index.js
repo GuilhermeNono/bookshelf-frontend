@@ -31,14 +31,13 @@ import { useUsers } from "hooks/useUsers";
 function Users() {
   const useUser = useUsers();
   const [controller] = useMaterialUIController();
-  const { token, library } = controller;
+  const { userLogged, library } = controller;
 
   const [users, setUsers] = useState();
 
   useEffect(() => {
-    if (token) {
-      useUser.getAllUsers(token, library).then((resp) => {
-        console.log("🚀 ~ file: index.js:41 ~ useUser.getAllUsers ~ resp:", resp);
+    if (userLogged) {
+      useUser.getAllUsers(userLogged.token, library).then((resp) => {
         if (resp) {
           usersTableData(resp).then((data) => {
             setUsers(data);
@@ -46,7 +45,7 @@ function Users() {
         }
       });
     }
-  }, [token]);
+  }, [userLogged]);
 
   return (
     <DashboardLayout>
@@ -66,7 +65,7 @@ function Users() {
                 coloredShadow="info"
               >
                 <MDTypography variant="h6" color="white">
-                  Emprestimos na biblioteca
+                  Usuários da biblioteca
                 </MDTypography>
               </MDBox>
               <MDBox pt={3}>
