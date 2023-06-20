@@ -1,13 +1,17 @@
 /**
+=========================================================
+* Material Dashboard 2 React - v2.1.0
+=========================================================
+
+* Product Page: https://www.creative-tim.com/product/material-dashboard-react
+* Copyright 2022 Creative Tim (https://www.creative-tim.com)
+
+Coded by www.creative-tim.com
+
  =========================================================
- * Material Dashboard 2 React - v2.1.0
- =========================================================
- * Product Page: https://www.creative-tim.com/product/material-dashboard-react
- * Copyright 2022 Creative Tim (https://www.creative-tim.com)
- Coded by www.creative-tim.com
- =========================================================
- * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
- */
+
+* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+*/
 
 // @mui material components
 import Grid from "@mui/material/Grid";
@@ -15,32 +19,38 @@ import Card from "@mui/material/Card";
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
 
 // Material Dashboard 2 React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
-import Footer from "examples/Footer";
-import DataTable from "examples/Tables/DataTable";
-import { useEffect, useState } from "react";
 import { useMaterialUIController } from "context";
-import { useLoan } from "hooks/useLoan";
+import Footer from "examples/Footer";
+
+// eslint-disable-next-line no-unused-vars
+import DataTable from "examples/Tables/DataTable";
+
+// Data
+// eslint-disable-next-line no-unused-vars
+import booksTableData from "layouts/books/data/booksTableData";
+// eslint-disable-next-line no-unused-vars
+import { useEffect, useState } from "react";
 import MDProgress from "components/MDProgress";
-import usersTableData from "layouts/usersList/data/usersTableData";
+import { useLibrary } from "hooks/useLibrary";
+import MDTypography from "components/MDTypography";
+import MDButton from "components/MDButton";
 
-function Users() {
-  const useLoans = useLoan();
+function Books() {
+  const [books, setBooks] = useState();
+  const useLibraries = useLibrary();
   const [controller] = useMaterialUIController();
-  const { token, library } = controller;
-
-  const [loans, setLoans] = useState();
+  const { token } = controller;
 
   useEffect(() => {
     if (token) {
-      useLoans.getLibraryLoan(token, library).then((resp) => {
+      useLibraries.getLibraryBooks(token, localStorage.getItem("bs-lid")).then((resp) => {
         if (resp) {
-          usersTableData(resp).then((data) => {
-            setLoans(data);
+          booksTableData(resp).then((data) => {
+            setBooks(data);
           });
         }
       });
@@ -58,20 +68,21 @@ function Users() {
                 mx={2}
                 mt={-3}
                 py={3}
-                px={2}
+                px={3}
                 variant="gradient"
                 bgColor="info"
                 borderRadius="lg"
                 coloredShadow="info"
               >
-                <MDTypography variant="h6" color="white">
-                  Emprestimos na biblioteca
-                </MDTypography>
+                <MDBox display="flex" alignItems="center" justifyContent="space-between">
+                  <MDTypography variant="h6">Livros na biblioteca</MDTypography>
+                  <MDButton color="success">Adicionar Livro</MDButton>
+                </MDBox>
               </MDBox>
               <MDBox pt={3}>
-                {loans ? (
+                {books ? (
                   <DataTable
-                    table={loans}
+                    table={books}
                     isSorted={false}
                     entriesPerPage={false}
                     showTotalEntries={false}
@@ -90,4 +101,4 @@ function Users() {
   );
 }
 
-export default Users;
+export default Books;

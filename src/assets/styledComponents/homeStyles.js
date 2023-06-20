@@ -6,10 +6,6 @@ export const Container = styled.div`
   background: #335675;
   color: #ffffff;
 
-  section {
-    padding: 80px 13%;
-  }
-
   * {
     padding: 0;
     margin: 0;
@@ -35,6 +31,7 @@ export const CenterText = styled.div`
   h2 {
     font-size: 2.6rem;
     line-height: 1.2;
+    font-weight: 500;
   }
 `;
 
@@ -44,6 +41,7 @@ export const Box = styled.div`
   border-radius: 20px;
   box-shadow: -11.729px -11.729px 32px rgb(255 255 255 / 15%);
   transition: all 0.4s ease;
+  height: 450px;
 
   img {
     height: auto;
@@ -61,11 +59,11 @@ export const Box = styled.div`
     transition: all 0.4s ease;
   }
   h3:hover {
-    color: var(--main-color);
+    color: #1b8ef2;
   }
   p {
     font-size: 1.1rem;
-    color: #1a2e40;
+    color: #c7dffc;
     font-weight: 500;
   }
 `;
@@ -82,46 +80,51 @@ export const Btn = styled.a`
   font-size: 1.1rem;
   font-weight: 500;
   cursor: pointer;
-  background: var(--main-color);
+  background: #1b8ef2;
   color: #ffffff;
   border-radius: 30px;
   transition: all 0.4s ease;
+  margin-top: 1rem;
 
   &:hover {
     transform: scale(0.9) translateY(-5px);
   }
 `;
-
+/*
+#1b8ef2 | Destaque
+#335675 | Background-dark
+#61a9eb | Background-light
+#0d4373 | Secondary
+#ffffff | Destaque
+#1a2e40 | Text Color
+#cecece | Subtitle
+*/
 export const AboutSec = styled.section`
   background: #61a9eb;
-  background-size: cover;
-  background-position: center;
+  padding: 50px 8%;
 `;
 
 export const AboutText = styled.div`
-  padding: 35px 20px;
+  p {
+    color: rgb(51, 86, 117);
+    text-align: justify;
+  }
+  h2 {
+    line-height: 1.2;
+    font-weight: 500;
+  }
   h5 {
-    color: #ffffff;
+    color: #335675;
     font-size: 18px;
     font-weight: 500;
+    margin-bottom: 1rem;
   }
   h4 {
     font-size: 24px;
-    font-weight: 700;
+    font-weight: 500;
     line-height: 34px;
     margin: 15px 0 15px;
     transition: all 0.4s ease;
-  }
-  h3:hover {
-    color: var(--main-color);
-  }
-  h6 {
-    color: #696969;
-    font-size: 1.1rem;
-    font-weight: 400;
-    line-height: 30px;
-    letter-spacing: 1px;
-    margin-bottom: 30px;
   }
 `;
 
@@ -131,7 +134,6 @@ export const AboutContent = styled.div`
   gap: 2rem;
   align-items: center;
   margin-top: 4rem;
-  cursor: pointer;
   border-radius: 15px;
 `;
 
@@ -153,6 +155,8 @@ export const ContactSec = styled.section`
   grid-template-columns: repeat(2, 1fr);
   gap: 2rem;
   align-items: center;
+  padding: 50px 8%;
+
   @media (max-width: 890px) {
     grid-template-columns: 1fr;
     gap: 1rem;
@@ -177,21 +181,24 @@ export const ContactText = styled.div`
     font-size: 2.6rem;
     line-height: 1.2;
     margin-bottom: 20px;
+    font-weight: 500;
   }
   p {
-    font-size: 1.1rem;
+    font-size: 0.8em;
     color: #1a2e40;
     font-weight: 500;
     line-height: 30px;
     margin-bottom: 30px;
   }
   h4 {
-    font-size: 20px;
+    font-size: 1em;
     margin-bottom: 10px;
   }
-  h5 {
-    font-size: 20px;
+  h6 {
+    font-size: 0.8em;
     margin-bottom: 40px;
+    color: #1a2e40;
+    font-weight: 500;
   }
 `;
 
@@ -208,9 +215,6 @@ export const FormContact = styled.form`
 export const ContainerContact = styled.div`
   display: flex;
   flex-direction: column;
-  h5 {
-    color: #335675;
-  }
 `;
 
 export const IconContact = styled.div`
@@ -219,11 +223,11 @@ export const IconContact = styled.div`
   h4 {
     text-align: center;
     margin: 0;
+    font-weight: 500;
   }
 `;
 
 export const ContainerSec = styled.section`
-  padding: 70px 13%;
   display: grid;
   background: #61a9eb;
   background-size: cover;
@@ -232,6 +236,7 @@ export const ContainerSec = styled.section`
   gap: 1.5rem;
   align-items: center;
   cursor: pointer;
+  padding: 50px 8%;
 
   @media (max-width: 1410px) {
     padding: 70px 3%;
@@ -240,12 +245,14 @@ export const ContainerSec = styled.section`
 `;
 
 export const ContainerBox = styled.div`
+  width: auto;
+  height: 130px;
   display: flex;
   align-items: center;
-  gap: 1.8rem;
+  gap: 1rem;
   border: 1px solid #e9ecef;
   border-radius: 20px;
-  padding: 20px 30px;
+  padding: 10px;
   box-shadow: -11.729px -11.729px 32px rgb(255 255 255 / 15%);
   transition: all 0.4s ease;
 
@@ -253,8 +260,6 @@ export const ContainerBox = styled.div`
     transform: translateY(-15px);
   }
 `;
-
-export const ContainerImage = styled.div``;
 
 export const ContainerText = styled.div`
   h4 {
@@ -270,15 +275,8 @@ export const ContainerText = styled.div`
   }
 `;
 
-export const CtaSec = styled.section``;
-
-export const CtaContent = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(170px, auto));
-  gap: 2rem;
-  align-items: center;
-  text-align: center;
-  margin-top: 5rem;
+export const CtaSec = styled.section`
+  padding: 50px 8%;
 `;
 
 export const CtaImage = styled.div`
@@ -299,17 +297,29 @@ export const CtaText = styled.div`
   text-align: left;
   h3 {
     color: #ffffff;
-    font-size: 1.1rem;
     font-weight: 500;
     line-height: 30px;
     letter-spacing: 1px;
     font-size: 1.2em;
+    margin-top: 1rem;
   }
-  h4 {
-    color: #ffffff;
-    font-size: 1.2em;
+  h2 {
+    line-height: 1.2;
     font-weight: 500;
-    margin-bottom: 2em;
+    margin-bottom: 1rem;
+  }
+  h3 {
+    font-size: 1em;
+    font-weight: 500;
+    margin-top: 1rem;
+    padding-left: 10px;
+  }
+  strong {
+    color: #cecece;
+  }
+  p {
+    color: #c7dffc;
+    text-align: justify;
   }
 `;
 
@@ -324,6 +334,7 @@ export const HomeSec = styled.section`
   grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
   align-items: center;
+  padding: 50px 8%;
 
   @media (max-width: 1050px) {
     height: 84vh;
@@ -344,31 +355,6 @@ export const HomeSec = styled.section`
   }
 `;
 
-export const HomeText = styled.div`
-  h1 {
-    font-size: 3.8rem;
-    margin: 15px 0 15px;
-  }
-
-  h6 {
-    color: #cecece;
-    font-size: 18px;
-    font-weight: 600;
-    letter-spacing: 2px;
-  }
-
-  p {
-    color: #cecece;
-    font-size: 1.1rem;
-    font-weight: 500;
-    margin-bottom: 48px;
-  }
-  @media (max-width: 890px) {
-    padding-top: 20px;
-  }
-`;
-export const Latter = styled.div``;
-
 export const LatterForm = styled.form`
   width: 100%;
   max-width: 460px;
@@ -379,7 +365,7 @@ export const LatterForm = styled.form`
     width: 100%;
     outline: none;
     padding: 16px 140px 16px 15px;
-    border: 2px solid var(--main-color);
+    border: 2px solid #1b8ef2;
     border-radius: 30px;
   }
 
@@ -388,7 +374,7 @@ export const LatterForm = styled.form`
     display: inline-block;
     border: none;
     outline: none;
-    background: var(--main-color);
+    background: #1b8ef2;
     color: #cecece;
     padding: 16px 40px;
     border-radius: 30px;
@@ -411,4 +397,7 @@ export const HomeImage = styled.div`
     width: 100%;
   }
 `;
-export const Categories = styled.section``;
+export const Categories = styled.section`
+  background: #335675;
+  padding: 50px 8%;
+`;

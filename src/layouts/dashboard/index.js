@@ -1,20 +1,20 @@
 /**
-=========================================================
-* Material Dashboard 2 React - v2.1.0
-=========================================================
+ =========================================================
+ * Material Dashboard 2 React - v2.1.0
+ =========================================================
 
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
+ * Product Page: https://www.creative-tim.com/product/material-dashboard-react
+ * Copyright 2022 Creative Tim (https://www.creative-tim.com)
 
-Coded by www.creative-tim.com
+ Coded by www.creative-tim.com
 
  =========================================================
 
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+ */
 
 // @mui material components
-import Grid from "@mui/material/Grid";
+// import Grid from "@mui/material/Grid";
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
@@ -32,13 +32,57 @@ import ComplexStatisticsCard from "examples/Cards/StatisticsCards/ComplexStatist
 // import reportsLineChartData from "layouts/dashboard/data/reportsLineChartData";
 
 // Dashboard components
-import Projects from "layouts/dashboard/components/Projects";
+import RecentBooks from "layouts/dashboard/components/Projects";
 import OrdersOverview from "layouts/dashboard/components/OrdersOverview";
+import { useMaterialUIController } from "context";
+import { useEffect, useState } from "react";
+// eslint-disable-next-line no-unused-vars
+import { Box, CircularProgress, Grid } from "@mui/material";
+import { useLoan } from "hooks/useLoan";
+import { useLibrary } from "hooks/useLibrary";
 
 function Dashboard() {
   // const { sales, tasks } = reportsLineChartData;
+  const [controller] = useMaterialUIController();
+  const [ready, setReady] = useState(false);
+  const [books, setBooks] = useState();
+  const [overdue, setOverdue] = useState();
+  const [loan, setLoan] = useState();
 
-  return (
+  const useBorrowing = useLoan();
+  const useLibraries = useLibrary();
+
+  const { token, library } = controller;
+
+  useEffect(() => {
+    if (token && library) {
+      setReady(true);
+    }
+  }, [token, library]);
+
+  useEffect(() => {
+    useBorrowing.getLibraryLoanOfMonth(token, library).then((resp) => {
+      if (resp) {
+        setLoan(resp);
+      }
+    });
+
+    useBorrowing
+      .getLibraryLoan(token, library, [{ filterKey: "overdue", operation: "eq", value: true }])
+      .then((resp) => {
+        if (resp) {
+          setOverdue(resp.length);
+        }
+      });
+
+    useLibraries.getLibraryBooksOfMonth(token, library).then((resp) => {
+      if (resp) {
+        setBooks(resp);
+      }
+    });
+  }, []);
+
+  return ready ? (
     <DashboardLayout>
       <DashboardNavbar />
       <MDBox py={3}>
@@ -49,59 +93,49 @@ function Dashboard() {
                 color="dark"
                 icon="book"
                 title="Novos livros"
-                // TODO: Atualizar o valor abaixo pelos livros que entraram no sistema recentemente.
-                count={281}
-                // TODO: Desenvolver um metodo que tras informações mais detalhadas.
-                percentage={{
-                  color: "success",
-                  amount: "+55%",
-                  label: "than lask week",
-                }}
+                count={books && books.length}
               />
             </MDBox>
           </Grid>
           <Grid item xs={12} md={6} lg={4}>
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
-                icon="leaderboard"
-                title="Emprestimos"
-                count="2,300"
-                percentage={{
-                  color: "success",
-                  amount: "+3%",
-                  label: "than last month",
-                }}
+                icon="collectionsbookmark"
+                title="Empréstimos"
+                count={loan && loan.length}
               />
             </MDBox>
           </Grid>
           <Grid item xs={12} md={6} lg={4}>
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
-                color="success"
-                icon="store"
+                color="error"
+                icon="alarmoff"
                 title="Em atraso"
-                count="34k"
-                percentage={{
-                  color: "error",
-                  amount: "+1%",
-                  label: "than yesterday",
-                }}
+                count={overdue && overdue}
               />
             </MDBox>
           </Grid>
         </Grid>
         <MDBox>
           <Grid container spacing={3}>
-            <Grid item xs={12} md={6} lg={8}>
-              <Projects />
+            <Grid item xs={12} md={6} lg={6}>
+              <RecentBooks books={books} />
             </Grid>
-            <Grid item xs={12} md={6} lg={4}>
-              <OrdersOverview />
+            <Grid item xs={12} md={6} lg={6}>
+              <OrdersOverview loanList={loan} />
             </Grid>
           </Grid>
         </MDBox>
       </MDBox>
       <Footer />
+    </DashboardLayout>
+  ) : (
+    <DashboardLayout>
+      <DashboardNavbar />
+      <Box sx={{ height: 100, display: "flex", justifyContent: "center", alignItems: "center" }}>
+        <CircularProgress />
+      </Box>
     </DashboardLayout>
   );
 }

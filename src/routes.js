@@ -37,9 +37,9 @@
 
 // Material Dashboard 2 React layouts
 import Dashboard from "layouts/dashboard";
-import Tables from "layouts/tables";
-import Billing from "layouts/billing";
-import Notifications from "layouts/notifications";
+// import Tables from "layouts/tables";
+// import Billing from "layouts/billing";
+// import Notifications from "layouts/notifications";
 import Profile from "layouts/profile";
 import SignIn from "layouts/authentication/sign-in";
 import SignUp from "layouts/authentication/sign-up";
@@ -49,6 +49,9 @@ import UserList from "layouts/usersList";
 import Icon from "@mui/material/Icon";
 import Home from "layouts/home";
 import Pricing from "layouts/pricing";
+import Books from "layouts/books";
+import Borrowing from "./layouts/borrowing";
+import Details from "./layouts/details";
 
 const routes = [
   {
@@ -77,37 +80,61 @@ const routes = [
     route: "/dashboard",
     component: <Dashboard />,
   },
+  // {
+  //   type: "title",
+  //   name: "Tables",
+  //   key: "tables",
+  //   icon: <Icon fontSize="small">table_view</Icon>,
+  //   route: "/dashboard/tables",
+  //   component: <Tables />,
+  // },
   {
     type: "collapse",
-    name: "Tables",
-    key: "tables",
+    name: "Books",
+    key: "books",
     icon: <Icon fontSize="small">table_view</Icon>,
-    route: "/tables",
-    component: <Tables />,
+    route: "/dashboard/books",
+    component: <Books />,
   },
   {
     type: "collapse",
-    name: "Billing",
-    key: "billing",
-    icon: <Icon fontSize="small">receipt_long</Icon>,
-    route: "/billing",
-    component: <Billing />,
+    name: "Loan",
+    key: "loan",
+    icon: <Icon fontSize="small">book</Icon>,
+    route: "/dashboard/borrowing",
+    component: <Borrowing />,
   },
-  {
-    type: "collapse",
-    name: "Notifications",
-    key: "notifications",
-    icon: <Icon fontSize="small">notifications</Icon>,
-    route: "/notifications",
-    component: <Notifications />,
-  },
+  // {
+  //   type: "title",
+  //   name: "Billing",
+  //   key: "billing",
+  //   icon: <Icon fontSize="small">receipt_long</Icon>,
+  //   route: "/dashboard/billing",
+  //   component: <Billing />,
+  // },
+  // {
+  //   type: "title",
+  //   name: "Notifications",
+  //   key: "notifications",
+  //   icon: <Icon fontSize="small">notifications</Icon>,
+  //   route: "/dashboard/notifications",
+  //   component: <Notifications />,
+  // },
   {
     type: "collapse",
     name: "Profile",
     key: "profile",
     icon: <Icon fontSize="small">person</Icon>,
-    route: "/profile",
+    route: "/dashboard/profile",
     component: <Profile />,
+  },
+  {
+    type: "collapse",
+    name: "UserList",
+    key: "userList",
+    icon: <Icon fontSize="small">table_view</Icon>,
+    route: "/userList",
+    component: <UserList />,
   },
   {
     type: "divider",
@@ -126,13 +153,20 @@ const routes = [
     component: <SignUp />,
   },
   {
-    type: "collapse",
-    name: "UserList",
-    key: "userList",
+    type: "title",
+    name: "Details",
+    key: "details",
     icon: <Icon fontSize="small">table_view</Icon>,
-    route: "/userList",
-    component: <UserList />,
+    route: "/dashboard/books/details/:libId",
+    component: <Details />,
   },
+  /**
+   * Colapse -> Deixa visivel
+   * Divider -> Deixar visivel incluindo um divisor embaixo dele
+   * title -> Esconde da Sidebar
+   * */
+
+  // http://localhost:8000/dashboard/books/detail/1475
 ];
 
 export default routes;

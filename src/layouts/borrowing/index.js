@@ -26,9 +26,9 @@ import { useEffect, useState } from "react";
 import { useMaterialUIController } from "context";
 import { useLoan } from "hooks/useLoan";
 import MDProgress from "components/MDProgress";
-import usersTableData from "layouts/usersList/data/usersTableData";
+import borrowingTableData from "layouts/borrowing/data/borrowingTableData";
 
-function Users() {
+function borrowing() {
   const useLoans = useLoan();
   const [controller] = useMaterialUIController();
   const { token, library } = controller;
@@ -39,7 +39,7 @@ function Users() {
     if (token) {
       useLoans.getLibraryLoan(token, library).then((resp) => {
         if (resp) {
-          usersTableData(resp).then((data) => {
+          borrowingTableData(resp).then((data) => {
             setLoans(data);
           });
         }
@@ -90,4 +90,4 @@ function Users() {
   );
 }
 
-export default Users;
+export default borrowing;
