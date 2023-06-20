@@ -280,255 +280,256 @@ function AddBook() {
                     />
                   </Grid>
                   <Grid xs={12} sm={12} md={6.2} lg={7.4} sx={upMd && { ml: 5, mb: 5 }}>
-                    <MDBox
-                      sx={
-                        downSm
-                          ? {
-                              display: "block",
-                            }
-                          : {
-                              display: "grid",
-                              gridTemplateColumns: "1fr 1fr",
-                              gridTemplateRows: "repeat(5, 1fr)",
-                              gap: 3,
-                              height: "410px",
-                            }
-                      }
-                    >
-                      <MDBox gridRow={1} sx={onlyXs && { mb: 3 }}>
-                        <MDInput
-                          type="text"
-                          label="Título"
-                          variant="outlined"
-                          fullWidth
-                          value={bookTitle}
-                          onChange={(e) => setBookTitle(e.target.value)}
-                          error={errors.bookTitle !== undefined}
-                          helperText={errors.bookTitle}
-                        />
-                      </MDBox>
-
-                      <MDBox gridRow={2} sx={onlyXs && { mb: 3 }}>
-                        <Autocomplete
-                          multiple
-                          id="authors"
-                          options={allAuthors}
-                          getOptionLabel={(author) => `${author.firstName} ${author.lastName}`}
-                          value={authors}
-                          onChange={(event, value) => setAuthors(value)}
-                          renderInput={(params) => (
-                            <TextField
-                              {...params}
-                              label="Autores"
-                              variant="outlined"
-                              placeholder="Adicionar autor"
-                            />
-                          )}
-                          renderTags={renderTags}
-                        />
-                        <MDBox mt={2}>
-                          <MDButton
-                            variant="contained"
-                            color="primary"
-                            onClick={handleOpenAddAuthorPopup}
-                          >
-                            Adicionar Autor
-                          </MDButton>
-                          {/* Popup de adição de autor */}
-                          <Dialog
-                            open={isAddAuthorPopupOpen}
-                            onClose={handleCloseAddAuthorPopup}
-                            sx={{ color: "#1A2E40" }}
-                          >
-                            <DialogTitle>Novo Autor</DialogTitle>
-                            <DialogContent>
+                    <Grid>
+                      <MDBox
+                        sx={
+                          downSm
+                            ? {
+                                display: "block",
+                              }
+                            : {
+                                display: "grid",
+                                gridTemplateColumns: "1fr 1fr",
+                                gridTemplateRows: "auto auto",
+                                gap: 3,
+                              }
+                        }
+                      >
+                        <Box gridRow={1} sx={onlyXs && { mb: 3 }}>
+                          <MDInput
+                            type="text"
+                            label="Título"
+                            variant="outlined"
+                            fullWidth
+                            value={bookTitle}
+                            onChange={(e) => setBookTitle(e.target.value)}
+                            error={errors.bookTitle !== undefined}
+                            helperText={errors.bookTitle}
+                          />
+                        </Box>
+                        <Box gridRow={2} sx={onlyXs && { mb: 3 }}>
+                          <Autocomplete
+                            multiple
+                            limitTags={2}
+                            id="authors"
+                            options={allAuthors}
+                            getOptionLabel={(author) => `${author.firstName} ${author.lastName}`}
+                            value={authors}
+                            onChange={(event, value) => setAuthors(value)}
+                            renderInput={(params) => (
                               <TextField
-                                label="Nome"
-                                name="firstName"
-                                value={newAuthor.firstName}
-                                onChange={handleNewAuthorChange}
+                                {...params}
+                                label="Autores"
                                 variant="outlined"
-                                fullWidth
+                                placeholder="Adicionar autor"
                               />
+                            )}
+                            renderTags={renderTags}
+                          />
+                          <MDBox mt={2}>
+                            <MDButton
+                              variant="contained"
+                              color="primary"
+                              onClick={handleOpenAddAuthorPopup}
+                            >
+                              Adicionar Autor
+                            </MDButton>
+                            {/* Popup de adição de autor */}
+                            <Dialog
+                              open={isAddAuthorPopupOpen}
+                              onClose={handleCloseAddAuthorPopup}
+                              sx={{ color: "#1A2E40" }}
+                            >
+                              <DialogTitle>Novo Autor</DialogTitle>
+                              <DialogContent>
+                                <TextField
+                                  label="Nome"
+                                  name="firstName"
+                                  value={newAuthor.firstName}
+                                  onChange={handleNewAuthorChange}
+                                  variant="outlined"
+                                  fullWidth
+                                />
+                                <TextField
+                                  sx={{ mt: 2 }}
+                                  label="Sobrenome"
+                                  name="lastName"
+                                  value={newAuthor.lastName}
+                                  onChange={handleNewAuthorChange}
+                                  variant="outlined"
+                                  fullWidth
+                                />
+                                <TextField
+                                  sx={{ mt: 2 }}
+                                  label="Avatar"
+                                  name="avatar"
+                                  value={newAuthor.avatar}
+                                  onChange={handleNewAuthorChange}
+                                  variant="outlined"
+                                  fullWidth
+                                />
+                                <MDButton
+                                  sx={{ mt: 2 }}
+                                  variant="contained"
+                                  color="info"
+                                  onClick={handleNewAuthorAddition}
+                                  disabled={
+                                    !newAuthor.firstName || !newAuthor.lastName || !newAuthor.avatar
+                                  }
+                                >
+                                  Adicionar Autor
+                                </MDButton>
+                              </DialogContent>
+                            </Dialog>
+                          </MDBox>
+                        </Box>
+                        <Box gridRow={3} sx={onlyXs && { mb: 3 }}>
+                          <Autocomplete
+                            multiple
+                            options={categories}
+                            getOptionLabel={(option) => option.name}
+                            renderInput={(params) => (
                               <TextField
-                                sx={{ mt: 2 }}
-                                label="Sobrenome"
-                                name="lastName"
-                                value={newAuthor.lastName}
-                                onChange={handleNewAuthorChange}
+                                {...params}
                                 variant="outlined"
-                                fullWidth
+                                label="Categorias"
+                                error={errors.categories !== undefined}
+                                helperText={errors.categories}
                               />
-                              <TextField
-                                sx={{ mt: 2 }}
-                                label="Avatar"
-                                name="avatar"
-                                value={newAuthor.avatar}
-                                onChange={handleNewAuthorChange}
-                                variant="outlined"
-                                fullWidth
-                              />
-                              <MDButton
-                                sx={{ mt: 2 }}
-                                variant="contained"
-                                color="info"
-                                onClick={handleNewAuthorAddition}
-                                disabled={
-                                  !newAuthor.firstName || !newAuthor.lastName || !newAuthor.avatar
-                                }
-                              >
-                                Adicionar Autor
-                              </MDButton>
-                            </DialogContent>
-                          </Dialog>
-                        </MDBox>
+                            )}
+                            value={selectedCategories}
+                            onChange={(event, value) => setSelectedCategories(value)}
+                            isOptionEqualToValue={isOptionEqualToValue}
+                          />
+                        </Box>
+                        <Box gridRow={4} sx={onlyXs && { mb: 3 }}>
+                          <MDInput
+                            type="text"
+                            label="URL da capa"
+                            variant="outlined"
+                            fullWidth
+                            value={imageUrl}
+                            onChange={(e) => setImageUrl(e.target.value)}
+                            error={errors.imageUrl !== undefined}
+                            helperText={errors.imageUrl}
+                          />
+                        </Box>
+                        <Box gridRow={5} sx={onlyXs && { mb: 3 }}>
+                          <FormControl fullWidth variant="outlined">
+                            <InputLabel id="language-select-label">Idioma</InputLabel>
+                            <Select
+                              labelId="language-select-label"
+                              id="language-select"
+                              label="Idioma"
+                              value={language}
+                              style={{ height: "44.13px" }}
+                              onChange={(e) => setLanguage(e.target.value)}
+                            >
+                              <MenuItem value="">Selecione</MenuItem>
+                              <MenuItem value="Português">Português</MenuItem>
+                              <MenuItem value="Inglês">Inglês</MenuItem>
+                              <MenuItem value="Espanhol">Espanhol</MenuItem>
+                            </Select>
+                          </FormControl>
+                        </Box>
+                        <Box gridRow={6} sx={onlyXs && { mb: 3 }}>
+                          <MDInput
+                            type="text"
+                            label="Sinopse"
+                            variant="outlined"
+                            placeholder="Insira a descrição do livro aqui"
+                            multiline
+                            rows={6}
+                            fullWidth
+                            value={synopsis}
+                            onChange={(e) => setSynopsis(e.target.value)}
+                            error={errors.publisherName !== undefined}
+                            helperText={errors.publisherName}
+                          />
+                        </Box>
+                        <Box gridRow={1} sx={onlyXs && { mb: 3 }}>
+                          <MDInput
+                            type="date"
+                            label="Data de Publicação"
+                            value={publicationDate}
+                            onChange={(e) => setPublicationDate(e.target.value)}
+                            variant="outlined"
+                            InputLabelProps={{
+                              shrink: true,
+                            }}
+                            fullWidth
+                            error={errors.publicationDate !== undefined}
+                            helperText={errors.publicationDate}
+                          />
+                        </Box>
+                        <Box gridRow={2} sx={onlyXs && { mb: 3 }}>
+                          <MDInput
+                            type="text"
+                            label="ISBN"
+                            variant="outlined"
+                            fullWidth
+                            value={isbn}
+                            onChange={(e) => setIsbn(e.target.value)}
+                            error={errors.isbn !== undefined}
+                            helperText={errors.isbn}
+                          />
+                        </Box>
+                        <Box gridRow={3} sx={onlyXs && { mb: 3 }}>
+                          <FormControl fullWidth>
+                            <InputLabel id="capeType-label">Tipo de Capa</InputLabel>
+                            <Select
+                              labelId="capeType-label"
+                              id="capeType"
+                              value={capeType}
+                              onChange={(e) => setCapeType(e.target.value)}
+                              label="Tipo de Capa"
+                              style={{ height: "44.13px" }}
+                              error={errors.capetype !== undefined}
+                              helperText={errors.capetype}
+                            >
+                              <MenuItem value="">Selecione</MenuItem>
+                              <MenuItem value="Dura">Dura</MenuItem>
+                              <MenuItem value="Comum">Comum</MenuItem>
+                            </Select>
+                          </FormControl>
+                        </Box>
+                        <Box gridRow={4} sx={onlyXs && { mb: 3 }}>
+                          <MDInput
+                            type="text"
+                            label="Publisher"
+                            fullWidth
+                            value={publisherName}
+                            onChange={(e) => setPublisherName(e.target.value)}
+                            error={errors.publisher !== undefined}
+                            helperText={errors.publisher}
+                          />
+                        </Box>
+                        <Box gridRow={5} sx={onlyXs && { mb: 3 }}>
+                          <MDInput
+                            type="text"
+                            label="Edição"
+                            variant="outlined"
+                            fullWidth
+                            value={edition}
+                            onChange={(e) => setEdition(e.target.value)}
+                            error={errors.edition !== undefined}
+                            helperText={errors.edition}
+                          />
+                        </Box>
+                        <Box gridRow={6} sx={onlyXs && { mb: 3 }}>
+                          <MDInput
+                            type="number"
+                            label="Páginas"
+                            variant="outlined"
+                            fullWidth
+                            value={numberPages}
+                            onChange={(e) => setNumberPages(e.target.value)}
+                            error={errors.numberPages !== undefined}
+                            helperText={errors.numberPages}
+                          />
+                        </Box>
                       </MDBox>
-                      <MDBox gridRow={3} sx={onlyXs && { mb: 3 }}>
-                        <Autocomplete
-                          multiple
-                          options={categories}
-                          getOptionLabel={(option) => option.name}
-                          renderInput={(params) => (
-                            <TextField
-                              {...params}
-                              variant="outlined"
-                              label="Categorias"
-                              error={errors.categories !== undefined}
-                              helperText={errors.categories}
-                            />
-                          )}
-                          value={selectedCategories}
-                          onChange={(event, value) => setSelectedCategories(value)}
-                          isOptionEqualToValue={isOptionEqualToValue}
-                        />
-                      </MDBox>
-                      <MDBox gridRow={4} sx={onlyXs && { mb: 3 }}>
-                        <MDInput
-                          type="text"
-                          label="URL da capa"
-                          variant="outlined"
-                          fullWidth
-                          value={imageUrl}
-                          onChange={(e) => setImageUrl(e.target.value)}
-                          error={errors.imageUrl !== undefined}
-                          helperText={errors.imageUrl}
-                        />
-                      </MDBox>
-                      <Box gridRow={5} sx={onlyXs && { mb: 3 }}>
-                        <FormControl fullWidth variant="outlined">
-                          <InputLabel id="language-select-label">Idioma</InputLabel>
-                          <Select
-                            labelId="language-select-label"
-                            id="language-select"
-                            label="Idioma"
-                            value={language}
-                            style={{ height: "44.13px" }}
-                            onChange={(e) => setLanguage(e.target.value)}
-                          >
-                            <MenuItem value="">Selecione</MenuItem>
-                            <MenuItem value="Português">Português</MenuItem>
-                            <MenuItem value="Inglês">Inglês</MenuItem>
-                            <MenuItem value="Espanhol">Espanhol</MenuItem>
-                          </Select>
-                        </FormControl>
-                      </Box>
-                      <Box gridRow={6} sx={onlyXs && { mb: 3 }}>
-                        <MDInput
-                          type="text"
-                          label="Sinopse"
-                          variant="outlined"
-                          placeholder="Insira a descrição do livro aqui"
-                          multiline
-                          rows={6}
-                          fullWidth
-                          value={synopsis}
-                          onChange={(e) => setSynopsis(e.target.value)}
-                          error={errors.publisherName !== undefined}
-                          helperText={errors.publisherName}
-                        />
-                      </Box>
-                      <Box gridRow={1} sx={onlyXs && { mb: 3 }}>
-                        <MDInput
-                          type="date"
-                          label="Data de Publicação"
-                          value={publicationDate}
-                          onChange={(e) => setPublicationDate(e.target.value)}
-                          variant="outlined"
-                          InputLabelProps={{
-                            shrink: true,
-                          }}
-                          fullWidth
-                          error={errors.publicationDate !== undefined}
-                          helperText={errors.publicationDate}
-                        />
-                      </Box>
-                      <Box gridRow={2} sx={onlyXs && { mb: 3 }}>
-                        <MDInput
-                          type="text"
-                          label="ISBN"
-                          variant="outlined"
-                          fullWidth
-                          value={isbn}
-                          onChange={(e) => setIsbn(e.target.value)}
-                          error={errors.isbn !== undefined}
-                          helperText={errors.isbn}
-                        />
-                      </Box>
-                      <Box gridRow={3} sx={onlyXs && { mb: 3 }}>
-                        <FormControl fullWidth>
-                          <InputLabel id="capeType-label">Tipo de Capa</InputLabel>
-                          <Select
-                            labelId="capeType-label"
-                            id="capeType"
-                            value={capeType}
-                            onChange={(e) => setCapeType(e.target.value)}
-                            label="Tipo de Capa"
-                            style={{ height: "44.13px" }}
-                            error={errors.capetype !== undefined}
-                            helperText={errors.capetype}
-                          >
-                            <MenuItem value="">Selecione</MenuItem>
-                            <MenuItem value="Dura">Dura</MenuItem>
-                            <MenuItem value="Comum">Comum</MenuItem>
-                          </Select>
-                        </FormControl>
-                      </Box>
-                      <Box gridRow={4} sx={onlyXs && { mb: 3 }}>
-                        <MDInput
-                          type="text"
-                          label="Publisher"
-                          fullWidth
-                          value={publisherName}
-                          onChange={(e) => setPublisherName(e.target.value)}
-                          error={errors.publisher !== undefined}
-                          helperText={errors.publisher}
-                        />
-                      </Box>
-                      <Box gridRow={5} sx={onlyXs && { mb: 3 }}>
-                        <MDInput
-                          type="text"
-                          label="Edição"
-                          variant="outlined"
-                          fullWidth
-                          value={edition}
-                          onChange={(e) => setEdition(e.target.value)}
-                          error={errors.edition !== undefined}
-                          helperText={errors.edition}
-                        />
-                      </Box>
-                      <Box gridRow={6} sx={onlyXs && { mb: 3 }}>
-                        <MDInput
-                          type="number"
-                          label="Páginas"
-                          variant="outlined"
-                          fullWidth
-                          value={numberPages}
-                          onChange={(e) => setNumberPages(e.target.value)}
-                          error={errors.numberPages !== undefined}
-                          helperText={errors.numberPages}
-                        />
-                      </Box>
-                    </MDBox>
+                    </Grid>
                   </Grid>
                   <Grid container lg={12}>
                     <Box sx={onlySm && { mt: 3 }}>
