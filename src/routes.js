@@ -49,6 +49,8 @@ import Icon from "@mui/material/Icon";
 import Home from "layouts/home";
 import Pricing from "layouts/pricing";
 import Books from "layouts/books";
+import AddCopy from "layouts/add-copy";
+import AddBook from "layouts/add-book";
 import Borrowing from "./layouts/borrowing";
 import Details from "./layouts/details";
 import {
@@ -110,11 +112,27 @@ const routesJson = [
     type: "collapse",
     name: "Books",
     key: "books",
-    icon: <Icon fontSize="small">table_view</Icon>,
+    icon: <Icon fontSize="small">collections_bookmark</Icon>,
     route: "/dashboard/books",
     component: <Books />,
     authorization: PERM_BOOKSHELF_LIB_BOOKS,
     profile: null,
+  },
+  {
+    type: "title",
+    name: "AddCopy",
+    key: "AddCopy",
+    icon: <Icon fontSize="small">table_view</Icon>,
+    route: "/dashboard/add-copy",
+    component: <AddCopy />,
+  },
+  {
+    type: "title",
+    name: "AddBook",
+    key: "AddBook",
+    icon: <Icon fontSize="small">table_view</Icon>,
+    route: "/dashboard/add-book",
+    component: <AddBook />,
   },
   {
     type: "collapse",
@@ -190,6 +208,12 @@ const routesJson = [
   //   route: "/dashboard/notifications",
   //   component: <Notifications />,
   // },
+  /**
+   * Colapse -> Deixa visivel
+   * Divider -> Deixar visivel incluindo um divisor embaixo dele
+   * title -> Esconde da Sidebar
+   * */
+  // http://localhost:8000/dashboard/books/detail/1475
   /**
    * Colapse -> Deixa visivel
    * Divider -> Deixar visivel incluindo um divisor embaixo dele
