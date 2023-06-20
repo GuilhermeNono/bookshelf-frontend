@@ -98,7 +98,7 @@ const routes = [
     component: <Books />,
   },
   {
-    type: "collapse",
+    type: "title",
     name: "AddCopy",
     key: "AddCopy",
     icon: <Icon fontSize="small">table_view</Icon>,
@@ -106,7 +106,7 @@ const routes = [
     component: <AddCopy />,
   },
   {
-    type: "collapse",
+    type: "title",
     name: "AddBook",
     key: "AddBook",
     icon: <Icon fontSize="small">table_view</Icon>,

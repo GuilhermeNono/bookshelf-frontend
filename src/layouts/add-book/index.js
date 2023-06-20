@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
+import Slide from "@mui/material/Slide";
 import {
   Alert,
   Autocomplete,
@@ -13,6 +14,7 @@ import {
   InputLabel,
   MenuItem,
   Select,
+  Snackbar,
   TextField,
   useMediaQuery,
   useTheme,
@@ -35,7 +37,7 @@ function AddBook() {
   const downSm = useMediaQuery(theme.breakpoints.down("sm"));
   const upMd = useMediaQuery(theme.breakpoints.up("md"));
   const onlyXs = useMediaQuery(theme.breakpoints.only("xs"));
-  const onlySm = useMediaQuery(theme.breakpoints.only("sm"));
+
   const { addNewBook, loading, getAllCategories, getAllAuthors } = useBooks();
 
   const { token } = controller;
@@ -57,67 +59,37 @@ function AddBook() {
   const [authors, setAuthors] = useState([]);
   const [newAuthor, setNewAuthor] = useState({ firstName: "", lastName: "", avatar: "" });
   const [allAuthors, setAllAuthors] = useState([]);
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
   const [isAddAuthorPopupOpen, setAddAuthorPopupOpen] = useState(false);
 
   // TODO - Mudar a cor do popup(dialog)
 
   // Tratar erros
-  const [errors, setErrors] = useState({});
+  const [showErrorAlert, setShowErrorAlert] = useState(false);
 
   // Validar campos
   const validateFields = () => {
-    const newErrors = {};
-    if (bookTitle.trim() === "") {
-      newErrors.bookTitle = "O título do livro é obrigatório.";
-    }
-    if (language.trim() === "") {
-      newErrors.language = "O idioma do livro é obrigatório.";
-    }
-    if (publicationDate.trim() === "") {
-      newErrors.publicationDate = "A data de publicação do livro é obrigatória.";
-    }
-    if (isbn.trim() === "") {
-      newErrors.isbn = "O ISBN do livro é obrigatório.";
-    }
-    if (synopsis.trim() === "") {
-      newErrors.synopsis = "A sinopse do livro é obrigatória.";
-    }
-    if (edition.trim() === "") {
-      newErrors.edition = "A edição do livro é obrigatória.";
-    }
-    if (capeType.trim() === "") {
-      newErrors.capeType = "O tipo de capa do livro é obrigatório.";
-    }
-    if (numberPages.trim() === "") {
-      newErrors.numberPages = "O número de páginas do livro é obrigatório.";
-    }
-    if (imageUrl.trim() === "") {
-      newErrors.imageUrl = "A URL da capa do livro é obrigatória.";
-    }
-    if (publisherName.trim() === "") {
-      newErrors.publisherName = "O nome da editora é obrigatório.";
-    }
-    if (selectedCategories.length === 0) {
-      newErrors.categories = "Pelo menos uma categoria deve ser selecionada.";
-    }
-    if (authors.length === 0) {
-      newErrors.authors = "Pelo menos um autor deve ser adicionado.";
-    } else {
-      authors.forEach((author, index) => {
-        if (author.firstName.trim() === "") {
-          newErrors[`authorFirstName${index}`] = "O primeiro nome do autor é obrigatório.";
-        }
-        if (author.lastName.trim() === "") {
-          newErrors[`authorLastName${index}`] = "O sobrenome do autor é obrigatório.";
-        }
-        if (author.avatar.trim() === "") {
-          newErrors[`authorAvatar${index}`] = "O avatar do autor é obrigatório.";
-        }
-      });
+    // Verifica se todos os campos estão preenchidos
+    if (
+      !bookTitle ||
+      !language ||
+      !publicationDate ||
+      !isbn ||
+      !synopsis ||
+      !edition ||
+      !capeType ||
+      !numberPages ||
+      !imageUrl ||
+      !publisherName ||
+      selectedCategories.length === 0 ||
+      authors.length === 0
+    ) {
+      return false;
     }
 
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+    // Outras validações específicas podem ser adicionadas aqui
+
+    return true;
   };
 
   useEffect(() => {
@@ -133,9 +105,6 @@ function AddBook() {
       }
     });
   }, []);
-
-  console.log("🚀 ~ file: index.js:137 ~ AddBook ~ allAuthors:", allAuthors);
-  console.log("🚀 ~ file: index.js:139 ~ AddBook ~ authors:", authors);
 
   const bookData = {
     name: bookTitle,
@@ -182,11 +151,13 @@ function AddBook() {
           setAuthors([]);
 
           // Exibe o alerta de sucesso
-          Alert("Livro adicionado com sucesso!");
+          setShowSuccessAlert(true);
         })
         .catch(() => {
           // Handle error response
         });
+    } else {
+      setShowErrorAlert(true);
     }
   };
 
@@ -237,8 +208,43 @@ function AddBook() {
       setAddAuthorPopupOpen(false);
     }
   };
+
+  const handleCloseAlert = () => {
+    setShowSuccessAlert(false);
+  };
+
   return (
     <DashboardLayout>
+      <Snackbar
+        open={showSuccessAlert}
+        autoHideDuration={3000}
+        onClose={handleCloseAlert}
+        anchorOrigin={{
+          vertical: "top",
+          horizontal: "center",
+        }}
+        TransitionComponent={Slide}
+      >
+        <Alert severity="success" sx={{ zIndex: 9999 }}>
+          Livro adicionado com sucesso!
+        </Alert>
+      </Snackbar>
+
+      <Snackbar
+        open={showErrorAlert}
+        autoHideDuration={3000}
+        onClose={() => setShowErrorAlert(false)}
+        anchorOrigin={{
+          vertical: "top",
+          horizontal: "center",
+        }}
+        TransitionComponent={Slide}
+      >
+        <Alert severity="error" sx={{ zIndex: 9999 }}>
+          Por favor, preencha todos os campos corretamente.
+        </Alert>
+      </Snackbar>
+
       <DashboardNavbar />
       <MDBox pt={6} pb={3}>
         <Grid container spacing={6}>
@@ -303,8 +309,6 @@ function AddBook() {
                             fullWidth
                             value={bookTitle}
                             onChange={(e) => setBookTitle(e.target.value)}
-                            error={errors.bookTitle !== undefined}
-                            helperText={errors.bookTitle}
                           />
                         </Box>
                         <Box gridRow={2} sx={onlyXs && { mb: 3 }}>
@@ -394,13 +398,7 @@ function AddBook() {
                             options={categories}
                             getOptionLabel={(option) => option.name}
                             renderInput={(params) => (
-                              <TextField
-                                {...params}
-                                variant="outlined"
-                                label="Categorias"
-                                error={errors.categories !== undefined}
-                                helperText={errors.categories}
-                              />
+                              <TextField {...params} variant="outlined" label="Categorias" />
                             )}
                             value={selectedCategories}
                             onChange={(event, value) => setSelectedCategories(value)}
@@ -415,8 +413,6 @@ function AddBook() {
                             fullWidth
                             value={imageUrl}
                             onChange={(e) => setImageUrl(e.target.value)}
-                            error={errors.imageUrl !== undefined}
-                            helperText={errors.imageUrl}
                           />
                         </Box>
                         <Box gridRow={5} sx={onlyXs && { mb: 3 }}>
@@ -448,8 +444,6 @@ function AddBook() {
                             fullWidth
                             value={synopsis}
                             onChange={(e) => setSynopsis(e.target.value)}
-                            error={errors.publisherName !== undefined}
-                            helperText={errors.publisherName}
                           />
                         </Box>
                         <Box gridRow={1} sx={onlyXs && { mb: 3 }}>
@@ -463,8 +457,6 @@ function AddBook() {
                               shrink: true,
                             }}
                             fullWidth
-                            error={errors.publicationDate !== undefined}
-                            helperText={errors.publicationDate}
                           />
                         </Box>
                         <Box gridRow={2} sx={onlyXs && { mb: 3 }}>
@@ -475,8 +467,6 @@ function AddBook() {
                             fullWidth
                             value={isbn}
                             onChange={(e) => setIsbn(e.target.value)}
-                            error={errors.isbn !== undefined}
-                            helperText={errors.isbn}
                           />
                         </Box>
                         <Box gridRow={3} sx={onlyXs && { mb: 3 }}>
@@ -489,11 +479,9 @@ function AddBook() {
                               onChange={(e) => setCapeType(e.target.value)}
                               label="Tipo de Capa"
                               style={{ height: "44.13px" }}
-                              error={errors.capetype !== undefined}
-                              helperText={errors.capetype}
                             >
                               <MenuItem value="">Selecione</MenuItem>
-                              <MenuItem value="Dura">Dura</MenuItem>
+                              <MenuItem valuNPe="Dura">Dura</MenuItem>
                               <MenuItem value="Comum">Comum</MenuItem>
                             </Select>
                           </FormControl>
@@ -505,8 +493,6 @@ function AddBook() {
                             fullWidth
                             value={publisherName}
                             onChange={(e) => setPublisherName(e.target.value)}
-                            error={errors.publisher !== undefined}
-                            helperText={errors.publisher}
                           />
                         </Box>
                         <Box gridRow={5} sx={onlyXs && { mb: 3 }}>
@@ -517,8 +503,6 @@ function AddBook() {
                             fullWidth
                             value={edition}
                             onChange={(e) => setEdition(e.target.value)}
-                            error={errors.edition !== undefined}
-                            helperText={errors.edition}
                           />
                         </Box>
                         <Box gridRow={6} sx={onlyXs && { mb: 3 }}>
@@ -529,26 +513,20 @@ function AddBook() {
                             fullWidth
                             value={numberPages}
                             onChange={(e) => setNumberPages(e.target.value)}
-                            error={errors.numberPages !== undefined}
-                            helperText={errors.numberPages}
                           />
                         </Box>
+                        <MDButton
+                          type="submit"
+                          variant="gradient"
+                          color="info"
+                          sx={onlyXs && { mb: 3 }}
+                          onClick={handleAddBook}
+                          disabled={loading}
+                        >
+                          {loading ? "Adicionando..." : "Adicionar"}
+                        </MDButton>
                       </MDBox>
                     </Grid>
-                  </Grid>
-                  <Grid container lg={12}>
-                    <Box sx={onlySm && { mt: 3 }}>
-                      <MDButton
-                        type="submit"
-                        variant="gradient"
-                        color="info"
-                        sx={onlyXs && { mb: 3 }}
-                        onClick={handleAddBook}
-                        disabled={loading}
-                      >
-                        {loading ? "Adicionando..." : "Adicionar"}
-                      </MDButton>
-                    </Box>
                   </Grid>
                 </Grid>
               </MDBox>

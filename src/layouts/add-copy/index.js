@@ -14,6 +14,7 @@
 // @mui material components
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
+import Slide from "@mui/material/Slide";
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
@@ -25,19 +26,20 @@ import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import MDButton from "components/MDButton";
 import MDInput from "components/MDInput";
-import { Autocomplete, Box, TextField, useMediaQuery, useTheme } from "@mui/material";
+import { Autocomplete, Box, Snackbar, TextField, useMediaQuery, useTheme } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useMaterialUIController } from "context";
 import capePlaceholder from "assets/images/capePlaceholder.png";
-import { useNavigate } from "react-router-dom";
+
 import { useBooks } from "hooks/useBooks";
-import Header from "./Header";
+import Alert from "@mui/material/Alert";
+import Header from "components/MDHeader";
 
 function AddCopy() {
   const [controller] = useMaterialUIController();
   const [selectedBook, setSelectedBook] = useState(null);
   const { token } = controller;
-  const navigate = useNavigate();
+
   const [tomboCode, setTomboCode] = useState([]);
   const [books, setBooks] = useState([]);
   const useBook = useBooks();
@@ -45,11 +47,12 @@ function AddCopy() {
   const downSm = useMediaQuery(theme.breakpoints.down("sm"));
   const upMd = useMediaQuery(theme.breakpoints.up("md"));
   const onlyXs = useMediaQuery(theme.breakpoints.only("xs"));
-  const onlySm = useMediaQuery(theme.breakpoints.only("sm"));
 
   const uidData = JSON.parse(localStorage.getItem("uid"));
   const { libraryId, userLibraryId } = uidData[0];
   const { addBookCopy, loading, error } = useBooks();
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
+
   // pegando as informações do localstorage
   // userLibraryId = userId, libraryId= libId
 
@@ -72,16 +75,39 @@ function AddCopy() {
     }
 
     addBookCopy(token, selectedBook.bookId, libraryId, userLibraryId, tomboCode)
-      .then(() => navigate("/dashboard/books"))
+      .then(() => {
+        setShowSuccessAlert(true);
+
+        setSelectedBook(null);
+        setTomboCode([]);
+      })
       .catch(() => {
         // colocar um pop-up ou algo do tipo avisando que algo deu errado
         console.log(`Algo deu errado: ${error}`);
       });
   };
 
+  const handleCloseAlert = () => {
+    setShowSuccessAlert(false);
+  };
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
+      <Snackbar
+        open={showSuccessAlert}
+        autoHideDuration={3000}
+        onClose={handleCloseAlert}
+        anchorOrigin={{
+          vertical: "top",
+          horizontal: "center",
+        }}
+        TransitionComponent={Slide}
+      >
+        <Alert severity="success" sx={{ zIndex: 9999 }}>
+          Cópia adicionada com sucesso!
+        </Alert>
+      </Snackbar>
       <MDBox pt={6} pb={3}>
         <Grid container spacing={6}>
           <Grid item xs={12}>
@@ -291,10 +317,6 @@ function AddCopy() {
                           />
                         </Box>
                       </Box>
-                    </MDBox>
-                  </Grid>
-                  <Grid container lg={12}>
-                    <Box sx={onlySm && { mt: 3 }}>
                       <MDButton
                         type="submit"
                         variant="gradient"
@@ -305,7 +327,7 @@ function AddCopy() {
                       >
                         {loading ? "Adicionando" : "Adicionar"}
                       </MDButton>
-                    </Box>
+                    </MDBox>
                   </Grid>
                 </Grid>
               </MDBox>
