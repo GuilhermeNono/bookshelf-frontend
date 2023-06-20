@@ -1,6 +1,4 @@
 const hasPermission = (permission, library) => {
-  console.log(permission);
-  console.log(library);
   const requiredPermission = permission;
   const currentLib = Number(library);
   let has = false;

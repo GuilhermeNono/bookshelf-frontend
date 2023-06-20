@@ -1,4 +1,5 @@
 import { useMaterialUIController } from "context";
+import { ROLE_BOOKSHELF_SYS_ADMIN } from "helpers/auth/Permisions";
 import { useEffect, useState } from "react";
 
 export const usePermission = () => {
@@ -29,6 +30,18 @@ export const usePermission = () => {
       return true;
     }
 
+    console.log(
+      "🚀 ~ file: usePermission.js:34 ~ hasPermission ~ userLogged.accountProfile:",
+      userLogged.accountProfile
+    );
+    console.log(
+      "🚀 ~ file: usePermission.js:34 ~ hasPermission ~ ROLE_BOOKSHELF_SYS_ADMIN:",
+      ROLE_BOOKSHELF_SYS_ADMIN
+    );
+    if (userLogged.accountProfile === ROLE_BOOKSHELF_SYS_ADMIN) {
+      return true;
+    }
+
     try {
       let userLibrary;
       const libraries = userLogged.librariesAccount;
@@ -36,13 +49,11 @@ export const usePermission = () => {
       let returnVariable = false;
 
       if (userLogged) {
-        console.log("🚀 ~ file: hasPermission.js:40 ~ hasPermission ~ userLogged:", userLogged);
         if (Array.isArray(libraries)) {
           libraries.forEach((lib) => {
             if (lib.libraryId === Number(library)) {
               userLibrary = lib;
             }
-            console.log("🚀 ~ file: hasPermission.js:45 ~ libraries.forEach ~ lib:", lib);
           });
 
           if (!userLibrary) {

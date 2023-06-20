@@ -66,11 +66,17 @@ export const useAuthentication = () => {
         localStorage.setItem("uid", JSON.stringify(user.librariesAccount));
         localStorage.setItem("bs-lid", JSON.stringify(bslid));
         localStorage.setItem("aid", JSON.stringify(user.accountId));
+        localStorage.setItem("aprof", JSON.stringify(user.accountProfile));
 
         currentUserSubject.next(user.token);
 
         const libraries = user.librariesAccount;
-        const userLoggedIns = new UserLogged(user.token, user.accountId, libraries);
+        const userLoggedIns = new UserLogged(
+          user.token,
+          user.accountId,
+          libraries,
+          user.accountProfile
+        );
         setUserLogged(dispatch, userLoggedIns);
         setError(null);
         setLoading(false);

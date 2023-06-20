@@ -1,4 +1,5 @@
 import { useMaterialUIController } from "context";
+import { ROLE_BOOKSHELF_SYS_ADMIN } from "helpers/auth/Permisions";
 import { useEffect, useState } from "react";
 
 export const useRole = () => {
@@ -27,6 +28,10 @@ export const useRole = () => {
     checkUserLogged();
     if (role === null) {
       return false;
+    }
+
+    if (userLogged.accountProfile === ROLE_BOOKSHELF_SYS_ADMIN) {
+      return true;
     }
 
     try {

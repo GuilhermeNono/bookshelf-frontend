@@ -132,6 +132,7 @@ export default function App() {
     const token = localStorage.getItem("userAuthorization");
     const libInfo = localStorage.getItem("uid");
     const accountId = localStorage.getItem("aid");
+    const accountProf = localStorage.getItem("aprof");
     const libraryId = localStorage.getItem("bs-lid");
 
     if (token && libInfo && accountId && libraryId) {
@@ -139,7 +140,7 @@ export default function App() {
       authentication.validateToken(token).then((resp) => {
         if (resp === 200 && libraryId) {
           const libObj = JSON.parse(libInfo);
-          const userLoggedIns = new UserLogged(token, accountId, libObj);
+          const userLoggedIns = new UserLogged(token, accountId, libObj, accountProf);
           setUserLogged(dispatch, userLoggedIns);
           setLibrary(dispatch, libraryId);
           navigate("/dashboard");
@@ -196,7 +197,7 @@ export default function App() {
   //         setAlreadyUp(false);
   //       }
   //     } catch (error) {
-  //       console.log(error);
+  //
   //     }
   //   }
   // }, [alreadyUp]);
