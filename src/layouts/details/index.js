@@ -35,12 +35,14 @@ function Details() {
   const useLibraries = useLibrary();
   const { libId } = useParams();
   const [controller, dispatch] = useMaterialUIController();
-  const { token, library } = controller;
+  const { userLogged, library } = controller;
   const [book, setBook] = useState(null);
 
   useEffect(() => {
     useLibraries
-      .getLibraryBooks(token, library, [{ filterKey: "code", operation: "eq", value: libId }])
+      .getLibraryBooks(userLogged.token, library, [
+        { filterKey: "code", operation: "eq", value: libId },
+      ])
       .then((response) => {
         setBook(response[0]);
         setCurrentBook(dispatch, response[0]);

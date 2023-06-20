@@ -62,14 +62,17 @@ function reducer(state, action) {
     case "DARKMODE": {
       return { ...state, darkMode: action.value };
     }
-    case "TOKEN": {
-      return { ...state, token: action.value };
+    case "USERLOGGED": {
+      return { ...state, userLogged: action.value };
     }
     case "LIBRARY": {
       return { ...state, library: action.value };
     }
     case "CURRENTBOOK": {
       return { ...state, currentBook: action.value };
+    }
+    case "ROUTES": {
+      return { ...state, routes: action.value };
     }
     case "NEWESTBOOKCOUNT": {
       return { ...state, currentBook: action.value };
@@ -96,9 +99,10 @@ function MaterialUIControllerProvider({ children }) {
     direction: "ltr",
     layout: "home",
     darkMode: true,
-    token: "",
+    userLogged: null,
     library: 0,
     currentBook: "",
+    routes: [],
     newestBookCount: 0,
     newestLoanCount: 0,
   };
@@ -139,9 +143,10 @@ const setOpenConfigurator = (dispatch, value) => dispatch({ type: "OPEN_CONFIGUR
 const setDirection = (dispatch, value) => dispatch({ type: "DIRECTION", value });
 const setLayout = (dispatch, value) => dispatch({ type: "LAYOUT", value });
 const setDarkMode = (dispatch, value) => dispatch({ type: "DARKMODE", value });
-const setToken = (dispatch, value) => dispatch({ type: "TOKEN", value });
+const setUserLogged = (dispatch, value) => dispatch({ type: "USERLOGGED", value });
 const setLibrary = (dispatch, value) => dispatch({ type: "LIBRARY", value });
 const setCurrentBook = (dispatch, value) => dispatch({ type: "CURRENTBOOK", value });
+const setRoutes = (dispatch, value) => dispatch({ type: "ROUTES", value });
 const setNewestBookCount = (dispatch, value) => dispatch({ type: "NEWESTBOOKCOUNT", value });
 const setNewestLoanCount = (dispatch, value) => dispatch({ type: "NEWESTLOANCOUNT", value });
 
@@ -154,13 +159,14 @@ export {
   setTransparentSidenav,
   setWhiteSidenav,
   setSidenavColor,
+  setRoutes,
   setTransparentNavbar,
   setFixedNavbar,
   setOpenConfigurator,
   setDirection,
   setLayout,
   setDarkMode,
-  setToken,
+  setUserLogged,
   setLibrary,
   setCurrentBook,
 };
