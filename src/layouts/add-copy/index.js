@@ -50,8 +50,9 @@ function AddCopy() {
 
   const uidData = JSON.parse(localStorage.getItem("uid"));
   const { libraryId, userLibraryId } = uidData[0];
-  const { addBookCopy, loading, error } = useBooks();
+  const { addBookCopy, loading } = useBooks();
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
+  const [showErrorAlert, setShowErrorAlert] = useState(false);
 
   // pegando as informações do localstorage
   // userLibraryId = userId, libraryId= libId
@@ -69,8 +70,8 @@ function AddCopy() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!selectedBook) {
-      // Verifique se um livro foi selecionado
+    if (!selectedBook || tomboCode === "") {
+      setShowErrorAlert(true);
       return;
     }
 
@@ -81,14 +82,12 @@ function AddCopy() {
         setSelectedBook(null);
         setTomboCode([]);
       })
-      .catch(() => {
-        // colocar um pop-up ou algo do tipo avisando que algo deu errado
-        console.log(`Algo deu errado: ${error}`);
-      });
+      .catch(() => {});
   };
 
   const handleCloseAlert = () => {
     setShowSuccessAlert(false);
+    setShowErrorAlert(false);
   };
 
   return (
@@ -106,6 +105,20 @@ function AddCopy() {
       >
         <Alert severity="success" sx={{ zIndex: 9999 }}>
           Cópia adicionada com sucesso!
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        open={showErrorAlert}
+        autoHideDuration={3000}
+        onClose={handleCloseAlert}
+        anchorOrigin={{
+          vertical: "top",
+          horizontal: "center",
+        }}
+        TransitionComponent={Slide}
+      >
+        <Alert severity="error" sx={{ zIndex: 9999 }}>
+          Por favor, selecione um título e insira um tombo antes de adicionar uma cópia.
         </Alert>
       </Snackbar>
       <MDBox pt={6} pb={3}>
