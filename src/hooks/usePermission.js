@@ -30,14 +30,6 @@ export const usePermission = () => {
       return true;
     }
 
-    console.log(
-      "🚀 ~ file: usePermission.js:34 ~ hasPermission ~ userLogged.accountProfile:",
-      userLogged.accountProfile
-    );
-    console.log(
-      "🚀 ~ file: usePermission.js:34 ~ hasPermission ~ ROLE_BOOKSHELF_SYS_ADMIN:",
-      ROLE_BOOKSHELF_SYS_ADMIN
-    );
     if (userLogged.accountProfile === ROLE_BOOKSHELF_SYS_ADMIN) {
       return true;
     }

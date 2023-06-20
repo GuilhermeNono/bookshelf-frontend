@@ -80,7 +80,6 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
               route.Type("blocked");
             }
           });
-          console.log(routes);
           // eslint-disable-next-line no-param-reassign
         }
         setIsRoutesSetted(true);

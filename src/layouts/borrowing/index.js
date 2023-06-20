@@ -36,7 +36,7 @@ function borrowing() {
   const [loans, setLoans] = useState();
 
   useEffect(() => {
-    if (userLogged.token) {
+    if (userLogged) {
       useLoans.getLibraryLoan(userLogged.token, library).then((resp) => {
         if (resp) {
           borrowingTableData(resp).then((data) => {
@@ -45,7 +45,7 @@ function borrowing() {
         }
       });
     }
-  }, [userLogged.token]);
+  }, [userLogged]);
 
   return (
     <DashboardLayout>

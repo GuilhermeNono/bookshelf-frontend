@@ -66,7 +66,7 @@ export const useAuthentication = () => {
         localStorage.setItem("uid", JSON.stringify(user.librariesAccount));
         localStorage.setItem("bs-lid", JSON.stringify(bslid));
         localStorage.setItem("aid", JSON.stringify(user.accountId));
-        localStorage.setItem("aprof", JSON.stringify(user.accountProfile));
+        localStorage.setItem("aprof", user.accountProfile);
 
         currentUserSubject.next(user.token);
 

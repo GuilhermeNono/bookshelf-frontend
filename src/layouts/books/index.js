@@ -46,7 +46,7 @@ function Books() {
   const { userLogged, library } = controller;
 
   useEffect(() => {
-    if (userLogged.token) {
+    if (userLogged) {
       useLibraries.getLibraryBooks(userLogged.token, library).then((resp) => {
         if (resp) {
           booksTableData(resp).then((data) => {
@@ -55,7 +55,7 @@ function Books() {
         }
       });
     }
-  }, [userLogged.token]);
+  }, [userLogged]);
 
   return (
     <DashboardLayout>
