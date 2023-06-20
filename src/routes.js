@@ -55,13 +55,12 @@ import Borrowing from "./layouts/borrowing";
 import Details from "./layouts/details";
 import {
   PERM_BOOKSHELF_LIB_BOOKS,
+  PERM_BOOKSHELF_LIB_BOOKS_BOOK_ADD,
+  PERM_BOOKSHELF_LIB_BOOKS_COPY_ADD,
   PERM_BOOKSHELF_LIB_BOOKS_DETAIL,
-  PERM_BOOKSHELF_LIB_DASH_ADMIN,
-  // PERM_BOOKSHELF_LIB_DASH_USER,
   PERM_BOOKSHELF_LIB_LOAN,
   PERM_BOOKSHELF_LIB_PROFILE,
   ROLE_LIBRARY_ADMIN,
-  // ROLE_LIBRARY_USER,
 } from "./helpers/auth/Permisions";
 import Converter from "./util/Converter";
 
@@ -91,23 +90,13 @@ const routesJson = [
   {
     type: "collapse",
     name: "Dashboard",
-    key: "dashboard_adm",
+    key: "dashboard_user",
     icon: <Icon fontSize="small">dashboard</Icon>,
     route: "/dashboard",
     component: <Dashboard />,
-    authorization: PERM_BOOKSHELF_LIB_DASH_ADMIN,
-    profile: ROLE_LIBRARY_ADMIN,
+    authorization: null,
+    profile: null,
   },
-  // {
-  //   type: "collapse",
-  //   name: "Dashboard",
-  //   key: "dashboard_user",
-  //   icon: <Icon fontSize="small">dashboard</Icon>,
-  //   route: "/dashboard",
-  //   component: <Dashboard />,
-  //   authorization: PERM_BOOKSHELF_LIB_DASH_USER,
-  //   profile: ROLE_LIBRARY_USER,
-  // },
   {
     type: "collapse",
     name: "Books",
@@ -119,20 +108,24 @@ const routesJson = [
     profile: null,
   },
   {
-    type: "title",
+    type: "blocked",
     name: "AddCopy",
     key: "AddCopy",
     icon: <Icon fontSize="small">table_view</Icon>,
     route: "/dashboard/add-copy",
     component: <AddCopy />,
+    authorization: PERM_BOOKSHELF_LIB_BOOKS_COPY_ADD,
+    profile: null,
   },
   {
-    type: "title",
+    type: "blocked",
     name: "AddBook",
     key: "AddBook",
     icon: <Icon fontSize="small">table_view</Icon>,
     route: "/dashboard/add-book",
     component: <AddBook />,
+    authorization: PERM_BOOKSHELF_LIB_BOOKS_BOOK_ADD,
+    profile: null,
   },
   {
     type: "collapse",

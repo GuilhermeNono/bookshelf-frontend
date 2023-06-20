@@ -39,11 +39,19 @@ import { useLibrary } from "hooks/useLibrary";
 import MDTypography from "components/MDTypography";
 import MDButton from "components/MDButton";
 import { Link } from "react-router-dom";
+import { usePermission } from "hooks/usePermission";
+import {
+  PERM_BOOKSHELF_LIB_BOOKS_BOOK_ADD,
+  PERM_BOOKSHELF_LIB_BOOKS_COPY_ADD,
+} from "helpers/auth/Permisions";
 
 function Books() {
   const [books, setBooks] = useState();
   const useLibraries = useLibrary();
   const [controller] = useMaterialUIController();
+  const { hasPermission } = usePermission();
+  const [doNotHavePermissionToAddBook, setDoNotHavePermissionToAddBook] = useState(false);
+  const [doNotHavePermissionToAddCopy, setDoNotHavePermissionToAddCopy] = useState(false);
   const { userLogged, library } = controller;
 
   useEffect(() => {
@@ -55,6 +63,21 @@ function Books() {
           });
         }
       });
+    }
+  }, [userLogged]);
+
+  useEffect(() => {
+    if (userLogged) {
+      const canAddBook = hasPermission(PERM_BOOKSHELF_LIB_BOOKS_BOOK_ADD, library);
+      const canAddCopy = hasPermission(PERM_BOOKSHELF_LIB_BOOKS_COPY_ADD, library);
+
+      if (!canAddBook) {
+        setDoNotHavePermissionToAddBook(true);
+      }
+
+      if (!canAddCopy) {
+        setDoNotHavePermissionToAddCopy(true);
+      }
     }
   }, [userLogged]);
 
@@ -77,27 +100,36 @@ function Books() {
               >
                 <MDBox display="flex" alignItems="center" justifyContent="space-between">
                   <MDTypography variant="h5">Acervo da Biblioteca</MDTypography>
-                  <MDBox display="flex" alignItems="center">
-                    <MDButton
-                      component={Link}
-                      to="/dashboard/add-book"
-                      fontWeight="bold"
-                      fontSize="25px"
-                      color="success"
-                      sx={{ mr: 5 }}
-                    >
-                      Adicionar Livro
-                    </MDButton>
-                    <MDButton
-                      component={Link}
-                      to="/dashboard/add-copy"
-                      fontWeight="bold"
-                      fontSize="25px"
-                      color="success"
-                    >
-                      Adicionar cópia
-                    </MDButton>
-                  </MDBox>
+                  {!doNotHavePermissionToAddBook && !doNotHavePermissionToAddCopy ? (
+                    <MDBox display="flex" alignItems="center">
+                      {!doNotHavePermissionToAddBook && (
+                        <MDButton
+                          component={Link}
+                          to="/dashboard/add-book"
+                          fontWeight="bold"
+                          fontSize="25px"
+                          color="success"
+                          sx={{ mr: 5 }}
+                        >
+                          Adicionar Livro
+                        </MDButton>
+                      )}
+                      {!doNotHavePermissionToAddCopy && (
+                        <MDButton
+                          component={Link}
+                          to="/dashboard/add-copy"
+                          fontWeight="bold"
+                          fontSize="25px"
+                          color="success"
+                        >
+                          Adicionar cópia
+                        </MDButton>
+                      )}
+                    </MDBox>
+                  ) : (
+                    // eslint-disable-next-line react/jsx-no-useless-fragment
+                    <></>
+                  )}
                 </MDBox>
               </MDBox>
               <MDBox pt={3}>
