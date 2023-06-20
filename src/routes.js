@@ -50,35 +50,134 @@ import Icon from "@mui/material/Icon";
 import Home from "layouts/home";
 import Pricing from "layouts/pricing";
 import Books from "layouts/books";
-import Borrowing from "./layouts/borrowing";
-import Details from "./layouts/details";
+import AddCopy from "layouts/add-copy";
+import AddBook from "layouts/add-book";
+import {
+  ROLE_LIBRARY_ADMIN,
+  PERM_BOOKSHELF_LIB_LOAN,
+  PERM_BOOKSHELF_LIB_BOOKS_DETAIL,
+  PERM_BOOKSHELF_LIB_PROFILE,
+  PERM_BOOKSHELF_LIB_BOOKS_BOOK_ADD,
+  PERM_BOOKSHELF_LIB_BOOKS,
+  PERM_BOOKSHELF_LIB_BOOKS_COPY_ADD,
+} from "helpers/auth/Permisions";
 
-const routes = [
+import Converter from "util/Converter";
+import Details from "./layouts/details";
+import Borrowing from "./layouts/borrowing";
+
+const routesJson = [
   {
-    type: "title",
+    type: "blocked",
     name: "Home",
     key: "home",
     icon: <Icon fontSize="small">dashboard</Icon>,
     route: "/",
     ignoreNav: true,
     component: <Home />,
+    authorization: null,
+    profile: null,
   },
   {
-    type: "title",
+    type: "blocked",
     name: "pricing",
     key: "pricing",
     icon: <Icon fontSize="small">dashboard</Icon>,
     route: "/pricing",
     ignoreNav: true,
     component: <Pricing />,
+    authorization: null,
+    profile: null,
   },
   {
     type: "collapse",
     name: "Dashboard",
-    key: "dashboard",
+    key: "dashboard_user",
     icon: <Icon fontSize="small">dashboard</Icon>,
     route: "/dashboard",
     component: <Dashboard />,
+    authorization: null,
+    profile: null,
+  },
+  {
+    type: "collapse",
+    name: "Books",
+    key: "books",
+    icon: <Icon fontSize="small">collections_bookmark</Icon>,
+    route: "/dashboard/books",
+    component: <Books />,
+    authorization: PERM_BOOKSHELF_LIB_BOOKS,
+    profile: null,
+  },
+  {
+    type: "blocked",
+    name: "AddCopy",
+    key: "AddCopy",
+    icon: <Icon fontSize="small">table_view</Icon>,
+    route: "/dashboard/add-copy",
+    component: <AddCopy />,
+    authorization: PERM_BOOKSHELF_LIB_BOOKS_COPY_ADD,
+    profile: null,
+  },
+  {
+    type: "blocked",
+    name: "AddBook",
+    key: "AddBook",
+    icon: <Icon fontSize="small">table_view</Icon>,
+    route: "/dashboard/add-book",
+    component: <AddBook />,
+    authorization: PERM_BOOKSHELF_LIB_BOOKS_BOOK_ADD,
+    profile: null,
+  },
+  {
+    type: "collapse",
+    name: "Loan",
+    key: "loan",
+    icon: <Icon fontSize="small">book</Icon>,
+    route: "/dashboard/borrowing",
+    component: <Borrowing />,
+    authorization: PERM_BOOKSHELF_LIB_LOAN,
+    profile: ROLE_LIBRARY_ADMIN,
+  },
+  {
+    type: "blocked",
+    name: "Sign In",
+    key: "sign-in",
+    icon: <Icon fontSize="small">login</Icon>,
+    route: "/authentication/sign-in",
+    component: <SignIn />,
+    authorization: null,
+    profile: null,
+  },
+  {
+    type: "blocked",
+    name: "Sign Up",
+    key: "sign-up",
+    icon: <Icon fontSize="small">assignment</Icon>,
+    route: "/authentication/sign-up",
+    component: <SignUp />,
+    authorization: null,
+    profile: null,
+  },
+  {
+    type: "blocked",
+    name: "Details",
+    key: "details",
+    icon: <Icon fontSize="small">table_view</Icon>,
+    route: "/dashboard/books/details/:libId",
+    component: <Details />,
+    authorization: PERM_BOOKSHELF_LIB_BOOKS_DETAIL,
+    profile: null,
+  },
+  {
+    type: "collapse",
+    name: "Profile",
+    key: "profile",
+    icon: <Icon fontSize="small">person</Icon>,
+    route: "/dashboard/profile",
+    component: <Profile />,
+    authorization: PERM_BOOKSHELF_LIB_PROFILE,
+    profile: null,
   },
   // {
   //   type: "title",
@@ -88,22 +187,6 @@ const routes = [
   //   route: "/dashboard/tables",
   //   component: <Tables />,
   // },
-  {
-    type: "collapse",
-    name: "Books",
-    key: "books",
-    icon: <Icon fontSize="small">table_view</Icon>,
-    route: "/dashboard/books",
-    component: <Books />,
-  },
-  {
-    type: "collapse",
-    name: "Loan",
-    key: "loan",
-    icon: <Icon fontSize="small">book</Icon>,
-    route: "/dashboard/borrowing",
-    component: <Borrowing />,
-  },
   // {
   //   type: "title",
   //   name: "Billing",
@@ -120,14 +203,6 @@ const routes = [
   //   route: "/dashboard/notifications",
   //   component: <Notifications />,
   // },
-  {
-    type: "collapse",
-    name: "Profile",
-    key: "profile",
-    icon: <Icon fontSize="small">person</Icon>,
-    route: "/dashboard/profile",
-    component: <Profile />,
-  },
   {
     type: "collapse",
     name: "UserList",
@@ -168,5 +243,7 @@ const routes = [
 
   // http://localhost:8000/dashboard/books/detail/1475
 ];
+
+const routes = Converter.JsonRouteToRoutObject(routesJson);
 
 export default routes;

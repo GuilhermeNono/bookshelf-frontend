@@ -39,6 +39,7 @@ export default async function data(loans) {
           detLoans: <DetailLoans code={element.id} />,
         });
       });
+
       return resp;
     }
     return [];

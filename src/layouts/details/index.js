@@ -15,11 +15,11 @@ import { Box, CircularProgress, Grid, useMediaQuery, useTheme } from "@mui/mater
 import DataTable from "examples/Tables/DataTable";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import MDBox from "../../components/MDBox";
 import MDTypography from "../../components/MDTypography";
 
 import DashboardLayout from "../../examples/LayoutContainers/DashboardLayout";
-import DashboardNavbar from "../../examples/Navbars/DashboardNavbar";
 import Footer from "../../examples/Footer";
 import data from "./data";
 import { useLibrary } from "../../hooks/useLibrary";
@@ -35,12 +35,14 @@ function Details() {
   const useLibraries = useLibrary();
   const { libId } = useParams();
   const [controller, dispatch] = useMaterialUIController();
-  const { token, library } = controller;
+  const { userLogged, library } = controller;
   const [book, setBook] = useState(null);
 
   useEffect(() => {
     useLibraries
-      .getLibraryBooks(token, library, [{ filterKey: "code", operation: "eq", value: libId }])
+      .getLibraryBooks(userLogged.token, library, [
+        { filterKey: "code", operation: "eq", value: libId },
+      ])
       .then((response) => {
         setBook(response[0]);
         setCurrentBook(dispatch, response[0]);

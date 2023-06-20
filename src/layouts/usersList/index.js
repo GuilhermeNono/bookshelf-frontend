@@ -24,23 +24,24 @@ import Footer from "examples/Footer";
 import DataTable from "examples/Tables/DataTable";
 import { useEffect, useState } from "react";
 import { useMaterialUIController } from "context";
-import { useLoan } from "hooks/useLoan";
 import MDProgress from "components/MDProgress";
 import usersTableData from "layouts/usersList/data/usersTableData";
+import { useUsers } from "hooks/useUsers";
 
 function Users() {
-  const useLoans = useLoan();
+  const useUser = useUsers();
   const [controller] = useMaterialUIController();
   const { token, library } = controller;
 
-  const [loans, setLoans] = useState();
+  const [users, setUsers] = useState();
 
   useEffect(() => {
     if (token) {
-      useLoans.getLibraryLoan(token, library).then((resp) => {
+      useUser.getAllUsers(token, library).then((resp) => {
+        console.log("🚀 ~ file: index.js:41 ~ useUser.getAllUsers ~ resp:", resp);
         if (resp) {
           usersTableData(resp).then((data) => {
-            setLoans(data);
+            setUsers(data);
           });
         }
       });
@@ -69,9 +70,9 @@ function Users() {
                 </MDTypography>
               </MDBox>
               <MDBox pt={3}>
-                {loans ? (
+                {users ? (
                   <DataTable
-                    table={loans}
+                    table={users}
                     isSorted={false}
                     entriesPerPage={false}
                     showTotalEntries={false}

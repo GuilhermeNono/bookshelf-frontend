@@ -29,7 +29,7 @@ export default async function data(users) {
         resp.push({
           eMail: <UserEmail email={element.userEmail} />,
         });
-        console.log(element.email);
+        console.log(element);
       });
       return resp;
     }

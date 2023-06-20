@@ -40,103 +40,177 @@ import { useEffect, useState } from "react";
 import { Box, CircularProgress, Grid } from "@mui/material";
 import { useLoan } from "hooks/useLoan";
 import { useLibrary } from "hooks/useLibrary";
+// import { useRole } from "hooks/hasRole";
+// import { useLocation } from "react-router-dom";
+// eslint-disable-next-line no-unused-vars
+import { ROLE_LIBRARY_ADMIN } from "helpers/auth/Permisions";
 
 function Dashboard() {
   // const { sales, tasks } = reportsLineChartData;
   const [controller] = useMaterialUIController();
   const [ready, setReady] = useState(false);
+  const [loanLengthPromise, setLoanLengthPromise] = useState(false);
+  const [loanPromise, setLoanPromise] = useState(false);
+  const [booksPromise, setBooksPromise] = useState(false);
   const [books, setBooks] = useState();
+  // eslint-disable-next-line no-unused-vars
+  const [highRole, setHighRole] = useState(false);
   const [overdue, setOverdue] = useState();
+
   const [loan, setLoan] = useState();
 
   const useBorrowing = useLoan();
+  // const location = useLocation();
+  // const { hasRole } = useRole();
   const useLibraries = useLibrary();
+  const filters = [
+    {
+      filterKey: "loanDateMonth",
+      operation: "eq",
+      value: 6,
+    },
+    {
+      filterKey: "loanDateYear",
+      operation: "eq",
+      value: new Date().getFullYear(),
+    },
+    {
+      filterKey: "returnDateMonth",
+      operation: "eq",
+      value: 6,
+    },
+    {
+      filterKey: "returnDateYear",
+      operation: "eq",
+      value: new Date().getFullYear(),
+    },
+  ];
 
-  const { token, library } = controller;
+  const { userLogged, library } = controller;
 
   useEffect(() => {
-    if (token && library) {
+    if (userLogged && library) {
       setReady(true);
     }
-  }, [token, library]);
+  }, [userLogged, library]);
 
   useEffect(() => {
-    useBorrowing.getLibraryLoanOfMonth(token, library).then((resp) => {
-      if (resp) {
-        setLoan(resp);
-      }
-    });
-
-    useBorrowing
-      .getLibraryLoan(token, library, [{ filterKey: "overdue", operation: "eq", value: true }])
-      .then((resp) => {
+    if (userLogged) {
+      useBorrowing.getLibraryLoan(userLogged.token, library, filters).then((resp) => {
         if (resp) {
-          setOverdue(resp.length);
+          setLoan(resp);
+          setLoanPromise(true);
         }
       });
 
-    useLibraries.getLibraryBooksOfMonth(token, library).then((resp) => {
-      if (resp) {
-        setBooks(resp);
-      }
-    });
-  }, []);
+      useBorrowing
+        .getLibraryLoan(userLogged.token, library, [
+          { filterKey: "overdue", operation: "eq", value: true },
+        ])
+        .then((resp) => {
+          if (resp) {
+            setOverdue(resp.length);
+            setLoanLengthPromise(true);
+          }
+        });
+
+      useLibraries.getLibraryBooksOfMonth(userLogged.token, library).then((resp) => {
+        if (resp) {
+          setBooks(resp);
+          setBooksPromise(true);
+        }
+      });
+    }
+  }, [userLogged]);
+
+  useEffect(() => {
+    if (userLogged) {
+      userLogged.librariesAccount.forEach((lib) => {
+        const profName = lib.profile;
+        if (lib.libraryId === Number(library)) {
+          if (profName === ROLE_LIBRARY_ADMIN) {
+            setHighRole(true);
+          }
+        }
+      });
+    }
+  }, [userLogged]);
 
   return ready ? (
     <DashboardLayout>
       <DashboardNavbar />
-      <MDBox py={3}>
-        <Grid container spacing={3}>
-          <Grid item xs={12} md={6} lg={4}>
-            <MDBox mb={1.5}>
-              <ComplexStatisticsCard
-                color="dark"
-                icon="book"
-                title="Novos livros"
-                count={books && books.length}
-              />
-            </MDBox>
-          </Grid>
-          <Grid item xs={12} md={6} lg={4}>
-            <MDBox mb={1.5}>
-              <ComplexStatisticsCard
-                icon="collectionsbookmark"
-                title="Empréstimos"
-                count={loan && loan.length}
-              />
-            </MDBox>
-          </Grid>
-          <Grid item xs={12} md={6} lg={4}>
-            <MDBox mb={1.5}>
-              <ComplexStatisticsCard
-                color="error"
-                icon="alarmoff"
-                title="Em atraso"
-                count={overdue && overdue}
-              />
-            </MDBox>
-          </Grid>
-        </Grid>
-        <MDBox>
-          <Grid container spacing={3}>
-            <Grid item xs={12} md={6} lg={6}>
-              <RecentBooks books={books} />
+      {highRole ? (
+        <>
+          <MDBox py={3}>
+            <Grid container spacing={3}>
+              <Grid item xs={12} md={6} lg={4}>
+                <MDBox mb={1.5}>
+                  {booksPromise ? (
+                    <ComplexStatisticsCard
+                      color="dark"
+                      icon="book"
+                      title="Novos livros"
+                      count={books && books.length}
+                    />
+                  ) : (
+                    <ComplexStatisticsCard color="dark" icon="book" title="Aguarde..." />
+                  )}
+                </MDBox>
+              </Grid>
+              <Grid item xs={12} md={6} lg={4}>
+                <MDBox mb={1.5}>
+                  {loanPromise ? (
+                    <ComplexStatisticsCard
+                      icon="collectionsbookmark"
+                      title="Empréstimos"
+                      count={loan && loan.length}
+                    />
+                  ) : (
+                    <ComplexStatisticsCard icon="collectionsbookmark" title="Aguarde..." />
+                  )}
+                </MDBox>
+              </Grid>
+              <Grid item xs={12} md={6} lg={4}>
+                <MDBox mb={1.5}>
+                  {loanLengthPromise ? (
+                    <ComplexStatisticsCard
+                      color="error"
+                      icon="alarmoff"
+                      title="Em atraso"
+                      count={overdue && overdue}
+                    />
+                  ) : (
+                    <ComplexStatisticsCard color="error" icon="alarmoff" title="Aguarde..." />
+                  )}
+                </MDBox>
+              </Grid>
             </Grid>
-            <Grid item xs={12} md={6} lg={6}>
-              <OrdersOverview loanList={loan} />
-            </Grid>
-          </Grid>
-        </MDBox>
-      </MDBox>
-      <Footer />
+            <MDBox>
+              <Grid container spacing={3}>
+                <Grid item xs={12} md={6} lg={6}>
+                  <RecentBooks books={books} />
+                </Grid>
+                <Grid item xs={12} md={6} lg={6}>
+                  <OrdersOverview loanList={loan} />
+                </Grid>
+              </Grid>
+            </MDBox>
+          </MDBox>
+          <Footer />
+        </>
+      ) : (
+        <>
+          <MDBox py={3}>
+            <MDBox />
+          </MDBox>
+          <Footer />
+        </>
+      )}
     </DashboardLayout>
   ) : (
-    <DashboardLayout>
-      <DashboardNavbar />
-      <Box sx={{ height: 100, display: "flex", justifyContent: "center", alignItems: "center" }}>
-        <CircularProgress />
-      </Box>
-    </DashboardLayout>
+    <Box sx={{ height: 100, display: "flex", justifyContent: "center", alignItems: "center" }}>
+      <CircularProgress />
+    </Box>
   );
 }
 
