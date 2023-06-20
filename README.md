@@ -15,7 +15,7 @@
 - In development...
 
 #
-<a href="https://github.com/GuilhermeNono/bookshelf-frontend">> Oficial Site</a>
+<a href="bookshelf-preview.vercel.app">> Oficial Site</a>
 
 ![PlaceHolder](https://sunsetmediawave.files.wordpress.com/2014/10/1-title1.gif)
 
