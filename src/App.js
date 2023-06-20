@@ -164,18 +164,14 @@ export default function App() {
     }
   }, [bsLidState]);
 
-  // eslint-disable-next-line consistent-return
-  // useEffect(() => {
-  //   if (pathname.indexOf("/dashboard") === 0) {
-  //     if (!userLogged) {
-  //       navigate("/authentication/sign-in");
-  //     }
-  //   } else if (pathname.indexOf("/authentication") === 0) {
-  //     if (userLogged) {
-  //       navigate("/dashboard");
-  //     }
-  //   }
-  // }, [pathname, userLogged]);
+  // eslint-disable-+next-line consistent-return
+  useEffect(() => {
+    if (pathname.indexOf("/dashboard") === 0) {
+      if (!userLogged) {
+        navigate("/authentication/sign-in");
+      }
+    }
+  }, [pathname, userLogged]);
 
   // eslint-disable-next-line no-unused-vars
   // const teste = [];
