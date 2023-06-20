@@ -141,7 +141,7 @@ function AddCopy() {
               <MDBox sx={{ margin: "3rem 1.5rem 1rem 3rem" }}>
                 <Grid
                   container
-                  spac-ing={3}
+                  spacing={3}
                   sx={downSm && { display: "flex", justifyContent: "center" }}
                 >
                   <Grid
@@ -154,10 +154,10 @@ function AddCopy() {
                     <MDBox
                       component="img"
                       sx={{
-                        width: "400px",
+                        width: "auto",
                         maxWidth: "100%",
                         height: "auto",
-                        maxHeight: "100%",
+                        maxHeight: "488px",
                         borderRadius: "0.7rem",
                       }}
                       src={selectedBook?.cape || capePlaceholder}
@@ -174,9 +174,8 @@ function AddCopy() {
                           : {
                               display: "grid",
                               gridTemplateColumns: "1fr 1fr",
-                              gridTemplateRows: "repeat(5, 1fr)",
+                              gridTemplateRows: "auto auto",
                               gap: 3,
-                              height: "410px",
                             }
                       }
                     >

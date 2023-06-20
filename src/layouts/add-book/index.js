@@ -278,10 +278,10 @@ function AddBook() {
                     <MDBox
                       component="img"
                       sx={{
-                        width: "400px",
+                        width: "auto",
                         maxWidth: "100%",
                         height: "auto",
-                        maxHeight: "100%",
+                        maxHeight: "488px",
                         borderRadius: "0.7rem",
                       }}
                       src={imageUrl || capePlaceholder}
