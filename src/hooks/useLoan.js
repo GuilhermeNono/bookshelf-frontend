@@ -102,6 +102,44 @@ export const useLoan = () => {
     return req;
   };
 
+  const createBorrowing = async (userToken, borrowingData) => {
+    checkIfIsCancelled();
+    setLoading(true);
+    setError(null);
+
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${userToken}`,
+    };
+
+    const borrowingBody = {
+      loanDate: "",
+      returnDate: "",
+      bookCode: "",
+      userId: "",
+    };
+
+    const requestOptions = {
+      method: "POST",
+      headers,
+    };
+
+    const req = fetch(`${ApiRouteBuild.buildRoute("borrowing")}`, requestOptions)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to create borrowing");
+        }
+        return response.json();
+      })
+      .catch(() => {
+        setError(error.message);
+        setLoading(false);
+        return null;
+      });
+
+    return req;
+  };
+
   useEffect(() => {
     setCancelled(true);
     // setError("");
@@ -110,6 +148,7 @@ export const useLoan = () => {
   return {
     getLibraryLoan,
     getLibraryLoanOfMonth,
+    createBorrowing,
     loading,
     error,
   };
