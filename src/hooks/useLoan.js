@@ -140,6 +140,30 @@ export const useLoan = () => {
     return req;
   };
 
+  const getAllUsers = (userToken) => {
+    setLoading(true);
+    setError(null);
+
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${userToken}`,
+    };
+
+    const requestOptions = {
+      method: "GET",
+      headers,
+    };
+
+    fetch(ApiRouteBuild.buildRoute("user"), requestOptions)
+      .then(() => {
+        setLoading(false);
+      })
+      .catch(() => {
+        setError("An error occurred while fetching users.");
+        setLoading(false);
+      });
+  };
+
   useEffect(() => {
     setCancelled(true);
     // setError("");
@@ -148,6 +172,7 @@ export const useLoan = () => {
   return {
     getLibraryLoan,
     getLibraryLoanOfMonth,
+    getAllUsers,
     createBorrowing,
     loading,
     error,

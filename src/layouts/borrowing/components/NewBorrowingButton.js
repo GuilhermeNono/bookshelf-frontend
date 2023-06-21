@@ -1,30 +1,28 @@
+import React, { useState } from "react";
 import {
   Alert,
-  Autocomplete,
   Box,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
   Slide,
-  TextField,
 } from "@mui/material";
+import Snackbar from "@mui/material/Snackbar";
+import { useMaterialUIController } from "context";
+import { useLoan } from "hooks/useLoan";
 import MDBox from "components/MDBox";
 import MDButton from "components/MDButton";
 import MDInput from "components/MDInput";
-import { useMaterialUIController } from "context";
-import { useLoan } from "hooks/useLoan";
-import React, { useEffect, useState } from "react";
-import Snackbar from "@mui/material/Snackbar";
-import { useAuthentication } from "hooks/useAuthentication";
 
 function NewBorrowingButton() {
   const [controller] = useMaterialUIController();
-  const { userLogged } = controller;
-  const { users, setUsers } = useState([]);
-  const { selectedUser, setSelectedUser } = useState(null);
+
   const { createBorrowing } = useLoan();
+  const { userLogged } = controller;
+
   const [openDialog, setOpenDialog] = useState(false);
+
   const [loanData, setLoanData] = useState({
     loanDate: "",
     returnDate: "",
@@ -33,17 +31,6 @@ function NewBorrowingButton() {
   });
   const [errorSnackbar, setErrorSnackbar] = useState(false);
   const [successSnackbar, setSuccessSnackbar] = useState(false);
-  const { token } = userLogged.token;
-
-  useEffect(() => {
-    if (token) {
-      useAuthentication.getAllUsers(token).then((resp) => {
-        if (resp) {
-          setUsers(resp);
-        }
-      });
-    }
-  }, [token]);
 
   const handleOpenDialog = () => {
     setOpenDialog(true);
@@ -156,16 +143,7 @@ function NewBorrowingButton() {
               />
             </MDBox>
             <Box gridRow={4} sx={{ mb: 2 }}>
-              <MDInput
-                label="Usuário"
-                type="text"
-                value={loanData.userId}
-                onChange={(e) => setLoanData({ ...loanData, userId: e.target.value })}
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                fullWidth
-              />
+              <MDInput label="Usuario" />
             </Box>
           </Box>
         </DialogContent>

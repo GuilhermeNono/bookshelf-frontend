@@ -209,30 +209,6 @@ export const useAuthentication = () => {
     localStorage.clear();
   };
 
-  const getAllUsers = (userToken) => {
-    setLoading(true);
-    setError(null);
-
-    const headers = {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${userToken}`,
-    };
-
-    const requestOptions = {
-      method: "GET",
-      headers,
-    };
-
-    fetch(ApiRouteBuild.buildRoute("user"), requestOptions)
-      .then(() => {
-        setLoading(false);
-      })
-      .catch(() => {
-        setError("An error occurred while fetching users.");
-        setLoading(false);
-      });
-  };
-
   useEffect(() => {
     setCancelled(true);
     // setError("");
@@ -242,7 +218,6 @@ export const useAuthentication = () => {
     loginUser,
     createUser,
     validateToken,
-    getAllUsers,
     userData,
     logOut,
     error,
