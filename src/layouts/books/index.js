@@ -34,7 +34,7 @@ import DataTable from "examples/Tables/DataTable";
 import booksTableData from "layouts/books/data/booksTableData";
 // eslint-disable-next-line no-unused-vars
 import { useEffect, useState } from "react";
-import MDProgress from "components/MDProgress";
+// import MDProgress from "components/MDProgress";
 import { useLibrary } from "hooks/useLibrary";
 import MDTypography from "components/MDTypography";
 import MDButton from "components/MDButton";
@@ -44,6 +44,7 @@ import {
   PERM_BOOKSHELF_LIB_BOOKS_BOOK_ADD,
   PERM_BOOKSHELF_LIB_BOOKS_COPY_ADD,
 } from "helpers/auth/Permisions";
+import { CircularProgress } from "@mui/material";
 
 function Books() {
   const [books, setBooks] = useState();
@@ -142,7 +143,15 @@ function Books() {
                     noEndBorder
                   />
                 ) : (
-                  <MDProgress />
+                  <MDBox mb={3}>
+                    <CircularProgress
+                      sx={{
+                        display: "flex",
+                        margin: "0 auto",
+                        alignContent: "center",
+                      }}
+                    />
+                  </MDBox>
                 )}
               </MDBox>
             </Card>
