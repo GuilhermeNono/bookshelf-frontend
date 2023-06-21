@@ -125,7 +125,7 @@ export const useLoan = () => {
       body: JSON.stringify(borrowingBody),
     };
 
-    const req = fetch(`${ApiRouteBuild.buildRoute("borrowing")}`, requestOptions)
+    const req = fetch(`${ApiRouteBuild.buildRoute("loan")}`, requestOptions)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Failed to create borrowing");
@@ -133,7 +133,6 @@ export const useLoan = () => {
         return response.json();
       })
       .catch(() => {
-        setError(error.message);
         setLoading(false);
         return null;
       });

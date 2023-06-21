@@ -5,11 +5,13 @@ import MDInput from "components/MDInput";
 import { useMaterialUIController } from "context";
 import { useLoan } from "hooks/useLoan";
 import React, { useState } from "react";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
 
 function NewBorrowingButton() {
   const [controller] = useMaterialUIController();
   const { userLogged } = controller;
-  const { useLoans } = useLoan();
+  const { createBorrowing } = useLoan();
   const [openDialog, setOpenDialog] = useState(false);
   const [loanData, setLoanData] = useState({
     loanDate: "",
@@ -17,6 +19,7 @@ function NewBorrowingButton() {
     bookCode: "",
     userId: "",
   });
+  const [openSnackbar, setOpenSnackbar] = useState(false);
 
   const handleOpenDialog = () => {
     setOpenDialog(true);
@@ -26,29 +29,52 @@ function NewBorrowingButton() {
     setOpenDialog(false);
   };
 
-  const handleSubmit = () => {
-    const { loanDate, returnDate, bookCode, userId } = loanData;
-    // Chamar a função createBorrowing com os dados do empréstimo
-    useLoans
-      .createBorrowing(userLogged.token, {
-        loanDate,
-        returnDate,
-        bookCode,
-        userId,
-      })
-      .then((response) => {
-        console.log("Borrowing created:", response);
-        // Fechar o diálogo após a criação do empréstimo
-        handleCloseDialog();
-      })
-      .catch((error) => {
-        console.error("Failed to create borrowing:", error);
-      });
+  const handleOpenSnackbar = () => {
+    setOpenSnackbar(true);
   };
 
+  const handleCloseSnackbar = () => {
+    setOpenSnackbar(false);
+  };
+
+  const borrowingData = {
+    loanDate: "",
+    returnDate: "",
+    bookCode: "",
+    userId: "",
+  };
+
+  const validateFields = () => {
+    // Verifica se todos os campos estão preenchidos
+    if (!loanData.loanDate || !loanData.returnDate || !loanData.bookCode || !loanData.userId) {
+      handleOpenSnackbar();
+      return false;
+    }
+
+    return true;
+  };
+
+  const handleSubmit = () => {
+    const isValid = validateFields();
+
+    if (isValid) {
+      createBorrowing(userLogged.token, borrowingData)
+        .then((response) => {
+          console.log("Borrowing created:", response);
+          handleCloseDialog();
+        })
+        .catch((error) => {
+          console.error("Failed to create borrowing:", error);
+        });
+    }
+
+    console.log(loanData);
+  };
   return (
     <MDBox>
-      <MDButton onClick={handleOpenDialog}>Novo Empréstimo</MDButton>
+      <MDButton onClick={handleOpenDialog} color="success">
+        Novo Empréstimo
+      </MDButton>
       <Dialog
         open={openDialog}
         onClose={handleCloseDialog}
@@ -122,6 +148,20 @@ function NewBorrowingButton() {
           </MDButton>
         </DialogActions>
       </Dialog>
+
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={5000}
+        onClose={handleCloseSnackbar}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "left",
+        }}
+      >
+        <MuiAlert onClose={handleCloseSnackbar} severity="error" elevation={6} variant="filled">
+          Por favor, preencha todos os campos para realizar o empréstimo.
+        </MuiAlert>
+      </Snackbar>
     </MDBox>
   );
 }

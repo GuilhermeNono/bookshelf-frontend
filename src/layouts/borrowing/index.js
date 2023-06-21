@@ -64,12 +64,17 @@ function borrowing() {
                 bgColor="info"
                 borderRadius="lg"
                 coloredShadow="info"
+                display="flex"
+                alignItems="center"
+                justifyContent="space-between"
               >
                 <MDTypography variant="h6" color="white">
                   Emprestimos na biblioteca
                 </MDTypography>
+
                 <NewBorrowingButton />
               </MDBox>
+
               <MDBox pt={3}>
                 {loans ? (
                   <DataTable
