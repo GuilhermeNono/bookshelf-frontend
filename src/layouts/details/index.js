@@ -39,15 +39,17 @@ function Details() {
   const [book, setBook] = useState(null);
 
   useEffect(() => {
-    useLibraries
-      .getLibraryBooks(userLogged.token, library, [
-        { filterKey: "code", operation: "eq", value: libId },
-      ])
-      .then((response) => {
-        setBook(response[0]);
-        setCurrentBook(dispatch, response[0]);
-      });
-  }, []);
+    if (userLogged) {
+      useLibraries
+        .getLibraryBooks(userLogged.token, library, [
+          { filterKey: "code", operation: "eq", value: libId },
+        ])
+        .then((response) => {
+          setBook(response[0]);
+          setCurrentBook(dispatch, response[0]);
+        });
+    }
+  }, [userLogged]);
 
   return (
     <DashboardLayout>

@@ -56,7 +56,7 @@ function Books() {
 
   useEffect(() => {
     if (userLogged) {
-      useLibraries.getLibraryBooks(userLogged.token, library).then((resp) => {
+      useLibraries.getLibraryBooksNoLimit(userLogged.token, library).then((resp) => {
         if (resp) {
           booksTableData(resp).then((data) => {
             setBooks(data);
