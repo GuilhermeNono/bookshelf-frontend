@@ -85,6 +85,7 @@ function borrowing() {
                         margin: "0 auto",
                         alignContent: "center",
                       }}
+                      color="inherit"
                     />
                   </MDBox>
                 )}
