@@ -326,26 +326,6 @@ function Details() {
                             09
                           </MDTypography>
                         </Box>
-                        <Box
-                          gridRow={3}
-                          sx={{
-                            display: "flex",
-                            flexDirection: "row",
-                            mr: "5",
-                            mb: "15px",
-                            alignItems: "flex-end",
-                          }}
-                        >
-                          <MDTypography variant="h6" sx={{ mr: "8px", fontSize: "0.74em" }}>
-                            Tombo:
-                          </MDTypography>
-                          <MDTypography
-                            variant="h6"
-                            sx={{ color: "#cecece", fontWeight: "400", fontSize: "0.7em" }}
-                          >
-                            {book.code}
-                          </MDTypography>
-                        </Box>
                       </Grid>
                     </Grid>
                   </Grid>
