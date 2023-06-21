@@ -25,8 +25,8 @@ import DataTable from "examples/Tables/DataTable";
 import { useEffect, useState } from "react";
 import { useMaterialUIController } from "context";
 import { useLoan } from "hooks/useLoan";
-import MDProgress from "components/MDProgress";
 import borrowingTableData from "layouts/borrowing/data/borrowingTableData";
+import { CircularProgress } from "@mui/material";
 
 function borrowing() {
   const useLoans = useLoan();
@@ -78,7 +78,15 @@ function borrowing() {
                     noEndBorder
                   />
                 ) : (
-                  <MDProgress />
+                  <MDBox mb={3}>
+                    <CircularProgress
+                      sx={{
+                        display: "flex",
+                        margin: "0 auto",
+                        alignContent: "center",
+                      }}
+                    />
+                  </MDBox>
                 )}
               </MDBox>
             </Card>
