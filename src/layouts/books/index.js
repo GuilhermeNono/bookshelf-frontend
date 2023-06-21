@@ -134,7 +134,7 @@ function Books() {
                 </MDBox>
               </MDBox>
               <MDBox pt={3}>
-                {false ? (
+                {books ? (
                   <DataTable
                     table={books}
                     isSorted={false}
