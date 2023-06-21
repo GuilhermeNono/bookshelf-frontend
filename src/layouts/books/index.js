@@ -134,7 +134,7 @@ function Books() {
                 </MDBox>
               </MDBox>
               <MDBox pt={3}>
-                {books ? (
+                {false ? (
                   <DataTable
                     table={books}
                     isSorted={false}
@@ -150,6 +150,7 @@ function Books() {
                         margin: "0 auto",
                         alignContent: "center",
                       }}
+                      color="inherit"
                     />
                   </MDBox>
                 )}
