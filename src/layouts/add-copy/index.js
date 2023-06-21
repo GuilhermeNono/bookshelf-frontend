@@ -39,7 +39,7 @@ import BackButton from "./components/BackButton";
 function AddCopy() {
   const [controller] = useMaterialUIController();
   const [selectedBook, setSelectedBook] = useState(null);
-  const { token } = controller;
+  const { userLogged } = controller;
 
   const [tomboCode, setTomboCode] = useState([]);
   const [books, setBooks] = useState([]);
@@ -59,14 +59,14 @@ function AddCopy() {
   // userLibraryId = userId, libraryId= libId
 
   useEffect(() => {
-    if (token) {
-      useBook.getAllBooks(token).then((resp) => {
+    if (userLogged) {
+      useBook.getAllBooks(userLogged.token).then((resp) => {
         if (resp) {
           setBooks(resp);
         }
       });
     }
-  }, [token]);
+  }, [userLogged]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -76,7 +76,7 @@ function AddCopy() {
       return;
     }
 
-    addBookCopy(token, selectedBook.bookId, libraryId, userLibraryId, tomboCode)
+    addBookCopy(userLogged.token, selectedBook.bookId, libraryId, userLibraryId, tomboCode)
       .then(() => {
         setShowSuccessAlert(true);
 

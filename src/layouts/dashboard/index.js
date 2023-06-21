@@ -209,7 +209,7 @@ function Dashboard() {
     </DashboardLayout>
   ) : (
     <Box sx={{ height: 100, display: "flex", justifyContent: "center", alignItems: "center" }}>
-      <CircularProgress />
+      <CircularProgress color="inherit" />
     </Box>
   );
 }

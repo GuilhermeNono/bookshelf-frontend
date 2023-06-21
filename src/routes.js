@@ -52,6 +52,7 @@ import Pricing from "layouts/pricing";
 import Books from "layouts/books";
 import AddCopy from "layouts/add-copy";
 import AddBook from "layouts/add-book";
+import LoansDetails from "layouts/loansDetails";
 import {
   ROLE_LIBRARY_ADMIN,
   PERM_BOOKSHELF_LIB_LOAN,
@@ -61,10 +62,9 @@ import {
   PERM_BOOKSHELF_LIB_BOOKS,
   PERM_BOOKSHELF_LIB_BOOKS_COPY_ADD,
 } from "helpers/auth/Permisions";
-
 import Converter from "util/Converter";
-import Details from "./layouts/details";
 import Borrowing from "./layouts/borrowing";
+import Details from "./layouts/details";
 
 const routesJson = [
   {
@@ -138,6 +138,16 @@ const routesJson = [
     component: <Borrowing />,
     authorization: PERM_BOOKSHELF_LIB_LOAN,
     profile: ROLE_LIBRARY_ADMIN,
+  },
+  {
+    type: "title",
+    name: "LoansDetails",
+    key: "loansDetails",
+    icon: <Icon fontSize="small">table_view</Icon>,
+    route: "/dashboard/borrowing/loansDetails/:loanId",
+    authorization: PERM_BOOKSHELF_LIB_LOAN,
+    component: <LoansDetails />,
+    profile: null,
   },
   {
     type: "blocked",

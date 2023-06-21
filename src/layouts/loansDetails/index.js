@@ -10,49 +10,100 @@
  */
 
 import Card from "@mui/material/Card";
-import Avatar from "@mui/material/Avatar";
-import { Box, CircularProgress, Grid, useMediaQuery, useTheme } from "@mui/material";
-import DataTable from "examples/Tables/DataTable";
-import { useParams } from "react-router-dom";
+import {
+  Alert,
+  Box,
+  CircularProgress,
+  Grid,
+  Snackbar,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import { useEffect, useState } from "react";
-import DashboardNavbar from "examples/Navbars/DashboardNavbar";
+import { useMaterialUIController, setCurrentBook } from "context";
+import { useLoan } from "hooks/useLoan";
+import { useNavigate, useParams } from "react-router-dom";
+import { useLibrary } from "hooks/useLibrary";
+import MDButton from "components/MDButton";
+import Slide from "@mui/material/Slide";
 import MDBox from "../../components/MDBox";
 import MDTypography from "../../components/MDTypography";
-
 import DashboardLayout from "../../examples/LayoutContainers/DashboardLayout";
+import DashboardNavbar from "../../examples/Navbars/DashboardNavbar";
 import Footer from "../../examples/Footer";
-import data from "./data";
-import { useLibrary } from "../../hooks/useLibrary";
-import { setCurrentBook, useMaterialUIController } from "../../context";
 
-function Details() {
+function LoansDetails() {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.down("lg"));
-  // eslint-disable-next-line no-unused-vars
-  const [bookInfo, setBookInfo] = useState(null);
-  const { columns, rows } = data();
 
+  const useLoans = useLoan();
   const useLibraries = useLibrary();
-  const { libId } = useParams();
+  const { loanId } = useParams();
   const [controller, dispatch] = useMaterialUIController();
+  const [loan, setLoans] = useState(null);
+  const [book, setBooks] = useState(null);
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
   const { userLogged, library } = controller;
-  const [book, setBook] = useState(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (userLogged && loan) {
+      useLibraries
+        .getLibraryBooks(userLogged.token, library, [
+          { filterKey: "code", operation: "eq", value: loan.bookId },
+        ])
+        .then((response) => {
+          if (response) {
+            setBooks(response[0]);
+            setCurrentBook(dispatch, response[0]);
+          }
+        });
+    }
+  }, [userLogged, loan]);
 
   useEffect(() => {
     if (userLogged) {
-      useLibraries
-        .getLibraryBooks(userLogged.token, library, [
-          { filterKey: "code", operation: "eq", value: libId },
+      useLoans
+        .getLibraryLoan(userLogged.token, library, [
+          { filterKey: "id", operation: "eq", value: loanId },
         ])
-        .then((response) => {
-          setBook(response[0]);
-          setCurrentBook(dispatch, response[0]);
+        .then((resp) => {
+          if (resp) {
+            setLoans(resp[0]);
+          }
         });
     }
-  }, [userLogged]);
+  }, []);
+
+  const closeBorrowing = () => {
+    if (userLogged) {
+      useLoans.closeLoan(userLogged.token, loanId);
+      setShowSuccessAlert(true);
+      navigate("/dashboard/borrowing");
+    }
+  };
+
+  const handleCloseAlert = () => {
+    setShowSuccessAlert(false);
+  };
 
   return (
     <DashboardLayout>
+      <Snackbar
+        open={showSuccessAlert}
+        autoHideDuration={3000}
+        onClose={handleCloseAlert}
+        anchorOrigin={{
+          vertical: "top",
+          horizontal: "center",
+        }}
+        TransitionComponent={Slide}
+      >
+        <Alert severity="success" sx={{ zIndex: 9999 }}>
+          Emprestimo quitado com sucesso!
+        </Alert>
+      </Snackbar>
+
       <DashboardNavbar />
       <MDBox pt={6} pb={3}>
         <Grid container spacing={6}>
@@ -72,7 +123,7 @@ function Details() {
                   Detalhes
                 </MDTypography>
               </MDBox>
-              {book ? (
+              {loan && book ? (
                 <MDBox sx={{ margin: "3rem 1.5rem 1rem 3rem" }}>
                   <Grid
                     sx={
@@ -91,7 +142,6 @@ function Details() {
                           width: "400px",
                           maxWidth: "100%",
                           height: "auto",
-                          maxHeight: "100%",
                           borderRadius: "0.7rem",
                         }}
                         src={book.cape}
@@ -100,40 +150,8 @@ function Details() {
                     </Grid>
                     <Grid xs={10.5} sm={6.6} lg={7.5} sx={{ ml: 2 }}>
                       <MDTypography variant="h3" align="center" sx={{ fontWeight: "400" }}>
-                        {book.name}
+                        {loan.books}
                       </MDTypography>
-                      <Grid container>
-                        <Avatar
-                          src={book.authors[0].avatar}
-                          alt="J.k.Rowling"
-                          sx={{ width: "6rem", height: "6rem", mr: "20px", mb: "15px" }}
-                        />
-                        <MDBox
-                          sx={{
-                            display: "flex",
-                            justifyContent: "center",
-                            flexDirection: "column",
-                            mb: "15px",
-                          }}
-                        >
-                          <MDTypography variant="h5">{book.authors[0].completeName}</MDTypography>
-                          <MDTypography variant="h6" sx={{ color: "#cecece", fontWeight: "400" }}>
-                            Autor(a)
-                          </MDTypography>
-                        </MDBox>
-                      </Grid>
-                      <Grid sx={{ textAlign: "justify" }}>
-                        <MDTypography
-                          variant="item"
-                          sx={{
-                            fontSize: "0.7em",
-                            fontWeight: "400",
-                            color: "#cecece",
-                          }}
-                        >
-                          {book.sinopse}
-                        </MDTypography>
-                      </Grid>
                       <Grid
                         mt={5}
                         sx={
@@ -143,6 +161,7 @@ function Details() {
                                 display: "grid",
                                 gridTemplateColumns: "1fr 1fr",
                                 gridTemplateRows: "repeat(6, 1fr)",
+                                gap: 2,
                               }
                         }
                       >
@@ -157,13 +176,13 @@ function Details() {
                           }}
                         >
                           <MDTypography variant="h6" sx={{ mr: "8px", fontSize: "0.74em" }}>
-                            Editora:
+                            Nome:
                           </MDTypography>
                           <MDTypography
                             variant="h6"
                             sx={{ color: "#cecece", fontWeight: "400", fontSize: "0.7em" }}
                           >
-                            {book.publisher}
+                            {loan.userName}
                           </MDTypography>
                         </Box>
                         <Box
@@ -177,13 +196,13 @@ function Details() {
                           }}
                         >
                           <MDTypography variant="h6" sx={{ mr: "8px", fontSize: "0.74em" }}>
-                            ISBN:
+                            Curso:
                           </MDTypography>
                           <MDTypography
                             variant="h6"
                             sx={{ color: "#cecece", fontWeight: "400", fontSize: "0.7em" }}
                           >
-                            {book.isbn}
+                            {`${loan.courses[0].module}° ${loan.courses[0].name} ${loan.courses[0].class}`}
                           </MDTypography>
                         </Box>
                         <Box
@@ -197,13 +216,13 @@ function Details() {
                           }}
                         >
                           <MDTypography variant="h6" sx={{ mr: "8px", fontSize: "0.74em" }}>
-                            Edição:
+                            Periodo:
                           </MDTypography>
                           <MDTypography
                             variant="h6"
                             sx={{ color: "#cecece", fontWeight: "400", fontSize: "0.7em" }}
                           >
-                            {book.edition}
+                            {loan.courses[0].period}
                           </MDTypography>
                         </Box>
                         <Box
@@ -217,13 +236,13 @@ function Details() {
                           }}
                         >
                           <MDTypography variant="h6" sx={{ mr: "8px", fontSize: "0.74em" }}>
-                            Data de Publicação:
+                            Data de Emprestimo:
                           </MDTypography>
                           <MDTypography
                             variant="h6"
                             sx={{ color: "#cecece", fontWeight: "400", fontSize: "0.7em" }}
                           >
-                            {book.publicationDate.substring(0, 10).split("-").reverse().join("/")}
+                            {loan.loanDate}
                           </MDTypography>
                         </Box>
                         <Box
@@ -237,13 +256,13 @@ function Details() {
                           }}
                         >
                           <MDTypography variant="h6" sx={{ mr: "8px", fontSize: "0.74em" }}>
-                            Paginas:
+                            Data de Devolução:
                           </MDTypography>
                           <MDTypography
                             variant="h6"
                             sx={{ color: "#cecece", fontWeight: "400", fontSize: "0.7em" }}
                           >
-                            {book.numberPages}
+                            {loan.returnDate}
                           </MDTypography>
                         </Box>
                         <Box
@@ -257,17 +276,82 @@ function Details() {
                           }}
                         >
                           <MDTypography variant="h6" sx={{ mr: "8px", fontSize: "0.74em" }}>
-                            Linguagem:
+                            Data de Renovação:
                           </MDTypography>
                           <MDTypography
                             variant="h6"
                             sx={{ color: "#cecece", fontWeight: "400", fontSize: "0.7em" }}
                           >
-                            {book.language}
+                            {loan.renewalDate
+                              ? loan.renewalDate.substring(0, 10).split("-").reverse().join("/")
+                              : "N/A"}
+                          </MDTypography>
+                        </Box>
+                        {loan.overdue ? (
+                          <Box
+                            gridRow={1}
+                            sx={{
+                              display: "flex",
+                              flexDirection: "row",
+                              mr: "5",
+                              mb: "15px",
+                              alignItems: "flex-end",
+                            }}
+                          >
+                            <MDTypography variant="h6" sx={{ mr: "8px", fontSize: "0.74em" }}>
+                              Status:
+                            </MDTypography>
+                            <MDTypography
+                              variant="h6"
+                              sx={{ color: "#FF0000", fontWeight: "400", fontSize: "0.7em" }}
+                            >
+                              Em atraso
+                            </MDTypography>
+                          </Box>
+                        ) : (
+                          <Box
+                            gridRow={1}
+                            sx={{
+                              display: "flex",
+                              flexDirection: "row",
+                              mr: "5",
+                              mb: "15px",
+                              alignItems: "flex-end",
+                            }}
+                          >
+                            <MDTypography variant="h6" sx={{ mr: "8px", fontSize: "0.74em" }}>
+                              Status:
+                            </MDTypography>
+                            <MDTypography
+                              variant="h6"
+                              sx={{ color: "#00FF0A", fontWeight: "400", fontSize: "0.7em" }}
+                            >
+                              Em dia
+                            </MDTypography>
+                          </Box>
+                        )}
+                        <Box
+                          gridRow={2}
+                          sx={{
+                            display: "flex",
+                            flexDirection: "row",
+                            mr: "5",
+                            mb: "15px",
+                            alignItems: "flex-end",
+                          }}
+                        >
+                          <MDTypography variant="h6" sx={{ mr: "8px", fontSize: "0.74em" }}>
+                            Autor:
+                          </MDTypography>
+                          <MDTypography
+                            variant="h6"
+                            sx={{ color: "#cecece", fontWeight: "400", fontSize: "0.7em" }}
+                          >
+                            {book.authors[0].completeName}
                           </MDTypography>
                         </Box>
                         <Box
-                          gridRow={1}
+                          gridRow={3}
                           sx={{
                             display: "flex",
                             flexDirection: "row",
@@ -283,11 +367,11 @@ function Details() {
                             variant="h6"
                             sx={{ color: "#cecece", fontWeight: "400", fontSize: "0.7em" }}
                           >
-                            {book.typeCape}
+                            {book.capeType}
                           </MDTypography>
                         </Box>
                         <Box
-                          gridRow={2}
+                          gridRow={4}
                           sx={{
                             display: "flex",
                             flexDirection: "row",
@@ -303,58 +387,25 @@ function Details() {
                             variant="h6"
                             sx={{ color: "#cecece", fontWeight: "400", fontSize: "0.7em" }}
                           >
-                            {book.code}
-                          </MDTypography>
-                        </Box>
-                        <Box
-                          gridRow={3}
-                          sx={{
-                            display: "flex",
-                            flexDirection: "row",
-                            mr: "5",
-                            mb: "15px",
-                            alignItems: "flex-end",
-                          }}
-                        >
-                          <MDTypography variant="h6" sx={{ mr: "8px", fontSize: "0.74em" }}>
-                            Copias:
-                          </MDTypography>
-                          <MDTypography
-                            variant="h6"
-                            sx={{ color: "#cecece", fontWeight: "400", fontSize: "0.7em" }}
-                          >
-                            09
+                            {loan.bookId}
                           </MDTypography>
                         </Box>
                       </Grid>
+                      {loan.active ? (
+                        <MDBox mt={4}>
+                          <MDButton
+                            color="primary"
+                            variant="contained"
+                            onClick={() => closeBorrowing()}
+                          >
+                            Quitar Emprestimo
+                          </MDButton>
+                        </MDBox>
+                      ) : (
+                        // eslint-disable-next-line react/jsx-no-useless-fragment
+                        <></>
+                      )}
                     </Grid>
-                  </Grid>
-                  <Grid item xs={12} sm={4} md={3} lg={2}>
-                    <MDBox
-                      mt={3}
-                      py={2}
-                      px={2}
-                      textAlign="center"
-                      variant="gradient"
-                      bgColor="info"
-                      borderRadius="lg"
-                      coloredShadow="info"
-                    >
-                      <MDTypography variant="h6" color="white">
-                        Emprestimos
-                      </MDTypography>
-                    </MDBox>
-                  </Grid>
-                  <Grid>
-                    <MDBox pt={3}>
-                      <DataTable
-                        table={{ columns, rows }}
-                        isSorted={false}
-                        entriesPerPage={false}
-                        showTotalEntries={false}
-                        noEndBorder
-                      />
-                    </MDBox>
                   </Grid>
                 </MDBox>
               ) : (
@@ -365,7 +416,6 @@ function Details() {
                       margin: "0 auto",
                       alignContent: "center",
                     }}
-                    color="inherit"
                   />
                 </MDBox>
               )}
@@ -378,4 +428,4 @@ function Details() {
   );
 }
 
-export default Details;
+export default LoansDetails;
