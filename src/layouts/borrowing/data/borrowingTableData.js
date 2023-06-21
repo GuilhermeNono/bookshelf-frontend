@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/function-component-definition */
 /**
@@ -31,8 +32,7 @@ export default async function data(loans) {
       loans.forEach((element) => {
         if (element) {
           resp.push({
-            status: <Status overdue={element.overdue} />,
-            accountStatus: <AccountStatus overdue={element.active} />,
+            status: <Status isActive={element.active} overdue={element.overdue} />,
             user: <Name name={element.userName} />,
             tombo: <Tombo idBook={element.bookId} />,
             book: <Book name={element.books} />,
@@ -48,29 +48,30 @@ export default async function data(loans) {
     return [];
   };
 
-  const Status = ({ overdue }) => (
-    <MDBox>
-      <MDBadge
-        badgeContent={overdue ? "Atraso" : "Em dia"}
-        color={overdue ? "error" : "success"}
-        variant="gradient"
-        size="sm"
-        textAlign="left"
-      />
-    </MDBox>
-  );
-
-  const AccountStatus = ({ overdue }) => (
-    <MDBox>
-      <MDBadge
-        badgeContent={overdue ? "Ativo" : "Quitado"}
-        color={overdue ? "success" : "error"}
-        variant="gradient"
-        size="sm"
-        textAlign="left"
-      />
-    </MDBox>
-  );
+  const Status = ({ isActive, overdue }) => {
+    const statusIfOverdue = overdue ? "Atraso" : "Em dia";
+    return (
+      <MDBox>
+        <MDBadge
+          // eslint-disable-next-line no-nested-ternary
+          badgeContent={isActive ? statusIfOverdue : "FINALIZADO"}
+          color={isActive ? (overdue ? "error" : "success") : "secondary"}
+          variant="gradient"
+          size="sm"
+          textAlign="left"
+        />
+      </MDBox>
+    );
+  };
+  // <MDBox>
+  //   <MDBadge
+  //     badgeContent={overdue ? "Ativo" : "Quitado"}
+  //     color={overdue ? "success" : "error"}
+  //     variant="gradient"
+  //     size="sm"
+  //     textAlign="left"
+  //   />
+  // </MDBox>
 
   const Name = ({ name }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
@@ -128,7 +129,6 @@ export default async function data(loans) {
   return {
     columns: [
       { Header: "Status", accessor: "status", width: "1%", align: "center" },
-      { Header: "Status do Emprestimo", accessor: "accountStatus", width: "1%", align: "center" },
       { Header: "Nome", accessor: "user", width: "10%", align: "center" },
       { Header: "Tombo", accessor: "tombo", width: "10%", align: "center" },
       { Header: "Livro", accessor: "book", width: "10%", align: "center" },

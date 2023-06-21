@@ -10,13 +10,22 @@
  */
 
 import Card from "@mui/material/Card";
-import { Box, Button, CircularProgress, Grid, useMediaQuery, useTheme } from "@mui/material";
+import {
+  Alert,
+  Box,
+  CircularProgress,
+  Grid,
+  Snackbar,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import { useEffect, useState } from "react";
 import { useMaterialUIController, setCurrentBook } from "context";
 import { useLoan } from "hooks/useLoan";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useLibrary } from "hooks/useLibrary";
-import CheckIcon from "@mui/icons-material/Check";
+import MDButton from "components/MDButton";
+import Slide from "@mui/material/Slide";
 import MDBox from "../../components/MDBox";
 import MDTypography from "../../components/MDTypography";
 import DashboardLayout from "../../examples/LayoutContainers/DashboardLayout";
@@ -33,8 +42,9 @@ function LoansDetails() {
   const [controller, dispatch] = useMaterialUIController();
   const [loan, setLoans] = useState(null);
   const [book, setBooks] = useState(null);
-  const [showAlert, setShowAlert] = useState(false);
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
   const { userLogged, library } = controller;
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (userLogged && loan) {
@@ -68,12 +78,32 @@ function LoansDetails() {
   const closeBorrowing = () => {
     if (userLogged) {
       useLoans.closeLoan(userLogged.token, loanId);
-      setShowAlert(true);
+      setShowSuccessAlert(true);
+      navigate("/dashboard/borrowing");
     }
+  };
+
+  const handleCloseAlert = () => {
+    setShowSuccessAlert(false);
   };
 
   return (
     <DashboardLayout>
+      <Snackbar
+        open={showSuccessAlert}
+        autoHideDuration={3000}
+        onClose={handleCloseAlert}
+        anchorOrigin={{
+          vertical: "top",
+          horizontal: "center",
+        }}
+        TransitionComponent={Slide}
+      >
+        <Alert severity="success" sx={{ zIndex: 9999 }}>
+          Emprestimo quitado com sucesso!
+        </Alert>
+      </Snackbar>
+
       <DashboardNavbar />
       <MDBox pt={6} pb={3}>
         <Grid container spacing={6}>
@@ -361,19 +391,19 @@ function LoansDetails() {
                           </MDTypography>
                         </Box>
                       </Grid>
-                      <MDBox mt={4}>
-                        <Button variant="contained" onClick={() => closeBorrowing()}>
-                          Quitar Emprestimo
-                        </Button>
-                      </MDBox>
-                      {showAlert && (
-                        <MDTypography
-                          color="success"
-                          icon={<CheckIcon fontSize="inherit" />}
-                          onClose={() => setShowAlert(false)}
-                        >
-                          Empréstimo quitado!
-                        </MDTypography>
+                      {loan.active ? (
+                        <MDBox mt={4}>
+                          <MDButton
+                            color="primary"
+                            variant="contained"
+                            onClick={() => closeBorrowing()}
+                          >
+                            Quitar Emprestimo
+                          </MDButton>
+                        </MDBox>
+                      ) : (
+                        // eslint-disable-next-line react/jsx-no-useless-fragment
+                        <></>
                       )}
                     </Grid>
                   </Grid>
