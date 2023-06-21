@@ -207,6 +207,7 @@ export const useAuthentication = () => {
 
   const logOut = () => {
     localStorage.clear();
+    setUserLogged(dispatch, null);
   };
 
   useEffect(() => {
