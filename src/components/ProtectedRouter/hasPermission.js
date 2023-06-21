@@ -1,6 +1,4 @@
 const hasPermission = (permission, library) => {
-  console.log("🚀 ~ file: hasPermission.js:2 ~ hasPermission ~ library:", library);
-  console.log("🚀 ~ file: hasPermission.js:2 ~ hasPermission ~ permission:", permission);
   const requiredPermission = permission;
   const currentLib = Number(library);
   let has = false;

@@ -103,7 +103,7 @@ export const useLibrary = () => {
     };
 
     const req = fetch(
-      `${ApiRouteBuild.buildRoute("library")}/books/search?pageSize=99`,
+      `${ApiRouteBuild.buildRoute("library")}/books/search?pageSize=99999`,
       requestOptions
     )
       .then((obj) =>
