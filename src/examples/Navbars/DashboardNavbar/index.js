@@ -1,17 +1,17 @@
 /**
-=========================================================
-* Material Dashboard 2 React - v2.1.0
-=========================================================
+ =========================================================
+ * Material Dashboard 2 React - v2.1.0
+ =========================================================
 
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
+ * Product Page: https://www.creative-tim.com/product/material-dashboard-react
+ * Copyright 2022 Creative Tim (https://www.creative-tim.com)
 
-Coded by www.creative-tim.com
+ Coded by www.creative-tim.com
 
  =========================================================
 
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+ */
 
 import { useState, useEffect } from "react";
 
@@ -107,10 +107,10 @@ function DashboardNavbar({ absolute, light, isMini }) {
       setTransparentNavbar(dispatch, (fixedNavbar && window.scrollY === 0) || !fixedNavbar);
     }
 
-    /** 
-     The event listener that's calling the handleTransparentNavbar function when 
+    /**
+     The event listener that's calling the handleTransparentNavbar function when
      scrolling the window.
-    */
+     */
     window.addEventListener("scroll", handleTransparentNavbar);
 
     // Call the handleTransparentNavbar function to set the state with the initial value.
@@ -194,9 +194,6 @@ function DashboardNavbar({ absolute, light, isMini }) {
                     libraries.map((lib) => (
                       <MenuItem value={lib.libraryId}>{lib.library}</MenuItem>
                     ))}
-                  {/* <MenuItem value={1}>Etec Comendador João Rays</MenuItem>
-                  <MenuItem value={2}>Etec 2</MenuItem>
-                  <MenuItem value={3}>Etec 3</MenuItem> */}
                 </Select>
               </FormControl>
             </MDBox>
@@ -204,7 +201,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
               <MDInput label="Pesquisar" />
             </MDBox>
             <MDBox color={light ? "white" : "inherit"}>
-              <Link to="/authentication/sign-in/basic">
+              <Link to="/dashboard/profile">
                 <IconButton sx={navbarIconButton} size="small" disableRipple>
                   <Icon sx={iconsStyle}>account_circle</Icon>
                 </IconButton>

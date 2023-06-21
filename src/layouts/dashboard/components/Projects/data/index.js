@@ -65,14 +65,16 @@ export default async function data(books) {
     const booksRow = [];
     if (books.length > 0) {
       // eslint-disable-next-line no-plusplus
-      for (let i = 0; i < 6; i++) {
-        const date = books[i].createdAt.substring(0, 10).split("-").reverse().join("/");
-        booksRow.push({
-          identifier: <BookIdentifier identifier={books[i].code} />,
-          name: <Book image={books[i].cape} name={books[i].name} />,
-          publisher: <Publisher publisher={books[i].publisher} />,
-          added: <CreatedAt date={date} />,
-        });
+      for (let i = 0; i < (books.length > 6 ? 6 : books.length); i++) {
+        if (books[i].createdAt) {
+          const date = books[i].createdAt.substring(0, 10).split("-").reverse().join("/");
+          booksRow.push({
+            identifier: <BookIdentifier identifier={books[i].code} />,
+            name: <Book image={books[i].cape} name={books[i].name} />,
+            publisher: <Publisher publisher={books[i].publisher} />,
+            added: <CreatedAt date={date} />,
+          });
+        }
       }
     }
     return booksRow;

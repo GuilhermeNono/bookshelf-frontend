@@ -15,11 +15,11 @@ import { Box, CircularProgress, Grid, useMediaQuery, useTheme } from "@mui/mater
 import DataTable from "examples/Tables/DataTable";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import MDBox from "../../components/MDBox";
 import MDTypography from "../../components/MDTypography";
 
 import DashboardLayout from "../../examples/LayoutContainers/DashboardLayout";
-import DashboardNavbar from "../../examples/Navbars/DashboardNavbar";
 import Footer from "../../examples/Footer";
 import data from "./data";
 import { useLibrary } from "../../hooks/useLibrary";
@@ -35,12 +35,14 @@ function Details() {
   const useLibraries = useLibrary();
   const { libId } = useParams();
   const [controller, dispatch] = useMaterialUIController();
-  const { token, library } = controller;
+  const { userLogged, library } = controller;
   const [book, setBook] = useState(null);
 
   useEffect(() => {
     useLibraries
-      .getLibraryBooks(token, library, [{ filterKey: "code", operation: "eq", value: libId }])
+      .getLibraryBooks(userLogged.token, library, [
+        { filterKey: "code", operation: "eq", value: libId },
+      ])
       .then((response) => {
         setBook(response[0]);
         setCurrentBook(dispatch, response[0]);
@@ -284,6 +286,26 @@ function Details() {
                         </Box>
                         <Box
                           gridRow={2}
+                          sx={{
+                            display: "flex",
+                            flexDirection: "row",
+                            mr: "5",
+                            mb: "15px",
+                            alignItems: "flex-end",
+                          }}
+                        >
+                          <MDTypography variant="h6" sx={{ mr: "8px", fontSize: "0.74em" }}>
+                            Tombo:
+                          </MDTypography>
+                          <MDTypography
+                            variant="h6"
+                            sx={{ color: "#cecece", fontWeight: "400", fontSize: "0.7em" }}
+                          >
+                            {book.code}
+                          </MDTypography>
+                        </Box>
+                        <Box
+                          gridRow={3}
                           sx={{
                             display: "flex",
                             flexDirection: "row",

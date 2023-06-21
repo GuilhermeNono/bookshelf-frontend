@@ -1,19 +1,19 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/function-component-definition */
 /**
-=========================================================
-* Material Dashboard 2 React - v2.1.0
-=========================================================
+ =========================================================
+ * Material Dashboard 2 React - v2.1.0
+ =========================================================
 
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
+ * Product Page: https://www.creative-tim.com/product/material-dashboard-react
+ * Copyright 2022 Creative Tim (https://www.creative-tim.com)
 
-Coded by www.creative-tim.com
+ Coded by www.creative-tim.com
 
  =========================================================
 
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+ */
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
@@ -21,26 +21,34 @@ import MDTypography from "components/MDTypography";
 import MDBadge from "components/MDBadge";
 import MDAvatar from "components/MDAvatar";
 import { Link } from "react-router-dom";
+// ...rest of your code
 import ArticleOutlinedIcon from "@mui/icons-material/ArticleOutlined";
 
 export default async function data(books) {
-  const Book = ({ image, name }) => (
-    <MDBox display="flex" alignItems="center" lineHeight={1}>
-      <MDAvatar
-        src={image}
-        name={name}
-        size="sm"
-        sx={{
-          borderRadius: "0",
-          alignContent: "center",
-          boxShadow: "3px 3px 5px 0px rgba(0,0,0,0.19)",
-        }}
-      />
-      <MDTypography variant="button" fontWeight="medium" ml={2} lineHeight={1}>
-        {name}
-      </MDTypography>
-    </MDBox>
-  );
+  const MAX_TITLE_LENGTH = 30; // Maximum length of the displayed title
+
+  const Book = ({ image, name }) => {
+    const truncatedTitle =
+      name.length > MAX_TITLE_LENGTH ? `${name.slice(0, MAX_TITLE_LENGTH)}...` : name;
+
+    return (
+      <MDBox display="flex" alignItems="center" lineHeight={1}>
+        <MDAvatar
+          src={image}
+          name={name}
+          size="sm"
+          sx={{
+            borderRadius: "0",
+            alignContent: "center",
+            boxShadow: "3px 3px 5px 0px rgba(0,0,0,0.19)",
+          }}
+        />
+        <MDTypography variant="button" fontWeight="medium" ml={2} lineHeight={1}>
+          {truncatedTitle}
+        </MDTypography>
+      </MDBox>
+    );
+  };
 
   const Books = () => {
     if (books.length > 0) {
@@ -92,6 +100,7 @@ export default async function data(books) {
       </MDBox>
     </MDBox>
   );
+
   const Publisher = ({ name }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
       <MDBox lineHeight={1}>
@@ -107,13 +116,18 @@ export default async function data(books) {
     </MDBox>
   );
 
-  const Categories = ({ categoryName }) => (
-    <MDBox lineHeight={1} textAlign="left">
-      <MDTypography display="block" variant="caption" color="text" fontWeight="medium">
-        {categoryName}
-      </MDTypography>
-    </MDBox>
-  );
+  const Categories = ({ categoryName }) => {
+    const categories = categoryName.split(", ");
+    const truncatedCategories = categories.slice(0, 2).join(", ");
+
+    return (
+      <MDBox lineHeight={1} textAlign="left">
+        <MDTypography display="block" variant="caption" color="text" fontWeight="medium">
+          {truncatedCategories}
+        </MDTypography>
+      </MDBox>
+    );
+  };
 
   const BookPages = ({ pages }) => (
     <MDBox lineHeight={1} textAlign="left">

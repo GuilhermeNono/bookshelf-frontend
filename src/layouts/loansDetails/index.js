@@ -16,6 +16,7 @@ import { useMaterialUIController, setCurrentBook } from "context";
 import { useLoan } from "hooks/useLoan";
 import { useParams } from "react-router-dom";
 import { useLibrary } from "hooks/useLibrary";
+import CheckIcon from "@mui/icons-material/Check";
 import MDBox from "../../components/MDBox";
 import MDTypography from "../../components/MDTypography";
 import DashboardLayout from "../../examples/LayoutContainers/DashboardLayout";
@@ -32,12 +33,13 @@ function LoansDetails() {
   const [controller, dispatch] = useMaterialUIController();
   const [loan, setLoans] = useState(null);
   const [book, setBooks] = useState(null);
-  const { token, library } = controller;
+  const [showAlert, setShowAlert] = useState(false);
+  const { userLogged, library } = controller;
 
   useEffect(() => {
-    if (loan) {
+    if (userLogged && loan) {
       useLibraries
-        .getLibraryBooks(token, library, [
+        .getLibraryBooks(userLogged.token, library, [
           { filterKey: "code", operation: "eq", value: loan.bookId },
         ])
         .then((response) => {
@@ -47,12 +49,14 @@ function LoansDetails() {
           }
         });
     }
-  }, [loan]);
+  }, [userLogged, loan]);
 
   useEffect(() => {
-    if (token) {
+    if (userLogged) {
       useLoans
-        .getLibraryLoan(token, library, [{ filterKey: "id", operation: "eq", value: loanId }])
+        .getLibraryLoan(userLogged.token, library, [
+          { filterKey: "id", operation: "eq", value: loanId },
+        ])
         .then((resp) => {
           if (resp) {
             setLoans(resp[0]);
@@ -62,8 +66,9 @@ function LoansDetails() {
   }, []);
 
   const closeBorrowing = () => {
-    if (token) {
-      useLoans.closeLoan(token, loanId);
+    if (userLogged) {
+      useLoans.closeLoan(userLogged.token, loanId);
+      setShowAlert(true);
     }
   };
 
@@ -361,6 +366,15 @@ function LoansDetails() {
                           Quitar Emprestimo
                         </Button>
                       </MDBox>
+                      {showAlert && (
+                        <MDTypography
+                          color="success"
+                          icon={<CheckIcon fontSize="inherit" />}
+                          onClose={() => setShowAlert(false)}
+                        >
+                          Empréstimo quitado!
+                        </MDTypography>
+                      )}
                     </Grid>
                   </Grid>
                 </MDBox>

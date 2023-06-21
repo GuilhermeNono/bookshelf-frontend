@@ -29,9 +29,10 @@ export default async function data(loans) {
     if (loans) {
       const resp = [];
       loans.forEach((element) => {
-        if (element.active === true) {
+        if (element) {
           resp.push({
             status: <Status overdue={element.overdue} />,
+            accountStatus: <AccountStatus overdue={element.active} />,
             user: <Name name={element.userName} />,
             tombo: <Tombo idBook={element.bookId} />,
             book: <Book name={element.books} />,
@@ -41,6 +42,7 @@ export default async function data(loans) {
           });
         }
       });
+
       return resp;
     }
     return [];
@@ -51,6 +53,18 @@ export default async function data(loans) {
       <MDBadge
         badgeContent={overdue ? "Atraso" : "Em dia"}
         color={overdue ? "error" : "success"}
+        variant="gradient"
+        size="sm"
+        textAlign="left"
+      />
+    </MDBox>
+  );
+
+  const AccountStatus = ({ overdue }) => (
+    <MDBox>
+      <MDBadge
+        badgeContent={overdue ? "Ativo" : "Quitado"}
+        color={overdue ? "success" : "error"}
         variant="gradient"
         size="sm"
         textAlign="left"
@@ -114,6 +128,7 @@ export default async function data(loans) {
   return {
     columns: [
       { Header: "Status", accessor: "status", width: "1%", align: "center" },
+      { Header: "Status do Emprestimo", accessor: "accountStatus", width: "1%", align: "center" },
       { Header: "Nome", accessor: "user", width: "10%", align: "center" },
       { Header: "Tombo", accessor: "tombo", width: "10%", align: "center" },
       { Header: "Livro", accessor: "book", width: "10%", align: "center" },

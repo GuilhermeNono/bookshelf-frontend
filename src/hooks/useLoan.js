@@ -1,6 +1,6 @@
 import ApiRouteBuild from "helpers/ApiRouteBuild";
-import Loan from "models/Loan.model";
 import { useEffect, useState } from "react";
+import Loan from "models/Loan.model";
 
 export const useLoan = () => {
   // eslint-disable-next-line no-unused-vars

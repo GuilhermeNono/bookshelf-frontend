@@ -13,7 +13,8 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
-import { useEffect } from "react";
+// eslint-disable-next-line no-unused-vars
+import { useEffect, useState } from "react";
 
 // react-router-dom components
 import { useLocation, NavLink } from "react-router-dom";
@@ -46,11 +47,17 @@ import {
   setTransparentSidenav,
   setWhiteSidenav,
 } from "context";
+import UserLogged from "models/UserLogged.model";
+import { usePermission } from "hooks/usePermission";
 
 function Sidenav({ color, brand, brandName, routes, ...rest }) {
   const [controller, dispatch] = useMaterialUIController();
-  const { miniSidenav, transparentSidenav, whiteSidenav, darkMode } = controller;
+  // eslint-disable-next-line no-unused-vars
+  const { miniSidenav, transparentSidenav, whiteSidenav, darkMode, userLogged } = controller;
   const location = useLocation();
+  // const [routesApp, setRoutesApp] = useState(routes);
+  const [isRoutesSetted, setIsRoutesSetted] = useState(false);
+  const { hasPermission } = usePermission();
   const collapseName = location.pathname.replace("/", "");
 
   let textColor = "white";
@@ -64,6 +71,23 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
   const closeSidenav = () => setMiniSidenav(dispatch, true);
 
   useEffect(() => {
+    if (!isRoutesSetted) {
+      if (userLogged instanceof UserLogged) {
+        if (userLogged.librariesAccount[0].profile) {
+          routes.forEach((route) => {
+            const hasPermissionOnContext = hasPermission(route.authorization);
+            if (!hasPermissionOnContext) {
+              route.Type("blocked");
+            }
+          });
+          // eslint-disable-next-line no-param-reassign
+        }
+        setIsRoutesSetted(true);
+      }
+    }
+  }, [userLogged]);
+
+  useEffect(() => {
     // A function that sets the mini state of the sidenav.
     function handleMiniSidenav() {
       setMiniSidenav(dispatch, window.innerWidth < 1200);
@@ -73,7 +97,7 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
 
     /** 
      The event listener that's calling the handleMiniSidenav function when resizing the window.
-    */
+     */
     window.addEventListener("resize", handleMiniSidenav);
 
     // Call the handleMiniSidenav function to set the state with the initial value.
@@ -84,57 +108,63 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
   }, [dispatch, location]);
 
   // Render all the routes from the routes.js (All the visible items on the Sidenav)
-  const renderRoutes = routes.map(({ type, name, icon, title, noCollapse, key, href, route }) => {
+
+  const renderRoutes = routes.map((route) => {
     let returnValue;
 
-    if (type === "collapse") {
-      returnValue = href ? (
+    if (route.type === "collapse") {
+      returnValue = route.href ? (
         <Link
-          href={href}
-          key={key}
+          href={route.href}
+          key={route.key}
           target="_blank"
           rel="noreferrer"
           sx={{ textDecoration: "none" }}
         >
           <SidenavCollapse
-            name={name}
-            icon={icon}
-            active={key === collapseName}
-            noCollapse={noCollapse}
+            name={route.name}
+            icon={route.icon}
+            active={route.key === collapseName}
+            noCollapse={route.noCollapse}
           />
         </Link>
       ) : (
-        <NavLink key={key} to={route}>
-          <SidenavCollapse name={name} icon={icon} active={key === collapseName} />
+        <NavLink key={route.key} to={route.route}>
+          <SidenavCollapse
+            name={route.name}
+            icon={route.icon}
+            active={route.key === collapseName}
+          />
         </NavLink>
       );
-    } else if (type === "title") {
+    } else if (route.type === "title") {
       returnValue = (
         <MDTypography
-          key={key}
+          key={route.key}
           color={textColor}
           display="block"
           variant="caption"
           fontWeight="bold"
           textTransform="uppercase"
           pl={3}
-          mt={2}
-          mb={1}
           ml={1}
         >
-          {title}
+          {route.title}
         </MDTypography>
       );
-    } else if (type === "divider") {
+    } else if (route.type === "divider") {
       returnValue = (
         <Divider
-          key={key}
+          key={route.key}
           light={
             (!darkMode && !whiteSidenav && !transparentSidenav) ||
             (darkMode && !transparentSidenav && whiteSidenav)
           }
         />
       );
+    } else if (route.type === "blocked") {
+      // eslint-disable-next-line react/jsx-no-useless-fragment
+      returnValue = <></>;
     }
 
     return returnValue;

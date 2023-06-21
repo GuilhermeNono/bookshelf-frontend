@@ -48,7 +48,7 @@ function CategoriesSection() {
       </CategoriesContent>
 
       <MainBtn>
-        <Btn href="#">Contratar serviços</Btn>
+        <Btn href="/pricing">Contratar serviços</Btn>
       </MainBtn>
     </Categories>
   );

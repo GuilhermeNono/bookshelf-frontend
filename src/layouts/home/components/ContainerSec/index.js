@@ -1,10 +1,5 @@
 import React from "react";
-import {
-  ContainerBox,
-  ContainerImage,
-  ContainerSec,
-  ContainerText,
-} from "assets/styledComponents/homeStyles";
+import { ContainerBox, ContainerSec, ContainerText } from "assets/styledComponents/homeStyles";
 
 import friendlyInterface from "assets/images/InterfaceAmigavel.svg";
 import security from "assets/images/Security.svg";
@@ -15,9 +10,7 @@ function ContainerSection() {
   return (
     <ContainerSec>
       <ContainerBox>
-        <ContainerImage>
-          <img src={friendlyInterface} alt="service" />
-        </ContainerImage>
+        <img src={friendlyInterface} alt="service" />
         <ContainerText>
           <h4>Interface amigavel</h4>
           <p>Simples de aprender</p>
@@ -25,9 +18,7 @@ function ContainerSection() {
       </ContainerBox>
 
       <ContainerBox>
-        <ContainerImage>
-          <img src={security} alt="service" />
-        </ContainerImage>
+        <img src={security} alt="service" />
         <ContainerText>
           <h4>Seguro</h4>
           <p>Segurança de dados</p>
@@ -35,9 +26,7 @@ function ContainerSection() {
       </ContainerBox>
 
       <ContainerBox>
-        <ContainerImage>
-          <img src={gear} alt="service" />
-        </ContainerImage>
+        <img src={gear} alt="service" />
         <ContainerText>
           <h4>Gerenciavel</h4>
           <p>Gerenciamento completo</p>
@@ -45,9 +34,7 @@ function ContainerSection() {
       </ContainerBox>
 
       <ContainerBox>
-        <ContainerImage>
-          <img src={handShake} alt="service" />
-        </ContainerImage>
+        <img src={handShake} alt="service" />
         <ContainerText>
           <h4>Para todos</h4>
           <p>Disponivel para todos</p>

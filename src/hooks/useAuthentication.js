@@ -1,9 +1,11 @@
+/* eslint-disable import/no-unresolved */
 // import handleResponse from "helpers/HandleResponse";
-import { useMaterialUIController, setToken } from "context";
+import { useMaterialUIController, setUserLogged } from "context";
 import handleResponse from "helpers/HandleResponse";
 import { BehaviorSubject } from "rxjs";
 import { useEffect, useState } from "react";
 // import defaultHeader from "../helpers/HeaderHelp";
+import UserLogged from "models/UserLogged.model";
 import ApiRouteBuild from "../helpers/ApiRouteBuild";
 
 export const useAuthentication = () => {
@@ -15,7 +17,7 @@ export const useAuthentication = () => {
   const [cancelled, setCancelled] = useState(false);
   // eslint-disable-next-line no-unused-vars
   const [controller, dispatch] = useMaterialUIController();
-  const { token } = controller;
+  const { userLogged } = controller;
 
   const checkIfIsCancelled = () => {
     if (cancelled) {
@@ -25,7 +27,7 @@ export const useAuthentication = () => {
   };
 
   const checkIfIsAlreadyLogged = () => {
-    if (token) {
+    if (userLogged) {
       // eslint-disable-next-line no-useless-return
       return;
     }
@@ -57,17 +59,27 @@ export const useAuthentication = () => {
 
     const req = fetch(ApiRouteBuild.buildRoute("authentication"), requestOptions)
       .then(handleResponse)
-      .then((user) => {
+      .then(async (user) => {
+        const bslid = user.librariesAccount[0].libraryId ? user.librariesAccount[0].libraryId : 0;
+
         localStorage.setItem("userAuthorization", user.token);
         localStorage.setItem("uid", JSON.stringify(user.librariesAccount));
-        const bslid = user.librariesAccount[0].libraryId ? user.librariesAccount[0].libraryId : 0;
         localStorage.setItem("bs-lid", JSON.stringify(bslid));
+        localStorage.setItem("aid", JSON.stringify(user.accountId));
+        localStorage.setItem("aprof", user.accountProfile);
+
         currentUserSubject.next(user.token);
 
-        // setToken(dispatch, user.token);
+        const libraries = user.librariesAccount;
+        const userLoggedIns = new UserLogged(
+          user.token,
+          user.accountId,
+          libraries,
+          user.accountProfile
+        );
+        setUserLogged(dispatch, userLoggedIns);
         setError(null);
         setLoading(false);
-        setToken(dispatch, user.token);
         return user;
       })
       .catch(() => {
@@ -166,6 +178,37 @@ export const useAuthentication = () => {
     return req;
   };
 
+  const userData = (userToken) => {
+    checkIfIsCancelled();
+    setLoading(true);
+    setError(null);
+
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${userToken}`,
+    };
+
+    const requestOptions = {
+      method: "GET",
+      headers,
+    };
+
+    const req = fetch(`${ApiRouteBuild.buildRoute("authentication")}/me`, requestOptions)
+      .then((resp) => resp.json())
+      .then((a) => a)
+      .catch(() => {
+        setError("Ocorreu um erro durante a execução da validação.");
+        setLoading(false);
+        return null;
+      });
+
+    return req;
+  };
+
+  const logOut = () => {
+    localStorage.clear();
+  };
+
   useEffect(() => {
     setCancelled(true);
     // setError("");
@@ -175,6 +218,8 @@ export const useAuthentication = () => {
     loginUser,
     createUser,
     validateToken,
+    userData,
+    logOut,
     error,
     loading,
   };
