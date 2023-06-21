@@ -113,15 +113,16 @@ export const useLoan = () => {
     };
 
     const borrowingBody = {
-      loanDate: "",
-      returnDate: "",
-      bookCode: "",
-      userId: "",
+      loanDate: borrowingData.loanDate,
+      returnDate: borrowingData.returnDate,
+      bookCode: borrowingData.bookCode,
+      userId: borrowingData.userId,
     };
 
     const requestOptions = {
       method: "POST",
       headers,
+      body: JSON.stringify(borrowingBody),
     };
 
     const req = fetch(`${ApiRouteBuild.buildRoute("borrowing")}`, requestOptions)

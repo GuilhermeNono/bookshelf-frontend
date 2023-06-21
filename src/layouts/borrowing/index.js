@@ -27,7 +27,7 @@ import { useMaterialUIController } from "context";
 import { useLoan } from "hooks/useLoan";
 import MDProgress from "components/MDProgress";
 import borrowingTableData from "layouts/borrowing/data/borrowingTableData";
-import MDButton from "components/MDButton";
+import NewBorrowingButton from "./components/NewBorrowingButton";
 
 function borrowing() {
   const useLoans = useLoan();
@@ -68,7 +68,7 @@ function borrowing() {
                 <MDTypography variant="h6" color="white">
                   Emprestimos na biblioteca
                 </MDTypography>
-                <MDButton>Novo Emprestimo</MDButton>
+                <NewBorrowingButton />
               </MDBox>
               <MDBox pt={3}>
                 {loans ? (
