@@ -1,16 +1,28 @@
-import { Box, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
+import {
+  Alert,
+  Autocomplete,
+  Box,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Slide,
+  TextField,
+} from "@mui/material";
 import MDBox from "components/MDBox";
 import MDButton from "components/MDButton";
 import MDInput from "components/MDInput";
 import { useMaterialUIController } from "context";
 import { useLoan } from "hooks/useLoan";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Snackbar from "@mui/material/Snackbar";
-import MuiAlert from "@mui/material/Alert";
+import { useAuthentication } from "hooks/useAuthentication";
 
 function NewBorrowingButton() {
   const [controller] = useMaterialUIController();
   const { userLogged } = controller;
+  const { users, setUsers } = useState([]);
+  const { selectedUser, setSelectedUser } = useState(null);
   const { createBorrowing } = useLoan();
   const [openDialog, setOpenDialog] = useState(false);
   const [loanData, setLoanData] = useState({
@@ -19,7 +31,19 @@ function NewBorrowingButton() {
     bookCode: "",
     userId: "",
   });
-  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [errorSnackbar, setErrorSnackbar] = useState(false);
+  const [successSnackbar, setSuccessSnackbar] = useState(false);
+  const { token } = userLogged.token;
+
+  useEffect(() => {
+    if (token) {
+      useAuthentication.getAllUsers(token).then((resp) => {
+        if (resp) {
+          setUsers(resp);
+        }
+      });
+    }
+  }, [token]);
 
   const handleOpenDialog = () => {
     setOpenDialog(true);
@@ -29,25 +53,33 @@ function NewBorrowingButton() {
     setOpenDialog(false);
   };
 
-  const handleOpenSnackbar = () => {
-    setOpenSnackbar(true);
+  const handleErrorSnackbar = () => {
+    setErrorSnackbar(true);
   };
 
-  const handleCloseSnackbar = () => {
-    setOpenSnackbar(false);
+  const handleCloseErrorSnackbar = () => {
+    setErrorSnackbar(false);
+  };
+
+  const handleSuccessSnackbar = () => {
+    setSuccessSnackbar(true);
+  };
+
+  const handleCloseSuccessSnackbar = () => {
+    setSuccessSnackbar(false);
   };
 
   const borrowingData = {
-    loanDate: "",
-    returnDate: "",
-    bookCode: "",
-    userId: "",
+    loanDate: loanData.loanDate,
+    returnDate: loanData.returnDate,
+    bookCode: loanData.bookCode,
+    userId: loanData.userId,
   };
 
   const validateFields = () => {
     // Verifica se todos os campos estão preenchidos
     if (!loanData.loanDate || !loanData.returnDate || !loanData.bookCode || !loanData.userId) {
-      handleOpenSnackbar();
+      handleErrorSnackbar();
       return false;
     }
 
@@ -59,17 +91,16 @@ function NewBorrowingButton() {
 
     if (isValid) {
       createBorrowing(userLogged.token, borrowingData)
-        .then((response) => {
-          console.log("Borrowing created:", response);
+        .then(() => {
           handleCloseDialog();
+          handleSuccessSnackbar();
         })
-        .catch((error) => {
-          console.error("Failed to create borrowing:", error);
-        });
+        .catch(() => {});
     }
 
     console.log(loanData);
   };
+
   return (
     <MDBox>
       <MDButton onClick={handleOpenDialog} color="success">
@@ -150,17 +181,33 @@ function NewBorrowingButton() {
       </Dialog>
 
       <Snackbar
-        open={openSnackbar}
+        open={errorSnackbar}
         autoHideDuration={5000}
-        onClose={handleCloseSnackbar}
+        onClose={handleCloseErrorSnackbar}
         anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "left",
+          vertical: "top",
+          horizontal: "center",
         }}
+        TransitionComponent={Slide}
       >
-        <MuiAlert onClose={handleCloseSnackbar} severity="error" elevation={6} variant="filled">
+        <Alert onClose={handleCloseErrorSnackbar} severity="error">
           Por favor, preencha todos os campos para realizar o empréstimo.
-        </MuiAlert>
+        </Alert>
+      </Snackbar>
+
+      <Snackbar
+        open={successSnackbar}
+        autoHideDuration={5000}
+        onClose={handleCloseSuccessSnackbar}
+        anchorOrigin={{
+          vertical: "top",
+          horizontal: "center",
+        }}
+        TransitionComponent={Slide}
+      >
+        <Alert onClose={handleCloseSuccessSnackbar} severity="success">
+          Empréstimo criado com sucesso!
+        </Alert>
       </Snackbar>
     </MDBox>
   );

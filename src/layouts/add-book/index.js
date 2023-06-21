@@ -42,7 +42,7 @@ function AddBook() {
 
   const { addNewBook, loading, getAllCategories, getAllAuthors } = useBooks();
 
-  const { token } = controller;
+  const { userLogged } = controller;
 
   // use states
   const [bookTitle, setBookTitle] = useState("");
@@ -95,12 +95,12 @@ function AddBook() {
   };
 
   useEffect(() => {
-    getAllCategories(token).then((resp) => {
+    getAllCategories(userLogged.token).then((resp) => {
       if (resp) {
         setCategories(resp);
       }
     });
-    getAllAuthors(token).then((resp) => {
+    getAllAuthors(userLogged.token).then((resp) => {
       if (resp) {
         setAllAuthors(resp);
         setAuthors([]);
@@ -135,7 +135,7 @@ function AddBook() {
     const isValid = validateFields();
 
     if (isValid) {
-      addNewBook(token, bookData)
+      addNewBook(userLogged.token, bookData)
         .then(() => {
           // Limpa os campos após o sucesso
           setBookTitle("");
