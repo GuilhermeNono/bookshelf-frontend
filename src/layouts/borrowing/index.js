@@ -26,8 +26,8 @@ import { useEffect, useState } from "react";
 import { useMaterialUIController } from "context";
 import { useLoan } from "hooks/useLoan";
 import borrowingTableData from "layouts/borrowing/data/borrowingTableData";
-import NewBorrowingButton from "./components/NewBorrowingButton";
 import { CircularProgress } from "@mui/material";
+import NewBorrowingButton from "./components/NewBorrowingButton";
 
 function borrowing() {
   const useLoans = useLoan();

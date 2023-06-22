@@ -143,7 +143,15 @@ function NewBorrowingButton() {
               />
             </MDBox>
             <Box gridRow={4} sx={{ mb: 2 }}>
-              <MDInput label="Usuario" />
+              <MDInput
+                label="Usuario"
+                type="text"
+                value={loanData.userId}
+                onChange={(e) => setLoanData({ ...loanData, userId: e.target.value })}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
             </Box>
           </Box>
         </DialogContent>
