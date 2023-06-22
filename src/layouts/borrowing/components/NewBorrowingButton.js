@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Alert,
+  Autocomplete,
   Box,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
   Slide,
+  TextField,
 } from "@mui/material";
 import Snackbar from "@mui/material/Snackbar";
 import { useMaterialUIController } from "context";
@@ -14,22 +16,25 @@ import { useLoan } from "hooks/useLoan";
 import MDBox from "components/MDBox";
 import MDButton from "components/MDButton";
 import MDInput from "components/MDInput";
+import { useLibrary } from "hooks/useLibrary";
 
 function NewBorrowingButton() {
   const [controller] = useMaterialUIController();
 
   const { createBorrowing } = useLoan();
+  const { getAllUsers } = useLibrary();
 
   const { userLogged } = controller;
 
   const [openDialog, setOpenDialog] = useState(false);
 
   const [loanData, setLoanData] = useState({
-    loanDate: "",
+    loanDate: new Date().toLocaleDateString(), // Definindo a data atual como valor inicial
     returnDate: "",
     bookCode: "",
     userId: "",
   });
+  const [users, setUsers] = useState();
   const [errorSnackbar, setErrorSnackbar] = useState(false);
   const [successSnackbar, setSuccessSnackbar] = useState(false);
 
@@ -88,6 +93,17 @@ function NewBorrowingButton() {
         });
     }
   };
+  console.log(loanData);
+
+  useEffect(() => {
+    if (userLogged) {
+      getAllUsers(userLogged.token).then((resp) => {
+        if (resp) {
+          setUsers(resp);
+        }
+      });
+    }
+  }, [userLogged]);
 
   return (
     <MDBox>
@@ -104,10 +120,10 @@ function NewBorrowingButton() {
           },
         }}
       >
-        <DialogTitle>Novo Empréstimo</DialogTitle>
+        <DialogTitle sx={{ mb: 2 }}>Novo Empréstimo</DialogTitle>
         <DialogContent>
           <Box gridRow={4} sx={{ mb: 2 }}>
-            <Box gridRow={1} sx={{ mb: 2 }}>
+            <MDBox gridRow={2} sx={{ mb: 2 }}>
               <MDInput
                 label="Data de Empréstimo"
                 type="date"
@@ -116,9 +132,8 @@ function NewBorrowingButton() {
                 InputLabelProps={{
                   shrink: true,
                 }}
-                fullWidth
               />
-            </Box>
+            </MDBox>
 
             <MDBox gridRow={2} sx={{ mb: 2 }}>
               <MDInput
@@ -144,14 +159,13 @@ function NewBorrowingButton() {
               />
             </MDBox>
             <Box gridRow={4} sx={{ mb: 2 }}>
-              <MDInput
-                label="Usuario"
-                type="number"
-                value={loanData.userId}
-                onChange={(e) => setLoanData({ ...loanData, userId: e.target.value })}
-                InputLabelProps={{
-                  shrink: true,
-                }}
+              <Autocomplete
+                disablePortal
+                id="combo-box-demo"
+                options={users}
+                getOptionLabel={(option) => option.account.personName}
+                onChange={(event, value) => setLoanData({ ...loanData, userId: value.account.id })}
+                renderInput={(params) => <TextField {...params} label="Usuário" />}
               />
             </Box>
           </Box>
