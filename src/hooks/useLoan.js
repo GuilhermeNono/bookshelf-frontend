@@ -19,26 +19,22 @@ export const useLoan = () => {
   };
 
   const getLibraryLoan = async (userToken, libId, filter = []) => {
+    checkIfIsCancelled();
+    setLoading(true);
+    setError(null);
+
     const filters = [{ filterKey: "library", value: libId, operation: "eq" }];
+
     if (filter.length > 0) {
       filter.forEach((element) => {
         filters.push(element);
       });
     }
-    checkIfIsCancelled();
-    setLoading(true);
-    setError(null);
 
     const headers = {
       "Content-Type": "application/json",
       Authorization: `Bearer ${userToken}`,
     };
-
-    if (filter.length > 0) {
-      filter.forEach((fl) => {
-        filters.push(fl);
-      });
-    }
 
     const libraryBody = {
       searchCriteriaList: filters,
