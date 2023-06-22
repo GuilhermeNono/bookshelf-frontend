@@ -73,14 +73,12 @@ function UserLoanOverview({ loanList }) {
     }
   }, [loanList]);
 
-  console.log(loanTable);
-
   return (
     <Card sx={{ height: "100%" }}>
       <MDBox pt={3} px={3} display="flex" justifyContent="space-between" alignItems="center">
         <MDBox>
           <MDTypography variant="h6" fontWeight="medium">
-            Empréstimos ativos
+            Empréstimos recentes
           </MDTypography>
           {loanTable && loanTable.rows.length >= 0 && (
             <MDBox mt={0} mb={2} display="flex" alignItems="center" lineHeight={0}>

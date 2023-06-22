@@ -24,7 +24,6 @@ export const useLoan = () => {
     setError(null);
 
     const filters = [{ filterKey: "library", value: libId, operation: "eq" }];
-    console.log("🚀 ~ file: useLoan.js:23 ~ getLibraryLoan ~ filters:", filters);
 
     if (filter.length > 0) {
       filter.forEach((element) => {

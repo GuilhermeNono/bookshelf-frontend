@@ -91,9 +91,6 @@ function UserDashboard({ books, booksPromise }) {
     }
   }, [userLogged, library]);
 
-  console.log(booksPromise);
-  console.log(books);
-
   return ready ? (
     <>
       <MDBox py={3}>
