@@ -156,7 +156,7 @@ export const useLibrary = () => {
     return req;
   };
 
-  const getAllUsers = async (userToken, searchValue = "") => {
+  const getAllUsers = (userToken, searchValue = "") => {
     checkIfIsCancelled();
     setLoading(true);
     setError(null);
@@ -183,26 +183,37 @@ export const useLibrary = () => {
       body: JSON.stringify(requestBody),
     };
 
-    const response = await fetch(ApiRouteBuild.buildRoute("library"), requestOptions);
-    const data = await response.json();
-
-    if (response.ok) {
-      const users = data.map((user) => ({
-        userLibId: user.userLibId,
-        rmRa: user.rmRa,
-        profilePicture: user.profilePicture,
-        active: user.active,
-        account: {
-          id: user.account.id,
-          active: user.account.active,
-          personName: user.account.personName,
-          userContact: user.account.userContact,
-        },
-      }));
-      return users;
-    }
-    setError("Ocorreu um erro ao buscar os usuários.");
-    return null;
+    return (
+      fetch(`${ApiRouteBuild.buildRoute("library")}/search`, requestOptions)
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          }
+          throw new Error("Ocorreu um erro ao buscar os usuários.");
+        })
+        .then((data) => {
+          const users = data.map((user) => ({
+            userLibId: user.userLibId,
+            rmRa: user.rmRa,
+            profilePicture: user.profilePicture,
+            active: user.active,
+            account: {
+              id: user.account.id,
+              active: user.account.active,
+              personName: user.account.personName,
+              userContact: user.account.userContact,
+            },
+          }));
+          setLoading(false);
+          return users;
+        })
+        // eslint-disable-next-line no-shadow
+        .catch((error) => {
+          setError(error.message);
+          setLoading(false);
+          return null;
+        })
+    );
   };
 
   useEffect(() => {
