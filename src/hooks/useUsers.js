@@ -1,6 +1,6 @@
 import ApiRouteBuild from "helpers/ApiRouteBuild";
-import User from "models/User.model";
 import { useEffect, useState } from "react";
+import User from "models/User.model";
 
 export const useUsers = () => {
   // eslint-disable-next-line no-unused-vars
@@ -18,32 +18,51 @@ export const useUsers = () => {
     }
   };
 
-  const getAllUsers = async (userToken) => {
+  const getAllUsers = async (userToken, libId, filter = []) => {
+    const filters = [{ filterKey: "library", value: libId, operation: "eq" }];
+    if (filter.length > 0) {
+      filter.forEach((element) => {
+        filters.push(element);
+      });
+    }
     checkIfIsCancelled();
     setLoading(true);
     setError(null);
+
     const headers = {
       "Content-Type": "application/json",
       Authorization: `Bearer ${userToken}`,
     };
 
-    const requestOptions = {
-      method: "GET",
-      headers,
+    if (filter.length > 0) {
+      filter.forEach((fl) => {
+        filters.push(fl);
+      });
+    }
+
+    const libraryBody = {
+      searchCriteriaList: filters,
+      dataOption: "all",
     };
 
-    const req = fetch(`${ApiRouteBuild.buildRoute("user")}`, requestOptions)
+    const requestOptions = {
+      method: "POST",
+      headers,
+      body: JSON.stringify(libraryBody),
+    };
+
+    const req = fetch(`${ApiRouteBuild.buildRoute("userLibrary")}/search`, requestOptions)
       .then((obj) =>
         obj.json().then((resp) => {
           const users = [];
-          resp.forEach((element) => {
+          resp.content.forEach((element) => {
             users.push(new User(element));
           });
           return users;
         })
       )
       .catch(() => {
-        setError("Ocorreu um erro durante a busca de usuarios.");
+        setError("Ocorreu um erro durante a busca de livros.");
         setLoading(false);
         return null;
       });
