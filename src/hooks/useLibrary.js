@@ -156,6 +156,55 @@ export const useLibrary = () => {
     return req;
   };
 
+  const getAllUsers = async (userToken, searchValue = "") => {
+    checkIfIsCancelled();
+    setLoading(true);
+    setError(null);
+
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${userToken}`,
+    };
+
+    const requestBody = {
+      dataOption: "all",
+      searchCriteriaList: [
+        {
+          filterKey: "name",
+          operation: "cn",
+          value: searchValue,
+        },
+      ],
+    };
+
+    const requestOptions = {
+      method: "POST",
+      headers,
+      body: JSON.stringify(requestBody),
+    };
+
+    const response = await fetch(ApiRouteBuild.buildRoute("library"), requestOptions);
+    const data = await response.json();
+
+    if (response.ok) {
+      const users = data.map((user) => ({
+        userLibId: user.userLibId,
+        rmRa: user.rmRa,
+        profilePicture: user.profilePicture,
+        active: user.active,
+        account: {
+          id: user.account.id,
+          active: user.account.active,
+          personName: user.account.personName,
+          userContact: user.account.userContact,
+        },
+      }));
+      return users;
+    }
+    setError("Ocorreu um erro ao buscar os usuários.");
+    return null;
+  };
+
   useEffect(() => {
     setCancelled(true);
     // setError("");
@@ -165,6 +214,7 @@ export const useLibrary = () => {
     getLibraryBooks,
     getLibraryBooksOfMonth,
     getLibraryBooksNoLimit,
+    getAllUsers,
     loading,
     error,
   };
