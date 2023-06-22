@@ -20,15 +20,11 @@ import App from "App";
 
 // Material Dashboard 2 React Context Provider
 import { MaterialUIControllerProvider } from "context";
-import { DevSupport } from "@react-buddy/ide-toolbox";
-import { ComponentPreviews, useInitial } from "./dev";
 
 ReactDOM.render(
   <BrowserRouter>
     <MaterialUIControllerProvider>
-      <DevSupport ComponentPreviews={ComponentPreviews} useInitialHook={useInitial}>
-        <App />
-      </DevSupport>
+      <App />
     </MaterialUIControllerProvider>
   </BrowserRouter>,
   document.getElementById("root")

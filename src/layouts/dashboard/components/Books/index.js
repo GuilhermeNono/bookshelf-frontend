@@ -29,7 +29,7 @@ import MDTypography from "components/MDTypography";
 import DataTable from "examples/Tables/DataTable";
 
 // Data
-import data from "layouts/dashboard/components/Projects/data";
+import data from "layouts/dashboard/components/Books/data";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 import { Box, CircularProgress } from "@mui/material";

@@ -133,7 +133,7 @@ const routesJson = [
     name: "Loan",
     key: "loan",
     icon: <Icon fontSize="small">book</Icon>,
-    route: "/dashboard/borrowing",
+    route: "/dashboard/loan",
     component: <Borrowing />,
     authorization: PERM_BOOKSHELF_LIB_LOAN,
     profile: ROLE_LIBRARY_ADMIN,

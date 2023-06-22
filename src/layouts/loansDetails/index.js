@@ -79,7 +79,7 @@ function LoansDetails() {
     if (userLogged) {
       useLoans.closeLoan(userLogged.token, loanId);
       setShowSuccessAlert(true);
-      navigate("/dashboard/borrowing");
+      navigate("/dashboard/loan");
     }
   };
 
