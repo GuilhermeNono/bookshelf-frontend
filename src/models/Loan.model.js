@@ -2,7 +2,8 @@ export default class Loan {
   constructor(obj) {
     // eslint-disable-next-line no-param-reassign
     obj = obj != null ? obj : {};
-    this.id = obj.user_id;
+    this.code = obj.id;
+    this.userId = obj.user_id;
     this.userName = obj.user_name;
     this.bookId = obj.book_identifier;
     this.books = obj.book;
