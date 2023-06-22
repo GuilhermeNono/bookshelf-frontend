@@ -40,7 +40,7 @@ function OrdersOverview({ loanList }) {
   const openMenu = ({ currentTarget }) => setMenu(currentTarget);
   const closeMenu = () => setMenu(null);
 
-  const navigateToLoans = () => navigate("/dashboard/loans");
+  const navigateToLoans = () => navigate("/dashboard/loan");
 
   const renderMenu = (
     <Menu
@@ -91,7 +91,7 @@ function OrdersOverview({ loanList }) {
                 &nbsp;
                 <MDTypography variant="button" color="text" fontWeight="medium">
                   24%
-                </MDTypography>{" "}
+                </MDTypography>
                 Nesse mês
               </MDTypography>
             </MDBox>
