@@ -1,6 +1,6 @@
 import ApiRouteBuild from "helpers/ApiRouteBuild";
-import Loan from "models/Loan.model";
 import { useEffect, useState } from "react";
+import Loan from "models/Loan.model";
 
 export const useLoan = () => {
   // eslint-disable-next-line no-unused-vars
@@ -102,66 +102,33 @@ export const useLoan = () => {
     return req;
   };
 
-  const createBorrowing = async (userToken, borrowingData) => {
+  const closeLoan = async (userToken, loanId) => {
     checkIfIsCancelled();
     setLoading(true);
     setError(null);
 
     const headers = {
-      "Content-Type": "application/json",
+      // "Content-Type": "application/json",
       Authorization: `Bearer ${userToken}`,
-    };
-
-    const borrowingBody = {
-      loanDate: borrowingData.loanDate,
-      returnDate: borrowingData.returnDate,
-      bookCode: borrowingData.bookCode,
-      userId: borrowingData.userId,
     };
 
     const requestOptions = {
       method: "POST",
       headers,
-      body: JSON.stringify(borrowingBody),
     };
 
-    const req = fetch(`${ApiRouteBuild.buildRoute("loan")}`, requestOptions)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Failed to create borrowing");
+    const req = fetch(`${ApiRouteBuild.buildRoute("loan")}/close/${loanId}`, requestOptions)
+      .then((resp) => {
+        if (resp.status === 204) {
+          console.log("Deu certo");
         }
-        return response.json();
       })
       .catch(() => {
+        setError("Ocorreu um erro durante a busca de emprestimos.");
         setLoading(false);
         return null;
       });
-
     return req;
-  };
-
-  const getAllUsers = (userToken) => {
-    setLoading(true);
-    setError(null);
-
-    const headers = {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${userToken}`,
-    };
-
-    const requestOptions = {
-      method: "GET",
-      headers,
-    };
-
-    fetch(ApiRouteBuild.buildRoute("user"), requestOptions)
-      .then(() => {
-        setLoading(false);
-      })
-      .catch(() => {
-        setError("An error occurred while fetching users.");
-        setLoading(false);
-      });
   };
 
   useEffect(() => {
@@ -172,8 +139,6 @@ export const useLoan = () => {
   return {
     getLibraryLoan,
     getLibraryLoanOfMonth,
-    getAllUsers,
-    createBorrowing,
     loading,
     error,
   };

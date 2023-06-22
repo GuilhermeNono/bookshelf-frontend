@@ -173,31 +173,6 @@ export default function App() {
     }
   }, [pathname, userLogged]);
 
-  // eslint-disable-next-line no-unused-vars
-  // const teste = [];
-
-  // useEffect(() => {
-  //   if (alreadyUp && userLogged instanceof UserLogged) {
-  //     try {
-  //       if (userLogged.librariesAccount[0].userProfile) {
-  //         const newRoutes = [];
-  //         routes.forEach((route) => {
-  //           const hasPermissionOnContext = hasPermission(route.authorization);
-  //           if (hasPermissionOnContext) {
-  //             newRoutes.push(route);
-  //           }
-  //         });
-  //         // eslint-disable-next-line no-import-assign
-  //         teste = newRoutes;
-  //         // setRoutes(dispatch, newRoutes);
-  //         setAlreadyUp(false);
-  //       }
-  //     } catch (error) {
-  //
-  //     }
-  //   }
-  // }, [alreadyUp]);
-
   const getRoutes = (allRoutes) =>
     // eslint-disable-next-line array-callback-return, consistent-return
     allRoutes.map((route) => {
@@ -224,30 +199,6 @@ export default function App() {
 
       return null;
     });
-
-  // const configsButton = (
-  //   <MDBox
-  //     display="flex"
-  //     justifyContent="center"
-  //     alignItems="center"
-  //     width="3.25rem"
-  //     height="3.25rem"
-  //     bgColor="white"
-  //     shadow="sm"
-  //     borderRadius="50%"
-  //     position="fixed"
-  //     right="2rem"
-  //     bottom="2rem"
-  //     zIndex={99}
-  //     color="dark"
-  //     sx={{ cursor: "pointer" }}
-  //     onClick={handleConfiguratorOpen}
-  //   >
-  //     <Icon fontSize="small" color="inherit">
-  //       settings
-  //     </Icon>
-  //   </MDBox>
-  // );
 
   return (
     alreadyUp &&

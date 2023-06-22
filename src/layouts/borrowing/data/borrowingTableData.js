@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/function-component-definition */
 /**
@@ -29,15 +30,17 @@ export default async function data(loans) {
     if (loans) {
       const resp = [];
       loans.forEach((element) => {
-        resp.push({
-          status: <Status overdue={element.overdue} />,
-          user: <Name name={element.userName} />,
-          tombo: <Tombo idBook={element.bookId} />,
-          book: <Book name={element.books} />,
-          loanDt: <Dates date={element.loanDate} />,
-          returnDt: <Dates date={element.returnDate} />,
-          detLoans: <DetailLoans code={element.id} />,
-        });
+        if (element) {
+          resp.push({
+            status: <Status isActive={element.active} overdue={element.overdue} />,
+            user: <Name name={element.userName} />,
+            tombo: <Tombo idBook={element.bookId} />,
+            book: <Book name={element.books} />,
+            loanDt: <Dates date={element.loanDate} />,
+            returnDt: <Dates date={element.returnDate} />,
+            detLoans: <DetailLoans id={element.code} />,
+          });
+        }
       });
 
       return resp;
@@ -45,17 +48,30 @@ export default async function data(loans) {
     return [];
   };
 
-  const Status = ({ overdue }) => (
-    <MDBox>
-      <MDBadge
-        badgeContent={overdue ? "Atraso" : "Em dia"}
-        color={overdue ? "error" : "success"}
-        variant="gradient"
-        size="sm"
-        textAlign="left"
-      />
-    </MDBox>
-  );
+  const Status = ({ isActive, overdue }) => {
+    const statusIfOverdue = overdue ? "Atraso" : "Em dia";
+    return (
+      <MDBox>
+        <MDBadge
+          // eslint-disable-next-line no-nested-ternary
+          badgeContent={isActive ? statusIfOverdue : "FINALIZADO"}
+          color={isActive ? (overdue ? "error" : "success") : "secondary"}
+          variant="gradient"
+          size="sm"
+          textAlign="left"
+        />
+      </MDBox>
+    );
+  };
+  // <MDBox>
+  //   <MDBadge
+  //     badgeContent={overdue ? "Ativo" : "Quitado"}
+  //     color={overdue ? "success" : "error"}
+  //     variant="gradient"
+  //     size="sm"
+  //     textAlign="left"
+  //   />
+  // </MDBox>
 
   const Name = ({ name }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
@@ -92,12 +108,12 @@ export default async function data(loans) {
   );
 
   // Precisa da detalhes de emprestimos para funcionar
-  const DetailLoans = ({ code }) => (
+  const DetailLoans = ({ id }) => (
     <MDBox lineHeight={1} textAlign="left">
       <MDTypography display="block" variant="caption" color="text" fontWeight="medium">
         <MDTypography
           component={Link}
-          to={`/dashboard/borrowing/#####/${code}`}
+          to={`/dashboard/borrowing/loansDetails/${id}`}
           variant="button"
           color="info"
           fontWeight="bold"
