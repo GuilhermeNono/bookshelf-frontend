@@ -1,14 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   Alert,
-  Autocomplete,
   Box,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
   Slide,
-  TextField,
 } from "@mui/material";
 import Snackbar from "@mui/material/Snackbar";
 import { useMaterialUIController } from "context";
@@ -16,13 +14,12 @@ import { useLoan } from "hooks/useLoan";
 import MDBox from "components/MDBox";
 import MDButton from "components/MDButton";
 import MDInput from "components/MDInput";
-import { useLibrary } from "hooks/useLibrary";
 
 function NewBorrowingButton() {
   const [controller] = useMaterialUIController();
 
   const { createBorrowing } = useLoan();
-  const { getAllUsers } = useLibrary();
+
   const { userLogged } = controller;
 
   const [openDialog, setOpenDialog] = useState(false);
@@ -35,22 +32,6 @@ function NewBorrowingButton() {
   });
   const [errorSnackbar, setErrorSnackbar] = useState(false);
   const [successSnackbar, setSuccessSnackbar] = useState(false);
-
-  const [users, setUsers] = useState([]);
-  const [selectedUser, setSelectedUser] = useState(null);
-
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const fetchedUsers = await getAllUsers(userLogged.token);
-        setUsers(fetchedUsers);
-      } catch (error) {
-        console.log("Error fetching users:", error);
-      }
-    };
-
-    fetchUsers();
-  }, [getAllUsers, userLogged.token]);
 
   const handleOpenDialog = () => {
     setOpenDialog(true);
@@ -76,20 +57,16 @@ function NewBorrowingButton() {
     setSuccessSnackbar(false);
   };
 
-  const handleUserChange = (event, value) => {
-    setSelectedUser(value);
-  };
-
   const borrowingData = {
     loanDate: loanData.loanDate,
     returnDate: loanData.returnDate,
     bookCode: loanData.bookCode,
-    userId: selectedUser ? selectedUser.id : "",
+    userId: loanData.userId,
   };
 
   const validateFields = () => {
     // Verifica se todos os campos estão preenchidos
-    if (!loanData.loanDate || !loanData.returnDate || !loanData.bookCode || !selectedUser) {
+    if (!loanData.loanDate || !loanData.returnDate || !loanData.bookCode || !loanData.userId) {
       handleErrorSnackbar();
       return false;
     }
@@ -167,21 +144,14 @@ function NewBorrowingButton() {
               />
             </MDBox>
             <Box gridRow={4} sx={{ mb: 2 }}>
-              <Autocomplete
-                options={users}
-                getOptionLabel={(user) => user.personName}
-                value={selectedUser}
-                onChange={handleUserChange}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    label="Usuário"
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                    fullWidth
-                  />
-                )}
+              <MDInput
+                label="Usuario"
+                type="number"
+                value={loanData.userId}
+                onChange={(e) => setLoanData({ ...loanData, userId: e.target.value })}
+                InputLabelProps={{
+                  shrink: true,
+                }}
               />
             </Box>
           </Box>

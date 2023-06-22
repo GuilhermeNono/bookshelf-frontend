@@ -1,5 +1,6 @@
 import ApiRouteBuild from "helpers/ApiRouteBuild";
 import Book from "models/Book.model";
+import User from "models/User.model";
 import { useEffect, useState } from "react";
 
 export const useLibrary = () => {
@@ -156,7 +157,14 @@ export const useLibrary = () => {
     return req;
   };
 
-  const getAllUsers = (userToken, searchValue = "") => {
+  const getAllUsers = (userToken, filter = []) => {
+    const filters = [{ filterKey: "name", value: "", operation: "cn" }];
+    if (filter.length > 0) {
+      filter.forEach((element) => {
+        filters.push(element);
+      });
+    }
+
     checkIfIsCancelled();
     setLoading(true);
     setError(null);
@@ -166,15 +174,15 @@ export const useLibrary = () => {
       Authorization: `Bearer ${userToken}`,
     };
 
+    if (filter.length > 0) {
+      filter.forEach((fl) => {
+        filters.push(fl);
+      });
+    }
+
     const requestBody = {
+      searchCriteriaList: filters,
       dataOption: "all",
-      searchCriteriaList: [
-        {
-          filterKey: "name",
-          operation: "cn",
-          value: searchValue,
-        },
-      ],
     };
 
     const requestOptions = {
@@ -183,37 +191,22 @@ export const useLibrary = () => {
       body: JSON.stringify(requestBody),
     };
 
-    return (
-      fetch(`${ApiRouteBuild.buildRoute("library")}/search`, requestOptions)
-        .then((response) => {
-          if (response.ok) {
-            return response.json();
-          }
-          throw new Error("Ocorreu um erro ao buscar os usuários.");
-        })
-        .then((data) => {
-          const users = data.map((user) => ({
-            userLibId: user.userLibId,
-            rmRa: user.rmRa,
-            profilePicture: user.profilePicture,
-            active: user.active,
-            account: {
-              id: user.account.id,
-              active: user.account.active,
-              personName: user.account.personName,
-              userContact: user.account.userContact,
-            },
-          }));
-          setLoading(false);
+    const req = fetch(`${ApiRouteBuild.buildRoute("user")}/library/search`, requestOptions)
+      .then((obj) =>
+        obj.json().then((resp) => {
+          const users = [];
+          resp.content.forEach((element) => {
+            users.push(new User(element));
+          });
           return users;
         })
-        // eslint-disable-next-line no-shadow
-        .catch((error) => {
-          setError(error.message);
-          setLoading(false);
-          return null;
-        })
-    );
+      )
+      .catch(() => {
+        setError("Ocorreu um erro durante a busca de livros.");
+        setLoading(false);
+        return null;
+      });
+    return req;
   };
 
   useEffect(() => {
