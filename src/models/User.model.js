@@ -14,6 +14,14 @@ class User {
       personName: obj.account.personName,
       userContact: obj.account.userContact,
     };
+    this.courses = {
+      id: obj.courses.id,
+      active: obj.courses.active,
+      name: obj.courses.name,
+      classromom: obj.courses.classromom,
+      period: obj.courses.period,
+      module: obj.courses.module,
+    };
   }
 }
 
