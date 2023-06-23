@@ -23,6 +23,16 @@ class User {
       module: obj.courses.module,
     };
   }
+
+  getEmail() {
+    const req = this.account.userContact.map((resp) => {
+      if (resp.type === "email") {
+        return resp;
+      }
+      return undefined;
+    });
+    return req ? req[0].contact : req;
+  }
 }
 
 export default User;
