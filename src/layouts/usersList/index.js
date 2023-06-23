@@ -39,7 +39,6 @@ function Users() {
     if (userLogged) {
       useUser.getAllUsers(userLogged.token, library).then((resp) => {
         if (resp) {
-          console.log("🚀 ~ file: index.js:42 ~ useUser.getAllUsers ~ resp:", resp);
           usersTableData(resp).then((data) => {
             setUsers(data);
           });

@@ -29,13 +29,18 @@ export default async function data(users) {
       const resp = [];
       users.forEach((element) => {
         resp.push({
-          accountActive: <IsActive isActive={element.userAccount.active} />,
-          userImg: <UserImg userImage={element.userImage} />,
-          name: <UserName userName={element.userAccount.personName} />,
-          course: <Course courses={element.userCourses} />,
+          accountActive: <IsActive isActive={element.account.active} />,
+          userImg: <UserImg userImage={element.profilePicture} />,
+          name: <UserName userName={element.account.personName} />,
+          // Cursos precisa ficar dinamico
+          course: (
+            <Course
+              courses={`${element.courses[0].module}° ${element.courses[0].name} ${element.courses[0].classroom} - ${element.courses[0].period}`}
+            />
+          ),
+          eMail: <Email email={element.getEmail()} />,
           registerRmRa: <Register register={element.rmRa} />,
         });
-        console.log(element.userCourses[0]);
       });
       return resp;
     }
@@ -55,7 +60,7 @@ export default async function data(users) {
   );
 
   const UserImg = ({ userImage }) => (
-    <MDBox display="flex" alignItems="center" lineHeight={1}>
+    <MDBox lineHeight={1}>
       <MDAvatar
         src={userImage}
         size="sm"
@@ -68,9 +73,17 @@ export default async function data(users) {
     </MDBox>
   );
 
+  const Register = ({ register }) => (
+    <MDBox lineHeight={1}>
+      <MDTypography display="block" variant="caption" color="text" fontWeight="medium">
+        {register}
+      </MDTypography>
+    </MDBox>
+  );
+
   const UserName = ({ userName }) => (
-    <MDBox display="flex" alignItems="center" lineHeight={1}>
-      <MDBox ml={2} lineHeight={1}>
+    <MDBox lineHeight={1}>
+      <MDBox lineHeight={1}>
         <MDTypography display="block" variant="button" fontWeight="medium">
           {userName}
         </MDTypography>
@@ -79,20 +92,18 @@ export default async function data(users) {
   );
 
   const Course = ({ courses }) => (
-    <MDBox display="flex" alignItems="center" lineHeight={1}>
-      <MDBox ml={2} lineHeight={1}>
-        <MDTypography display="block" variant="button" fontWeight="medium">
-          {courses}
-        </MDTypography>
-      </MDBox>
+    <MDBox lineHeight={1}>
+      <MDTypography display="block" variant="caption" color="text" fontWeight="medium">
+        {courses}
+      </MDTypography>
     </MDBox>
   );
 
-  const Register = ({ register }) => (
+  const Email = ({ email }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
-      <MDBox ml={2} lineHeight={1}>
+      <MDBox lineHeight={1}>
         <MDTypography display="block" variant="button" fontWeight="medium">
-          {register}
+          {email}
         </MDTypography>
       </MDBox>
     </MDBox>
@@ -100,11 +111,12 @@ export default async function data(users) {
 
   return {
     columns: [
-      { Header: "Status da Conta", accessor: "accountActive", width: "10%", align: "left" },
-      { Header: "Avatar", accessor: "userImg", width: "10%", align: "left" },
-      { Header: "Nome", accessor: "name", width: "10%", align: "left" },
-      { Header: "Curso", accessor: "course", width: "10%", align: "left" },
-      { Header: "RM/RA", accessor: "registerRmRa", width: "10%", align: "left" },
+      { Header: "Avatar", accessor: "userImg", width: "1%", align: "left" },
+      { Header: "Status da Conta", accessor: "accountActive", width: "5%", align: "center" },
+      { Header: "Nome", accessor: "name", width: "5%", align: "center" },
+      { Header: "RM/RA", accessor: "registerRmRa", width: "5%", align: "center" },
+      { Header: "Curso", accessor: "course", width: "5%", align: "center" },
+      { Header: "Email", accessor: "eMail", width: "5%", align: "center" },
     ],
 
     rows: Users(),
