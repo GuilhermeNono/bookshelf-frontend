@@ -33,9 +33,9 @@ function NewBorrowingButton() {
   const upMd = useMediaQuery(theme.breakpoints.up("md"));
   const onlyXs = useMediaQuery(theme.breakpoints.only("xs"));
   const { createBorrowing } = useLoan();
-  const { getAllUsers } = useLibrary();
+  const { getAllUsers, getLibraryBooks } = useLibrary();
 
-  const { userLogged } = controller;
+  const { userLogged, library } = controller;
 
   const [openDialog, setOpenDialog] = useState(false);
 
@@ -47,6 +47,7 @@ function NewBorrowingButton() {
   });
   const [users, setUsers] = useState();
   const [selectedUser, setSelectedUser] = useState();
+  const [currentBook, setCurrentBook] = useState({});
   const [errorSnackbar, setErrorSnackbar] = useState(false);
   const [successSnackbar, setSuccessSnackbar] = useState(false);
 
@@ -100,12 +101,9 @@ function NewBorrowingButton() {
           handleCloseDialog();
           handleSuccessSnackbar();
         })
-        .catch((error) => {
-          console.log("Error creating borrowing:", error);
-        });
+        .catch((error) => {});
     }
   };
-  console.log(selectedUser && selectedUser.getEmail());
 
   useEffect(() => {
     if (userLogged) {
@@ -116,6 +114,18 @@ function NewBorrowingButton() {
       });
     }
   }, [userLogged]);
+
+  useEffect(() => {
+    if (userLogged && loanData) {
+      getLibraryBooks(userLogged.token, library, [
+        { filterKey: "code", operation: "eq", value: loanData.bookCode },
+      ]).then((response) => {
+        if (response) {
+          setCurrentBook(response);
+        }
+      });
+    }
+  }, [loanData]);
 
   return (
     <MDBox>
@@ -133,8 +143,12 @@ function NewBorrowingButton() {
           },
         }}
       >
-        <DialogTitle sx={{ mb: 1 }}>Novo Empréstimo</DialogTitle>
-        <DialogTitle sx={{ mb: 1 }}>Nome do Livro</DialogTitle>
+        <DialogTitle sx={{ mb: 1 }}>Realizar emprestimo</DialogTitle>
+        <DialogTitle sx={{ mb: 1 }}>
+          <Typography align="center">
+            {currentBook && currentBook[0] ? currentBook[0].name : "Nome do Livro"}
+          </Typography>
+        </DialogTitle>
         <DialogContent>
           <MDBox sx={{ margin: "3rem 1.5rem 1rem 3rem" }}>
             <Grid
@@ -158,7 +172,7 @@ function NewBorrowingButton() {
                     maxHeight: "488px",
                     borderRadius: "0.7rem",
                   }}
-                  src={capePlaceholder}
+                  src={currentBook && currentBook[0] ? currentBook[0].cape : capePlaceholder}
                   alt="cape"
                 />
               </Grid>
@@ -190,24 +204,81 @@ function NewBorrowingButton() {
                       />
                     </Box>
                     <Box gridRow={2} sx={onlyXs && { mb: 3 }}>
-                      <MDTypography>Editora: </MDTypography>
+                      <MDTypography variant="h5" sx={{ mr: "8px", fontSize: "1em" }}>
+                        Editora:
+                      </MDTypography>
+
+                      <MDTypography
+                        variant="h6"
+                        sx={{ color: "#cecece", fontWeight: "400", fontSize: "1em" }}
+                      >
+                        {currentBook && currentBook[0] ? currentBook[0].publisher : ""}
+                      </MDTypography>
                     </Box>
 
                     <Box gridRow={3} sx={onlyXs && { mb: 3 }}>
-                      <MDTypography>ISBN: </MDTypography>
+                      <MDTypography variant="h5" sx={{ mr: "8px", fontSize: "1em" }}>
+                        ISBN:
+                      </MDTypography>
+
+                      <MDTypography
+                        variant="h6"
+                        sx={{ color: "#cecece", fontWeight: "400", fontSize: "1em" }}
+                      >
+                        {currentBook && currentBook[0] ? currentBook[0].isbn : ""}
+                      </MDTypography>
                     </Box>
                     <Box gridRow={4} sx={onlyXs && { mb: 3 }}>
-                      <MDTypography>Edição: </MDTypography>
+                      <MDTypography variant="h5" sx={{ mr: "8px", fontSize: "1em" }}>
+                        Edição:
+                      </MDTypography>
+
+                      <MDTypography
+                        variant="h6"
+                        sx={{ color: "#cecece", fontWeight: "400", fontSize: "1em" }}
+                      >
+                        {currentBook && currentBook[0] ? currentBook[0].edition : ""}
+                      </MDTypography>
                     </Box>
                     <Box gridRow={5} sx={onlyXs && { mb: 3 }}>
-                      <MDTypography>Data de Publicação: </MDTypography>
+                      <MDTypography variant="h5" sx={{ mr: "8px", fontSize: "1em" }}>
+                        Data de Publicação:
+                      </MDTypography>
+
+                      <MDTypography
+                        variant="h6"
+                        sx={{ color: "#cecece", fontWeight: "400", fontSize: "1em" }}
+                      >
+                        {currentBook && currentBook[0]
+                          ? currentBook[0].publicationDate
+                              .substring(0, 10)
+                              .split("-")
+                              .reverse()
+                              .join("/") || ""
+                          : ""}
+                      </MDTypography>
                     </Box>
                     <Box gridRow={6} sx={onlyXs && { mb: 3 }}>
-                      <MDTypography>Linguagem: </MDTypography>
+                      <MDTypography variant="h5" sx={{ mr: "8px", fontSize: "1em" }}>
+                        Linguagem:
+                      </MDTypography>
+
+                      <MDTypography
+                        variant="h6"
+                        sx={{ color: "#cecece", fontWeight: "400", fontSize: "1em" }}
+                      >
+                        {currentBook && currentBook[0] ? currentBook[0].language : ""}
+                      </MDTypography>
                     </Box>
                     <Box gridRow={1} sx={onlyXs && { mb: 3 }}>
                       <Autocomplete
+                        disablePortal
+                        id="combo-box-demo"
+                        options={users}
+                        getOptionLabel={(option) => option.account.personName}
                         renderInput={(params) => <TextField {...params} label="Curso" />}
+                        value={selectedUser}
+                        onChange={(event, value) => setSelectedUser(value)}
                       />
                     </Box>
                     <Box gridRow={2} sx={onlyXs && { mb: 3 }}>
@@ -256,7 +327,24 @@ function NewBorrowingButton() {
                       </MDTypography>
                     </Box>
                     <Box gridRow={5} sx={onlyXs && { mb: 3 }} />
-                    <Box gridRow={6} sx={onlyXs && { mb: 3 }} />
+                    <Box gridRow={6} sx={onlyXs && { mb: 3 }}>
+                      <MDInput
+                        label="Data de Devolução"
+                        type="date"
+                        value={loanData.returnDate}
+                        InputLabelProps={{
+                          shrink: true,
+                        }}
+                        onChange={(event) => {
+                          const { value } = event.target;
+                          setLoanData((prevState) => ({
+                            ...prevState,
+                            returnDate: value,
+                          }));
+                        }}
+                        variant="outlined"
+                      />
+                    </Box>
                   </MDBox>
                 </Grid>
               </Grid>
@@ -264,12 +352,13 @@ function NewBorrowingButton() {
           </MDBox>
         </DialogContent>
 
-        <DialogActions>
+        <DialogActions sx={{ justifyContent: "center" }}>
           <MDButton onClick={handleCloseDialog} color="error" variant="contained">
             Cancelar
           </MDButton>
+          <Box sx={{ width: "16px" }} /> {/* Add a spacer between the buttons */}
           <MDButton onClick={handleSubmit} color="info" background="none">
-            Criar Empréstimo
+            Finalizar
           </MDButton>
         </DialogActions>
       </Dialog>

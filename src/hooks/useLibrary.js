@@ -35,12 +35,6 @@ export const useLibrary = () => {
       Authorization: `Bearer ${userToken}`,
     };
 
-    if (filter.length > 0) {
-      filter.forEach((fl) => {
-        filters.push(fl);
-      });
-    }
-
     const libraryBody = {
       searchCriteriaList: filters,
       dataOption: "all",
