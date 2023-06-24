@@ -151,7 +151,6 @@ function NewBorrowingButton() {
 
   useEffect(() => {
     if (userLogged && selectedCourse) {
-      console.log(selectedCourse);
       getAllUsers(userLogged.token, [
         { filterKey: "library", operation: "eq", value: library },
         { filterKey: "course", operation: "eq", value: selectedCourse.id },
@@ -169,8 +168,6 @@ function NewBorrowingButton() {
   useEffect(() => {
     setSelectedUser(null); // Limpa o usuário selecionado ao alterar o curso
   }, [selectedCourse]);
-
-  console.log(loanData);
 
   return (
     <MDBox>
