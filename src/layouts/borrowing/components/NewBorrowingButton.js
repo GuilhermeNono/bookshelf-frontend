@@ -25,8 +25,9 @@ import { useLibrary } from "hooks/useLibrary";
 import capePlaceholder from "assets/images/capePlaceholder.png";
 import MDTypography from "components/MDTypography";
 import useCourse from "hooks/useCourse";
+import PropTypes from "prop-types";
 
-function NewBorrowingButton() {
+function NewBorrowingButton({ onBorrowingCompleted }) {
   const theme = useTheme();
   // eslint-disable-next-line no-unused-vars
   const [controller, dispatch] = useMaterialUIController();
@@ -118,6 +119,10 @@ function NewBorrowingButton() {
           handleCloseDialog();
           handleSuccessSnackbar();
           clearFields();
+          // Chame a função  quando o empréstimo for concluído
+          if (onBorrowingCompleted) {
+            onBorrowingCompleted();
+          }
         })
         .catch(() => {});
     }
@@ -438,5 +443,13 @@ function NewBorrowingButton() {
     </MDBox>
   );
 }
+
+NewBorrowingButton.propTypes = {
+  onBorrowingCompleted: PropTypes.func,
+};
+
+NewBorrowingButton.defaultProps = {
+  onBorrowingCompleted: () => {},
+};
 
 export default NewBorrowingButton;

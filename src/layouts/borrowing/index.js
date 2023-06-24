@@ -32,21 +32,47 @@ import NewBorrowingButton from "./components/NewBorrowingButton";
 function borrowing() {
   const useLoans = useLoan();
   const [controller] = useMaterialUIController();
+
   const { userLogged, library } = controller;
 
   const [loans, setLoans] = useState();
+  const [updateTrigger, setUpdateTrigger] = useState(0);
+
+  const fetchLoans = async () => {
+    if (userLogged) {
+      const resp = await useLoans.getLibraryLoan(userLogged.token, library);
+      if (resp) {
+        const data = await borrowingTableData(resp);
+        setLoans(data);
+      }
+    }
+  };
 
   useEffect(() => {
-    if (userLogged) {
-      useLoans.getLibraryLoan(userLogged.token, library).then((resp) => {
-        if (resp) {
-          borrowingTableData(resp).then((data) => {
-            setLoans(data);
-          });
-        }
-      });
-    }
-  }, [userLogged]);
+    const fetchLoansAndListen = async () => {
+      await fetchLoans(); // Buscar empréstimos inicialmente
+
+      // Escutar eventos de conclusão de empréstimo
+      const listener = () => {
+        fetchLoans(); // Atualizar empréstimos quando um empréstimo for concluído
+      };
+
+      // Adicionar listener ao evento
+      NewBorrowingButton.addBorrowingCompletedListener(listener);
+
+      // Limpar o listener quando o componente for desmontado
+      return () => {
+        NewBorrowingButton.removeBorrowingCompletedListener(listener);
+      };
+    };
+
+    fetchLoansAndListen();
+  }, [userLogged, library, updateTrigger]);
+
+  const handleBorrowingCompleted = () => {
+    setUpdateTrigger((prevTrigger) => prevTrigger + 1);
+    fetchLoans(); // Atualize os empréstimos quando um empréstimo for concluído
+  };
 
   return (
     <DashboardLayout>
@@ -72,7 +98,7 @@ function borrowing() {
                   Emprestimos na biblioteca
                 </MDTypography>
 
-                <NewBorrowingButton />
+                <NewBorrowingButton onBorrowingCompleted={handleBorrowingCompleted} />
               </MDBox>
 
               <MDBox pt={3}>
