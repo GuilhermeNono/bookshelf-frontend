@@ -20,15 +20,15 @@ export const useLibrary = () => {
   };
 
   const getLibraryBooks = async (userToken, libId, filter = []) => {
+    checkIfIsCancelled();
+    setLoading(true);
+    setError(null);
     const filters = [{ filterKey: "id", value: libId, operation: "eq" }];
     if (filter.length > 0) {
       filter.forEach((element) => {
         filters.push(element);
       });
     }
-    checkIfIsCancelled();
-    setLoading(true);
-    setError(null);
 
     const headers = {
       "Content-Type": "application/json",
@@ -65,27 +65,20 @@ export const useLibrary = () => {
   };
 
   const getLibraryBooksNoLimit = async (userToken, libId, filter = []) => {
+    checkIfIsCancelled();
+    setLoading(true);
+    setError(null);
     const filters = [{ filterKey: "id", value: libId, operation: "eq" }];
     if (filter.length > 0) {
       filter.forEach((element) => {
         filters.push(element);
       });
     }
-    checkIfIsCancelled();
-    setLoading(true);
-    setError(null);
 
     const headers = {
       "Content-Type": "application/json",
       Authorization: `Bearer ${userToken}`,
     };
-
-    if (filter.length > 0) {
-      filter.forEach((fl) => {
-        filters.push(fl);
-      });
-    }
-
     const libraryBody = {
       searchCriteriaList: filters,
       dataOption: "all",
@@ -152,27 +145,22 @@ export const useLibrary = () => {
   };
 
   const getAllUsers = (userToken, filter = []) => {
+    checkIfIsCancelled();
+    setLoading(true);
+    setError(null);
     const filters = [{ filterKey: "name", value: "", operation: "cn" }];
     if (filter.length > 0) {
+      console.log("🚀 ~ file: useLibrary.js:153 ~ getAllUsers ~ filter:", filter);
+
       filter.forEach((element) => {
         filters.push(element);
       });
     }
 
-    checkIfIsCancelled();
-    setLoading(true);
-    setError(null);
-
     const headers = {
       "Content-Type": "application/json",
       Authorization: `Bearer ${userToken}`,
     };
-
-    if (filter.length > 0) {
-      filter.forEach((fl) => {
-        filters.push(fl);
-      });
-    }
 
     const requestBody = {
       searchCriteriaList: filters,

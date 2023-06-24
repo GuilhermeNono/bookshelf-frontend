@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
 import {
   Alert,
@@ -16,6 +15,7 @@ import {
   useTheme,
 } from "@mui/material";
 import Snackbar from "@mui/material/Snackbar";
+// eslint-disable-next-line no-unused-vars
 import { useMaterialUIController } from "context";
 import { useLoan } from "hooks/useLoan";
 import MDBox from "components/MDBox";
@@ -23,33 +23,38 @@ import MDButton from "components/MDButton";
 import MDInput from "components/MDInput";
 import { useLibrary } from "hooks/useLibrary";
 import capePlaceholder from "assets/images/capePlaceholder.png";
-import MDAlert from "components/MDAlert";
 import MDTypography from "components/MDTypography";
+import useCourse from "hooks/useCourse";
 
 function NewBorrowingButton() {
   const theme = useTheme();
-  const [controller] = useMaterialUIController();
+  // eslint-disable-next-line no-unused-vars
+  const [controller, dispatch] = useMaterialUIController();
   const downSm = useMediaQuery(theme.breakpoints.down("sm"));
   const upMd = useMediaQuery(theme.breakpoints.up("md"));
   const onlyXs = useMediaQuery(theme.breakpoints.only("xs"));
   const { createBorrowing } = useLoan();
   const { getAllUsers, getLibraryBooks } = useLibrary();
-
+  const { getLibaryCourses } = useCourse();
   const { userLogged, library } = controller;
 
   const [openDialog, setOpenDialog] = useState(false);
 
+  const [users, setUsers] = useState();
+  const [courses, setCourses] = useState();
+  const [selectedUser, setSelectedUser] = useState();
+  const [selectedCourse, setSelectedCourse] = useState();
+  const [currentBook, setCurrentBook] = useState({});
+  const [isCourseSelected, setIsCourseSelected] = useState(false);
+
+  const [errorSnackbar, setErrorSnackbar] = useState(false);
+  const [successSnackbar, setSuccessSnackbar] = useState(false);
   const [loanData, setLoanData] = useState({
-    loanDate: new Date().toLocaleDateString(), // Definindo a data atual como valor inicial
+    loanDate: new Date().toLocaleDateString("en-CA"),
     returnDate: "",
     bookCode: "",
     userId: "",
   });
-  const [users, setUsers] = useState();
-  const [selectedUser, setSelectedUser] = useState();
-  const [currentBook, setCurrentBook] = useState({});
-  const [errorSnackbar, setErrorSnackbar] = useState(false);
-  const [successSnackbar, setSuccessSnackbar] = useState(false);
 
   const handleOpenDialog = () => {
     setOpenDialog(true);
@@ -92,6 +97,18 @@ function NewBorrowingButton() {
     return true;
   };
 
+  const clearFields = () => {
+    setLoanData({
+      loanDate: new Date().toLocaleDateString("en-CA"),
+      returnDate: "",
+      bookCode: "",
+      userId: "",
+    });
+    setSelectedCourse(null);
+    setSelectedUser(null);
+    setIsCourseSelected(false);
+  };
+
   const handleSubmit = () => {
     const isValid = validateFields();
 
@@ -100,20 +117,11 @@ function NewBorrowingButton() {
         .then(() => {
           handleCloseDialog();
           handleSuccessSnackbar();
+          clearFields();
         })
-        .catch((error) => {});
+        .catch(() => {});
     }
   };
-
-  useEffect(() => {
-    if (userLogged) {
-      getAllUsers(userLogged.token).then((resp) => {
-        if (resp) {
-          setUsers(resp);
-        }
-      });
-    }
-  }, [userLogged]);
 
   useEffect(() => {
     if (userLogged && loanData) {
@@ -126,6 +134,43 @@ function NewBorrowingButton() {
       });
     }
   }, [loanData]);
+
+  useEffect(() => {
+    if (selectedUser && selectedUser.account.id) {
+      setLoanData({ ...loanData, userId: selectedUser.account.id });
+    }
+  }, [selectedUser]);
+
+  useEffect(() => {
+    if (userLogged) {
+      getLibaryCourses(userLogged.token, library).then((resp) => {
+        setCourses(resp);
+      });
+    }
+  }, [userLogged]);
+
+  useEffect(() => {
+    if (userLogged && selectedCourse) {
+      console.log(selectedCourse);
+      getAllUsers(userLogged.token, [
+        { filterKey: "library", operation: "eq", value: library },
+        { filterKey: "course", operation: "eq", value: selectedCourse.id },
+      ]).then((response) => {
+        if (response) {
+          setUsers(response);
+        }
+      });
+      setIsCourseSelected(true);
+    } else {
+      setIsCourseSelected(false);
+    }
+  }, [selectedCourse]);
+
+  useEffect(() => {
+    setSelectedUser(null); // Limpa o usuário selecionado ao alterar o curso
+  }, [selectedCourse]);
+
+  console.log(loanData);
 
   return (
     <MDBox>
@@ -274,11 +319,11 @@ function NewBorrowingButton() {
                       <Autocomplete
                         disablePortal
                         id="combo-box-demo"
-                        options={users}
-                        getOptionLabel={(option) => option.account.personName}
+                        options={courses}
+                        getOptionLabel={(option) => option.name}
                         renderInput={(params) => <TextField {...params} label="Curso" />}
-                        value={selectedUser}
-                        onChange={(event, value) => setSelectedUser(value)}
+                        value={selectedCourse}
+                        onChange={(event, value) => setSelectedCourse(value)}
                       />
                     </Box>
                     <Box gridRow={2} sx={onlyXs && { mb: 3 }}>
@@ -290,6 +335,7 @@ function NewBorrowingButton() {
                         renderInput={(params) => <TextField {...params} label="Usuário" />}
                         value={selectedUser}
                         onChange={(event, value) => setSelectedUser(value)}
+                        disabled={!isCourseSelected}
                       />
                     </Box>
                     <Box
