@@ -32,14 +32,14 @@ export default async function data(users) {
           accountActive: <IsActive isActive={element.account.active} />,
           userImg: <UserImg userImage={element.profilePicture} />,
           name: <UserName userName={element.account.personName} />,
-          // Cursos precisa ficar dinamico
           course: (
             <Course
               courses={`${element.courses[0].module}° ${element.courses[0].name} ${element.courses[0].classroom} - ${element.courses[0].period}`}
             />
           ),
-          eMail: <Email email={element.getEmail()} />,
           registerRmRa: <Register register={element.rmRa} />,
+          eMail: <Email email={element.getEmail()} />,
+          phone: <Phone number={element.getPhone()} />,
         });
       });
       return resp;
@@ -65,7 +65,7 @@ export default async function data(users) {
         src={userImage}
         size="sm"
         sx={{
-          borderRadius: "0",
+          borderRadius: "1",
           alignContent: "center",
           boxShadow: "3px 3px 5px 0px rgba(0,0,0,0.19)",
         }}
@@ -109,6 +109,16 @@ export default async function data(users) {
     </MDBox>
   );
 
+  const Phone = ({ number }) => (
+    <MDBox display="flex" alignItems="center" lineHeight={1}>
+      <MDBox lineHeight={1}>
+        <MDTypography display="block" variant="button" fontWeight="medium">
+          {number}
+        </MDTypography>
+      </MDBox>
+    </MDBox>
+  );
+
   return {
     columns: [
       { Header: "Avatar", accessor: "userImg", width: "1%", align: "left" },
@@ -117,6 +127,7 @@ export default async function data(users) {
       { Header: "RM/RA", accessor: "registerRmRa", width: "5%", align: "center" },
       { Header: "Curso", accessor: "course", width: "5%", align: "center" },
       { Header: "Email", accessor: "eMail", width: "5%", align: "center" },
+      { Header: "Telefone", accessor: "phone", width: "5%", align: "center" },
     ],
 
     rows: Users(),

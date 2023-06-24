@@ -45,13 +45,13 @@ class User {
   }
 
   getEmail() {
-    const req = this.account.userContact.map((resp) => {
-      if (resp.type === "email") {
-        return resp;
-      }
-      return undefined;
-    });
-    return req ? req[0].contact : req;
+    const req = this.account.userContact.find((resp) => resp.type === "email");
+    return req ? req.contact : null;
+  }
+
+  getPhone() {
+    const req = this.account.userContact.find((resp) => resp.type === "phone");
+    return req ? req.contact : null;
   }
 }
 
