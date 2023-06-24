@@ -52,6 +52,7 @@ import Books from "layouts/books";
 import AddCopy from "layouts/add-copy";
 import AddBook from "layouts/add-book";
 import LoansDetails from "layouts/loansDetails";
+import NotFoundPage from "layouts/not-found";
 import Borrowing from "./layouts/borrowing";
 import Details from "./layouts/details";
 import {
@@ -66,6 +67,17 @@ import {
 import Converter from "./util/Converter";
 
 const routesJson = [
+  {
+    type: "blocked",
+    name: "notFound",
+    key: "notFound",
+    icon: <Icon fontSize="small">dashboard</Icon>,
+    route: "/*",
+    ignoreNav: true,
+    component: <NotFoundPage />,
+    authorization: null,
+    profile: null,
+  },
   {
     type: "blocked",
     name: "Home",
