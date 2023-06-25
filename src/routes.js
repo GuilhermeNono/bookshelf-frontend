@@ -43,6 +43,7 @@ import Dashboard from "layouts/dashboard";
 import Profile from "layouts/profile";
 import SignIn from "layouts/authentication/sign-in";
 import SignUp from "layouts/authentication/sign-up";
+import UserList from "layouts/usersList";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
@@ -53,18 +54,18 @@ import AddCopy from "layouts/add-copy";
 import AddBook from "layouts/add-book";
 import LoansDetails from "layouts/loansDetails";
 import NotFoundPage from "layouts/not-found";
+import {
+  ROLE_LIBRARY_ADMIN,
+  PERM_BOOKSHELF_LIB_LOAN,
+  PERM_BOOKSHELF_LIB_BOOKS_DETAIL,
+  PERM_BOOKSHELF_LIB_PROFILE,
+  PERM_BOOKSHELF_LIB_BOOKS_BOOK_ADD,
+  PERM_BOOKSHELF_LIB_BOOKS,
+  PERM_BOOKSHELF_LIB_BOOKS_COPY_ADD,
+} from "helpers/auth/Permisions";
+import Converter from "util/Converter";
 import Borrowing from "./layouts/borrowing";
 import Details from "./layouts/details";
-import {
-  PERM_BOOKSHELF_LIB_BOOKS,
-  PERM_BOOKSHELF_LIB_BOOKS_BOOK_ADD,
-  PERM_BOOKSHELF_LIB_BOOKS_COPY_ADD,
-  PERM_BOOKSHELF_LIB_BOOKS_DETAIL,
-  PERM_BOOKSHELF_LIB_LOAN,
-  PERM_BOOKSHELF_LIB_PROFILE,
-  ROLE_LIBRARY_ADMIN,
-} from "./helpers/auth/Permisions";
-import Converter from "./util/Converter";
 
 const routesJson = [
   {
@@ -224,17 +225,44 @@ const routesJson = [
   //   route: "/dashboard/notifications",
   //   component: <Notifications />,
   // },
+  {
+    type: "collapse",
+    name: "UserList",
+    key: "userList",
+    icon: <Icon fontSize="small">table_view</Icon>,
+    route: "/userList",
+    component: <UserList />,
+  },
+  {
+    type: "divider",
+    name: "Sign In",
+    key: "sign-in",
+    icon: <Icon fontSize="small">login</Icon>,
+    route: "/authentication/sign-in",
+    component: <SignIn />,
+  },
+  {
+    type: "title",
+    name: "Sign Up",
+    key: "sign-up",
+    icon: <Icon fontSize="small">assignment</Icon>,
+    route: "/authentication/sign-up",
+    component: <SignUp />,
+  },
+  {
+    type: "title",
+    name: "Details",
+    key: "details",
+    icon: <Icon fontSize="small">table_view</Icon>,
+    route: "/dashboard/books/details/:libId",
+    component: <Details />,
+  },
   /**
    * Colapse -> Deixa visivel
    * Divider -> Deixar visivel incluindo um divisor embaixo dele
    * title -> Esconde da Sidebar
    * */
-  // http://localhost:8000/dashboard/books/detail/1475
-  /**
-   * Colapse -> Deixa visivel
-   * Divider -> Deixar visivel incluindo um divisor embaixo dele
-   * title -> Esconde da Sidebar
-   * */
+
   // http://localhost:8000/dashboard/books/detail/1475
 ];
 
