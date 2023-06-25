@@ -1,5 +1,6 @@
 import ApiRouteBuild from "helpers/ApiRouteBuild";
 import Book from "models/Book.model";
+import User from "models/User.model";
 import { useEffect, useState } from "react";
 
 export const useLibrary = () => {
@@ -19,26 +20,20 @@ export const useLibrary = () => {
   };
 
   const getLibraryBooks = async (userToken, libId, filter = []) => {
+    checkIfIsCancelled();
+    setLoading(true);
+    setError(null);
     const filters = [{ filterKey: "id", value: libId, operation: "eq" }];
     if (filter.length > 0) {
       filter.forEach((element) => {
         filters.push(element);
       });
     }
-    checkIfIsCancelled();
-    setLoading(true);
-    setError(null);
 
     const headers = {
       "Content-Type": "application/json",
       Authorization: `Bearer ${userToken}`,
     };
-
-    if (filter.length > 0) {
-      filter.forEach((fl) => {
-        filters.push(fl);
-      });
-    }
 
     const libraryBody = {
       searchCriteriaList: filters,
@@ -70,27 +65,20 @@ export const useLibrary = () => {
   };
 
   const getLibraryBooksNoLimit = async (userToken, libId, filter = []) => {
+    checkIfIsCancelled();
+    setLoading(true);
+    setError(null);
     const filters = [{ filterKey: "id", value: libId, operation: "eq" }];
     if (filter.length > 0) {
       filter.forEach((element) => {
         filters.push(element);
       });
     }
-    checkIfIsCancelled();
-    setLoading(true);
-    setError(null);
 
     const headers = {
       "Content-Type": "application/json",
       Authorization: `Bearer ${userToken}`,
     };
-
-    if (filter.length > 0) {
-      filter.forEach((fl) => {
-        filters.push(fl);
-      });
-    }
-
     const libraryBody = {
       searchCriteriaList: filters,
       dataOption: "all",
@@ -156,6 +144,53 @@ export const useLibrary = () => {
     return req;
   };
 
+  const getAllUsers = (userToken, filter = []) => {
+    checkIfIsCancelled();
+    setLoading(true);
+    setError(null);
+    const filters = [{ filterKey: "name", value: "", operation: "cn" }];
+    if (filter.length > 0) {
+      console.log("🚀 ~ file: useLibrary.js:153 ~ getAllUsers ~ filter:", filter);
+
+      filter.forEach((element) => {
+        filters.push(element);
+      });
+    }
+
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${userToken}`,
+    };
+
+    const requestBody = {
+      searchCriteriaList: filters,
+      dataOption: "all",
+    };
+
+    const requestOptions = {
+      method: "POST",
+      headers,
+      body: JSON.stringify(requestBody),
+    };
+
+    const req = fetch(`${ApiRouteBuild.buildRoute("user")}/library/search`, requestOptions)
+      .then((obj) =>
+        obj.json().then((resp) => {
+          const users = [];
+          resp.content.forEach((element) => {
+            users.push(new User(element));
+          });
+          return users;
+        })
+      )
+      .catch(() => {
+        setError("Ocorreu um erro durante a busca de livros.");
+        setLoading(false);
+        return null;
+      });
+    return req;
+  };
+
   useEffect(() => {
     setCancelled(true);
     // setError("");
@@ -165,7 +200,7 @@ export const useLibrary = () => {
     getLibraryBooks,
     getLibraryBooksOfMonth,
     getLibraryBooksNoLimit,
-
+    getAllUsers,
     loading,
     error,
   };
