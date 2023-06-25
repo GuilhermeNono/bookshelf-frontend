@@ -37,6 +37,10 @@ export const APICONFIG = {
       route: "/api/v1/library/profile",
     },
     {
+      name: "userLibrary",
+      route: "/api/v1/user/library",
+    },
+    {
       name: "course",
       route: "/api/v1/course",
     },
