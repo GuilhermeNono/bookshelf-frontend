@@ -36,7 +36,6 @@ function borrowing() {
   const { userLogged, library } = controller;
 
   const [loans, setLoans] = useState();
-  const [updateTrigger, setUpdateTrigger] = useState(0);
 
   const fetchLoans = async () => {
     if (userLogged) {
@@ -51,26 +50,12 @@ function borrowing() {
   useEffect(() => {
     const fetchLoansAndListen = async () => {
       await fetchLoans(); // Buscar empréstimos inicialmente
-
-      // Escutar eventos de conclusão de empréstimo
-      const listener = () => {
-        fetchLoans(); // Atualizar empréstimos quando um empréstimo for concluído
-      };
-
-      // Adicionar listener ao evento
-      NewBorrowingButton.addBorrowingCompletedListener(listener);
-
-      // Limpar o listener quando o componente for desmontado
-      return () => {
-        NewBorrowingButton.removeBorrowingCompletedListener(listener);
-      };
     };
 
     fetchLoansAndListen();
-  }, [userLogged, library, updateTrigger]);
+  }, [userLogged, library]);
 
   const handleBorrowingCompleted = () => {
-    setUpdateTrigger((prevTrigger) => prevTrigger + 1);
     fetchLoans(); // Atualize os empréstimos quando um empréstimo for concluído
   };
 
