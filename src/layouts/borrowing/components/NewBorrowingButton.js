@@ -21,6 +21,7 @@ import { useLoan } from "hooks/useLoan";
 import MDBox from "components/MDBox";
 import MDButton from "components/MDButton";
 import MDInput from "components/MDInput";
+
 import { useLibrary } from "hooks/useLibrary";
 import capePlaceholder from "assets/images/capePlaceholder.png";
 import MDTypography from "components/MDTypography";
@@ -47,7 +48,8 @@ function NewBorrowingButton({ onBorrowingCompleted }) {
   const [selectedCourse, setSelectedCourse] = useState();
   const [currentBook, setCurrentBook] = useState({});
   const [isCourseSelected, setIsCourseSelected] = useState(false);
-
+  const today = new Date().toLocaleDateString("en-CA");
+  const [error, setError] = useState("");
   const [errorSnackbar, setErrorSnackbar] = useState(false);
   const [successSnackbar, setSuccessSnackbar] = useState(false);
   const [loanData, setLoanData] = useState({
@@ -57,12 +59,16 @@ function NewBorrowingButton({ onBorrowingCompleted }) {
     userId: "",
   });
 
-  const handleOpenDialog = () => {
-    setOpenDialog(true);
-  };
-
-  const handleCloseDialog = () => {
-    setOpenDialog(false);
+  const clearFields = () => {
+    setLoanData({
+      loanDate: new Date().toLocaleDateString("en-CA"),
+      returnDate: "",
+      bookCode: "",
+      userId: "",
+    });
+    setSelectedCourse(null);
+    setSelectedUser(null);
+    setIsCourseSelected(false);
   };
 
   const handleErrorSnackbar = () => {
@@ -79,6 +85,10 @@ function NewBorrowingButton({ onBorrowingCompleted }) {
 
   const handleCloseSuccessSnackbar = () => {
     setSuccessSnackbar(false);
+  };
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+    clearFields();
   };
 
   const borrowingData = {
@@ -98,33 +108,26 @@ function NewBorrowingButton({ onBorrowingCompleted }) {
     return true;
   };
 
-  const clearFields = () => {
-    setLoanData({
-      loanDate: new Date().toLocaleDateString("en-CA"),
-      returnDate: "",
-      bookCode: "",
-      userId: "",
-    });
-    setSelectedCourse(null);
-    setSelectedUser(null);
-    setIsCourseSelected(false);
-  };
-
   const handleSubmit = () => {
     const isValid = validateFields();
 
     if (isValid) {
-      createBorrowing(userLogged.token, borrowingData)
-        .then(() => {
-          handleCloseDialog();
-          handleSuccessSnackbar();
-          clearFields();
-          // Chame a função  quando o empréstimo for concluído
-          if (onBorrowingCompleted) {
-            onBorrowingCompleted();
-          }
-        })
-        .catch(() => {});
+      if (loanData.returnDate < today) {
+        setError("A data é anterior ao dia atual ");
+      } else {
+        setError("");
+        createBorrowing(userLogged.token, borrowingData)
+          .then(() => {
+            handleCloseDialog();
+            handleSuccessSnackbar();
+            clearFields();
+            // Chame a função  quando o empréstimo for concluído
+            if (onBorrowingCompleted) {
+              onBorrowingCompleted();
+            }
+          })
+          .catch(() => {});
+      }
     }
   };
 
@@ -171,8 +174,13 @@ function NewBorrowingButton({ onBorrowingCompleted }) {
   }, [selectedCourse]);
 
   useEffect(() => {
-    setSelectedUser(null); // Limpa o usuário selecionado ao alterar o curso
+    setSelectedUser(null); // Limpar o usuário selecionado
+    setLoanData({ ...loanData, userId: null }); // Limpar o userId dos dados de empréstimo
   }, [selectedCourse]);
+
+  const handleOpenDialog = () => {
+    setOpenDialog(true);
+  };
 
   return (
     <MDBox>
@@ -187,6 +195,7 @@ function NewBorrowingButton({ onBorrowingCompleted }) {
             backgroundColor: "#202940",
             boxShadow: "none",
             maxWidth: "1189.42px",
+            height: "auto",
           },
         }}
       >
@@ -394,6 +403,7 @@ function NewBorrowingButton({ onBorrowingCompleted }) {
                         }}
                         variant="outlined"
                       />
+                      {error && <div style={{ color: "red" }}>{error}</div>}
                     </Box>
                   </MDBox>
                 </Grid>
