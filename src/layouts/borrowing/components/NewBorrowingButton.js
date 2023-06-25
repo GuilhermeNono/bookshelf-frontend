@@ -190,7 +190,7 @@ function NewBorrowingButton({ onBorrowingCompleted }) {
           },
         }}
       >
-        <DialogTitle sx={{ mb: 1 }}>Realizar emprestimo</DialogTitle>
+        <DialogTitle sx={{ mb: 1 }}>Realizar Emprestimo</DialogTitle>
         <DialogTitle sx={{ mb: 1 }}>
           <Typography align="center">
             {currentBook && currentBook[0] ? currentBook[0].name : "Nome do Livro"}
@@ -322,7 +322,9 @@ function NewBorrowingButton({ onBorrowingCompleted }) {
                         disablePortal
                         id="combo-box-demo"
                         options={courses}
-                        getOptionLabel={(option) => option.name}
+                        getOptionLabel={(option) =>
+                          `${option.module}° ${option.name} - ${option.classroom}`
+                        }
                         renderInput={(params) => <TextField {...params} label="Curso" />}
                         value={selectedCourse}
                         onChange={(event, value) => setSelectedCourse(value)}
