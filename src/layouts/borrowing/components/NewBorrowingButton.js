@@ -199,7 +199,7 @@ function NewBorrowingButton({ onBorrowingCompleted }) {
           },
         }}
       >
-        <DialogTitle sx={{ mb: 1 }}>Realizar Emprestimo</DialogTitle>
+        <DialogTitle sx={{ mb: 1 }}>Realizar Empréstimo</DialogTitle>
         <DialogTitle sx={{ mb: 1 }}>
           <Typography align="center">
             {currentBook && currentBook[0] ? currentBook[0].name : "Nome do Livro"}

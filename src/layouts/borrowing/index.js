@@ -80,7 +80,7 @@ function borrowing() {
                 justifyContent="space-between"
               >
                 <MDTypography variant="h6" color="white">
-                  Emprestimos na biblioteca
+                  Empréstimos na biblioteca
                 </MDTypography>
 
                 <NewBorrowingButton onBorrowingCompleted={handleBorrowingCompleted} />
