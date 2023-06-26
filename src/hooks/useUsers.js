@@ -1,4 +1,5 @@
 import ApiRouteBuild from "helpers/ApiRouteBuild";
+import handleResponse from "helpers/HandleResponse";
 import { useEffect, useState } from "react";
 import User from "models/User.model";
 
@@ -63,6 +64,77 @@ export const useUsers = () => {
     return req;
   };
 
+  const createUserDashboard = async (
+    firstName,
+    lastName,
+    email,
+    password,
+    confirmPassword,
+    birthyDay,
+    phone,
+    gender,
+    profileId,
+    cpf,
+    rmRa,
+    profilePicture,
+    libProfileId,
+    libId,
+    coursesId
+  ) => {
+    checkIfIsCancelled();
+    setLoading(true);
+    setError(null);
+
+    // header da requisição
+    const headers = {
+      "Content-Type": "application/json",
+    };
+
+    // Json da requisição
+
+    const registerBody = {
+      firstName,
+      lastName,
+      email,
+      password,
+      confirmPassword,
+      birthyDay,
+      phone,
+      gender,
+      profileId,
+      cpf,
+      rmRa,
+      profilePicture,
+      libProfileId,
+      libId,
+      coursesId,
+    };
+
+    // Montando a requisição
+
+    const requestOptions = {
+      method: "POST",
+      headers,
+      body: JSON.stringify(registerBody),
+    };
+
+    // Executando requisição
+
+    const req = fetch(`${ApiRouteBuild.buildRoute("userLibrary")}`, requestOptions)
+      // Convertendo string para json
+      .then(handleResponse)
+      // Manipulando json de resposta
+      .then((user) => user)
+      // Tratativa de erro
+      .catch(() => {
+        setError("Dados incorretos.");
+        setLoading(false);
+        return null;
+      });
+    // Retornando resultado
+    return req;
+  };
+
   useEffect(() => {
     setCancelled(true);
     // setError("");
@@ -70,6 +142,7 @@ export const useUsers = () => {
 
   return {
     getAllUsers,
+    createUserDashboard,
     loading,
     error,
   };

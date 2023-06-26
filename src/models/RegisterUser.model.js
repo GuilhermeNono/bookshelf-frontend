@@ -5,6 +5,7 @@ export default class RegisterUser {
     this.accountInfo = {
       firstName: obj.firstName,
       lastName: obj.lastName,
+      email: obj.email,
       password: obj.password,
       confirmPassword: obj.confirmPassword,
       birthyDay: obj.birthyDay,
@@ -15,6 +16,7 @@ export default class RegisterUser {
     };
     this.rmRa = obj.rmRa;
     this.userImage = obj.profilePicture;
+    this.libProfileId = obj.libProfileId;
     this.libId = obj.libId;
     this.coursesId = obj.coursesId;
   }
