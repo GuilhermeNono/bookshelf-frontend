@@ -184,7 +184,7 @@ export const useLoan = () => {
       body: JSON.stringify(requestBody),
     };
 
-    const req = fetch(`${ApiRouteBuild.buildRoute("borrowing")}/renewal`, requestOptions)
+    const req = fetch(`${ApiRouteBuild.buildRoute("loan")}/renewal`, requestOptions)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Failed to renew loan");
