@@ -45,6 +45,7 @@ function LoansDetails() {
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
   const { userLogged, library } = controller;
   const navigate = useNavigate();
+  const [dateToReturn, setDateToReturn] = useState("");
 
   useEffect(() => {
     if (userLogged && loan) {
@@ -87,6 +88,12 @@ function LoansDetails() {
     setShowSuccessAlert(false);
   };
 
+  const handleRenewLoan = () => {
+    if (userLogged) {
+      useLoans.renewLoan(userLogged.token, loanId, dateToReturn);
+      console.log(JSON.stringify(loan, null, 2));
+    }
+  };
   return (
     <DashboardLayout>
       <Snackbar
@@ -282,9 +289,7 @@ function LoansDetails() {
                             variant="h6"
                             sx={{ color: "#cecece", fontWeight: "400", fontSize: "0.7em" }}
                           >
-                            {loan.renewalDate
-                              ? loan.renewalDate.substring(0, 10).split("-").reverse().join("/")
-                              : "N/A"}
+                            {loan.renewalDate ? loan.renewalDate.substring(0, 10) : "N/A"}
                           </MDTypography>
                         </Box>
                         {loan.overdue ? (
@@ -400,6 +405,15 @@ function LoansDetails() {
                           >
                             Quitar Emprestimo
                           </MDButton>
+                          <MDBox>
+                            <input
+                              type="date"
+                              label="data"
+                              value={dateToReturn}
+                              onChange={(e) => setDateToReturn(e.target.value)}
+                            />
+                            <MDButton onClick={handleRenewLoan}>Confirmar</MDButton>
+                          </MDBox>
                         </MDBox>
                       ) : (
                         // eslint-disable-next-line react/jsx-no-useless-fragment

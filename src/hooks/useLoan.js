@@ -163,7 +163,7 @@ export const useLoan = () => {
     return req;
   };
 
-  const renewLoan = (userToken, borrowingId, dateToReturn) => {
+  const renewLoan = (userToken, loanId, dateToReturn) => {
     checkIfIsCancelled();
     setLoading(true);
     setError(null);
@@ -175,11 +175,11 @@ export const useLoan = () => {
 
     const requestBody = {
       dateToReturn,
-      borrowingId,
+      borrowingId: loanId,
     };
 
     const requestOptions = {
-      method: "PATCH",
+      method: "POST",
       headers,
       body: JSON.stringify(requestBody),
     };
