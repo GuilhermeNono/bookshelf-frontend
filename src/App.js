@@ -255,20 +255,21 @@ export default function App() {
           </>
         )}
         {layout === "vr" && <Configurator />}
-        {layout === "home" && (
+        {layout === "home" ? (
           <>
             <MDHeader />
             <Routes>
               {getRoutes(routes)}
-              <Route path="*" element={<Navigate to="/dashboard" />} />
+              <Route path="" element={<Navigate to="/dashboard" />} />
             </Routes>
             <MDFooter />
           </>
+        ) : (
+          <Routes>
+            {getRoutes(routes)}
+            <Route path="" element={<Navigate to="/dashboard" />} />
+          </Routes>
         )}
-        <Routes>
-          {getRoutes(routes)}
-          <Route path="*" element={<Navigate to="/dashboard" />} />
-        </Routes>
       </ThemeProvider>
     ))
   );

@@ -41,6 +41,7 @@ import Dashboard from "layouts/dashboard";
 // import Billing from "layouts/billing";
 // import Notifications from "layouts/notifications";
 import Profile from "layouts/profile";
+import Register from "layouts/registerUser";
 import SignIn from "layouts/authentication/sign-in";
 import SignUp from "layouts/authentication/sign-up";
 import UserList from "layouts/usersList";
@@ -177,6 +178,16 @@ const routesJson = [
     route: "/dashboard/books/details/:libId",
     component: <Details />,
     authorization: PERM_BOOKSHELF_LIB_BOOKS_DETAIL,
+    profile: null,
+  },
+  {
+    type: "collapse",
+    name: "Register",
+    key: "register",
+    icon: <Icon fontSize="small">person</Icon>,
+    route: "/dashboard/register",
+    component: <Register />,
+    authorization: PERM_BOOKSHELF_LIB_PROFILE,
     profile: null,
   },
   {
