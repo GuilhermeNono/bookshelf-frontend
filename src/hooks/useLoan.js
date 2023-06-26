@@ -179,7 +179,7 @@ export const useLoan = () => {
     };
 
     const requestOptions = {
-      method: "POST",
+      method: "PATCH",
       headers,
       body: JSON.stringify(requestBody),
     };
