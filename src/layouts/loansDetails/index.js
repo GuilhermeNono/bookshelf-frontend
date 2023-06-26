@@ -46,7 +46,9 @@ function LoansDetails() {
   const { loanId } = useParams();
   const [controller, dispatch] = useMaterialUIController();
   const [loan, setLoan] = useState(null);
+  const [error, setError] = useState("");
   const [book, setBooks] = useState(null);
+  const today = new Date().toLocaleDateString("en-CA");
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
   const [showRenewSuccessAlert, setShowRenewSuccessAlert] = useState(false);
   const [dateToReturn, setDateToReturn] = useState("");
@@ -92,6 +94,10 @@ function LoansDetails() {
     }
   };
 
+  const handleRenewCloseAlert = () => {
+    setShowRenewSuccessAlert(false);
+  };
+
   const handleCloseAlert = () => {
     setShowSuccessAlert(false);
   };
@@ -105,10 +111,25 @@ function LoansDetails() {
   };
 
   const handleRenewLoan = () => {
-    if (userLogged) {
-      useLoans.renewLoan(userLogged.token, loanId, dateToReturn).then(() => {
-        setShowRenewSuccessAlert(true);
-      });
+    if (dateToReturn < today) {
+      setError("A data é anterior ao dia atual ");
+    } else {
+      setError("");
+      if (userLogged) {
+        useLoans.renewLoan(userLogged.token, loanId, dateToReturn).then(() => {
+          setShowRenewSuccessAlert(true);
+          setOpenDialog(false);
+          useLoans
+            .getLibraryLoan(userLogged.token, library, [
+              { filterKey: "id", operation: "eq", value: loanId },
+            ])
+            .then((resp) => {
+              if (resp) {
+                setLoan(resp[0]);
+              }
+            });
+        });
+      }
     }
   };
   return (
@@ -130,7 +151,7 @@ function LoansDetails() {
       <Snackbar
         open={showRenewSuccessAlert}
         autoHideDuration={3000}
-        onClose={handleCloseAlert}
+        onClose={handleRenewCloseAlert}
         anchorOrigin={{
           vertical: "top",
           horizontal: "center",
@@ -464,11 +485,16 @@ function LoansDetails() {
                                     onChange={(e) => setDateToReturn(e.target.value)}
                                     fullWidth
                                   />
+                                  {error && <div style={{ color: "red" }}>{error}</div>}
                                 </MDBox>
                               </DialogContent>
                               <DialogActions>
-                                <MDButton onClick={handleDialogClose}>Cancelar</MDButton>
-                                <MDButton onClick={handleRenewLoan}>Concluir</MDButton>
+                                <MDButton onClick={handleDialogClose} color="error">
+                                  Cancelar
+                                </MDButton>
+                                <MDButton onClick={handleRenewLoan} color="info">
+                                  Concluir
+                                </MDButton>
                               </DialogActions>
                             </Dialog>
                           </MDBox>
