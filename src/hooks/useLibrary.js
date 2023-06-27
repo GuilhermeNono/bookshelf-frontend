@@ -191,6 +191,41 @@ export const useLibrary = () => {
     return req;
   };
 
+  const deleteCopy = (userToken, copyID) => {
+    checkIfIsCancelled();
+    setLoading(true);
+    setError(null);
+
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${userToken}`,
+    };
+
+    const requestOptions = {
+      method: "DELETE",
+      headers,
+      body: JSON.stringify({
+        libCode: copyID,
+      }),
+    };
+
+    const req = fetch(`${ApiRouteBuild.buildRoute("library")}/book/${copyID}`, requestOptions)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to delete the copy.");
+        }
+        return true;
+      })
+      .catch(() => {
+        setError("An error occurred while deleting the copy.");
+        return false;
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+    return req;
+  };
+
   useEffect(() => {
     setCancelled(true);
     // setError("");
@@ -201,6 +236,7 @@ export const useLibrary = () => {
     getLibraryBooksOfMonth,
     getLibraryBooksNoLimit,
     getAllUsers,
+    deleteCopy,
     loading,
     error,
   };
