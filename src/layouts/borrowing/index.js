@@ -27,25 +27,37 @@ import { useMaterialUIController } from "context";
 import { useLoan } from "hooks/useLoan";
 import borrowingTableData from "layouts/borrowing/data/borrowingTableData";
 import { CircularProgress } from "@mui/material";
+import NewBorrowingButton from "./components/NewBorrowingButton";
 
 function borrowing() {
   const useLoans = useLoan();
   const [controller] = useMaterialUIController();
+
   const { userLogged, library } = controller;
 
   const [loans, setLoans] = useState();
 
-  useEffect(() => {
+  const fetchLoans = async () => {
     if (userLogged) {
-      useLoans.getLibraryLoan(userLogged.token, library).then((resp) => {
-        if (resp) {
-          borrowingTableData(resp).then((data) => {
-            setLoans(data);
-          });
-        }
-      });
+      const resp = await useLoans.getLibraryLoan(userLogged.token, library);
+      if (resp) {
+        const data = await borrowingTableData(resp);
+        setLoans(data);
+      }
     }
-  }, [userLogged]);
+  };
+
+  useEffect(() => {
+    const fetchLoansAndListen = async () => {
+      await fetchLoans(); // Buscar empréstimos inicialmente
+    };
+
+    fetchLoansAndListen();
+  }, [userLogged, library]);
+
+  const handleBorrowingCompleted = () => {
+    fetchLoans(); // Atualize os empréstimos quando um empréstimo for concluído
+  };
 
   return (
     <DashboardLayout>
@@ -63,11 +75,17 @@ function borrowing() {
                 bgColor="info"
                 borderRadius="lg"
                 coloredShadow="info"
+                display="flex"
+                alignItems="center"
+                justifyContent="space-between"
               >
                 <MDTypography variant="h6" color="white">
-                  Emprestimos na biblioteca
+                  Empréstimos na biblioteca
                 </MDTypography>
+
+                <NewBorrowingButton onBorrowingCompleted={handleBorrowingCompleted} />
               </MDBox>
+
               <MDBox pt={3}>
                 {loans ? (
                   <DataTable
