@@ -1,6 +1,7 @@
 import ApiRouteBuild from "helpers/ApiRouteBuild";
 import handleResponse from "helpers/HandleResponse";
 import { useEffect, useState } from "react";
+import UserLib from "models/UserLib.model";
 import User from "models/User.model";
 
 export const useUsers = () => {
@@ -19,7 +20,40 @@ export const useUsers = () => {
     }
   };
 
-  const getAllUsers = async (userToken, libId, filter = []) => {
+  const getUsersNotResgistred = async (userToken) => {
+    checkIfIsCancelled();
+    setLoading(true);
+    setError(null);
+
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${userToken}`,
+    };
+
+    const requestOptions = {
+      method: "GET",
+      headers,
+    };
+
+    const req = fetch(`${ApiRouteBuild.buildRoute("user")}`, requestOptions)
+      .then((obj) =>
+        obj.json().then((resp) => {
+          const books = [];
+          resp.forEach((element) => {
+            books.push(new User(element));
+          });
+          return books;
+        })
+      )
+      .catch(() => {
+        setError("Ocorreu um erro durante a busca de usuários.");
+        setLoading(false);
+        return null;
+      });
+    return req;
+  };
+
+  const getAllLibUsers = async (userToken, libId, filter = []) => {
     const filters = [{ filterKey: "library", value: libId, operation: "eq" }];
     if (filter.length > 0) {
       filter.forEach((element) => {
@@ -51,7 +85,7 @@ export const useUsers = () => {
         obj.json().then((resp) => {
           const users = [];
           resp.content.forEach((element) => {
-            users.push(new User(element));
+            users.push(new UserLib(element));
           });
           return users;
         })
@@ -64,53 +98,34 @@ export const useUsers = () => {
     return req;
   };
 
-  const createUserDashboard = async (
-    firstName,
-    lastName,
-    email,
-    password,
-    confirmPassword,
-    birthyDay,
-    phone,
-    gender,
-    profileId,
-    cpf,
-    rmRa,
-    profilePicture,
-    libProfileId,
-    libId,
-    coursesId
-  ) => {
+  const createUserDashboard = async (userToken, registerData) => {
     checkIfIsCancelled();
     setLoading(true);
     setError(null);
 
-    // header da requisição
     const headers = {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${userToken}`,
     };
-
-    // Json da requisição
 
     const registerBody = {
-      firstName,
-      lastName,
-      email,
-      password,
-      confirmPassword,
-      birthyDay,
-      phone,
-      gender,
-      profileId,
-      cpf,
-      rmRa,
-      profilePicture,
-      libProfileId,
-      libId,
-      coursesId,
+      firstName: registerData.firstName,
+      lastName: registerData.lastName,
+      email: registerData.email,
+      password: registerData.password,
+      confirmPassword: registerData.confirmPassword,
+      birthyDay: registerData.birthyDay,
+      phone: registerData.phone,
+      gender: registerData.gender,
+      profileId: registerData.profileId,
+      cpf: registerData.cpf,
+      id: registerData.accountId,
+      rmRa: registerData.rmRa,
+      profilePicture: registerData.profilePicture,
+      libProfileId: registerData.libProfileId,
+      libId: registerData.libId,
+      coursesId: registerData.coursesId,
     };
-
-    // Montando a requisição
 
     const requestOptions = {
       method: "POST",
@@ -118,30 +133,24 @@ export const useUsers = () => {
       body: JSON.stringify(registerBody),
     };
 
-    // Executando requisição
-
     const req = fetch(`${ApiRouteBuild.buildRoute("userLibrary")}`, requestOptions)
-      // Convertendo string para json
       .then(handleResponse)
-      // Manipulando json de resposta
       .then((user) => user)
-      // Tratativa de erro
       .catch(() => {
         setError("Dados incorretos.");
         setLoading(false);
         return null;
       });
-    // Retornando resultado
     return req;
   };
 
   useEffect(() => {
     setCancelled(true);
-    // setError("");
   }, []);
 
   return {
-    getAllUsers,
+    getUsersNotResgistred,
+    getAllLibUsers,
     createUserDashboard,
     loading,
     error,

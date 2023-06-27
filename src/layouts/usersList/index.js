@@ -37,7 +37,7 @@ function Users() {
 
   useEffect(() => {
     if (userLogged) {
-      useUser.getAllUsers(userLogged.token, library).then((resp) => {
+      useUser.getAllLibUsers(userLogged.token, library).then((resp) => {
         if (resp) {
           usersTableData(resp).then((data) => {
             setUsers(data);

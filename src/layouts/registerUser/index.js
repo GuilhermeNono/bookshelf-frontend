@@ -30,15 +30,15 @@ import Header from "layouts/registerUser/components/Header";
 
 // Data
 import MDTypography from "components/MDTypography";
-import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import { Autocomplete, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import { useEffect, useState } from "react";
-import { isValid, parseISO } from "date-fns";
+// import { isValid, parseISO } from "date-fns";
 import { useUsers } from "hooks/useUsers";
+import { useMaterialUIController } from "context";
 import MDInput from "../../components/MDInput";
 import MDButton from "../../components/MDButton";
 
 function Overview() {
-  /* eslint-disable no-unused-vars */
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -46,96 +46,105 @@ function Overview() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [birthyDay, setBirthyDay] = useState("");
   const [phone, setPhone] = useState("");
-  // const [gender, setGender] = useState("");
+  const [gender, setGender] = useState("");
   const [cpf, setCpf] = useState("");
   const [rmRa, setRmRa] = useState("");
   const [profilePicture, setProfilePicture] = useState("");
-  const [libId, setLibId] = useState("");
   const [coursesId, setCoursesId] = useState([]);
 
   // errors
-  const [firstNameError, setNameError] = useState(false);
-  const [lastNameError, setLastNameError] = useState(false);
-  const [emailError, setEmailError] = useState(false);
-  const [passwordError, setPasswordError] = useState(false);
-  const [confirmPasswordError, setConfirmPasswordError] = useState(false);
-  const [cpfError, setCpfError] = useState(false);
-  const [birthyDayError, setBirthyDayError] = useState(false);
-  const [phoneError, setPhoneError] = useState(false);
-  const [genderError, setGenderError] = useState(false);
+  // const [firstNameError, setNameError] = useState(false);
+  // const [lastNameError, setLastNameError] = useState(false);
+  // const [emailError, setEmailError] = useState(false);
+  // const [passwordError, setPasswordError] = useState(false);
+  // const [confirmPasswordError, setConfirmPasswordError] = useState(false);
+  // const [birthyDayError, setBirthyDayError] = useState(false);
+  // const [phoneError, setPhoneError] = useState(false);
+  // const [genderError, setGenderError] = useState(false);
+  // const [cpfError, setCpfError] = useState(false);
+  // const [rmRaError, setRmRaError] = useState(false);
+  // const [coursesIdError, setCoursesIdError] = useState(false);
+  // const [lockButton, setLockButton] = useState(true);
 
-  const [checkButton, setCheckButton] = useState(false);
-  const [lockButton, setLockButton] = useState(true);
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [users, setUsers] = useState([]);
 
   const registerUser = useUsers();
+  const [controller] = useMaterialUIController();
+  const { userLogged, library } = controller;
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    await registerUser.createUserDashboard(
-      firstName,
-      lastName,
-      email,
-      password,
-      confirmPassword,
-      birthyDay,
-      phone,
-      // gender,
-      1,
-      cpf,
-      rmRa,
-      profilePicture,
-      1,
-      1,
-      coursesId
-    );
+  const validateFields = () => {
+    if (
+      !firstName ||
+      !lastName ||
+      !email ||
+      !password ||
+      !confirmPassword ||
+      !birthyDay ||
+      !phone ||
+      !gender ||
+      !cpf ||
+      !rmRa ||
+      !coursesId
+    ) {
+      return false;
+    }
+    return true;
   };
 
-  useEffect(() => {
-    const isFirstNameValid = firstName && firstName.length >= 3;
-    const isLastNameValid = lastName && lastName.length >= 3;
-    const isEmailValid = email && email.includes("@");
-    const isPasswordValid = password && password.length >= 6;
-    const isConfirmPasswordValid = confirmPassword && confirmPassword === password;
-    const isCpfValid = cpf && cpf.length === 11;
-    const isBirthDayValid = birthyDay && isValid(parseISO(birthyDay));
-    const isPhoneValid = phone && phone.length >= 10;
-    // const isGenderValid = gender && (gender === "Male" || gender === "Female");
-    const isCheckValid = checkButton === true;
-
-    const isFormValid =
-      isFirstNameValid &&
-      isLastNameValid &&
-      isEmailValid &&
-      isPasswordValid &&
-      isConfirmPasswordValid &&
-      isCpfValid &&
-      isBirthDayValid &&
-      isPhoneValid &&
-      // isGenderValid &&
-      isCheckValid;
-
-    setLockButton(!isFormValid);
-    setNameError(firstName ? !isFirstNameValid : false);
-    setLastNameError(lastName ? !isLastNameValid : false);
-    setEmailError(email ? !isEmailValid : false);
-    setPasswordError(password ? !isPasswordValid : false);
-    setConfirmPasswordError(confirmPassword ? !isConfirmPasswordValid : false);
-    setCpfError(cpf ? !isCpfValid : false);
-    setBirthyDayError(birthyDay ? !isBirthDayValid : false);
-    setPhoneError(phone ? !isPhoneValid : false);
-    // setGenderError(gender ? !isGenderValid : false);
-  }, [
+  const registerData = {
     firstName,
     lastName,
     email,
     password,
     confirmPassword,
-    cpf,
     birthyDay,
     phone,
-    // gender,
-    checkButton,
-  ]);
+    gender,
+    cpf,
+    rmRa,
+    profilePicture,
+    coursesId,
+  };
+
+  useEffect(() => {
+    if (userLogged) {
+      registerUser.getUsersNotResgistred(userLogged.token, library).then((resp) => {
+        if (resp) {
+          setUsers(resp);
+        }
+      });
+    }
+  }, [userLogged]);
+
+  const handleRegisterUser = () => {
+    const isValid = validateFields();
+
+    if (isValid) {
+      registerUser
+        .createUserDashboard(userLogged.token, registerData)
+        .then(() => {
+          // Limpa os campos após o sucesso
+          setFirstName("");
+          setLastName("");
+          setEmail("");
+          setPassword("");
+          setConfirmPassword("");
+          setBirthyDay("");
+          setPhone("");
+          setGender("");
+          setCpf("");
+          setRmRa("");
+          setProfilePicture();
+          setCoursesId([]);
+
+          // Exibe o alerta de sucesso
+        })
+        .catch(() => {
+          // Handle error response
+        });
+    }
+  };
 
   return (
     <DashboardLayout>
@@ -143,14 +152,32 @@ function Overview() {
       <MDBox mb={2} />
       <Header>
         <MDBox mt={5} mb={3}>
-          <MDBox component="form" role="form" onSubmit={handleSubmit}>
+          <MDBox>
             <Grid container spacing={1}>
               <Grid item xs={12} md={6} xl={4}>
                 <MDBox p={2}>
-                  <MDTypography variant="h6" fontWeight="medium" textTransform="capitalize">
-                    Registrar Usuário
-                  </MDTypography>
                   <MDBox pt={1} pb={2} px={1} lineHeight={1.25}>
+                    <MDTypography
+                      variant="caption"
+                      fontWeight="bold"
+                      color="text"
+                      textTransform="uppercase"
+                    >
+                      Indentificador
+                    </MDTypography>
+                    <MDBox py={2} pb={2}>
+                      <Autocomplete
+                        sx={{ fontSize: "30px" }}
+                        disablePortal
+                        id="combo-box-demo"
+                        options={users}
+                        getOptionLabel={(option) => option.cpf}
+                        renderInput={(params) => <TextField {...params} label="CPF" />}
+                        value={selectedUser}
+                        onChange={(event, value) => setSelectedUser(value)}
+                      />
+                    </MDBox>
+                    {console.log(selectedUser)}
                     <MDTypography
                       variant="caption"
                       fontWeight="bold"
@@ -172,7 +199,8 @@ function Overview() {
                     >
                       <MDInput
                         onChange={(e) => setFirstName(e.target.value)}
-                        value={firstName}
+                        value={selectedUser?.name ? selectedUser.name.split(" ")[0] : firstName}
+                        readOnly={Boolean(selectedUser?.name)}
                         type="text"
                         label="Nome"
                         variant="outlined"
@@ -180,7 +208,8 @@ function Overview() {
                       />
                       <MDInput
                         onChange={(e) => setLastName(e.target.value)}
-                        value={lastName}
+                        value={selectedUser?.name ? selectedUser.name.split(" ")[1] : firstName}
+                        readOnly={Boolean(selectedUser?.name)}
                         type="text"
                         label="Sobrenome"
                         variant="outlined"
@@ -190,7 +219,8 @@ function Overview() {
                     <MDBox display="flex" alignItems="center" pb={2}>
                       <MDInput
                         onChange={(e) => setEmail(e.target.value)}
-                        value={email}
+                        value={selectedUser?.getEmail() ? selectedUser.getEmail() : email}
+                        readOnly={Boolean(selectedUser?.getEmail())}
                         type="email"
                         label="Email"
                         variant="outlined"
@@ -200,37 +230,20 @@ function Overview() {
                     <MDBox display="flex" alignItems="center" pb={2}>
                       <MDInput
                         onChange={(e) => setPhone(e.target.value)}
-                        value={phone}
+                        value={selectedUser?.getPhone() ? selectedUser.getPhone() : phone}
+                        readOnly={Boolean(selectedUser?.getPhone())}
                         type="phone"
                         label="Telefone"
                         variant="outlined"
                         fullWidth
                       />
                     </MDBox>
-                    <MDTypography
-                      variant="caption"
-                      fontWeight="bold"
-                      color="text"
-                      textTransform="uppercase"
-                    >
-                      Senha
-                    </MDTypography>
-                    <MDBox display="flex" alignItems="center" py={2} pb={2}>
-                      <MDInput
-                        onChange={(e) => setPassword(e.target.value)}
-                        value={password}
-                        type="password"
-                        label="Senha"
-                        variant="outlined"
-                        fullWidth
-                      />
-                    </MDBox>
                     <MDBox display="flex" alignItems="center" pb={2}>
                       <MDInput
-                        onChange={(e) => setConfirmPassword(e.target.value)}
-                        value={confirmPassword}
-                        type="password"
-                        label="Confirmar senha"
+                        onChange={(e) => setProfilePicture(e.target.value)}
+                        value={profilePicture}
+                        type="text"
+                        label="Foto do usuário"
                         variant="outlined"
                         fullWidth
                       />
@@ -242,9 +255,6 @@ function Overview() {
                 <Divider orientation="vertical" sx={{ ml: -2, mr: 1 }} />
                 <Grid item xs={12} md={12} xl={12}>
                   <MDBox p={2}>
-                    <MDTypography variant="h6" fontWeight="medium" textTransform="capitalize">
-                      Registrar Biblioteca
-                    </MDTypography>
                     <MDBox pt={1} pb={2} px={1} lineHeight={1.25}>
                       <MDTypography
                         variant="caption"
@@ -254,50 +264,54 @@ function Overview() {
                       >
                         Dados do aluno
                       </MDTypography>
-                      <MDBox display="flex" alignItems="center" py={2} pb={2}>
-                        <MDInput
-                          onChange={(e) => setLibId(e.target.value)}
-                          value={libId}
-                          type="text"
-                          label="Instituição"
-                          variant="outlined"
-                          fullWidth
-                        />
-                      </MDBox>
-                      <MDBox display="flex" alignItems="center" pb={2}>
-                        <MDInput
-                          onChange={(e) => setCpf(e.target.value)}
-                          value={cpf}
-                          type="number"
-                          label="CPF"
-                          variant="outlined"
-                          fullWidth
-                        />
-                      </MDBox>
-                      <MDBox display="flex" alignItems="center" pb={2}>
+                      <MDBox display="flex" alignItems="center" pb={2} py={2}>
                         <MDInput
                           onChange={(e) => setRmRa(e.target.value)}
                           value={rmRa}
-                          type="number"
+                          type="text"
                           label="RM/RA"
                           variant="outlined"
                           fullWidth
                         />
                       </MDBox>
-                      <MDBox
-                        onChange={(e) => setCoursesId(e.target.value)}
-                        value={coursesId}
-                        display="flex"
-                        alignItems="center"
-                        pb={2}
-                      >
-                        <MDInput type="text" label="Curso" variant="outlined" fullWidth />
-                      </MDBox>
                       <MDBox display="flex" alignItems="center" pb={2}>
                         <MDInput
-                          onChange={(e) => setBirthyDay(e.target.value)}
-                          value={birthyDay}
-                          type="date"
+                          onChange={(e) => setCoursesId(e.target.value)}
+                          value={coursesId}
+                          type="text"
+                          label="Curso"
+                          variant="outlined"
+                          fullWidth
+                        />
+                      </MDBox>
+                      <FormControl variant="outlined" fullWidth>
+                        <InputLabel id="gender-label">Sexo</InputLabel>
+                        <Select
+                          labelId="gender-label"
+                          id="gender"
+                          readOnly={Boolean(selectedUser?.personName)}
+                          onChange={(e) => setGender(e.target.value)}
+                          label="Sexo"
+                          style={{ height: "44.13px" }}
+                        >
+                          <MenuItem value="">Selecione</MenuItem>
+                          <MenuItem value="Male">Masculino</MenuItem>
+                          <MenuItem value="Female">Feminino</MenuItem>
+                        </Select>
+                      </FormControl>
+                      {console.log(selectedUser?.birthyDay)}
+                      <MDBox display="flex" alignItems="center" pb={2} py={2}>
+                        <MDInput
+                          onChange={(e) =>
+                            setBirthyDay(
+                              e.target.value
+                                .replace(/[^0-9]/g, "")
+                                .replace(/^(\d{2})(\d{0,2})(\d{0,4}).*/, "$1/$2/$3")
+                            )
+                          }
+                          value={selectedUser?.birthyDay ? selectedUser.birthyDay : birthyDay}
+                          readOnly={Boolean(selectedUser?.birthyDay)}
+                          type="text"
                           variant="outlined"
                           fullWidth
                         />
@@ -309,9 +323,6 @@ function Overview() {
               </Grid>
               <Grid item xs={12} xl={4}>
                 <MDBox p={2}>
-                  <MDTypography variant="h6" fontWeight="medium" textTransform="capitalize">
-                    Definir Permissões
-                  </MDTypography>
                   <MDBox pt={1} pb={2} px={1} lineHeight={1.25}>
                     <MDTypography
                       variant="caption"
@@ -336,13 +347,47 @@ function Overview() {
                         </Select>
                       </FormControl>
                     </MDBox>
+                    <MDTypography
+                      variant="caption"
+                      fontWeight="bold"
+                      color="text"
+                      textTransform="uppercase"
+                    >
+                      Senha
+                    </MDTypography>
+                    <MDBox display="flex" alignItems="center" py={2} pb={2}>
+                      <MDInput
+                        onChange={(e) => setPassword(e.target.value)}
+                        value={password}
+                        type="password"
+                        label="Senha"
+                        variant="outlined"
+                        // error={passwordError}
+                        // helperText={passwordError ? "A senha deve ter pelo menos 6 caracteres" : ""}
+                        // FormHelperTextProps={{ style: { color: "red" } }}
+                        fullWidth
+                      />
+                    </MDBox>
+                    <MDBox display="flex" alignItems="center" pb={2}>
+                      <MDInput
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        value={confirmPassword}
+                        type="password"
+                        label="Confirmar senha"
+                        variant="outlined"
+                        // error={confirmPasswordError}
+                        // helperText={confirmPasswordError ? "As senhas não conferem" : ""}
+                        // FormHelperTextProps={{ style: { color: "red" } }}
+                        fullWidth
+                      />
+                    </MDBox>
                     <MDBox>
                       <MDButton
-                        href="#"
-                        disabled={lockButton}
+                        // disabled={lockButton}
                         type="submit"
                         variant="gradient"
                         color="info"
+                        onClick={handleRegisterUser}
                         fullWidth
                       >
                         Continuar
