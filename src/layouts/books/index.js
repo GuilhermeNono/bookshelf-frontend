@@ -44,10 +44,14 @@ import {
   PERM_BOOKSHELF_LIB_BOOKS_BOOK_ADD,
   PERM_BOOKSHELF_LIB_BOOKS_COPY_ADD,
 } from "helpers/auth/Permisions";
-import { CircularProgress } from "@mui/material";
-
+// eslint-disable-next-line no-unused-vars
+import { Autocomplete, CircularProgress, Icon, TextField } from "@mui/material";
+import MDInput from "components/MDInput";
+// @DL
 function Books() {
   const [books, setBooks] = useState();
+  const [booksResp, setBooksResp] = useState();
+  const [selectedBook, setselectedBook] = useState();
   const useLibraries = useLibrary();
   const [controller] = useMaterialUIController();
   const { hasPermission } = usePermission();
@@ -59,6 +63,7 @@ function Books() {
     if (userLogged) {
       useLibraries.getLibraryBooksNoLimit(userLogged.token, library).then((resp) => {
         if (resp) {
+          setBooksResp(resp);
           booksTableData(resp).then((data) => {
             setBooks(data);
           });
@@ -66,6 +71,31 @@ function Books() {
       });
     }
   }, [userLogged]);
+
+  useEffect(() => {
+    if (selectedBook) {
+      useLibraries
+        .getLibraryBooksNoLimit(userLogged.token, library, [
+          { filterKey: "name", operation: "cn", value: selectedBook.name },
+        ])
+        .then((resp) => {
+          if (resp) {
+            booksTableData(resp).then((data) => {
+              setBooks(data);
+            });
+          }
+        });
+    } else {
+      useLibraries.getLibraryBooksNoLimit(userLogged.token, library).then((resp) => {
+        if (resp) {
+          setBooksResp(resp);
+          booksTableData(resp).then((data) => {
+            setBooks(data);
+          });
+        }
+      });
+    }
+  }, [selectedBook]);
 
   useEffect(() => {
     if (userLogged) {
@@ -102,7 +132,36 @@ function Books() {
                 <MDBox display="flex" alignItems="center" justifyContent="space-between">
                   <MDTypography variant="h5">Acervo da Biblioteca</MDTypography>
                   {!doNotHavePermissionToAddBook && !doNotHavePermissionToAddCopy ? (
-                    <MDBox display="flex" alignItems="center">
+                    <MDBox display="flex" alignItems="center" justifyContent="center">
+                      <MDBox
+                        display="flex"
+                        alignItems="center"
+                        justifyContent="space-between"
+                        mr={3}
+                        sx={{ width: "300px" }}
+                      >
+                        <Icon sx={{ color: "#fff" }} mr={2} fontSize="large">
+                          filter_list
+                        </Icon>
+                        <MDBox sx={{ width: "250px" }}>
+                          <Autocomplete
+                            freeSolo
+                            id="combo-box-demo"
+                            options={booksResp}
+                            getOptionLabel={(option) => option.name}
+                            renderInput={(params) => (
+                              <MDInput
+                                {...params}
+                                sx={{ paddingBottom: "0" }}
+                                label="Nome do livro"
+                              />
+                            )}
+                            value={selectedBook}
+                            isOptionEqualToValue={(option, value) => option.id === value.id}
+                            onChange={(event, value) => setselectedBook(value)}
+                          />
+                        </MDBox>
+                      </MDBox>
                       {!doNotHavePermissionToAddBook && (
                         <MDButton
                           component={Link}

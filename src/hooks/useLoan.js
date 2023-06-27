@@ -127,6 +127,42 @@ export const useLoan = () => {
     return req;
   };
 
+  const renewalLoan = async (userToken, dateToReturn, borrowingId) => {
+    checkIfIsCancelled();
+    setLoading(true);
+    setError(null);
+
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${userToken}`,
+    };
+
+    const bodyfoda = {
+      dateToReturn,
+      borrowingId,
+    };
+
+    const requestOptions = {
+      method: "PATCH",
+      headers,
+      body: JSON.stringify(bodyfoda),
+    };
+
+    const req = fetch(`${ApiRouteBuild.buildRoute("loan")}/renewal`, requestOptions)
+      .then((resp) => {
+        if (resp.status === 204) {
+          console.log("Deu certo");
+        }
+        return resp.status;
+      })
+      .catch(() => {
+        setError("Ocorreu um erro durante a busca de emprestimos.");
+        setLoading(false);
+        return null;
+      });
+    return req;
+  };
+
   const createBorrowing = async (userToken, borrowingData) => {
     checkIfIsCancelled();
     setLoading(true);
@@ -173,6 +209,7 @@ export const useLoan = () => {
     getLibraryLoanOfMonth,
     closeLoan,
     createBorrowing,
+    renewalLoan,
     loading,
     error,
   };
