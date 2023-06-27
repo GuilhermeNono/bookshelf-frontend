@@ -260,7 +260,7 @@ export default function App() {
             <MDHeader />
             <Routes>
               {getRoutes(routes)}
-              <Route path="*" element={<Navigate to="/dashboard" />} />
+              <Route path="" element={<Navigate to="/dashboard" />} />
             </Routes>
             <MDFooter />
           </>

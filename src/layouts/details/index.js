@@ -11,11 +11,24 @@
 
 import Card from "@mui/material/Card";
 import Avatar from "@mui/material/Avatar";
-import { Box, CircularProgress, Grid, useMediaQuery, useTheme } from "@mui/material";
+import {
+  Alert,
+  Box,
+  CircularProgress,
+  Dialog,
+  DialogActions,
+  DialogTitle,
+  Grid,
+  Slide,
+  Snackbar,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import DataTable from "examples/Tables/DataTable";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
+import MDButton from "components/MDButton";
 import MDBox from "../../components/MDBox";
 import MDTypography from "../../components/MDTypography";
 
@@ -31,7 +44,9 @@ function Details() {
   // eslint-disable-next-line no-unused-vars
   const [bookInfo, setBookInfo] = useState(null);
   const { columns, rows } = data();
-
+  const navigate = useNavigate();
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const useLibraries = useLibrary();
   const { libId } = useParams();
   const [controller, dispatch] = useMaterialUIController();
@@ -51,9 +66,60 @@ function Details() {
     }
   }, [userLogged]);
 
+  const handleRemoveCopy = () => {
+    if (userLogged && book) {
+      useLibraries
+        .deleteCopy(userLogged.token, book.code)
+        .then(() => {
+          setShowSuccessAlert(true);
+          setTimeout(() => {
+            setShowSuccessAlert(false);
+            navigate("/dashboard/books");
+          }, 3000);
+        })
+        .catch(() => {});
+    }
+  };
+
+  const handleDeleteConfirm = () => {
+    handleRemoveCopy();
+    setShowDeleteDialog(false);
+  };
+
+  const handleDeleteCancel = () => {
+    setShowDeleteDialog(false);
+  };
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
+      <Snackbar
+        open={showSuccessAlert}
+        autoHideDuration={3000}
+        anchorOrigin={{
+          vertical: "top",
+          horizontal: "center",
+        }}
+        TransitionComponent={Slide}
+      >
+        <Alert severity="success" sx={{ zIndex: 9999 }}>
+          Cópia removida com sucesso!
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        open={showSuccessAlert}
+        sx={{ mt: 8 }}
+        autoHideDuration={3000}
+        anchorOrigin={{
+          vertical: "top",
+          horizontal: "center",
+        }}
+        TransitionComponent={Slide}
+      >
+        <Alert severity="success" sx={{ zIndex: 9999 }}>
+          Movendo a página...
+        </Alert>
+      </Snackbar>
       <MDBox pt={6} pb={3}>
         <Grid container spacing={6}>
           <Grid item xs={12}>
@@ -68,9 +134,41 @@ function Details() {
                 borderRadius="lg"
                 coloredShadow="info"
               >
-                <MDTypography variant="h6" color="white">
-                  Detalhes
-                </MDTypography>
+                <Grid container justifyContent="space-between" alignItems="center">
+                  <Grid item>
+                    <MDTypography variant="h6" color="white">
+                      Detalhes do Livro
+                    </MDTypography>
+                  </Grid>
+                  <Grid item>
+                    <MDButton onClick={() => setShowDeleteDialog(true)} color="error">
+                      Remover Cópia
+                    </MDButton>
+
+                    <Dialog
+                      open={showDeleteDialog}
+                      onClose={handleDeleteCancel}
+                      PaperProps={{
+                        style: {
+                          backgroundColor: "#202940",
+                          boxShadow: "none",
+                          maxWidth: "350px",
+                          height: "auto",
+                        },
+                      }}
+                    >
+                      <DialogTitle>Tem certeza que deseja excluir essa cópia?</DialogTitle>
+                      <DialogActions>
+                        <MDButton onClick={handleDeleteCancel} color="info">
+                          Cancelar
+                        </MDButton>
+                        <MDButton onClick={handleDeleteConfirm} color="error">
+                          Excluir
+                        </MDButton>
+                      </DialogActions>
+                    </Dialog>
+                  </Grid>
+                </Grid>
               </MDBox>
               {book ? (
                 <MDBox sx={{ margin: "3rem 1.5rem 1rem 3rem" }}>
