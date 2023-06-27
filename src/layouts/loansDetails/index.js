@@ -14,8 +14,13 @@ import {
   Alert,
   Box,
   CircularProgress,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
   Grid,
   Snackbar,
+  TextField,
   useMediaQuery,
   useTheme,
 } from "@mui/material";
@@ -40,9 +45,15 @@ function LoansDetails() {
   const useLibraries = useLibrary();
   const { loanId } = useParams();
   const [controller, dispatch] = useMaterialUIController();
-  const [loan, setLoans] = useState(null);
+  const [loan, setLoan] = useState(null);
+  const [error, setError] = useState("");
   const [book, setBooks] = useState(null);
+  const today = new Date().toLocaleDateString("en-CA");
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
+  const [showRenewSuccessAlert, setShowRenewSuccessAlert] = useState(false);
+  const [dateToReturn, setDateToReturn] = useState("");
+  const [openDialog, setOpenDialog] = useState(false);
+
   const { userLogged, library } = controller;
   const navigate = useNavigate();
 
@@ -69,7 +80,7 @@ function LoansDetails() {
         ])
         .then((resp) => {
           if (resp) {
-            setLoans(resp[0]);
+            setLoan(resp[0]);
           }
         });
     }
@@ -83,10 +94,44 @@ function LoansDetails() {
     }
   };
 
+  const handleRenewCloseAlert = () => {
+    setShowRenewSuccessAlert(false);
+  };
+
   const handleCloseAlert = () => {
     setShowSuccessAlert(false);
   };
 
+  const handleOpenDialog = () => {
+    setOpenDialog(true);
+  };
+
+  const handleDialogClose = () => {
+    setOpenDialog(false);
+  };
+
+  const handleRenewLoan = () => {
+    if (dateToReturn < today) {
+      setError("A data é anterior ao dia atual ");
+    } else {
+      setError("");
+      if (userLogged) {
+        useLoans.renewLoan(userLogged.token, loanId, dateToReturn).then(() => {
+          setShowRenewSuccessAlert(true);
+          setOpenDialog(false);
+          useLoans
+            .getLibraryLoan(userLogged.token, library, [
+              { filterKey: "id", operation: "eq", value: loanId },
+            ])
+            .then((resp) => {
+              if (resp) {
+                setLoan(resp[0]);
+              }
+            });
+        });
+      }
+    }
+  };
   return (
     <DashboardLayout>
       <Snackbar
@@ -101,6 +146,20 @@ function LoansDetails() {
       >
         <Alert severity="success" sx={{ zIndex: 9999 }}>
           Emprestimo quitado com sucesso!
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        open={showRenewSuccessAlert}
+        autoHideDuration={3000}
+        onClose={handleRenewCloseAlert}
+        anchorOrigin={{
+          vertical: "top",
+          horizontal: "center",
+        }}
+        TransitionComponent={Slide}
+      >
+        <Alert severity="success" sx={{ zIndex: 9999 }}>
+          Emprestimo renovado com sucesso!
         </Alert>
       </Snackbar>
 
@@ -282,11 +341,35 @@ function LoansDetails() {
                             variant="h6"
                             sx={{ color: "#cecece", fontWeight: "400", fontSize: "0.7em" }}
                           >
-                            {loan.renewalDate
-                              ? loan.renewalDate.substring(0, 10).split("-").reverse().join("/")
-                              : "N/A"}
+                            {loan.renewalDate ? loan.renewalDate.substring(0, 10) : "N/A"}
                           </MDTypography>
                         </Box>
+                        <Box
+                          gridRow={7}
+                          sx={{
+                            display: "flex",
+                            flexDirection: "row",
+                            mr: "5",
+                            mb: "15px",
+                            alignItems: "flex-end",
+                          }}
+                        >
+                          {loan.active ? (
+                            <MDBox mt={4}>
+                              <MDButton
+                                color="primary"
+                                variant="contained"
+                                onClick={() => closeBorrowing()}
+                              >
+                                Quitar Empréstimo
+                              </MDButton>
+                            </MDBox>
+                          ) : (
+                            // eslint-disable-next-line react/jsx-no-useless-fragment
+                            <></>
+                          )}
+                        </Box>
+
                         {loan.overdue ? (
                           <Box
                             gridRow={1}
@@ -390,21 +473,58 @@ function LoansDetails() {
                             {loan.bookId}
                           </MDTypography>
                         </Box>
-                      </Grid>
-                      {loan.active ? (
-                        <MDBox mt={4}>
+                        <Box
+                          gridRow={7}
+                          sx={{
+                            display: "flex",
+                            flexDirection: "row",
+                            mr: "5",
+                            mb: "15px",
+                            alignItems: "flex-end",
+                          }}
+                        >
                           <MDButton
-                            color="primary"
+                            // style={{ backgroundColor: "#4a1b52" ""#7a2d87", color: "#FFF" }}
                             variant="contained"
-                            onClick={() => closeBorrowing()}
+                            color="success"
+                            onClick={handleOpenDialog}
                           >
-                            Quitar Emprestimo
+                            Renovar Empréstimo
                           </MDButton>
-                        </MDBox>
-                      ) : (
-                        // eslint-disable-next-line react/jsx-no-useless-fragment
-                        <></>
-                      )}
+
+                          <Dialog
+                            open={openDialog}
+                            onClose={handleDialogClose}
+                            PaperProps={{
+                              style: {
+                                backgroundColor: "#202940",
+                                boxShadow: "none",
+                              },
+                            }}
+                          >
+                            <DialogTitle>Selecione a data</DialogTitle>
+                            <DialogContent>
+                              <MDBox>
+                                <TextField
+                                  type="date"
+                                  value={dateToReturn}
+                                  onChange={(e) => setDateToReturn(e.target.value)}
+                                  fullWidth
+                                />
+                                {error && <div style={{ color: "red" }}>{error}</div>}
+                              </MDBox>
+                            </DialogContent>
+                            <DialogActions>
+                              <MDButton onClick={handleDialogClose} color="error">
+                                Cancelar
+                              </MDButton>
+                              <MDButton onClick={handleRenewLoan} color="info">
+                                Concluir
+                              </MDButton>
+                            </DialogActions>
+                          </Dialog>
+                        </Box>
+                      </Grid>
                     </Grid>
                   </Grid>
                 </MDBox>

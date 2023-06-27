@@ -163,6 +163,41 @@ export const useLoan = () => {
     return req;
   };
 
+  const renewLoan = (userToken, loanId, dateToReturn) => {
+    checkIfIsCancelled();
+    setLoading(true);
+    setError(null);
+
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${userToken}`,
+    };
+
+    const requestBody = {
+      dateToReturn,
+      borrowingId: loanId,
+    };
+
+    const requestOptions = {
+      method: "PATCH",
+      headers,
+      body: JSON.stringify(requestBody),
+    };
+
+    const req = fetch(`${ApiRouteBuild.buildRoute("loan")}/renewal`, requestOptions)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to renew loan");
+        }
+        setLoading(false);
+      })
+      .catch(() => {
+        setError("An error occurred while renewing the loan.");
+        setLoading(false);
+      });
+    return req;
+  };
+
   useEffect(() => {
     setCancelled(true);
     // setError("");
@@ -172,6 +207,7 @@ export const useLoan = () => {
     getLibraryLoan,
     getLibraryLoanOfMonth,
     closeLoan,
+    renewLoan,
     createBorrowing,
     loading,
     error,
