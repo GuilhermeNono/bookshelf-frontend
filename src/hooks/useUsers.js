@@ -1,5 +1,4 @@
 import ApiRouteBuild from "helpers/ApiRouteBuild";
-import handleResponse from "helpers/HandleResponse";
 import { useEffect, useState } from "react";
 import UserLib from "models/UserLib.model";
 import User from "models/User.model";
@@ -109,16 +108,6 @@ export const useUsers = () => {
     };
 
     const registerBody = {
-      firstName: registerData.firstName,
-      lastName: registerData.lastName,
-      email: registerData.email,
-      password: registerData.password,
-      confirmPassword: registerData.confirmPassword,
-      birthyDay: registerData.birthyDay,
-      phone: registerData.phone,
-      gender: registerData.gender,
-      profileId: registerData.profileId,
-      cpf: registerData.cpf,
       id: registerData.accountId,
       rmRa: registerData.rmRa,
       profilePicture: registerData.profilePicture,
@@ -134,8 +123,12 @@ export const useUsers = () => {
     };
 
     const req = fetch(`${ApiRouteBuild.buildRoute("userLibrary")}`, requestOptions)
-      .then(handleResponse)
-      .then((user) => user)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to add new user");
+        }
+        return response.json();
+      })
       .catch(() => {
         setError("Dados incorretos.");
         setLoading(false);
