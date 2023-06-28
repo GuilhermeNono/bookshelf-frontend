@@ -11,6 +11,7 @@ import {
   Slide,
   TextField,
   Typography,
+  createFilterOptions,
   useMediaQuery,
   useTheme,
 } from "@mui/material";
@@ -27,15 +28,17 @@ import capePlaceholder from "assets/images/capePlaceholder.png";
 import MDTypography from "components/MDTypography";
 import useCourse from "hooks/useCourse";
 import PropTypes from "prop-types";
+import borrowingTableData from "layouts/borrowing/data/borrowingTableData";
 
-function NewBorrowingButton({ onBorrowingCompleted }) {
+// eslint-disable-next-line react/prop-types, no-unused-vars
+function NewBorrowingButton({ setLoans, setLoanTables, loans, onBorrowingCompleted }) {
   const theme = useTheme();
   // eslint-disable-next-line no-unused-vars
   const [controller, dispatch] = useMaterialUIController();
   const downSm = useMediaQuery(theme.breakpoints.down("sm"));
   const upMd = useMediaQuery(theme.breakpoints.up("md"));
   const onlyXs = useMediaQuery(theme.breakpoints.only("xs"));
-  const { createBorrowing } = useLoan();
+  const { createBorrowing, getLibraryLoan } = useLoan();
   const { getAllUsers, getLibraryBooks } = useLibrary();
   const { getLibaryCourses } = useCourse();
   const { userLogged, library } = controller;
@@ -50,6 +53,7 @@ function NewBorrowingButton({ onBorrowingCompleted }) {
   const [isCourseSelected, setIsCourseSelected] = useState(false);
   const today = new Date().toLocaleDateString("en-CA");
   const [error, setError] = useState("");
+  const [selectedLoan, setSelectedLoan] = useState();
   const [errorSnackbar, setErrorSnackbar] = useState(false);
   const [successSnackbar, setSuccessSnackbar] = useState(false);
   const [loanData, setLoanData] = useState({
@@ -58,6 +62,30 @@ function NewBorrowingButton({ onBorrowingCompleted }) {
     bookCode: "",
     userId: "",
   });
+
+  useEffect(() => {
+    if (selectedLoan) {
+      getLibraryLoan(userLogged.token, library, [
+        { filterKey: "name", operation: "cn", value: selectedLoan.userName },
+      ]).then((resp) => {
+        if (resp) {
+          borrowingTableData(resp).then((data) => {
+            setLoanTables(data);
+            setLoans(resp);
+          });
+        }
+      });
+    } else {
+      getLibraryLoan(userLogged.token, library).then((resp) => {
+        if (resp) {
+          borrowingTableData(resp).then((data) => {
+            setLoanTables(data);
+            setLoans(resp);
+          });
+        }
+      });
+    }
+  }, [selectedLoan]);
 
   const clearFields = () => {
     setLoanData({
@@ -182,11 +210,42 @@ function NewBorrowingButton({ onBorrowingCompleted }) {
     setOpenDialog(true);
   };
 
+  const filterOptions = createFilterOptions({
+    stringify: ({ userName, bookId }) => `${userName} ${bookId}`,
+  });
+
   return (
     <MDBox>
-      <MDButton onClick={handleOpenDialog} color="success">
-        Novo Empréstimo
-      </MDButton>
+      <MDBox
+        sx={{ width: "100%" }}
+        display="flex"
+        justifyContent="space-between"
+        alignItems="center"
+      >
+        <MDBox mr={3} sx={{ width: "250px" }}>
+          {loans ? (
+            <Autocomplete
+              freeSolo
+              id="loans-autocomplete"
+              options={loans}
+              getOptionLabel={(option) => `${option.userName}`}
+              filterOptions={filterOptions}
+              renderInput={(params) => (
+                <MDInput {...params} sx={{ paddingBottom: "0" }} label="Empréstimo" />
+              )}
+              value={selectedLoan}
+              isOptionEqualToValue={(option, value) => option.id === value.id}
+              onChange={(event, value) => setSelectedLoan(value)}
+            />
+          ) : (
+            // eslint-disable-next-line react/jsx-no-useless-fragment
+            <></>
+          )}
+        </MDBox>
+        <MDButton onClick={handleOpenDialog} color="success">
+          Novo Empréstimo
+        </MDButton>
+      </MDBox>
       <Dialog
         open={openDialog}
         onClose={handleCloseDialog}

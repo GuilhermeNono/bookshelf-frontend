@@ -113,7 +113,7 @@ const routesJson = [
   },
   {
     type: "collapse",
-    name: "Books",
+    name: "Acervo",
     key: "books",
     icon: <Icon fontSize="small">collections_bookmark</Icon>,
     route: "/dashboard/books",
@@ -143,7 +143,7 @@ const routesJson = [
   },
   {
     type: "collapse",
-    name: "Loan",
+    name: "Emprestimos",
     key: "loan",
     icon: <Icon fontSize="small">book</Icon>,
     route: "/dashboard/loan",
@@ -192,7 +192,7 @@ const routesJson = [
     profile: null,
   },
   {
-    type: "collapse",
+    type: "blocked",
     name: "Profile",
     key: "profile",
     icon: <Icon fontSize="small">person</Icon>,
@@ -227,8 +227,8 @@ const routesJson = [
   // },
   {
     type: "collapse",
-    name: "UserList",
-    key: "userList",
+    name: "Usuarios",
+    key: "users",
     icon: <Icon fontSize="small">table_view</Icon>,
     route: "/userList",
     component: <UserList />,

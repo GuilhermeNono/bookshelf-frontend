@@ -45,7 +45,7 @@ import {
   PERM_BOOKSHELF_LIB_BOOKS_COPY_ADD,
 } from "helpers/auth/Permisions";
 // eslint-disable-next-line no-unused-vars
-import { Autocomplete, CircularProgress, Icon, TextField } from "@mui/material";
+import { Autocomplete, CircularProgress, Icon, createFilterOptions } from "@mui/material";
 import MDInput from "components/MDInput";
 // @DL
 function Books() {
@@ -112,6 +112,10 @@ function Books() {
     }
   }, [userLogged]);
 
+  const filterOptions = createFilterOptions({
+    stringify: ({ name, code }) => `${name} ${code}`,
+  });
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -136,25 +140,19 @@ function Books() {
                       <MDBox
                         display="flex"
                         alignItems="center"
-                        justifyContent="space-between"
+                        justifyContent="center"
                         mr={3}
                         sx={{ width: "300px" }}
                       >
-                        <Icon sx={{ color: "#fff" }} mr={2} fontSize="large">
-                          filter_list
-                        </Icon>
                         <MDBox sx={{ width: "250px" }}>
                           <Autocomplete
                             freeSolo
                             id="combo-box-demo"
                             options={booksResp}
                             getOptionLabel={(option) => option.name}
+                            filterOptions={filterOptions}
                             renderInput={(params) => (
-                              <MDInput
-                                {...params}
-                                sx={{ paddingBottom: "0" }}
-                                label="Nome do livro"
-                              />
+                              <MDInput {...params} sx={{ paddingBottom: "0" }} label="Livros" />
                             )}
                             value={selectedBook}
                             isOptionEqualToValue={(option, value) => option.id === value.id}

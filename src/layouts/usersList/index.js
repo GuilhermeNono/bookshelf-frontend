@@ -64,7 +64,7 @@ function Users() {
                 borderRadius="lg"
                 coloredShadow="info"
               >
-                <MDTypography variant="h6" color="white">
+                <MDTypography variant="h5" color="white">
                   Usuários da biblioteca
                 </MDTypography>
               </MDBox>
