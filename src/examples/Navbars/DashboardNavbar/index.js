@@ -30,7 +30,6 @@ import Icon from "@mui/material/Icon";
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
-import MDInput from "components/MDInput";
 
 // Material Dashboard 2 React example components
 import Breadcrumbs from "examples/Breadcrumbs";
@@ -196,9 +195,6 @@ function DashboardNavbar({ absolute, light, isMini }) {
                     ))}
                 </Select>
               </FormControl>
-            </MDBox>
-            <MDBox pr={1}>
-              <MDInput label="Pesquisar" />
             </MDBox>
             <MDBox color={light ? "white" : "inherit"}>
               <Link to="/dashboard/profile">

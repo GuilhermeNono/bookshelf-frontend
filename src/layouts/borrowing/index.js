@@ -36,12 +36,14 @@ function borrowing() {
   const { userLogged, library } = controller;
 
   const [loans, setLoans] = useState();
+  const [allLoansObj, setAllLoansObj] = useState();
 
   const fetchLoans = async () => {
     if (userLogged) {
       const resp = await useLoans.getLibraryLoan(userLogged.token, library);
       if (resp) {
         const data = await borrowingTableData(resp);
+        setAllLoansObj(resp);
         setLoans(data);
       }
     }
@@ -58,6 +60,8 @@ function borrowing() {
   const handleBorrowingCompleted = () => {
     fetchLoans(); // Atualize os empréstimos quando um empréstimo for concluído
   };
+
+  console.log(loans);
 
   return (
     <DashboardLayout>
@@ -79,11 +83,22 @@ function borrowing() {
                 alignItems="center"
                 justifyContent="space-between"
               >
-                <MDTypography variant="h6" color="white">
+                <MDTypography variant="h5" color="white">
                   Empréstimos na biblioteca
                 </MDTypography>
 
-                <NewBorrowingButton onBorrowingCompleted={handleBorrowingCompleted} />
+                {loans ? (
+                  <NewBorrowingButton
+                    loans={allLoansObj}
+                    setAllLoansObj={setAllLoansObj}
+                    setLoans={setAllLoansObj}
+                    setLoanTables={setLoans}
+                    onBorrowingCompleted={handleBorrowingCompleted}
+                  />
+                ) : (
+                  // eslint-disable-next-line react/jsx-no-useless-fragment
+                  <></>
+                )}
               </MDBox>
 
               <MDBox pt={3}>
